@@ -28,6 +28,16 @@ APK：bundled 交付态 `app-debug.apk`（11,297,029 bytes，SHA-256 `aab1680e49
 - 恢复：`UPDATE dance_items SET deleted_at=NULL WHERE id=…` → 曲库 `30 → 31`。
 - 说明：本条验证「默认软删除+可恢复」；「同时删除本地媒体文件」为二次确认分支，本轮未触发。
 
+## T092 升级保留数据（通过）
+
+- 场景：在已有数据（31 条曲库 + 62 个离线文件 + 已选主题）的机器上，用含 T083 修复的新 APK `adb install -r` 覆盖安装（不卸载、不清数据）。
+- 结果（升级后冷启动）：
+  - `localStorage['dance.offline.manifest'].items.length = 31`，`dance.offline.cache` = 62 条。
+  - App 数据目录 `files/dance-offline/` 实存 **62** 个文件（31 `audio-*.audio` + 31 `img-*.img`），无 `.tmp` 残留。
+  - 主题设置保留（`dancelib.themeMode = dark`）。
+  - 曲库 `/api/catalog` 仍 31 条。
+- 结论：覆盖升级保留离线缓存与用户设置，无需重新同步。
+
 ## 未闭环
 
 - 「播放没有声音」仍需用户关停 MIUI 录屏后复听确认（见 `audio-diagnosis.txt`）。
