@@ -1,0 +1,34 @@
+✖ database migrations persist, enforce status, tags and foreign keys (0.734042ms)
+✖ health stays available without recognition keys and exposes no local paths (0.105167ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 0
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 43.1725
+
+✖ failing tests:
+
+test at tests/foundation.test.mjs:9:1
+✖ database migrations persist, enforce status, tags and foreign keys (0.734042ms)
+  Error: 数据库迁移尚未实现
+      at openDatabase (file:///Users/zzymima0000/Developer/coding/1.Active/040-ing-%E6%89%8D%E8%89%BA%E5%B1%95%E7%A4%BA%E5%8E%85/server/db/database.mjs:1:40)
+      at TestContext.<anonymous> (file:///Users/zzymima0000/Developer/coding/1.Active/040-ing-%E6%89%8D%E8%89%BA%E5%B1%95%E7%A4%BA%E5%8E%85/tests/foundation.test.mjs:12:14)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.start (node:internal/test_runner/test:1242:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17)
+
+test at tests/foundation.test.mjs:24:1
+✖ health stays available without recognition keys and exposes no local paths (0.105167ms)
+  Error: API 尚未实现
+      at createApiServer (file:///Users/zzymima0000/Developer/coding/1.Active/040-ing-%E6%89%8D%E8%89%BA%E5%B1%95%E7%A4%BA%E5%8E%85/server/index.mjs:1:43)
+      at TestContext.<anonymous> (file:///Users/zzymima0000/Developer/coding/1.Active/040-ing-%E6%89%8D%E8%89%BA%E5%B1%95%E7%A4%BA%E5%8E%85/tests/foundation.test.mjs:25:18)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3)

@@ -1,0 +1,44 @@
+
+> personal-dance-library@0.1.0 test
+> vitest run tests/unit/device-settings.test.ts
+
+
+ RUN  v4.1.11 /Users/zzymima0000/Developer/coding/1.Active/040-ing-才艺展示厅
+
+ ❯ tests/unit/device-settings.test.ts (2 tests | 2 failed) 4ms
+   × 服务器地址只接受私有网络，开发回环必须显式允许 3ms
+   × 主题持久化且非法数据安全回退 0ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/unit/device-settings.test.ts > 服务器地址只接受私有网络，开发回环必须显式允许
+Error: 尚未实现
+ ❯ validateEndpoint src/lib/device-settings.ts:2:85
+      1| import type { DeviceSettings } from './types';
+      2| export function validateEndpoint(_input:string,_allowLoopback=false):s…
+       |                                                                                     ^
+      3| export function readDeviceSettings():DeviceSettings { throw new Error(…
+      4| export function saveDeviceSettings(_settings:DeviceSettings):void { th…
+ ❯ tests/unit/device-settings.test.ts:4:10
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  tests/unit/device-settings.test.ts > 主题持久化且非法数据安全回退
+Error: 尚未实现
+ ❯ readDeviceSettings src/lib/device-settings.ts:3:61
+      1| import type { DeviceSettings } from './types';
+      2| export function validateEndpoint(_input:string,_allowLoopback=false):s…
+      3| export function readDeviceSettings():DeviceSettings { throw new Error(…
+       |                                                             ^
+      4| export function saveDeviceSettings(_settings:DeviceSettings):void { th…
+      5|
+ ❯ tests/unit/device-settings.test.ts:13:10
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  2 failed (2)
+   Start at  16:19:25
+   Duration  426ms (transform 19ms, setup 95ms, import 7ms, tests 4ms, environment 248ms)
+

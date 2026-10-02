@@ -1,0 +1,1 @@
+{"task": "给管理后台加一个普通列表页，走脚手架生成", "expected": "GENERAL_AGENT", "expected_excluded_ids": ["volc-coding__deepseek-flash__high"]}

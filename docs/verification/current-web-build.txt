@@ -1,0 +1,13 @@
+
+> personal-dance-library@0.1.0 build
+> tsc -b && vite build
+
+vite v7.3.6 building client environment for production...
+transforming...
+✓ 57 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                   0.49 kB │ gzip:  0.33 kB
+dist/assets/index-C-bpiHE5.css    6.65 kB │ gzip:  2.01 kB
+dist/assets/index-CYtSrEVj.js   280.22 kB │ gzip: 89.12 kB
+✓ built in 498ms

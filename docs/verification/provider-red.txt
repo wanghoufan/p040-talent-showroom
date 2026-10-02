@@ -1,0 +1,21 @@
+✖ recognition off, exception, timeout and invalid candidates preserve import fallback (0.335583ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 38.691792
+
+✖ failing tests:
+
+test at tests/provider.test.mjs:4:1
+✖ recognition off, exception, timeout and invalid candidates preserve import fallback (0.335583ms)
+  Error: 尚未实现
+      at recognizeSafely (file:///Users/zzymima0000/Developer/coding/1.Active/040-ing-%E6%89%8D%E8%89%BA%E5%B1%95%E7%A4%BA%E5%8E%85/server/recognition/provider.mjs:1:49)
+      at TestContext.<anonymous> (file:///Users/zzymima0000/Developer/coding/1.Active/040-ing-%E6%89%8D%E8%89%BA%E5%B1%95%E7%A4%BA%E5%8E%85/tests/provider.test.mjs:5:26)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.start (node:internal/test_runner/test:1242:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17)

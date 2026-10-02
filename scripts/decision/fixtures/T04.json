@@ -1,0 +1,1 @@
+{"task": "登录回归", "failure": "3个用例失败", "evidence": "实现符合已批准Requirement，测试用例引用旧需求字段", "test_result": "FAIL", "files": "tests/login", "phase": "DEVELOP", "expected": "QA"}

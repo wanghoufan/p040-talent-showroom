@@ -1,0 +1,1 @@
+{"task": "x", "runner": "opencode", "note": "task-claimed runner must be ignored -> RUNNER_UNKNOWN without env"}

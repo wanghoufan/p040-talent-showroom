@@ -1,0 +1,1 @@
+{"change_request": "只调整首页字体、间距、圆角", "project_phase": "DEVELOP", "dev_baseline": "PRODUCT_PLAN_V1.0", "requirement_dod": "首页视觉样式", "affected_modules": ["homepage"], "schema_changed": false, "arch_changed": false, "core_flow_changed": false, "perm_changed": false, "expected": "A"}

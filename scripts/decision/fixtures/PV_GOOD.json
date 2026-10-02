@@ -1,0 +1,1 @@
+{"plan_id":"PLAN_GOOD","children":[{"child_id":"A","allowed_paths":["src/api/profile/"],"forbidden_paths":["src/ui/"],"dependencies":[]},{"child_id":"B","allowed_paths":["src/ui/profile/"],"forbidden_paths":["src/api/"],"dependencies":[]}]}

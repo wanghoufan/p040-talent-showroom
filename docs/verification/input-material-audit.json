@@ -1,0 +1,1282 @@
+{
+  "assets": [
+    {
+      "file": "assets/app-icon-master.png",
+      "width": 1024,
+      "height": 1024,
+      "sha256": "c7b88a64ea05455b5ffd1d0c7c0be037cd97dca4f2906ab4eaf9decf7c584bed"
+    },
+    {
+      "file": "assets/splash-dark.png",
+      "width": 2732,
+      "height": 2732,
+      "sha256": "67d717ca37bea081fd0b324081e271ef39e4602bfb321cd43ed21055c1cd507d"
+    },
+    {
+      "file": "assets/splash.png",
+      "width": 2732,
+      "height": 2732,
+      "sha256": "4e8bbb8ca1159872a928d6233c3c77f19bc37f95733d4ad8a60cde6a1773eef2"
+    },
+    {
+      "file": "reference/ui/launch-screen-preview-dark.png",
+      "width": 1080,
+      "height": 2400,
+      "sha256": "49dd892484e3d577d25164396eb54d7bfefc763a4caf49c6a146ae209e4cd3de"
+    },
+    {
+      "file": "reference/ui/prototype-dark-approved.png",
+      "width": 1672,
+      "height": 941,
+      "sha256": "80f11db7cabe314d0b33c29734c3b22700d5bc09276041f34695c11fa8c2aec3"
+    },
+    {
+      "file": "reference/ui/prototype-light-approved.png",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "e1f791ba103a4715a842bb478c8930c0fb39e8b701607d2e9c64b3edb2448a27"
+    }
+  ],
+  "media": [
+    {
+      "file": "按作品分割/Big_Guy.mp4",
+      "size": 8403735,
+      "probeExit": 0,
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "h264",
+            "codec_type": "video"
+          },
+          {
+            "codec_name": "aac",
+            "codec_type": "audio"
+          }
+        ],
+        "format": {
+          "duration": "16.000000"
+        }
+      }
+    },
+    {
+      "file": "按作品分割/Levitating.mp4",
+      "size": 10359753,
+      "probeExit": 0,
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "h264",
+            "codec_type": "video"
+          },
+          {
+            "codec_name": "aac",
+            "codec_type": "audio"
+          }
+        ],
+        "format": {
+          "duration": "14.466667"
+        }
+      }
+    },
+    {
+      "file": "按作品分割/不再犹豫dj.mp4",
+      "size": 10709161,
+      "probeExit": 0,
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "h264",
+            "codec_type": "video"
+          },
+          {
+            "codec_name": "aac",
+            "codec_type": "audio"
+          }
+        ],
+        "format": {
+          "duration": "15.333333"
+        }
+      }
+    },
+    {
+      "file": "按作品分割/不要在我寂寞时说爱我.mp4",
+      "size": 11554836,
+      "probeExit": 0,
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "h264",
+            "codec_type": "video"
+          },
+          {
+            "codec_name": "aac",
+            "codec_type": "audio"
+          }
+        ],
+        "format": {
+          "duration": "15.700000"
+        }
+      }
+    },
+    {
+      "file": "按作品分割/你最近还好吗.mp4",
+      "size": 9350917,
+      "probeExit": 0,
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "h264",
+            "codec_type": "video"
+          },
+          {
+            "codec_name": "aac",
+            "codec_type": "audio"
+          }
+        ],
+        "format": {
+          "duration": "17.233333"
+        }
+      }
+    },
+    {
+      "file": "按作品分割/你的好坏我照单全收.mp4",
+      "size": 7292155,
+      "probeExit": 0,
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "h264",
+            "codec_type": "video"
+          },
+          {
+            "codec_name": "aac",
+            "codec_type": "audio"
+          }
+        ],
+        "format": {
+          "duration": "12.900000"
+        }
+      }
+    },
+    {
+      "file": "按作品分割/刀马刀马.mp4",
+      "size": 6008248,
+      "probeExit": 0,
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "h264",
+            "codec_type": "video"
+          },
+          {
+            "codec_name": "aac",
+            "codec_type": "audio"
+          }
+        ],
+        "format": {
+          "duration": "13.966667"
+        }
+      }
+    },
+    {
+      "file": "按作品分割/复仇摇.mp4",
+      "size": 9214931,
+      "probeExit": 0,
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "h264",
+            "codec_type": "video"
+          },
+          {
+            "codec_name": "aac",
+            "codec_type": "audio"
+          }
+        ],
+        "format": {
+          "duration": "14.733333"
+        }
+      }
+    },
+    {
+      "file": "按作品分割/奔跑.mp4",
+      "size": 16207519,
+      "probeExit": 0,
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "h264",
+            "codec_type": "video"
+          },
+          {
+            "codec_name": "aac",
+            "codec_type": "audio"
+          }
+        ],
+        "format": {
+          "duration": "20.766667"
+        }
+      }
+    },
+    {
+      "file": "按作品分割/妈妈的话.mp4",
+      "size": 16977332,
+      "probeExit": 0,
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "h264",
+            "codec_type": "video"
+          },
+          {
+            "codec_name": "aac",
+            "codec_type": "audio"
+          }
+        ],
+        "format": {
+          "duration": "28.700000"
+        }
+      }
+    },
+    {
+      "file": "按作品分割/孤单北半球.mp4",
+      "size": 18108441,
+      "probeExit": 0,
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "h264",
+            "codec_type": "video"
+          },
+          {
+            "codec_name": "aac",
+            "codec_type": "audio"
+          }
+        ],
+        "format": {
+          "duration": "22.866667"
+        }
+      }
+    },
+    {
+      "file": "按作品分割/就是爱你.mp4",
+      "size": 17226724,
+      "probeExit": 0,
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "h264",
+            "codec_type": "video"
+          },
+          {
+            "codec_name": "aac",
+            "codec_type": "audio"
+          }
+        ],
+        "format": {
+          "duration": "20.500000"
+        }
+      }
+    },
+    {
+      "file": "按作品分割/情非得已.mp4",
+      "size": 17576236,
+      "probeExit": 0,
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "h264",
+            "codec_type": "video"
+          },
+          {
+            "codec_name": "aac",
+            "codec_type": "audio"
+          }
+        ],
+        "format": {
+          "duration": "25.333333"
+        }
+      }
+    },
+    {
+      "file": "按作品分割/抽离dj版.mp4",
+      "size": 21242280,
+      "probeExit": 0,
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "h264",
+            "codec_type": "video"
+          },
+          {
+            "codec_name": "aac",
+            "codec_type": "audio"
+          }
+        ],
+        "format": {
+          "duration": "33.100000"
+        }
+      }
+    },
+    {
+      "file": "按作品分割/拨开天空的乌云.mp4",
+      "size": 9631560,
+      "probeExit": 0,
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "h264",
+            "codec_type": "video"
+          },
+          {
+            "codec_name": "aac",
+            "codec_type": "audio"
+          }
+        ],
+        "format": {
+          "duration": "17.300000"
+        }
+      }
+    },
+    {
+      "file": "按作品分割/星奇摇1.0.mp4",
+      "size": 6887691,
+      "probeExit": 0,
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "h264",
+            "codec_type": "video"
+          },
+          {
+            "codec_name": "aac",
+            "codec_type": "audio"
+          }
+        ],
+        "format": {
+          "duration": "17.766667"
+        }
+      }
+    },
+    {
+      "file": "按作品分割/星游记.mp4",
+      "size": 26448564,
+      "probeExit": 0,
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "h264",
+            "codec_type": "video"
+          },
+          {
+            "codec_name": "aac",
+            "codec_type": "audio"
+          }
+        ],
+        "format": {
+          "duration": "30.466667"
+        }
+      }
+    },
+    {
+      "file": "按作品分割/暖暖.mp4",
+      "size": 16082560,
+      "probeExit": 0,
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "h264",
+            "codec_type": "video"
+          },
+          {
+            "codec_name": "aac",
+            "codec_type": "audio"
+          }
+        ],
+        "format": {
+          "duration": "23.633333"
+        }
+      }
+    },
+    {
+      "file": "按作品分割/月半弯.mp4",
+      "size": 16103486,
+      "probeExit": 0,
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "h264",
+            "codec_type": "video"
+          },
+          {
+            "codec_name": "aac",
+            "codec_type": "audio"
+          }
+        ],
+        "format": {
+          "duration": "22.500000"
+        }
+      }
+    },
+    {
+      "file": "按作品分割/热烈.mp4",
+      "size": 15984065,
+      "probeExit": 0,
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "h264",
+            "codec_type": "video"
+          },
+          {
+            "codec_name": "aac",
+            "codec_type": "audio"
+          }
+        ],
+        "format": {
+          "duration": "32.800000"
+        }
+      }
+    },
+    {
+      "file": "按作品分割/爱.mp4",
+      "size": 11558734,
+      "probeExit": 0,
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "h264",
+            "codec_type": "video"
+          },
+          {
+            "codec_name": "aac",
+            "codec_type": "audio"
+          }
+        ],
+        "format": {
+          "duration": "17.033333"
+        }
+      }
+    },
+    {
+      "file": "按作品分割/爱情鸟.mp4",
+      "size": 14815036,
+      "probeExit": 0,
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "h264",
+            "codec_type": "video"
+          },
+          {
+            "codec_name": "aac",
+            "codec_type": "audio"
+          }
+        ],
+        "format": {
+          "duration": "24.433333"
+        }
+      }
+    },
+    {
+      "file": "按作品分割/王上摇.mp4",
+      "size": 8934997,
+      "probeExit": 0,
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "h264",
+            "codec_type": "video"
+          },
+          {
+            "codec_name": "aac",
+            "codec_type": "audio"
+          }
+        ],
+        "format": {
+          "duration": "24.633333"
+        }
+      }
+    },
+    {
+      "file": "按作品分割/第一次爱的人.mp4",
+      "size": 13713208,
+      "probeExit": 0,
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "h264",
+            "codec_type": "video"
+          },
+          {
+            "codec_name": "aac",
+            "codec_type": "audio"
+          }
+        ],
+        "format": {
+          "duration": "24.866667"
+        }
+      }
+    },
+    {
+      "file": "按作品分割/等你的回答.mp4",
+      "size": 12357830,
+      "probeExit": 0,
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "h264",
+            "codec_type": "video"
+          },
+          {
+            "codec_name": "aac",
+            "codec_type": "audio"
+          }
+        ],
+        "format": {
+          "duration": "17.466667"
+        }
+      }
+    },
+    {
+      "file": "按作品分割/红日.mp4",
+      "size": 12427227,
+      "probeExit": 0,
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "h264",
+            "codec_type": "video"
+          },
+          {
+            "codec_name": "aac",
+            "codec_type": "audio"
+          }
+        ],
+        "format": {
+          "duration": "18.400000"
+        }
+      }
+    },
+    {
+      "file": "按作品分割/胆小鬼.mp4",
+      "size": 15284821,
+      "probeExit": 0,
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "h264",
+            "codec_type": "video"
+          },
+          {
+            "codec_name": "aac",
+            "codec_type": "audio"
+          }
+        ],
+        "format": {
+          "duration": "19.866667"
+        }
+      }
+    },
+    {
+      "file": "按作品分割/跳楼机dj版.mp4",
+      "size": 6123642,
+      "probeExit": 0,
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "h264",
+            "codec_type": "video"
+          },
+          {
+            "codec_name": "aac",
+            "codec_type": "audio"
+          }
+        ],
+        "format": {
+          "duration": "17.400000"
+        }
+      }
+    },
+    {
+      "file": "按作品分割/青春修炼手册.mp4",
+      "size": 8107493,
+      "probeExit": 0,
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "h264",
+            "codec_type": "video"
+          },
+          {
+            "codec_name": "aac",
+            "codec_type": "audio"
+          }
+        ],
+        "format": {
+          "duration": "16.033333"
+        }
+      }
+    },
+    {
+      "file": "按作品分割/青苹果乐园.mp4",
+      "size": 11041617,
+      "probeExit": 0,
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "h264",
+            "codec_type": "video"
+          },
+          {
+            "codec_name": "aac",
+            "codec_type": "audio"
+          }
+        ],
+        "format": {
+          "duration": "17.566667"
+        }
+      }
+    },
+    {
+      "file": "按作品分割/鲨鱼舞郭富城版.mp4",
+      "size": 12838513,
+      "probeExit": 0,
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "h264",
+            "codec_type": "video"
+          },
+          {
+            "codec_name": "aac",
+            "codec_type": "audio"
+          }
+        ],
+        "format": {
+          "duration": "19.466667"
+        }
+      }
+    },
+    {
+      "file": "按作品分割_MP3/Big_Guy.mp3",
+      "size": 186370,
+      "probeExit": 0,
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "codec_type": "audio"
+          }
+        ],
+        "format": {
+          "duration": "15.998549"
+        }
+      }
+    },
+    {
+      "file": "按作品分割_MP3/Levitating.mp3",
+      "size": 164737,
+      "probeExit": 0,
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "codec_type": "audio"
+          }
+        ],
+        "format": {
+          "duration": "14.442812"
+        }
+      }
+    },
+    {
+      "file": "按作品分割_MP3/不再犹豫dj.mp3",
+      "size": 182824,
+      "probeExit": 0,
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "codec_type": "audio"
+          }
+        ],
+        "format": {
+          "duration": "15.325170"
+        }
+      }
+    },
+    {
+      "file": "按作品分割_MP3/不要在我寂寞时说爱我.mp3",
+      "size": 181944,
+      "probeExit": 0,
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "codec_type": "audio"
+          }
+        ],
+        "format": {
+          "duration": "15.696689"
+        }
+      }
+    },
+    {
+      "file": "按作品分割_MP3/你最近还好吗.mp3",
+      "size": 194352,
+      "probeExit": 0,
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "codec_type": "audio"
+          }
+        ],
+        "format": {
+          "duration": "17.252426"
+        }
+      }
+    },
+    {
+      "file": "按作品分割_MP3/你的好坏我照单全收.mp3",
+      "size": 152363,
+      "probeExit": 0,
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "codec_type": "audio"
+          }
+        ],
+        "format": {
+          "duration": "12.887075"
+        }
+      }
+    },
+    {
+      "file": "按作品分割_MP3/刀马刀马.mp3",
+      "size": 162841,
+      "probeExit": 0,
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "codec_type": "audio"
+          }
+        ],
+        "format": {
+          "duration": "13.955193"
+        }
+      }
+    },
+    {
+      "file": "按作品分割_MP3/复仇摇.mp3",
+      "size": 165203,
+      "probeExit": 0,
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "codec_type": "audio"
+          }
+        ],
+        "format": {
+          "duration": "14.744671"
+        }
+      }
+    },
+    {
+      "file": "按作品分割_MP3/奔跑.mp3",
+      "size": 241996,
+      "probeExit": 0,
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "codec_type": "audio"
+          }
+        ],
+        "format": {
+          "duration": "20.781859"
+        }
+      }
+    },
+    {
+      "file": "按作品分割_MP3/妈妈的话.mp3",
+      "size": 337299,
+      "probeExit": 0,
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "codec_type": "audio"
+          }
+        ],
+        "format": {
+          "duration": "28.699864"
+        }
+      }
+    },
+    {
+      "file": "按作品分割_MP3/孤单北半球.mp3",
+      "size": 267144,
+      "probeExit": 0,
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "codec_type": "audio"
+          }
+        ],
+        "format": {
+          "duration": "22.848435"
+        }
+      }
+    },
+    {
+      "file": "按作品分割_MP3/就是爱你.mp3",
+      "size": 245473,
+      "probeExit": 0,
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "codec_type": "audio"
+          }
+        ],
+        "format": {
+          "duration": "20.503220"
+        }
+      }
+    },
+    {
+      "file": "按作品分割_MP3/情非得已.mp3",
+      "size": 296817,
+      "probeExit": 0,
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "codec_type": "audio"
+          }
+        ],
+        "format": {
+          "duration": "25.332971"
+        }
+      }
+    },
+    {
+      "file": "按作品分割_MP3/抽离dj版.mp3",
+      "size": 383453,
+      "probeExit": 0,
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "codec_type": "audio"
+          }
+        ],
+        "format": {
+          "duration": "33.088435"
+        }
+      }
+    },
+    {
+      "file": "按作品分割_MP3/拨开天空的乌云.mp3",
+      "size": 206827,
+      "probeExit": 0,
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "codec_type": "audio"
+          }
+        ],
+        "format": {
+          "duration": "17.275646"
+        }
+      }
+    },
+    {
+      "file": "按作品分割_MP3/星奇摇1.0.mp3",
+      "size": 192226,
+      "probeExit": 0,
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "codec_type": "audio"
+          }
+        ],
+        "format": {
+          "duration": "17.786485"
+        }
+      }
+    },
+    {
+      "file": "按作品分割_MP3/星游记.mp3",
+      "size": 356512,
+      "probeExit": 0,
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "codec_type": "audio"
+          }
+        ],
+        "format": {
+          "duration": "30.464580"
+        }
+      }
+    },
+    {
+      "file": "按作品分割_MP3/暖暖.mp3",
+      "size": 275128,
+      "probeExit": 0,
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "codec_type": "audio"
+          }
+        ],
+        "format": {
+          "duration": "23.637914"
+        }
+      }
+    },
+    {
+      "file": "按作品分割_MP3/月半弯.mp3",
+      "size": 264688,
+      "probeExit": 0,
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "codec_type": "audio"
+          }
+        ],
+        "format": {
+          "duration": "22.500136"
+        }
+      }
+    },
+    {
+      "file": "按作品分割_MP3/热烈.mp3",
+      "size": 371991,
+      "probeExit": 0,
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "codec_type": "audio"
+          }
+        ],
+        "format": {
+          "duration": "32.786576"
+        }
+      }
+    },
+    {
+      "file": "按作品分割_MP3/爱.mp3",
+      "size": 197812,
+      "probeExit": 0,
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "codec_type": "audio"
+          }
+        ],
+        "format": {
+          "duration": "17.020227"
+        }
+      }
+    },
+    {
+      "file": "按作品分割_MP3/爱情鸟.mp3",
+      "size": 286176,
+      "probeExit": 0,
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "codec_type": "audio"
+          }
+        ],
+        "format": {
+          "duration": "24.450612"
+        }
+      }
+    },
+    {
+      "file": "按作品分割_MP3/王上摇.mp3",
+      "size": 305270,
+      "probeExit": 0,
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "codec_type": "audio"
+          }
+        ],
+        "format": {
+          "duration": "24.636372"
+        }
+      }
+    },
+    {
+      "file": "按作品分割_MP3/第一次爱的人.mp3",
+      "size": 285827,
+      "probeExit": 0,
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "codec_type": "audio"
+          }
+        ],
+        "format": {
+          "duration": "24.845351"
+        }
+      }
+    },
+    {
+      "file": "按作品分割_MP3/等你的回答.mp3",
+      "size": 204729,
+      "probeExit": 0,
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "codec_type": "audio"
+          }
+        ],
+        "format": {
+          "duration": "17.461406"
+        }
+      }
+    },
+    {
+      "file": "按作品分割_MP3/红日.mp3",
+      "size": 218501,
+      "probeExit": 0,
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "codec_type": "audio"
+          }
+        ],
+        "format": {
+          "duration": "18.390204"
+        }
+      }
+    },
+    {
+      "file": "按作品分割_MP3/胆小鬼.mp3",
+      "size": 222620,
+      "probeExit": 0,
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "codec_type": "audio"
+          }
+        ],
+        "format": {
+          "duration": "19.853061"
+        }
+      }
+    },
+    {
+      "file": "按作品分割_MP3/跳楼机dj版.mp3",
+      "size": 203583,
+      "probeExit": 0,
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "codec_type": "audio"
+          }
+        ],
+        "format": {
+          "duration": "17.391746"
+        }
+      }
+    },
+    {
+      "file": "按作品分割_MP3/青春修炼手册.mp3",
+      "size": 184846,
+      "probeExit": 0,
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "codec_type": "audio"
+          }
+        ],
+        "format": {
+          "duration": "16.044989"
+        }
+      }
+    },
+    {
+      "file": "按作品分割_MP3/青苹果乐园.mp3",
+      "size": 180732,
+      "probeExit": 0,
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "codec_type": "audio"
+          }
+        ],
+        "format": {
+          "duration": "17.554286"
+        }
+      }
+    },
+    {
+      "file": "按作品分割_MP3/鲨鱼舞郭富城版.mp3",
+      "size": 228733,
+      "probeExit": 0,
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "codec_type": "audio"
+          }
+        ],
+        "format": {
+          "duration": "19.481542"
+        }
+      }
+    }
+  ]
+}

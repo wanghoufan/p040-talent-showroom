@@ -1,0 +1,29 @@
+✖ empty library imports real video, disabled provider saves source, duplicate is explicit, fake MIME fails (21.11675ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 95.501375
+
+✖ failing tests:
+
+test at tests/import.test.mjs:10:1
+✖ empty library imports real video, disabled provider saves source, duplicate is explicit, fake MIME fails (21.11675ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  
+  undefined !== []
+  
+      at TestContext.<anonymous> (file:///Users/zzymima0000/Developer/coding/1.Active/040-ing-%E6%89%8D%E8%89%BA%E5%B1%95%E7%A4%BA%E5%8E%85/tests/import.test.mjs:18:12)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: [],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }

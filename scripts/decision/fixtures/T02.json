@@ -1,0 +1,1 @@
+{"change_request": "现有功能中新增一个局部设置项", "project_phase": "DEVELOP", "dev_baseline": "PRODUCT_PLAN_V1.0", "requirement_dod": "设置页局部项", "affected_modules": ["settings"], "schema_changed": false, "arch_changed": false, "core_flow_changed": false, "perm_changed": false, "expected": "B"}

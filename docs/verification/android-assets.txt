@@ -1,0 +1,107 @@
+[log] xml(load) at /Users/zzymima0000/Developer/coding/1.Active/040-ing-才艺展示厅/android/app/src/main/AndroidManifest.xml
+[log] xml(load) Found root namespaces in XML file: http://schemas.android.com/apk/res/android
+Generating assets for android
+CREATE android adaptive-icon /Users/zzymima0000/Developer/coding/1.Active/040-ing-才艺展示厅/android/app/src/main/res/mipmap-ldpi/ic_launcher_foreground.png (14.12 KB)
+CREATE android adaptive-icon /Users/zzymima0000/Developer/coding/1.Active/040-ing-才艺展示厅/android/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml
+CREATE android adaptive-icon /Users/zzymima0000/Developer/coding/1.Active/040-ing-才艺展示厅/android/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml
+CREATE android adaptive-icon /Users/zzymima0000/Developer/coding/1.Active/040-ing-才艺展示厅/android/app/src/main/res/mipmap-mdpi/ic_launcher_foreground.png (23.39 KB)
+CREATE android adaptive-icon /Users/zzymima0000/Developer/coding/1.Active/040-ing-才艺展示厅/android/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml
+CREATE android adaptive-icon /Users/zzymima0000/Developer/coding/1.Active/040-ing-才艺展示厅/android/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml
+CREATE android adaptive-icon /Users/zzymima0000/Developer/coding/1.Active/040-ing-才艺展示厅/android/app/src/main/res/mipmap-hdpi/ic_launcher_foreground.png (46.08 KB)
+CREATE android adaptive-icon /Users/zzymima0000/Developer/coding/1.Active/040-ing-才艺展示厅/android/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml
+CREATE android adaptive-icon /Users/zzymima0000/Developer/coding/1.Active/040-ing-才艺展示厅/android/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml
+CREATE android adaptive-icon /Users/zzymima0000/Developer/coding/1.Active/040-ing-才艺展示厅/android/app/src/main/res/mipmap-xhdpi/ic_launcher_foreground.png (78.07 KB)
+CREATE android adaptive-icon /Users/zzymima0000/Developer/coding/1.Active/040-ing-才艺展示厅/android/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml
+CREATE android adaptive-icon /Users/zzymima0000/Developer/coding/1.Active/040-ing-才艺展示厅/android/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml
+CREATE android adaptive-icon /Users/zzymima0000/Developer/coding/1.Active/040-ing-才艺展示厅/android/app/src/main/res/mipmap-xxhdpi/ic_launcher_foreground.png (163.49 KB)
+CREATE android adaptive-icon /Users/zzymima0000/Developer/coding/1.Active/040-ing-才艺展示厅/android/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml
+CREATE android adaptive-icon /Users/zzymima0000/Developer/coding/1.Active/040-ing-才艺展示厅/android/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml
+CREATE android adaptive-icon /Users/zzymima0000/Developer/coding/1.Active/040-ing-才艺展示厅/android/app/src/main/res/mipmap-xxxhdpi/ic_launcher_foreground.png (283.92 KB)
+CREATE android adaptive-icon /Users/zzymima0000/Developer/coding/1.Active/040-ing-才艺展示厅/android/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml
+CREATE android adaptive-icon /Users/zzymima0000/Developer/coding/1.Active/040-ing-才艺展示厅/android/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml
+CREATE android adaptive-icon /Users/zzymima0000/Developer/coding/1.Active/040-ing-才艺展示厅/android/app/src/main/res/mipmap-ldpi/ic_launcher_background.png (276 B)
+CREATE android adaptive-icon /Users/zzymima0000/Developer/coding/1.Active/040-ing-才艺展示厅/android/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml
+CREATE android adaptive-icon /Users/zzymima0000/Developer/coding/1.Active/040-ing-才艺展示厅/android/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml
+CREATE android adaptive-icon /Users/zzymima0000/Developer/coding/1.Active/040-ing-才艺展示厅/android/app/src/main/res/mipmap-mdpi/ic_launcher_background.png (350 B)
+CREATE android adaptive-icon /Users/zzymima0000/Developer/coding/1.Active/040-ing-才艺展示厅/android/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml
+CREATE android adaptive-icon /Users/zzymima0000/Developer/coding/1.Active/040-ing-才艺展示厅/android/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml
+CREATE android adaptive-icon /Users/zzymima0000/Developer/coding/1.Active/040-ing-才艺展示厅/android/app/src/main/res/mipmap-hdpi/ic_launcher_background.png (531 B)
+CREATE android adaptive-icon /Users/zzymima0000/Developer/coding/1.Active/040-ing-才艺展示厅/android/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml
+CREATE android adaptive-icon /Users/zzymima0000/Developer/coding/1.Active/040-ing-才艺展示厅/android/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml
+CREATE android adaptive-icon /Users/zzymima0000/Developer/coding/1.Active/040-ing-才艺展示厅/android/app/src/main/res/mipmap-xhdpi/ic_launcher_background.png (697 B)
+CREATE android adaptive-icon /Users/zzymima0000/Developer/coding/1.Active/040-ing-才艺展示厅/android/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml
+CREATE android adaptive-icon /Users/zzymima0000/Developer/coding/1.Active/040-ing-才艺展示厅/android/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml
+CREATE android adaptive-icon /Users/zzymima0000/Developer/coding/1.Active/040-ing-才艺展示厅/android/app/src/main/res/mipmap-xxhdpi/ic_launcher_background.png (1.02 KB)
+CREATE android adaptive-icon /Users/zzymima0000/Developer/coding/1.Active/040-ing-才艺展示厅/android/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml
+CREATE android adaptive-icon /Users/zzymima0000/Developer/coding/1.Active/040-ing-才艺展示厅/android/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml
+CREATE android adaptive-icon /Users/zzymima0000/Developer/coding/1.Active/040-ing-才艺展示厅/android/app/src/main/res/mipmap-xxxhdpi/ic_launcher_background.png (1.69 KB)
+CREATE android adaptive-icon /Users/zzymima0000/Developer/coding/1.Active/040-ing-才艺展示厅/android/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml
+CREATE android adaptive-icon /Users/zzymima0000/Developer/coding/1.Active/040-ing-才艺展示厅/android/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml
+CREATE android icon /Users/zzymima0000/Developer/coding/1.Active/040-ing-才艺展示厅/android/app/src/main/res/mipmap-ldpi/ic_launcher.png (1.38 KB)
+CREATE android icon /Users/zzymima0000/Developer/coding/1.Active/040-ing-才艺展示厅/android/app/src/main/res/mipmap-mdpi/ic_launcher.png (3.08 KB)
+CREATE android icon /Users/zzymima0000/Developer/coding/1.Active/040-ing-才艺展示厅/android/app/src/main/res/mipmap-hdpi/ic_launcher.png (8.39 KB)
+CREATE android icon /Users/zzymima0000/Developer/coding/1.Active/040-ing-才艺展示厅/android/app/src/main/res/mipmap-xhdpi/ic_launcher.png (15.76 KB)
+CREATE android icon /Users/zzymima0000/Developer/coding/1.Active/040-ing-才艺展示厅/android/app/src/main/res/mipmap-xxhdpi/ic_launcher.png (35.21 KB)
+CREATE android icon /Users/zzymima0000/Developer/coding/1.Active/040-ing-才艺展示厅/android/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png (62.06 KB)
+CREATE android icon /Users/zzymima0000/Developer/coding/1.Active/040-ing-才艺展示厅/android/app/src/main/res/mipmap-ldpi/ic_launcher_round.png (3.44 KB)
+CREATE android icon /Users/zzymima0000/Developer/coding/1.Active/040-ing-才艺展示厅/android/app/src/main/res/mipmap-mdpi/ic_launcher_round.png (5.7 KB)
+CREATE android icon /Users/zzymima0000/Developer/coding/1.Active/040-ing-才艺展示厅/android/app/src/main/res/mipmap-hdpi/ic_launcher_round.png (11.58 KB)
+CREATE android icon /Users/zzymima0000/Developer/coding/1.Active/040-ing-才艺展示厅/android/app/src/main/res/mipmap-xhdpi/ic_launcher_round.png (18.98 KB)
+CREATE android icon /Users/zzymima0000/Developer/coding/1.Active/040-ing-才艺展示厅/android/app/src/main/res/mipmap-xxhdpi/ic_launcher_round.png (37.24 KB)
+CREATE android icon /Users/zzymima0000/Developer/coding/1.Active/040-ing-才艺展示厅/android/app/src/main/res/mipmap-xxxhdpi/ic_launcher_round.png (61.55 KB)
+CREATE android splash /Users/zzymima0000/Developer/coding/1.Active/040-ing-才艺展示厅/android/app/src/main/res/drawable/splash.png (13.23 KB)
+CREATE android splash /Users/zzymima0000/Developer/coding/1.Active/040-ing-才艺展示厅/android/app/src/main/res/drawable-land-ldpi/splash.png (12.11 KB)
+CREATE android splash /Users/zzymima0000/Developer/coding/1.Active/040-ing-才艺展示厅/android/app/src/main/res/drawable-land-mdpi/splash.png (24.1 KB)
+CREATE android splash /Users/zzymima0000/Developer/coding/1.Active/040-ing-才艺展示厅/android/app/src/main/res/drawable-land-hdpi/splash.png (56.25 KB)
+CREATE android splash /Users/zzymima0000/Developer/coding/1.Active/040-ing-才艺展示厅/android/app/src/main/res/drawable-land-xhdpi/splash.png (131.72 KB)
+CREATE android splash /Users/zzymima0000/Developer/coding/1.Active/040-ing-才艺展示厅/android/app/src/main/res/drawable-land-xxhdpi/splash.png (199.42 KB)
+CREATE android splash /Users/zzymima0000/Developer/coding/1.Active/040-ing-才艺展示厅/android/app/src/main/res/drawable-land-xxxhdpi/splash.png (282.47 KB)
+CREATE android splash /Users/zzymima0000/Developer/coding/1.Active/040-ing-才艺展示厅/android/app/src/main/res/drawable-port-ldpi/splash.png (7.93 KB)
+CREATE android splash /Users/zzymima0000/Developer/coding/1.Active/040-ing-才艺展示厅/android/app/src/main/res/drawable-port-mdpi/splash.png (13.23 KB)
+CREATE android splash /Users/zzymima0000/Developer/coding/1.Active/040-ing-才艺展示厅/android/app/src/main/res/drawable-port-hdpi/splash.png (26.92 KB)
+CREATE android splash /Users/zzymima0000/Developer/coding/1.Active/040-ing-才艺展示厅/android/app/src/main/res/drawable-port-xhdpi/splash.png (52.65 KB)
+CREATE android splash /Users/zzymima0000/Developer/coding/1.Active/040-ing-才艺展示厅/android/app/src/main/res/drawable-port-xxhdpi/splash.png (85.23 KB)
+CREATE android splash /Users/zzymima0000/Developer/coding/1.Active/040-ing-才艺展示厅/android/app/src/main/res/drawable-port-xxxhdpi/splash.png (138.82 KB)
+CREATE android splash-dark /Users/zzymima0000/Developer/coding/1.Active/040-ing-才艺展示厅/android/app/src/main/res/drawable-night/splash.png (13.11 KB)
+CREATE android splash-dark /Users/zzymima0000/Developer/coding/1.Active/040-ing-才艺展示厅/android/app/src/main/res/drawable-land-night-ldpi/splash.png (13.11 KB)
+CREATE android splash-dark /Users/zzymima0000/Developer/coding/1.Active/040-ing-才艺展示厅/android/app/src/main/res/drawable-land-night-mdpi/splash.png (26.64 KB)
+CREATE android splash-dark /Users/zzymima0000/Developer/coding/1.Active/040-ing-才艺展示厅/android/app/src/main/res/drawable-land-night-hdpi/splash.png (62.4 KB)
+CREATE android splash-dark /Users/zzymima0000/Developer/coding/1.Active/040-ing-才艺展示厅/android/app/src/main/res/drawable-land-night-xhdpi/splash.png (145.8 KB)
+CREATE android splash-dark /Users/zzymima0000/Developer/coding/1.Active/040-ing-才艺展示厅/android/app/src/main/res/drawable-land-night-xxhdpi/splash.png (222.33 KB)
+CREATE android splash-dark /Users/zzymima0000/Developer/coding/1.Active/040-ing-才艺展示厅/android/app/src/main/res/drawable-land-night-xxxhdpi/splash.png (318.53 KB)
+CREATE android splash-dark /Users/zzymima0000/Developer/coding/1.Active/040-ing-才艺展示厅/android/app/src/main/res/drawable-port-night-ldpi/splash.png (9.09 KB)
+CREATE android splash-dark /Users/zzymima0000/Developer/coding/1.Active/040-ing-才艺展示厅/android/app/src/main/res/drawable-port-night-mdpi/splash.png (15.41 KB)
+CREATE android splash-dark /Users/zzymima0000/Developer/coding/1.Active/040-ing-才艺展示厅/android/app/src/main/res/drawable-port-night-hdpi/splash.png (33.73 KB)
+CREATE android splash-dark /Users/zzymima0000/Developer/coding/1.Active/040-ing-才艺展示厅/android/app/src/main/res/drawable-port-night-xhdpi/splash.png (68.23 KB)
+CREATE android splash-dark /Users/zzymima0000/Developer/coding/1.Active/040-ing-才艺展示厅/android/app/src/main/res/drawable-port-night-xxhdpi/splash.png (108.67 KB)
+CREATE android splash-dark /Users/zzymima0000/Developer/coding/1.Active/040-ing-才艺展示厅/android/app/src/main/res/drawable-port-night-xxxhdpi/splash.png (176.51 KB)
+CREATE android splash /Users/zzymima0000/Developer/coding/1.Active/040-ing-才艺展示厅/android/app/src/main/res/drawable/splash.png (54.21 KB)
+CREATE android splash /Users/zzymima0000/Developer/coding/1.Active/040-ing-才艺展示厅/android/app/src/main/res/drawable-land-ldpi/splash.png (28.81 KB)
+CREATE android splash /Users/zzymima0000/Developer/coding/1.Active/040-ing-才艺展示厅/android/app/src/main/res/drawable-land-mdpi/splash.png (54.34 KB)
+CREATE android splash /Users/zzymima0000/Developer/coding/1.Active/040-ing-才艺展示厅/android/app/src/main/res/drawable-land-hdpi/splash.png (121.54 KB)
+CREATE android splash /Users/zzymima0000/Developer/coding/1.Active/040-ing-才艺展示厅/android/app/src/main/res/drawable-land-xhdpi/splash.png (271.64 KB)
+CREATE android splash /Users/zzymima0000/Developer/coding/1.Active/040-ing-才艺展示厅/android/app/src/main/res/drawable-land-xxhdpi/splash.png (425.48 KB)
+CREATE android splash /Users/zzymima0000/Developer/coding/1.Active/040-ing-才艺展示厅/android/app/src/main/res/drawable-land-xxxhdpi/splash.png (607.96 KB)
+CREATE android splash /Users/zzymima0000/Developer/coding/1.Active/040-ing-才艺展示厅/android/app/src/main/res/drawable-port-ldpi/splash.png (28.97 KB)
+CREATE android splash /Users/zzymima0000/Developer/coding/1.Active/040-ing-才艺展示厅/android/app/src/main/res/drawable-port-mdpi/splash.png (54.21 KB)
+CREATE android splash /Users/zzymima0000/Developer/coding/1.Active/040-ing-才艺展示厅/android/app/src/main/res/drawable-port-hdpi/splash.png (119.43 KB)
+CREATE android splash /Users/zzymima0000/Developer/coding/1.Active/040-ing-才艺展示厅/android/app/src/main/res/drawable-port-xhdpi/splash.png (264.56 KB)
+CREATE android splash /Users/zzymima0000/Developer/coding/1.Active/040-ing-才艺展示厅/android/app/src/main/res/drawable-port-xxhdpi/splash.png (407.93 KB)
+CREATE android splash /Users/zzymima0000/Developer/coding/1.Active/040-ing-才艺展示厅/android/app/src/main/res/drawable-port-xxxhdpi/splash.png (585.38 KB)
+CREATE android splash-dark /Users/zzymima0000/Developer/coding/1.Active/040-ing-才艺展示厅/android/app/src/main/res/drawable-night/splash.png (27.47 KB)
+CREATE android splash-dark /Users/zzymima0000/Developer/coding/1.Active/040-ing-才艺展示厅/android/app/src/main/res/drawable-land-night-ldpi/splash.png (27.47 KB)
+CREATE android splash-dark /Users/zzymima0000/Developer/coding/1.Active/040-ing-才艺展示厅/android/app/src/main/res/drawable-land-night-mdpi/splash.png (52.4 KB)
+CREATE android splash-dark /Users/zzymima0000/Developer/coding/1.Active/040-ing-才艺展示厅/android/app/src/main/res/drawable-land-night-hdpi/splash.png (118.76 KB)
+CREATE android splash-dark /Users/zzymima0000/Developer/coding/1.Active/040-ing-才艺展示厅/android/app/src/main/res/drawable-land-night-xhdpi/splash.png (268.32 KB)
+CREATE android splash-dark /Users/zzymima0000/Developer/coding/1.Active/040-ing-才艺展示厅/android/app/src/main/res/drawable-land-night-xxhdpi/splash.png (419.89 KB)
+CREATE android splash-dark /Users/zzymima0000/Developer/coding/1.Active/040-ing-才艺展示厅/android/app/src/main/res/drawable-land-night-xxxhdpi/splash.png (598.49 KB)
+CREATE android splash-dark /Users/zzymima0000/Developer/coding/1.Active/040-ing-才艺展示厅/android/app/src/main/res/drawable-port-night-ldpi/splash.png (27.61 KB)
+CREATE android splash-dark /Users/zzymima0000/Developer/coding/1.Active/040-ing-才艺展示厅/android/app/src/main/res/drawable-port-night-mdpi/splash.png (52.34 KB)
+CREATE android splash-dark /Users/zzymima0000/Developer/coding/1.Active/040-ing-才艺展示厅/android/app/src/main/res/drawable-port-night-hdpi/splash.png (116.63 KB)
+CREATE android splash-dark /Users/zzymima0000/Developer/coding/1.Active/040-ing-才艺展示厅/android/app/src/main/res/drawable-port-night-xhdpi/splash.png (261.57 KB)
+CREATE android splash-dark /Users/zzymima0000/Developer/coding/1.Active/040-ing-才艺展示厅/android/app/src/main/res/drawable-port-night-xxhdpi/splash.png (403.3 KB)
+CREATE android splash-dark /Users/zzymima0000/Developer/coding/1.Active/040-ing-才艺展示厅/android/app/src/main/res/drawable-port-night-xxxhdpi/splash.png (576.5 KB)
+
+
+Totals:
+android: 100 generated, 8.9 MB total

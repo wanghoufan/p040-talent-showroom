@@ -1,0 +1,53 @@
+# 重装 debug APK 复验证据（2026-10-02 恢复后）
+
+## 设备能力预检（固定真机 note11tpro）
+
+```
+$ adb devices -l
+indq5xfi6hovay4d       device usb:... model:22101316C device:ruby   (Note12 Pro — 禁用，不替代)
+192.168.31.63:5555     device product:xagapro model:22041216UC device:xagapro  <- 固定真机
+```
+
+- 目标设备：`192.168.31.63:5555`，marketname `Redmi Note 11T Pro+`，model `22041216UC`，device `xagapro`。
+- 所有动作均带 `-s 192.168.31.63:5555`；未使用另一台 USB Note12 Pro。
+- 本机只有网络 ADB，无 USB 连接本机（T015 的 USB live-reload 不在此记 PASS）。
+
+## 服务与端口（实时，非假定旧 session）
+
+```
+$ lsof -nP -iTCP:5173 -sTCP:LISTEN   -> node PID 93745  127.0.0.1:5173 (Vite)
+$ lsof -nP -iTCP:8791 -sTCP:LISTEN   -> node PID 67419  127.0.0.1:8791 (API, --watch)
+$ curl -s http://127.0.0.1:8791/api/health -> {"ok":true,"recognition":"disabled"}
+$ adb -s 192.168.31.63:5555 reverse --list
+host-12 tcp:5173 tcp:5173
+host-12 tcp:8791 tcp:8791
+```
+
+## 安装与进程
+
+```
+$ adb -s 192.168.31.63:5555 shell pm path com.wanghoufan.dancelibrary.dev
+package:/data/app/~~flJNMv_gSBX026L_PcsH9g==/com.wanghoufan.dancelibrary.dev-yAenvzgTnmTVPylYF6OHUQ==/base.apk
+$ adb -s 192.168.31.63:5555 shell pidof com.wanghoufan.dancelibrary.dev
+31468
+$ adb -s 192.168.31.63:5555 shell cat /proc/net/unix | grep webview
+... @webview_devtools_remote_31468
+```
+
+- 重装时 9225 转发的旧 socket 已陈旧（指向 PID 30649）；已重建：
+  `adb forward --remove tcp:9225 && adb forward tcp:9225 localabstract:webview_devtools_remote_31468`。
+
+## 页面 / 曲库 / 播放复验（CDP 实测，非命令成功替代）
+
+- 页面：`document.title === "舞蹈曲库"`，`location.href === http://127.0.0.1:5173/`。
+- 曲库：页面文本含 31 个卡片标题；`GET /api/catalog` 返回 `total=31, catalogVersion=32`，状态「想学 31」。
+- 播放：`scripts/android-cdp.mjs tap .quick-play` 后
+  `audio.paused=false, currentTime 1.43s -> 3.79s, duration 19.46s, readyState=4, error=null`，
+  音频源 `http://127.0.0.1:5173/api/media/audio/923134c6-...`（Vite 代理到 8791）。
+- 截图：`docs/verification/screens/reinstall-verify-01.png`（曲库）、`reinstall-verify-02-playing.png`（播放中）。
+
+## 结论
+
+- HTTP cleartext 修复后，最终页面、31 条曲库、一键播放三项均真机复验通过。
+- 当前 APK 为依赖 Mac Vite/API + ADB reverse 的 live 预览版，**不是完整离线交付**；离线交付在 T058–T064 完成后再评。
+- 若后续重建 APK，大小/签名需重测（本轮未重建）。

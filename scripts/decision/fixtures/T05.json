@@ -1,0 +1,1 @@
+{"task": "分享链路", "failure": "无法确定预期行为", "evidence": "Requirement根本没有定义该场景，开发与测试都无法判定", "test_result": "BLOCKED", "files": "docs/pm", "phase": "PLAN", "expected": "PLANNER"}

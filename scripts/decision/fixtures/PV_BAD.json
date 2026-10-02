@@ -1,0 +1,1 @@
+{"plan_id":"PLAN_BAD","children":[{"child_id":"A","allowed_paths":["src/api/","package-lock.json"],"forbidden_paths":[],"dependencies":[]},{"child_id":"B","allowed_paths":["src/api/profile/"],"forbidden_paths":[],"dependencies":[]}]}

@@ -1,0 +1,1 @@
+{"issue": "核心权限判断失效，未授权用户可访问受保护数据", "impact": "全站鉴权", "core_sm": false, "perm": true, "data_loss": false, "arch": false, "blocking": true, "evidence": "越权复现", "expected": true}

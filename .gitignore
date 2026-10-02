@@ -37,6 +37,11 @@ secrets.*
 *.sqlite
 *.sqlite3
 *.db
+var/
+temp/
+导入素材/
+按作品分割_MP3/
+android/local.properties
 .tmp/
 .cache_busting/
 

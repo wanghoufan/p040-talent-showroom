@@ -1,0 +1,52 @@
+openapi: 3.1.0
+info:
+  title: Personal Dance Library Local API
+  version: 1.1.0
+servers:
+  - url: http://127.0.0.1:8791
+paths:
+  /api/health:
+    get:
+      responses:
+        '200': {description: OK}
+  /api/catalog:
+    get:
+      responses:
+        '200': {description: Catalog snapshot}
+  /api/imports/file:
+    post:
+      description: Stream upload a user-provided video/audio and create ImportJob.
+      responses:
+        '202': {description: Import accepted}
+  /api/imports/link:
+    post:
+      description: Submit only a registered SourceAdapter link; never generic fetch.
+      responses:
+        '202': {description: Import accepted or NEEDS_INPUT}
+  /api/imports/{id}:
+    get:
+      parameters: [{name: id, in: path, required: true, schema: {type: string}}]
+      responses:
+        '200': {description: Import status}
+  /api/imports/{id}/finalize:
+    post:
+      parameters: [{name: id, in: path, required: true, schema: {type: string}}]
+      responses:
+        '201': {description: DanceItem created}
+  /api/dances/{id}:
+    get: {responses: {'200': {description: Dance item}}}
+    patch: {responses: {'200': {description: Updated}}}
+    delete: {responses: {'204': {description: Removed}}}
+  /api/media/audio/{clipId}:
+    get: {responses: {'200': {description: Full audio}, '206': {description: Range response}}}
+    head: {responses: {'200': {description: Headers}}}
+  /api/media/reference/{sourceId}:
+    get: {responses: {'200': {description: Full video}, '206': {description: Range response}}}
+    head: {responses: {'200': {description: Headers}}}
+  /api/media/cover/{assetId}:
+    get: {responses: {'200': {description: Cover asset}}}
+  /api/playlists/tonight:
+    get: {responses: {'200': {description: Ordered playlist}}}
+    put: {responses: {'200': {description: Replaced ordered playlist}}}
+  /api/sync/manifest:
+    get: {responses: {'200': {description: Version/hash/size manifest}}}

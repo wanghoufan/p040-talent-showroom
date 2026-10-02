@@ -1,0 +1,631 @@
+{
+ "version": 6,
+ "generated_at": "2026-09-22T14:50:01",
+ "generated_by": "scripts/decision/build-index.mjs",
+ "sources": {
+  "opencode": "~/.config/opencode/skills",
+  "codebuddy": "~/.codebuddy/skills",
+  "central": "~/.agents/skills",
+  "claude": "~/.claude/skills",
+  "codex": "~/.codex/skills",
+  "cursor": "~/.cursor/skills",
+  "trae": "~/.trae-cn/skills",
+  "devin": "~/.config/devin/skills",
+  "crush": "~/.config/crush/skills",
+  "goose": "~/.config/goose/skills"
+ },
+ "scanned": {
+  "opencode": 25,
+  "codebuddy": 24,
+  "central": 1,
+  "claude": 24,
+  "codex": 25,
+  "cursor": 24,
+  "trae": 26,
+  "devin": 4,
+  "crush": 4,
+  "goose": 4
+ },
+ "skills": {
+  "ai-coding-homework-writeup": {
+   "id": "ai-coding-homework-writeup",
+   "paths": {
+    "opencode": "~/.config/opencode/skills/ai-coding-homework-writeup",
+    "codebuddy": "~/.codebuddy/skills/ai-coding-homework-writeup",
+    "claude": "~/.claude/skills/ai-coding-homework-writeup",
+    "codex": "~/.codex/skills/ai-coding-homework-writeup",
+    "cursor": "~/.cursor/skills/ai-coding-homework-writeup",
+    "trae": "~/.trae-cn/skills/ai-coding-homework-writeup"
+   },
+   "broken": [],
+   "agents": [
+    "opencode",
+    "codebuddy",
+    "claude",
+    "codex",
+    "cursor",
+    "trae"
+   ]
+  },
+  "batch-organize": {
+   "id": "batch-organize",
+   "paths": {
+    "opencode": "~/.config/opencode/skills/batch-organize",
+    "codebuddy": "~/.codebuddy/skills/batch-organize",
+    "claude": "~/.claude/skills/batch-organize",
+    "codex": "~/.codex/skills/batch-organize",
+    "cursor": "~/.cursor/skills/batch-organize",
+    "trae": "~/.trae-cn/skills/batch-organize"
+   },
+   "broken": [],
+   "agents": [
+    "opencode",
+    "codebuddy",
+    "claude",
+    "codex",
+    "cursor",
+    "trae"
+   ]
+  },
+  "browseros-neo": {
+   "id": "browseros-neo",
+   "paths": {
+    "opencode": "~/.config/opencode/skills/browseros-neo",
+    "central": "~/.agents/skills/browseros-neo",
+    "claude": "~/.claude/skills/browseros-neo",
+    "cursor": "~/.cursor/skills/browseros-neo"
+   },
+   "broken": [],
+   "agents": [
+    "opencode",
+    "central",
+    "claude",
+    "cursor"
+   ]
+  },
+  "coding-workspace-organizer": {
+   "id": "coding-workspace-organizer",
+   "paths": {
+    "opencode": "~/.config/opencode/skills/coding-workspace-organizer",
+    "codebuddy": "~/.codebuddy/skills/coding-workspace-organizer",
+    "claude": "~/.claude/skills/coding-workspace-organizer",
+    "codex": "~/.codex/skills/coding-workspace-organizer",
+    "cursor": "~/.cursor/skills/coding-workspace-organizer",
+    "trae": "~/.trae-cn/skills/coding-workspace-organizer"
+   },
+   "broken": [],
+   "agents": [
+    "opencode",
+    "codebuddy",
+    "claude",
+    "codex",
+    "cursor",
+    "trae"
+   ]
+  },
+  "computer-use": {
+   "id": "computer-use",
+   "paths": {
+    "opencode": "~/.config/opencode/skills/computer-use",
+    "codebuddy": "~/.codebuddy/skills/computer-use",
+    "claude": "~/.claude/skills/computer-use",
+    "codex": "~/.codex/skills/computer-use",
+    "cursor": "~/.cursor/skills/computer-use",
+    "trae": "~/.trae-cn/skills/computer-use",
+    "devin": "~/.config/devin/skills/computer-use",
+    "crush": "~/.config/crush/skills/computer-use",
+    "goose": "~/.config/goose/skills/computer-use"
+   },
+   "broken": [
+    "opencode",
+    "codebuddy",
+    "claude",
+    "codex",
+    "cursor",
+    "trae",
+    "devin",
+    "crush",
+    "goose"
+   ],
+   "agents": []
+  },
+  "course-md-organize": {
+   "id": "course-md-organize",
+   "paths": {
+    "opencode": "~/.config/opencode/skills/course-md-organize",
+    "codebuddy": "~/.codebuddy/skills/course-md-organize",
+    "claude": "~/.claude/skills/course-md-organize",
+    "codex": "~/.codex/skills/course-md-organize",
+    "cursor": "~/.cursor/skills/course-md-organize",
+    "trae": "~/.trae-cn/skills/course-md-organize"
+   },
+   "broken": [],
+   "agents": [
+    "opencode",
+    "codebuddy",
+    "claude",
+    "codex",
+    "cursor",
+    "trae"
+   ]
+  },
+  "course-pdf-to-md": {
+   "id": "course-pdf-to-md",
+   "paths": {
+    "opencode": "~/.config/opencode/skills/course-pdf-to-md",
+    "codebuddy": "~/.codebuddy/skills/course-pdf-to-md",
+    "claude": "~/.claude/skills/course-pdf-to-md",
+    "codex": "~/.codex/skills/course-pdf-to-md",
+    "cursor": "~/.cursor/skills/course-pdf-to-md",
+    "trae": "~/.trae-cn/skills/course-pdf-to-md"
+   },
+   "broken": [],
+   "agents": [
+    "opencode",
+    "codebuddy",
+    "claude",
+    "codex",
+    "cursor",
+    "trae"
+   ]
+  },
+  "deploy-to-vercel": {
+   "id": "deploy-to-vercel",
+   "paths": {
+    "opencode": "~/.config/opencode/skills/deploy-to-vercel",
+    "codebuddy": "~/.codebuddy/skills/deploy-to-vercel",
+    "claude": "~/.claude/skills/deploy-to-vercel",
+    "codex": "~/.codex/skills/deploy-to-vercel",
+    "cursor": "~/.cursor/skills/deploy-to-vercel",
+    "trae": "~/.trae-cn/skills/deploy-to-vercel"
+   },
+   "broken": [],
+   "agents": [
+    "opencode",
+    "codebuddy",
+    "claude",
+    "codex",
+    "cursor",
+    "trae"
+   ]
+  },
+  "find-skills": {
+   "id": "find-skills",
+   "paths": {
+    "opencode": "~/.config/opencode/skills/find-skills",
+    "codebuddy": "~/.codebuddy/skills/find-skills",
+    "claude": "~/.claude/skills/find-skills",
+    "codex": "~/.codex/skills/find-skills",
+    "cursor": "~/.cursor/skills/find-skills",
+    "trae": "~/.trae-cn/skills/find-skills"
+   },
+   "broken": [],
+   "agents": [
+    "opencode",
+    "codebuddy",
+    "claude",
+    "codex",
+    "cursor",
+    "trae"
+   ]
+  },
+  "frontend-design": {
+   "id": "frontend-design",
+   "paths": {
+    "opencode": "~/.config/opencode/skills/frontend-design",
+    "codebuddy": "~/.codebuddy/skills/frontend-design",
+    "claude": "~/.claude/skills/frontend-design",
+    "codex": "~/.codex/skills/frontend-design",
+    "cursor": "~/.cursor/skills/frontend-design",
+    "trae": "~/.trae-cn/skills/frontend-design"
+   },
+   "broken": [],
+   "agents": [
+    "opencode",
+    "codebuddy",
+    "claude",
+    "codex",
+    "cursor",
+    "trae"
+   ]
+  },
+  "github": {
+   "id": "github",
+   "paths": {
+    "opencode": "~/.config/opencode/skills/github",
+    "codebuddy": "~/.codebuddy/skills/github",
+    "claude": "~/.claude/skills/github",
+    "codex": "~/.codex/skills/github",
+    "cursor": "~/.cursor/skills/github",
+    "trae": "~/.trae-cn/skills/github"
+   },
+   "broken": [],
+   "agents": [
+    "opencode",
+    "codebuddy",
+    "claude",
+    "codex",
+    "cursor",
+    "trae"
+   ]
+  },
+  "github-portfolio-sync": {
+   "id": "github-portfolio-sync",
+   "paths": {
+    "opencode": "~/.config/opencode/skills/github-portfolio-sync",
+    "codebuddy": "~/.codebuddy/skills/github-portfolio-sync",
+    "claude": "~/.claude/skills/github-portfolio-sync",
+    "codex": "~/.codex/skills/github-portfolio-sync",
+    "cursor": "~/.cursor/skills/github-portfolio-sync",
+    "trae": "~/.trae-cn/skills/github-portfolio-sync"
+   },
+   "broken": [],
+   "agents": [
+    "opencode",
+    "codebuddy",
+    "claude",
+    "codex",
+    "cursor",
+    "trae"
+   ]
+  },
+  "github-readme-maintainer": {
+   "id": "github-readme-maintainer",
+   "paths": {
+    "opencode": "~/.config/opencode/skills/github-readme-maintainer",
+    "codebuddy": "~/.codebuddy/skills/github-readme-maintainer",
+    "claude": "~/.claude/skills/github-readme-maintainer",
+    "codex": "~/.codex/skills/github-readme-maintainer",
+    "cursor": "~/.cursor/skills/github-readme-maintainer",
+    "trae": "~/.trae-cn/skills/github-readme-maintainer"
+   },
+   "broken": [],
+   "agents": [
+    "opencode",
+    "codebuddy",
+    "claude",
+    "codex",
+    "cursor",
+    "trae"
+   ]
+  },
+  "grill-me": {
+   "id": "grill-me",
+   "paths": {
+    "opencode": "~/.config/opencode/skills/grill-me",
+    "codebuddy": "~/.codebuddy/skills/grill-me",
+    "claude": "~/.claude/skills/grill-me",
+    "codex": "~/.codex/skills/grill-me",
+    "cursor": "~/.cursor/skills/grill-me",
+    "trae": "~/.trae-cn/skills/grill-me"
+   },
+   "broken": [],
+   "agents": [
+    "opencode",
+    "codebuddy",
+    "claude",
+    "codex",
+    "cursor",
+    "trae"
+   ]
+  },
+  "leader": {
+   "id": "leader",
+   "paths": {
+    "opencode": "~/.config/opencode/skills/leader",
+    "codebuddy": "~/.codebuddy/skills/leader",
+    "claude": "~/.claude/skills/leader",
+    "codex": "~/.codex/skills/leader",
+    "cursor": "~/.cursor/skills/leader",
+    "trae": "~/.trae-cn/skills/leader"
+   },
+   "broken": [],
+   "agents": [
+    "opencode",
+    "codebuddy",
+    "claude",
+    "codex",
+    "cursor",
+    "trae"
+   ]
+  },
+  "manage-skills": {
+   "id": "manage-skills",
+   "paths": {
+    "opencode": "~/.config/opencode/skills/manage-skills"
+   },
+   "broken": [],
+   "agents": [
+    "opencode"
+   ]
+  },
+  "neat-freak": {
+   "id": "neat-freak",
+   "paths": {
+    "opencode": "~/.config/opencode/skills/neat-freak",
+    "codebuddy": "~/.codebuddy/skills/neat-freak",
+    "claude": "~/.claude/skills/neat-freak",
+    "codex": "~/.codex/skills/neat-freak",
+    "cursor": "~/.cursor/skills/neat-freak",
+    "trae": "~/.trae-cn/skills/neat-freak"
+   },
+   "broken": [],
+   "agents": [
+    "opencode",
+    "codebuddy",
+    "claude",
+    "codex",
+    "cursor",
+    "trae"
+   ]
+  },
+  "netlify-deploy": {
+   "id": "netlify-deploy",
+   "paths": {
+    "opencode": "~/.config/opencode/skills/netlify-deploy",
+    "codebuddy": "~/.codebuddy/skills/netlify-deploy",
+    "claude": "~/.claude/skills/netlify-deploy",
+    "codex": "~/.codex/skills/netlify-deploy",
+    "cursor": "~/.cursor/skills/netlify-deploy",
+    "trae": "~/.trae-cn/skills/netlify-deploy"
+   },
+   "broken": [],
+   "agents": [
+    "opencode",
+    "codebuddy",
+    "claude",
+    "codex",
+    "cursor",
+    "trae"
+   ]
+  },
+  "orca-cli": {
+   "id": "orca-cli",
+   "paths": {
+    "opencode": "~/.config/opencode/skills/orca-cli",
+    "codebuddy": "~/.codebuddy/skills/orca-cli",
+    "claude": "~/.claude/skills/orca-cli",
+    "codex": "~/.codex/skills/orca-cli",
+    "cursor": "~/.cursor/skills/orca-cli",
+    "trae": "~/.trae-cn/skills/orca-cli",
+    "devin": "~/.config/devin/skills/orca-cli",
+    "crush": "~/.config/crush/skills/orca-cli",
+    "goose": "~/.config/goose/skills/orca-cli"
+   },
+   "broken": [
+    "opencode",
+    "codebuddy",
+    "claude",
+    "codex",
+    "cursor",
+    "trae",
+    "devin",
+    "crush",
+    "goose"
+   ],
+   "agents": []
+  },
+  "orca-codex-commands": {
+   "id": "orca-codex-commands",
+   "paths": {
+    "opencode": "~/.config/opencode/skills/orca-codex-commands"
+   },
+   "broken": [],
+   "agents": [
+    "opencode"
+   ]
+  },
+  "ponytail": {
+   "id": "ponytail",
+   "paths": {
+    "opencode": "~/.config/opencode/skills/ponytail",
+    "codebuddy": "~/.codebuddy/skills/ponytail",
+    "claude": "~/.claude/skills/ponytail",
+    "codex": "~/.codex/skills/ponytail",
+    "cursor": "~/.cursor/skills/ponytail",
+    "trae": "~/.trae-cn/skills/ponytail"
+   },
+   "broken": [],
+   "agents": [
+    "opencode",
+    "codebuddy",
+    "claude",
+    "codex",
+    "cursor",
+    "trae"
+   ]
+  },
+  "skill-creator": {
+   "id": "skill-creator",
+   "paths": {
+    "opencode": "~/.config/opencode/skills/skill-creator",
+    "codebuddy": "~/.codebuddy/skills/skill-creator",
+    "claude": "~/.claude/skills/skill-creator",
+    "codex": "~/.codex/skills/skill-creator",
+    "cursor": "~/.cursor/skills/skill-creator",
+    "trae": "~/.trae-cn/skills/skill-creator"
+   },
+   "broken": [],
+   "agents": [
+    "opencode",
+    "codebuddy",
+    "claude",
+    "codex",
+    "cursor",
+    "trae"
+   ]
+  },
+  "skill-manager-governance": {
+   "id": "skill-manager-governance",
+   "paths": {
+    "opencode": "~/.config/opencode/skills/skill-manager-governance",
+    "codebuddy": "~/.codebuddy/skills/skill-manager-governance",
+    "claude": "~/.claude/skills/skill-manager-governance",
+    "codex": "~/.codex/skills/skill-manager-governance",
+    "cursor": "~/.cursor/skills/skill-manager-governance",
+    "trae": "~/.trae-cn/skills/skill-manager-governance"
+   },
+   "broken": [],
+   "agents": [
+    "opencode",
+    "codebuddy",
+    "claude",
+    "codex",
+    "cursor",
+    "trae"
+   ]
+  },
+  "theme-factory": {
+   "id": "theme-factory",
+   "paths": {
+    "opencode": "~/.config/opencode/skills/theme-factory",
+    "codebuddy": "~/.codebuddy/skills/theme-factory",
+    "claude": "~/.claude/skills/theme-factory",
+    "codex": "~/.codex/skills/theme-factory",
+    "cursor": "~/.cursor/skills/theme-factory",
+    "trae": "~/.trae-cn/skills/theme-factory"
+   },
+   "broken": [],
+   "agents": [
+    "opencode",
+    "codebuddy",
+    "claude",
+    "codex",
+    "cursor",
+    "trae"
+   ]
+  },
+  "vercel-blocked-deploy-triage": {
+   "id": "vercel-blocked-deploy-triage",
+   "paths": {
+    "opencode": "~/.config/opencode/skills/vercel-blocked-deploy-triage",
+    "codebuddy": "~/.codebuddy/skills/vercel-blocked-deploy-triage",
+    "claude": "~/.claude/skills/vercel-blocked-deploy-triage",
+    "codex": "~/.codex/skills/vercel-blocked-deploy-triage",
+    "cursor": "~/.cursor/skills/vercel-blocked-deploy-triage",
+    "trae": "~/.trae-cn/skills/vercel-blocked-deploy-triage"
+   },
+   "broken": [],
+   "agents": [
+    "opencode",
+    "codebuddy",
+    "claude",
+    "codex",
+    "cursor",
+    "trae"
+   ]
+  },
+  "make-repo-contribution": {
+   "id": "make-repo-contribution",
+   "paths": {
+    "codebuddy": "~/.codebuddy/skills/make-repo-contribution",
+    "trae": "~/.trae-cn/skills/make-repo-contribution",
+    "devin": "~/.config/devin/skills/make-repo-contribution",
+    "crush": "~/.config/crush/skills/make-repo-contribution",
+    "goose": "~/.config/goose/skills/make-repo-contribution"
+   },
+   "broken": [
+    "codebuddy",
+    "trae",
+    "devin",
+    "crush",
+    "goose"
+   ],
+   "agents": []
+  },
+  "orchestration": {
+   "id": "orchestration",
+   "paths": {
+    "codebuddy": "~/.codebuddy/skills/orchestration",
+    "claude": "~/.claude/skills/orchestration",
+    "trae": "~/.trae-cn/skills/orchestration",
+    "devin": "~/.config/devin/skills/orchestration",
+    "crush": "~/.config/crush/skills/orchestration",
+    "goose": "~/.config/goose/skills/orchestration"
+   },
+   "broken": [
+    "codebuddy",
+    "claude",
+    "trae",
+    "devin",
+    "crush",
+    "goose"
+   ],
+   "agents": []
+  },
+  "hv-analysis": {
+   "id": "hv-analysis",
+   "paths": {
+    "codex": "~/.codex/skills/hv-analysis"
+   },
+   "broken": [],
+   "agents": [
+    "codex"
+   ]
+  },
+  "netdisk-to-obsidian": {
+   "id": "netdisk-to-obsidian",
+   "paths": {
+    "codex": "~/.codex/skills/netdisk-to-obsidian"
+   },
+   "broken": [],
+   "agents": [
+    "codex"
+   ]
+  },
+  "storage-analyzer": {
+   "id": "storage-analyzer",
+   "paths": {
+    "codex": "~/.codex/skills/storage-analyzer",
+    "cursor": "~/.cursor/skills/storage-analyzer",
+    "trae": "~/.trae-cn/skills/storage-analyzer"
+   },
+   "broken": [],
+   "agents": [
+    "codex",
+    "cursor",
+    "trae"
+   ]
+  },
+  "guizang-ppt-skill": {
+   "id": "guizang-ppt-skill",
+   "paths": {
+    "trae": "~/.trae-cn/skills/guizang-ppt-skill"
+   },
+   "broken": [],
+   "agents": [
+    "trae"
+   ]
+  }
+ },
+ "broken_ids": [
+  "computer-use",
+  "make-repo-contribution",
+  "orca-cli",
+  "orchestration"
+ ],
+ "dup_groups": [
+  "ai-coding-homework-writeup",
+  "batch-organize",
+  "browseros-neo",
+  "coding-workspace-organizer",
+  "course-md-organize",
+  "course-pdf-to-md",
+  "deploy-to-vercel",
+  "find-skills",
+  "frontend-design",
+  "github",
+  "github-portfolio-sync",
+  "github-readme-maintainer",
+  "grill-me",
+  "leader",
+  "neat-freak",
+  "netlify-deploy",
+  "ponytail",
+  "skill-creator",
+  "skill-manager-governance",
+  "storage-analyzer",
+  "theme-factory",
+  "vercel-blocked-deploy-triage"
+ ]
+}

@@ -1,0 +1,86 @@
+
+> personal-dance-library@0.1.0 test
+> vitest run tests/unit/filters.test.ts
+
+
+ RUN  v4.1.11 /Users/zzymima0000/Developer/coding/1.Active/040-ing-才艺展示厅
+
+ ❯ tests/unit/filters.test.ts (1 test | 1 failed) 5ms
+   × 全部状态及16种标签筛选严格取AND，清除状态不会丢掉零标签项目 4ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/unit/filters.test.ts > 全部状态及16种标签筛选严格取AND，清除状态不会丢掉零标签项目
+AssertionError: expected [] to deeply equal [ 'CAN_DANCE-0', 'CAN_DANCE-1', …(46) ]
+
+- Expected
++ Received
+
+- [
+-   "CAN_DANCE-0",
+-   "CAN_DANCE-1",
+-   "CAN_DANCE-2",
+-   "CAN_DANCE-3",
+-   "CAN_DANCE-4",
+-   "CAN_DANCE-5",
+-   "CAN_DANCE-6",
+-   "CAN_DANCE-7",
+-   "CAN_DANCE-8",
+-   "CAN_DANCE-9",
+-   "CAN_DANCE-10",
+-   "CAN_DANCE-11",
+-   "CAN_DANCE-12",
+-   "CAN_DANCE-13",
+-   "CAN_DANCE-14",
+-   "CAN_DANCE-15",
+-   "PRACTICING-0",
+-   "PRACTICING-1",
+-   "PRACTICING-2",
+-   "PRACTICING-3",
+-   "PRACTICING-4",
+-   "PRACTICING-5",
+-   "PRACTICING-6",
+-   "PRACTICING-7",
+-   "PRACTICING-8",
+-   "PRACTICING-9",
+-   "PRACTICING-10",
+-   "PRACTICING-11",
+-   "PRACTICING-12",
+-   "PRACTICING-13",
+-   "PRACTICING-14",
+-   "PRACTICING-15",
+-   "WANT_TO_LEARN-0",
+-   "WANT_TO_LEARN-1",
+-   "WANT_TO_LEARN-2",
+-   "WANT_TO_LEARN-3",
+-   "WANT_TO_LEARN-4",
+-   "WANT_TO_LEARN-5",
+-   "WANT_TO_LEARN-6",
+-   "WANT_TO_LEARN-7",
+-   "WANT_TO_LEARN-8",
+-   "WANT_TO_LEARN-9",
+-   "WANT_TO_LEARN-10",
+-   "WANT_TO_LEARN-11",
+-   "WANT_TO_LEARN-12",
+-   "WANT_TO_LEARN-13",
+-   "WANT_TO_LEARN-14",
+-   "WANT_TO_LEARN-15",
+- ]
++ []
+
+ ❯ tests/unit/filters.test.ts:12:60
+     10|     const scenes=SCENE_OPTIONS.filter((_,i)=>mask&(1<<i)).map(s=>s.id);
+     11|     const expected=items.filter(i=>(!status||i.learningStatus===status…
+     12|     expect(filterDances(items,status,scenes).map(i=>i.id)).toEqual(exp…
+       |                                                            ^
+     13|   }
+     14|   expect(filterDances(items,null,[],'找不到')).toHaveLength(0);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed (1)
+   Start at  16:28:44
+   Duration  429ms (transform 20ms, setup 90ms, import 9ms, tests 5ms, environment 250ms)
+

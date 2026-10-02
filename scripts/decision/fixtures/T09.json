@@ -1,0 +1,1 @@
+{"issue": "局部UI间距错误", "impact": "单个页面视觉", "core_sm": false, "perm": false, "data_loss": false, "arch": false, "blocking": false, "evidence": "截图对比", "expected": false}

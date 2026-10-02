@@ -1,0 +1,36 @@
+# 交付态（bundled）APK 构建与真机连通验证
+
+日期：2026-10-02（Asia/Shanghai）　分支：codex/personal-dance-library　真机：192.168.31.63:5555（Redmi Note 11T Pro+ / 22041216UC / xagapro）
+
+## 1. 构建（非 live 预览，bundled dist）
+
+- 前端：`npm run build`（tsc -b + vite build）→ 成功，dist 生成。
+- 同步：`npx cap sync android`（未设 CAP_LIVE）→ `android/app/src/main/assets/capacitor.config.json` 内 **无 server.url**，即打包 dist 交付态。
+- 原生：`JAVA_HOME=$HOME/android-toolchain/jdk-21.0.12.1+1/Contents/Home ANDROID_HOME=$HOME/android-toolchain/sdk ./android/gradlew -p android :app:assembleDebug --offline` → BUILD SUCCESSFUL。
+- APK：`android/app/build/outputs/apk/debug/app-debug.apk`
+  - 大小：11,297,112 bytes
+  - SHA-256：a027a59c2be9c43b841da062680ab1d3e024a069bf1e9c0f4283a7e398ecc546
+  - 签名：Android Debug，证书 SHA-256 `8e82a7975008e8ec87ff0f2ecadf495b5263effa34aaec9ab6f135ebea911cf3`
+- 安装：`adb -s 192.168.31.63:5555 install -r` → Success（未卸载，保留数据）。
+
+## 2. 交付态 WebView 源与 LAN 连通方案（本轮修复）
+
+- 现象：bundled 包 WebView 源默认 `https://localhost`，向私有 LAN 明文 HTTP API（`http://192.168.31.43:8791`）发请求被 **mixed content 拦截**：
+  fetch 报 `TypeError: Failed to fetch`；`<audio>` 报 `MEDIA_ELEMENT_ERROR: Format error`（同样媒质，blob 播放正常，证明编解码无问题）。
+- 处置（`capacitor.config.ts`）：交付态设 `server.androidScheme: 'http'`（WebView 源改为 `http://localhost`）＋ `android.allowMixedContent: true`。
+- 结果：真机 WebView `location.href == http://localhost/`；对 API 的 fetch 返回 200；`<audio>` 正常加载播放。
+
+## 3. 真机复验（bundled 交付态）
+
+- API 以 `HOST=0.0.0.0 PORT=8791 node server/index.mjs` 起在 Mac（192.168.31.43:8791），LAN 可达（真机 toybox nc 收到 `HTTP/1.1 200 OK`）。
+- 「我的 → Mac Mini 连接」填 `http://192.168.31.43:8791`，连接测试 → “连接成功，服务器地址已保存”。
+- 「同步离线曲库」→ “已同步 31 首，新缓存 62 个文件”。
+- 「曲库」页：31 张卡片、封面、时长、状态（想学 31）、四场景标签、底栏四 Tab 正常。
+- 快速播放：`audio.paused=false`，`currentTime` 由 0 → 3.04s 前进，`duration=19.46s`，`error=null`。
+- 截图：`docs/verification/screens/bundled-play-01.png`、`bundled-play-02.png`。
+
+## 4. 尚未闭环（如实标注）
+
+- T064「完全断网冷启动」：本机仅网络 ADB，真正飞行模式会断掉 adb 通道，只能用「停掉 Mac 后端」近似，**未完成**。
+- 用户反馈「播放没有声音」：自动化只证明 `currentTime` 前进且无 error，未证明实际出声；需单独排查（WebView 媒体音量/系统媒体音量/静音属性）。**未完成**。
+- 本 APK 仍为 debug 签名，正式签名与长期部署留 Human Gate。

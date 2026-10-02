@@ -1,0 +1,16 @@
+✔ Copying web assets from dist to android/app/src/main/assets/public in 3.92ms
+✔ Creating capacitor.config.json in android/app/src/main/assets in 1.21ms
+[info] Inlining sourcemaps
+✔ copy android in 11.70ms
+✔ Updating Android plugins in 967.79μs
+✔ update android in 20.95ms
+✔ Running Gradle build in 11.77s
+✖ Deploying app-debug.apk to 192.168.31.63:5555 - failed!
+[error] Selected hardware device 192.168.31.63:5555
+        Installing /Users/zzymima0000/Developer/coding/1.Active/040-ing-才艺展示厅/android/app/build/outputs/apk/debug/app-debug.apk...
+        ERR_UNKNOWN: Non-zero exit code from adb: 1
+        
+        More details for this error may be available online:
+        
+        	https://github.com/ionic-team/native-run/wiki/Android-Errors
+        

@@ -1,0 +1,1 @@
+{"task": "发版前DB审核", "failure": "migration被驳回", "evidence": "RLS策略缺失，schema变更未评审", "test_result": "FAIL", "files": "drizzle", "phase": "DEVELOP", "expected": "DB_ADMIN"}

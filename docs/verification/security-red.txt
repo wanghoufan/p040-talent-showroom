@@ -1,0 +1,56 @@
+✖ media root rejects traversal and symlink escapes while retaining Unicode names (1.496875ms)
+✖ source links accept only exact registered HTTPS hosts, never generic downloads (0.07075ms)
+✖ SSRF addresses reject local, link-local, mapped IPv4 and reserved ranges (0.993959ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 0
+ℹ fail 3
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 43.187334
+
+✖ failing tests:
+
+test at tests/security.test.mjs:9:1
+✖ media root rejects traversal and symlink escapes while retaining Unicode names (1.496875ms)
+  Error: 安全路径尚未实现
+      at controlledPath (file:///Users/zzymima0000/Developer/coding/1.Active/040-ing-%E6%89%8D%E8%89%BA%E5%B1%95%E7%A4%BA%E5%8E%85/server/security/paths.mjs:1:42)
+      at TestContext.<anonymous> (file:///Users/zzymima0000/Developer/coding/1.Active/040-ing-%E6%89%8D%E8%89%BA%E5%B1%95%E7%A4%BA%E5%8E%85/tests/security.test.mjs:16:18)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.start (node:internal/test_runner/test:1242:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17)
+
+test at tests/security.test.mjs:21:1
+✖ source links accept only exact registered HTTPS hosts, never generic downloads (0.07075ms)
+  Error: 来源策略尚未实现
+      at normalizeSourceLink (file:///Users/zzymima0000/Developer/coding/1.Active/040-ing-%E6%89%8D%E8%89%BA%E5%B1%95%E7%A4%BA%E5%8E%85/server/security/source-policy.mjs:2:47)
+      at TestContext.<anonymous> (file:///Users/zzymima0000/Developer/coding/1.Active/040-ing-%E6%89%8D%E8%89%BA%E5%B1%95%E7%A4%BA%E5%8E%85/tests/security.test.mjs:22:16)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3)
+
+test at tests/security.test.mjs:26:1
+✖ SSRF addresses reject local, link-local, mapped IPv4 and reserved ranges (0.993959ms)
+  AssertionError [ERR_ASSERTION]: 0.0.0.0
+  
+  true !== false
+  
+      at TestContext.<anonymous> (file:///Users/zzymima0000/Developer/coding/1.Active/040-ing-%E6%89%8D%E8%89%BA%E5%B1%95%E7%A4%BA%E5%8E%85/tests/security.test.mjs:27:187)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: true,
+    expected: false,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

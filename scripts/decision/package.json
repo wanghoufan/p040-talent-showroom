@@ -1,0 +1,11 @@
+{
+  "name": "orca-decide",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "ORCA Decision Sidecar CLI (Jev via TypeSafe direct API). Advisory only.",
+  "bin": {
+    "orca-decide": "./orca-decide.mjs"
+  },
+  "dependencies": {}
+}
