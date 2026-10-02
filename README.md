@@ -6,7 +6,7 @@
 
 > 目标场景：在家里（Mac）把歌收好，带手机出门——**现场没网也能冷启动、直接播放**，不用再临时翻抖音。
 
-![曲库首页](docs/verification/screens/library-first-batch-light.png)
+![曲库首页](docs/verification/screens/cover-bulk-home-light.png)
 
 ## 它能做什么
 

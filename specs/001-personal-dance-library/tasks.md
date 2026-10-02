@@ -101,7 +101,7 @@ description: "个人舞蹈曲库 V1.5 implementation task list"
 - [x] T061 [US5] 实现 Android sync：catalog snapshot + selected audio/cover，断网首屏不等待 network timeout。（真机 note11tpro 实测 62 文件落盘）
 - [x] T062 [P] [US5] 实现 `PerformancePage.tsx`：默认会跳、四标签 AND、大播放/暂停/从头/上一首/下一首。（真机离线播放通过）
 - [x] T063 [US5] 未缓存/损坏 UI 明确不可播；播放 ended 只停止。（真机"未缓存，不可播"+提示通过）
-- [ ] T064 [US5] 完全断网真机：kill app → cold start → ≤3 操作播放 → 10 条手动切歌；记录 `android-offline.md`。（待交付态 APK，live 预览不能代表离线冷启动）
+- [x] T064 [US5] 完全断网真机：kill app → cold start → ≤3 操作播放 → 10 条手动切歌；记录 `android-offline.md`。（2026-10-02 bundled debug + USB 固定真机飞行模式/关闭 Wi-Fi，冷启动 1 击播放、10 首逐曲通过；见 android-offline.md）
 
 ## Phase 9: User Story 6 - 原视频学习 / 去重 (P2)
 
@@ -138,7 +138,7 @@ description: "个人舞蹈曲库 V1.5 implementation task list"
 - [x] T086 [P] 全局加载/空/错误/离线/空间不足文案；不暴露 stack/provider/path。
 - [x] T087 完成 API/media integration tests：Range、非法 ID、path traversal、SSRF、伪 MIME、删除引用、provider faults。
 - [x] T088 完成 backup/restore scripts：SQLite/catalog/covers/audio/manifest；参考视频按可重建性记录。
-- [ ] T089 isolated Docker build/run 到独立端口，不影响 P038；记录 compose config、health、rollback，不执行正式长期部署。
+- [x] T089 isolated Docker build/run 到独立端口，不影响 P038；记录 compose config、health、rollback，不执行正式长期部署。
 
 ## Phase 13: Release Candidate Validation
 
@@ -171,3 +171,10 @@ Setup/Assets
 ```
 
 **Independent developer rule**: 单人执行按编号最安全；标 `[P]` 的任务仅表示文件/依赖允许并行，但无需为了“并行”增加编排复杂度。
+
+
+## 2026-10-03 用户局部增量（不重开架构计划）
+
+- [x] T097 首页批量管理：逐卡/全选当前结果/清空/退出；修改三种学习状态与四种固定标签（增删替换），确认预览、取消和失败重试。
+- [x] T098 原子批量分类 API、整批校验、回滚、仅所选项变化；更新手机快照/离线元数据，保留音乐缓存；补 OpenAPI 与数据约束。
+- [x] T099 lint/test/integration/build、Java21 offline APK 构建；固定 note11tpro 隔离示范原生触摸，最终封面合并版本勾选/取消/主题封面/播放回归。见 `docs/verification/bulk-classification.md` 与 `bulk-edit-round5.json`。

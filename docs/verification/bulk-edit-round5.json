@@ -1,0 +1,32 @@
+{
+  "date": "2026-10-03",
+  "device": "IN9LZTAYV4UGU4JF",
+  "model": "22041216UC",
+  "fixture": "isolated temporary SQLite 8793, 3 synthetic items",
+  "results": [
+    "native select pair / practicing / add outdoor preserving original / unselected unchanged",
+    "can dance / remove outdoor",
+    "replace tags",
+    "want to learn / clear tags",
+    "filter select all limited / change filter clears selection",
+    "connection failure / retry enabled / cancel retains selection / no write"
+  ],
+  "result": "PASS",
+  "realDataModified": false,
+  "phoneBackupRestored": true,
+  "realCount": 31,
+  "realClassificationsUnchangedByQA": true,
+  "cacheIndexUnchanged": true,
+  "developmentEndpoint": "http://192.168.31.42:8791",
+  "finalMergedApk": {
+    "selectionAndCancel": "PASS",
+    "covers": "light/dark gradients with title and watermark, detail PASS",
+    "playback": {
+      "time": 1.085688,
+      "paused": false,
+      "error": null
+    }
+  },
+  "note": "Real library classifications were subsequently changed during interactive use; QA did not overwrite them.",
+  "isolatedFixtureCleaned": true
+}

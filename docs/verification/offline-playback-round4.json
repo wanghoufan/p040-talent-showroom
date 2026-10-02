@@ -1,0 +1,165 @@
+{
+  "device": "IN9LZTAYV4UGU4JF",
+  "date": "2026-10-02",
+  "networkBefore": {
+    "wifi": "1",
+    "data": "1",
+    "airplane": "0"
+  },
+  "tracks": [
+    {
+      "index": 1,
+      "expected": "鲨鱼舞郭富城版",
+      "title": "鲨鱼舞郭富城版",
+      "time": 1.212654,
+      "paused": false,
+      "error": null,
+      "local": true,
+      "active": 1,
+      "button": "⏸",
+      "miniVisible": true,
+      "miniPosition": "fixed"
+    },
+    {
+      "index": 2,
+      "expected": "青苹果乐园",
+      "title": "青苹果乐园",
+      "time": 1.348788,
+      "paused": false,
+      "error": null,
+      "local": true,
+      "active": 1,
+      "button": "⏸",
+      "miniVisible": true,
+      "miniPosition": "fixed"
+    },
+    {
+      "index": 3,
+      "expected": "胆小鬼",
+      "title": "胆小鬼",
+      "time": 1.208729,
+      "paused": false,
+      "error": null,
+      "local": true,
+      "active": 1,
+      "button": "⏸",
+      "miniVisible": true,
+      "miniPosition": "fixed"
+    },
+    {
+      "index": 4,
+      "expected": "青春修炼手册",
+      "title": "青春修炼手册",
+      "time": 1.32551,
+      "paused": false,
+      "error": null,
+      "local": true,
+      "active": 1,
+      "button": "⏸",
+      "miniVisible": true,
+      "miniPosition": "fixed"
+    },
+    {
+      "index": 5,
+      "expected": "跳楼机dj版",
+      "title": "跳楼机dj版",
+      "time": 1.327975,
+      "paused": false,
+      "error": null,
+      "local": true,
+      "active": 1,
+      "button": "⏸",
+      "miniVisible": true,
+      "miniPosition": "fixed"
+    },
+    {
+      "index": 6,
+      "expected": "红日",
+      "title": "红日",
+      "time": 1.329878,
+      "paused": false,
+      "error": null,
+      "local": true,
+      "active": 1,
+      "button": "⏸",
+      "miniVisible": true,
+      "miniPosition": "fixed"
+    },
+    {
+      "index": 7,
+      "expected": "第一次爱的人",
+      "title": "第一次爱的人",
+      "time": 1.23971,
+      "paused": false,
+      "error": null,
+      "local": true,
+      "active": 1,
+      "button": "⏸",
+      "miniVisible": true,
+      "miniPosition": "fixed"
+    },
+    {
+      "index": 8,
+      "expected": "等你的回答",
+      "title": "等你的回答",
+      "time": 1.3204,
+      "paused": false,
+      "error": null,
+      "local": true,
+      "active": 1,
+      "button": "⏸",
+      "miniVisible": true,
+      "miniPosition": "fixed"
+    },
+    {
+      "index": 9,
+      "expected": "爱",
+      "title": "爱",
+      "time": 1.317611,
+      "paused": false,
+      "error": null,
+      "local": true,
+      "active": 1,
+      "button": "⏸",
+      "miniVisible": true,
+      "miniPosition": "fixed"
+    },
+    {
+      "index": 10,
+      "expected": "爱情鸟",
+      "title": "爱情鸟",
+      "time": 1.35149,
+      "paused": false,
+      "error": null,
+      "local": true,
+      "active": 1,
+      "button": "⏸",
+      "miniVisible": true,
+      "miniPosition": "fixed"
+    }
+  ],
+  "networkDisabled": {
+    "airplane": "1",
+    "wifi": "0",
+    "data": "1"
+  },
+  "connectivity": [
+    "Active default network: none"
+  ],
+  "coldStart": {
+    "url": "http://localhost/",
+    "cards": 31,
+    "cache": 62
+  },
+  "pause": {
+    "paused": true,
+    "time": 2.003217,
+    "button": "▶"
+  },
+  "result": "PASS",
+  "networkRestored": {
+    "airplane": "0",
+    "wifi": "1",
+    "data": "1"
+  }
+}

@@ -6,7 +6,7 @@ A **personal-use** dance library: pull the music you actually dance to out of sh
 
 > The intended flow: collect songs at home (on a Mac), then take the phone out — **cold-start and play even with no network**, instead of scrambling through short-video apps on site.
 
-![Library home](docs/verification/screens/library-first-batch-light.png)
+![Library home](docs/verification/screens/cover-bulk-home-light.png)
 
 ## What it does
 

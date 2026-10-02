@@ -1,0 +1,51 @@
+{
+  "date": "2026-10-02",
+  "project": "p040-v15-qa",
+  "base": "http://127.0.0.1:8792",
+  "health": {
+    "status": 200,
+    "data": {
+      "ok": true,
+      "recognition": "disabled"
+    }
+  },
+  "home": {
+    "status": 200,
+    "type": "text/html; charset=utf-8"
+  },
+  "asset": {
+    "url": "/assets/index-B8ayd9aD.js",
+    "status": 200
+  },
+  "spa": {
+    "status": 200,
+    "type": "text/html; charset=utf-8"
+  },
+  "import": {
+    "status": "READY"
+  },
+  "finalize": {
+    "status": 201,
+    "id": "250c4fff-c997-4392-9b60-01004eef8cf3"
+  },
+  "range": {
+    "status": 206,
+    "bytes": 10
+  },
+  "result": "PASS",
+  "persistence": {
+    "status": 200,
+    "count": 1,
+    "sameId": true
+  },
+  "rollback": {
+    "result": "PASS",
+    "port8792": "ECONNREFUSED",
+    "testContainerRemoved": true,
+    "testVolumeRemoved": true
+  },
+  "image": {
+    "id": "sha256:2fda36ff01a0c242114fbe5e2e6884aed9d0445a2950b6aabdc53398fcbe2c77",
+    "bytes": 239901830
+  }
+}

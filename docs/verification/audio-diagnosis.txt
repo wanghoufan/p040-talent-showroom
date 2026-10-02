@@ -44,3 +44,18 @@ App 侧（WebView 内 `document.querySelector('audio')`）：
 - flinger 真实输出轨 `AudioOut_15`：`Standby: no`、`Output devices: 0x2 (AUDIO_DEVICE_OUT_SPEAKER)` —— **输出已回到物理扬声器，REMOTE_SUBMIX 劫持消失**。
 - 定论：`P0 播放没有声音` = 设备侧音频路由卡死（输出被钉在 remote_submix 虚拟采集设备），**重启已复位**；**App 代码无缺陷，无需任何改动**。此前将原因归到「录屏/投屏进程在跑」属误判（停进程后路由未变即证伪），已更正。
 - 遗留：T064 物理断网冷启动（受网络/USB 条件限制，待现场）。
+
+## 最终归因更正：scrcpy 默认转发音频（本次复发定位）
+
+用户再次报告“接线后手机无声”，保持现场经 USB 读取：
+- 固定真机 `IN9LZTAYV4UGU4JF` / `22041216UC`；STREAM_MUSIC 未静音，speaker 音量非 0，当前 Devices 为 remote_submix。
+- Mac 正在运行 `scrcpy -s IN9LZTAYV4UGU4JF --stay-awake ...`，未指定 `--no-audio`。
+- 本机 scrcpy 4.1 `--help` 明确说明 `--audio-source=output` 会转发整机声音并禁止设备本地播放；`--no-audio` 禁用音频转发。
+- 用户确认：接线投屏时声音到 Mac，拔线后手机恢复播放。因此本次是投屏音频转发行为，不是应用播放故障。此前仅根据 remote_submix 将状态判为“必须重启的音频路由卡死”，证据不足；此前针对 MIUI 录屏/镜像进程的处置未覆盖 Mac 上 scrcpy 音频转发。
+
+处置：仅终止核验的该手机 scrcpy 会话，保留原画面窗口位置并以 `--no-audio` 重开；未重启手机、未改 App/音量/真实数据。复验：设备仍 USB 在线，STREAM_MUSIC `Devices: speaker(2)`，streamVolume 10、Muted false；AudioFlinger 输出为 `AUDIO_DEVICE_OUT_SPEAKER`，不存在 REMOTE_SUBMIX 输出/输入采集行。
+
+当前会话已禁用音频转发；未来重新开投屏需继续带参数，不能表述为已修改 scrcpy 全局默认：
+`scrcpy -s IN9LZTAYV4UGU4JF --no-audio --stay-awake`
+
+结论：本次 P0 无声反馈已解释并消除转发条件；用户确认拔线即正常出声，应用无须修改。真机 QA 用只传画面的投屏，避免将 Mac 出声/播放器时间前进当作手机物理扬声器验收。

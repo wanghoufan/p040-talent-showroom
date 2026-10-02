@@ -41,3 +41,20 @@ APK：bundled 交付态 `app-debug.apk`（debug 签名）
 
 - 无像素级比对工具，采用人工层级/风格核对 + 取样，非自动化视觉回归。
 - 正式签名与长期部署留 Human Gate。
+
+## 首页播放反馈复验（2026-10-02，接续开发）
+
+- 固定 USB 真机 `IN9LZTAYV4UGU4JF`，型号 `22041216UC` / `xagapro`；未使用另一台 Note12 Pro。
+- bundled debug APK 重建并 `adb install -r` 成功，保留 31 条曲库与 62 条离线缓存索引；页面源 `http://localhost/`，无 `server.url`。
+- 原生 `adb shell input tap` 点击卡片播放：当前卡片蓝色封面边框、蓝色标题，独立按钮由 ▶ 变为 ⏸；底部固定播放条显示完整曲名、原生暂停控件、时间与进度。
+- 点击同一卡片暂停：`audio.paused=true`，时间保持，卡片按钮回到 ▶，悬浮条继续显示当前曲名。
+- 切换曲目：高亮仅有 1 张，标题跟随当前音频；滚动曲库后悬浮条仍为 `position:fixed`，位于底栏上方，不需滚到列表末尾。
+- 截图：`screens/library-play-enhanced-playing.png`、`screens/library-play-enhanced-paused.png`；逐曲状态见 `offline-playback-round4.json`。
+- QA 通道预检：设备识别、应用包路径、1080×2460 屏幕、WebView CDP 读取及 ADB 原生触摸/截图均通过。CDP touch 未触发实际点击，正式验证改用 ADB 原生触摸；未以脚本直接调用 `play()` 代替用户点击。
+
+
+## 2026-10-03 批量分类与渐变封面合并复验
+
+固定 note11tpro 原生触摸：批量勾选高亮、已选数量、底部分类按钮、弹层原生下拉三状态/标签操作、预览与取消保存均可用。隔离示范曲目验证增删替换与未选项不变；真实曲库只勾选/取消和播放，未测试写入真实分类。浅深渐变封面及详情舞名/水印显示正常。
+
+截图：`screens/bulk-edit-sheet.png`、`bulk-edit-saved.png`（可清除示范）；`bulk-edit-real-selection.png`、`cover-bulk-home-light.png`、`cover-bulk-home-dark.png`、`cover-detail-dark.png`（最终合并 APK）。证据 `bulk-edit-round5.json`。

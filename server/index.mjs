@@ -10,6 +10,7 @@ import { serveMedia } from './media/http-media.mjs';
 import { mimeForContainer } from './media/mime.mjs';
 import { deriveClip } from './media/clips.mjs';
 import { deleteDance } from './dances/delete.mjs';
+import { bulkUpdateDances } from './dances/bulk-update.mjs';
 import { storeCover } from './media/covers.mjs';
 import { normalizeSourceLink } from './security/source-policy.mjs';
 import { serveStatic } from './static.mjs';
@@ -18,9 +19,9 @@ export function sendJson(res, status, value) {
   res.writeHead(status, { 'Content-Type': 'application/json; charset=utf-8', 'Cache-Control': 'no-store' });
   res.end(JSON.stringify(value));
 }
-async function readJson(req) {
+async function readJson(req, maxBytes=32768) {
   let size=0;const chunks=[];
-  for await(const chunk of req){size+=chunk.length;if(size>32768)throw new Error('BAD_REQUEST');chunks.push(chunk);}
+  for await(const chunk of req){size+=chunk.length;if(size>maxBytes)throw new Error('BAD_REQUEST');chunks.push(chunk);}
   const value=JSON.parse(Buffer.concat(chunks).toString()||'{}');
   if(!value||typeof value!=='object'||Array.isArray(value))throw new Error('BAD_REQUEST');
   return value;
@@ -41,6 +42,7 @@ export function createApiServer(options={}) {
       const {db}=ctx;
       if(db&&req.method==='GET'&&path==='/api/catalog') return sendJson(res,200,getCatalog(db,url.searchParams));
       if(db&&req.method==='GET'&&path==='/api/sync/manifest') return sendJson(res,200,getManifest(db));
+      if(db&&req.method==='PATCH'&&path==='/api/dances/bulk') return sendJson(res,200,bulkUpdateDances(db,await readJson(req,65536)));
       if(db&&path==='/api/playlists/tonight'){
         if(req.method==='GET') return sendJson(res,200,getPlaylist(db));
         if(req.method==='PUT'){const body=await readJson(req);return sendJson(res,200,setPlaylist(db,body.items));}

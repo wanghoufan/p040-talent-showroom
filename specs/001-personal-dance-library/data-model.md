@@ -32,3 +32,8 @@ files/
 ```
 
 Device settings store only theme/api endpoint/last sync; media readiness comes from manifest + filesystem validation, not Preferences booleans.
+
+
+### 2026-10-03 批量分类增量
+
+不新增表或迁移。一次事务更新所选 `dance_items.learning_status / scene_mask / updated_at`，整批验证有效且未删除后写入，曲库版本仅递增一次；任一项失败整批回滚。标签添加按位 OR，移除按位 AND NOT，替换使用新 mask。SourceMedia、PerformanceClip、SongIdentity 不变。
