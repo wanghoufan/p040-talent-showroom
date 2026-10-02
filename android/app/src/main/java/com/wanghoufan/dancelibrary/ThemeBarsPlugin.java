@@ -1,9 +1,11 @@
 package com.wanghoufan.dancelibrary;
 
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.view.View;
 import android.view.Window;
+import android.view.WindowManager;
 
 import com.getcapacitor.Plugin;
 import com.getcapacitor.PluginCall;
@@ -34,6 +36,14 @@ public class ThemeBarsPlugin extends Plugin {
 
     private void apply(boolean dark) {
         Window window = getActivity().getWindow();
+        int color = dark ? DARK_BG : LIGHT_BG;
+
+        // 关键：只有声明「由 App 绘制系统栏背景」时，setStatusBarColor/setNavigationBarColor 才会生效；
+        // Capacitor 默认主题未声明该 flag，因此此前设置被系统忽略（MIUI 下表现为恒白）。
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS
+                | WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+
         View decor = window.getDecorView();
         int flags = decor.getSystemUiVisibility();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -45,7 +55,14 @@ public class ThemeBarsPlugin extends Plugin {
             else flags |= View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR;
         }
         decor.setSystemUiVisibility(flags);
-        window.setStatusBarColor(dark ? DARK_BG : LIGHT_BG);
-        window.setNavigationBarColor(dark ? DARK_BG : LIGHT_BG);
+
+        // 兜底：部分 ROM 会以窗口背景色填充系统栏区域，同步窗口/Decor 背景避免残留白条。
+        window.setStatusBarColor(color);
+        window.setNavigationBarColor(color);
+        decor.setBackground(new ColorDrawable(color));
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            window.setStatusBarContrastEnforced(false);
+            window.setNavigationBarContrastEnforced(false);
+        }
     }
 }

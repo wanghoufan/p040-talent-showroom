@@ -107,5 +107,11 @@
 - 修复交付态连通：`capacitor.config.ts` 设 `server.androidScheme: 'http'` + `android.allowMixedContent: true`，解决 https 页面加载 http 接口/媒体的 mixed content 拦截。
 - LAN 起 API（`HOST=0.0.0.0 PORT=8791`）→ 真机配置 `http://192.168.31.43:8791` → 连接成功 → 同步 31 首/62 文件 → 曲库 31 卡 → 快速播放 `currentTime` 前进、无 error。
 - 用户已确认最终形态：**家里 Mac 收歌/同步，手机带出去纯离线演出**（符合 spec US5 / SC-004），维持现有架构，不做手机端独立化重做。
-- 用户已授权 commit + push（main）。
+- 用户已授权 commit + push（main）。已提交 `2ca15cd`（全量）与 `129282e`（离线优先播放 + T064/无声证据），均推送到 main。
+- 第 3 轮真机验证（`docs/verification/device-verify-round3.md`）：
+  - **T083 已修复**：`ThemeBarsPlugin` 补 `FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS`，状态栏/导航栏深色 `(6,11,18)`、浅色 `(246,248,251)` 均跟随主题（此前恒白）。
+  - **T072 通过**：详情→查看原视频一击播放（t=3.27s、error=null）。
+  - **T071 通过**：软删除 31→30，媒体保留，DB 恢复 deleted_at→31。
+- 新 APK：`app-debug.apk` 11,297,029 bytes，SHA-256 `aab1680e…15a8b0bb`（含 T083 修复）。
+- 仍未闭环：T092 升级保留数据、Docker 验证、T090 automated.md、T093 release 可构建性、T094 FR/SC 追溯矩阵、T095 HUMAN-GATE.md；「无声音」待用户复听确认。
 
