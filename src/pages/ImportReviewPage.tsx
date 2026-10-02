@@ -5,6 +5,7 @@ import { catalogChanged } from '../lib/catalog-store';
 import { STATUS_OPTIONS,SCENE_OPTIONS } from '../lib/filters';
 import type { DanceItem,ImportJob,LearningStatus,SceneTag } from '../lib/types';
 import ImportProgress from '../components/ImportProgress';
+import CoverArt from '../components/CoverArt';
 
 /**
  * 收录确认页（T034）。
@@ -60,7 +61,7 @@ export default function ImportReviewPage(){
       <Link className="icon-link" to="/">返回曲库</Link>
     </div>}
     {job?.status==='READY'&&job.draft&&<div className="review-form">
-      {job.draft.cover&&<img className="detail-cover" src={mediaUrl(job.draft.cover.url)} alt="舞蹈封面"/>}
+      <CoverArt title={title.trim() || '舞蹈'} variant="detail" />
       {job.duplicateId&&<p className="notice">已收藏过此来源。<Link to={`/dances/${job.duplicateId}`}>查看已有舞蹈</Link>；仍可保存新的一份。</p>}
       {job.draft.link&&<p className="muted">来源链接已保留。</p>}
       {candidates.length>0&&<fieldset><legend>识曲候选（选择后会写入歌曲信息）</legend><div className="button-row">{candidates.map((c,i)=><button key={i} onClick={()=>{setTitle(c.title);setArtist(c.artist);}}>{c.title} · {c.artist} · {Math.round(c.confidence*100)}%</button>)}</div><button onClick={()=>{setTitle('');setArtist('');}}>忽略候选，手动填写</button></fieldset>}

@@ -5,6 +5,7 @@ import { catalogChanged, storedCatalog } from '../lib/catalog-store';
 import { STATUS_OPTIONS, SCENE_OPTIONS } from '../lib/filters';
 import type { DanceItem } from '../lib/types';
 import ClipTrimmer from '../components/ClipTrimmer';
+import CoverArt from '../components/CoverArt';
 
 export default function DanceDetailPage() {
   const { id } = useParams();
@@ -45,7 +46,7 @@ export default function DanceDetailPage() {
   return (
     <section>
       <header className="page-header"><Link className="icon-link" to="/" aria-label="返回曲库">‹</Link><h1>舞蹈详情</h1></header>
-      <div className="detail-cover">{item.cover ? <img src={mediaUrl(item.cover.url)} alt="" /> : <span>♪</span>}</div>
+      <CoverArt title={item.title} variant="detail" />
       <h2 className="detail-title">{item.title}</h2>
       <p className="muted">{item.artist}</p>
       <div className="primary-actions">

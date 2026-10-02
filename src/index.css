@@ -114,3 +114,13 @@ legend { margin-bottom:10px; font-size:15px; }
 .danger-zone { border-color:#e06666; }
 .danger { background:#3a1414; color:#ff8a8a; border:1px solid #e06666; }
 @media (min-width:650px) { .card-grid { grid-template-columns:repeat(3,minmax(0,1fr)); } .library-layout { grid-template-columns:100px minmax(0,1fr); } }
+
+.cover-art { position:relative; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:8px; text-align:center; padding:12px; overflow:hidden; background:linear-gradient(160deg,#101f36,#1d3355); color:#dbe8ff; border:1px solid #23354b; }
+.cover-art__glyph { position:absolute; font-size:86px; line-height:1; opacity:.12; z-index:0; }
+.cover-art__text { position:relative; z-index:1; font-size:14px; font-weight:800; line-height:1.4; letter-spacing:.5px; word-break:break-word; display:-webkit-box; -webkit-line-clamp:4; -webkit-box-orient:vertical; overflow:hidden; }
+.cover-art__bar { position:relative; z-index:1; width:26px; height:3px; border-radius:2px; background:var(--primary); }
+.dance-card__cover .cover-art { position:absolute; inset:0; border-radius:9px; }
+.cover-art--detail { width:100%; aspect-ratio:16/10; border-radius:12px; }
+[data-theme="light"] .cover-art { background:linear-gradient(160deg,#eaf2ff,#c6dbff); color:var(--primary); border-color:#dbe6f5; }
+[data-theme="light"] .cover-art__glyph { color:var(--primary); }
+[data-theme="light"] .cover-art__bar { display:none; }
