@@ -1,0 +1,61 @@
+openapi: 3.0.3
+info:
+  title: P040 V2 增量接口
+  version: 2.0.0
+paths:
+  /api/repertoire:
+    get:
+      summary: 查询未删除才艺曲目，支持 kind、status、q
+      responses:
+        '200': {description: 'items 数组'}
+    post:
+      summary: 创建吉他或唱歌曲目，kind 与 title 必填
+      responses:
+        '201': {description: '创建后的 TalentItem'}
+        '400': {description: '未知字段、类型或范围错误'}
+  /api/repertoire/{id}:
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema: {type: string, format: uuid}
+    get:
+      responses:
+        '200': {description: TalentItem}
+        '404': {description: 曲目不存在}
+    patch:
+      summary: 修改资料；kind 与媒体关联字段不可直接修改
+      responses:
+        '200': {description: 修改后的 TalentItem}
+        '400': {description: 参数错误}
+    delete:
+      summary: 软删除曲目，保留媒体
+      responses:
+        '200': {description: 'deleted true, mediaDeleted 0'}
+  /api/repertoire/{id}/media:
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema: {type: string, format: uuid}
+    post:
+      summary: 关联 READY 的音频或视频导入任务
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: false
+              required: [importJobId]
+              properties:
+                importJobId: {type: string, format: uuid}
+                audioRole: {type: string, enum: [REFERENCE, ACCOMPANIMENT]}
+      responses:
+        '200': {description: 含音频与来源的 TalentItem}
+        '400': {description: 任务未就绪或已被其他记录使用}
+  /api/sync/manifest:
+    get:
+      summary: 兼容 V1 的 items、playlist，新增 repertoire 数组
+      responses:
+        '200': {description: 全部舞蹈与才艺元数据及媒体清单}

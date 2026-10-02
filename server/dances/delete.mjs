@@ -12,11 +12,15 @@ export function deleteDance(db, mediaRoot, id, { deleteMedia = false } = {}) {
   if (!item) throw Object.assign(new Error('NOT_FOUND'), { status: 404 });
 
   // 引用检查（排除本条目本身）。
-  const sourceRefs = item.sourceMediaId
+  let sourceRefs = item.sourceMediaId
     ? db.prepare('SELECT COUNT(*) AS n FROM dance_items WHERE source_media_id=? AND id<>? AND deleted_at IS NULL').get(item.sourceMediaId, id).n : 0;
-  const clipRefs = db.prepare('SELECT COUNT(*) AS n FROM dance_items WHERE performance_clip_id=? AND id<>? AND deleted_at IS NULL').get(item.performanceClipId, id).n;
-  const coverRefs = item.coverAssetId
+  let clipRefs = db.prepare('SELECT COUNT(*) AS n FROM dance_items WHERE performance_clip_id=? AND id<>? AND deleted_at IS NULL').get(item.performanceClipId, id).n;
+  let coverRefs = item.coverAssetId
     ? db.prepare('SELECT COUNT(*) AS n FROM dance_items WHERE cover_asset_id=? AND id<>? AND deleted_at IS NULL').get(item.coverAssetId, id).n : 0;
+
+  sourceRefs += item.sourceMediaId ? db.prepare('SELECT COUNT(*) AS n FROM repertoire_items WHERE source_media_id=? AND deleted_at IS NULL').get(item.sourceMediaId).n : 0;
+  clipRefs += db.prepare('SELECT COUNT(*) AS n FROM repertoire_items WHERE performance_clip_id=? AND deleted_at IS NULL').get(item.performanceClipId).n;
+  coverRefs += item.coverAssetId ? db.prepare('SELECT COUNT(*) AS n FROM repertoire_items WHERE cover_asset_id=? AND deleted_at IS NULL').get(item.coverAssetId).n : 0;
 
   db.exec('BEGIN IMMEDIATE');
   try {

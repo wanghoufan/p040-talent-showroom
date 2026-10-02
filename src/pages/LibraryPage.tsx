@@ -1,3 +1,4 @@
+import TalentNav from '../components/TalentNav';
 import { useRef, useState } from 'react';
 import { useCatalog } from '../lib/catalog-store';
 import { filterDances } from '../lib/filters';
@@ -61,6 +62,7 @@ export default function LibraryPage() {
   };
   return <section>
     <header className="page-header"><h1>我的舞蹈曲库</h1><div className="page-header__actions"><button className="batch-entry" disabled={!items.length} onClick={toggleBatch}>{batchMode ? '退出批量' : '批量管理'}</button><button aria-label="收录舞蹈" disabled={batchMode} onClick={() => setImporting(true)}>＋</button></div></header>
+    <TalentNav />
     <PendingShares />
     <input className="search" type="search" aria-label="搜索舞蹈" placeholder="搜索歌名或歌手" value={query} onChange={event => { setQuery(event.target.value); clearSelection(); }} />
     <SceneTagBar value={scenes} onChange={next => { setScenes(next); clearSelection(); }} />

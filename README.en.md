@@ -1,4 +1,4 @@
-# Personal Dance Library
+# Personal Talent Library (Dance / Guitar / Vocals)
 
 English | [简体中文](README.md)
 
@@ -83,7 +83,7 @@ Configured via environment variables (see `.env.example`). Server secrets are **
 | `SQLITE_DB_PATH` | `var/personal-dance-library.db` | SQLite database path |
 | `MEDIA_ROOT` | `var/media` | Directory for audio / covers / source videos |
 | `MUSIC_RECOGNITION_PROVIDER` | `disabled` | Recognition provider (off by default) |
-| `MUSIC_RECOGNITION_API_KEY` | empty | Recognition service key (if enabled) |
+| `MUSIC_RECOGNITION_API_KEY` | empty | Reserved: recognition service key (not yet wired in the server, so it has no effect today) |
 
 ## Known limitations
 
@@ -105,3 +105,9 @@ React 19 · TypeScript · Vite 7 ｜ Node.js local API (`node:sqlite`) ｜ Capac
 ## License
 
 No open-source license is declared; this is a personal-use project.
+
+## V2 guitar and vocals MVP
+
+Switch Dance / Guitar / Vocals above the library. Create a text-only song first, record its key, guitar Capo and chord/lyric text, then import your own audio or video. Vocals distinguish accompaniment from reference audio. Detail playback supports pause, looping and speed controls; key and Capo are notes, not audio transposition.
+
+Settings can download all three libraries’ music and covers with progress, failure details, cancellation after the current file and resumable retries. Text scores and lyrics remain available offline. Creating, editing and importing require the local API. Image/PDF scores, automatic transposition, mixed-talent performance queues and public song requests are outside this MVP; Tonight and Performance remain dance-only. See [V2 plan](specs/002-guitar-vocal/plan.md).

@@ -1,4 +1,4 @@
-# 个人舞蹈曲库
+# 个人才艺曲库（舞蹈 / 吉他 / 唱歌）
 
 [English](README.en.md) | 简体中文
 
@@ -9,6 +9,10 @@
 ![曲库首页](docs/verification/screens/cover-bulk-home-light.png)
 
 ## 它能做什么
+
+- **吉他和唱歌曲库（V2 最小版本）**：顶部切换才艺，先录入歌名、调性和文本谱/歌词，再导入自己的音频或视频。吉他记录 Capo，唱歌区分伴奏/示范；支持搜索、学习状态、编辑和删除确认。
+- **练习播放器**：吉他/唱歌详情可播放、暂停、单曲循环和变速；调性与 Capo 只记录，不改变音高。
+- **下载全部音乐到手机**：在“我的”下载三类曲目的音频和封面，显示进度、失败名单，停止后保留已完成文件，重试只补缺失文件；纯文本谱和歌词也会离线保存。
 
 - **从视频里裁出跳舞用的音乐**：导入本地视频，自动截取片段，还能手动微调起止点，并保留原始视频随时回看。
 - **批量分类**：首页进入“批量管理”，勾选多首或全选当前结果，一起改学习状态，或添加、移除、替换场景标签。保存需连接本地 API。
@@ -83,11 +87,12 @@ docker compose up --build
 | `SQLITE_DB_PATH` | `var/personal-dance-library.db` | SQLite 数据库路径 |
 | `MEDIA_ROOT` | `var/media` | 音频 / 封面 / 原始视频的存放目录 |
 | `MUSIC_RECOGNITION_PROVIDER` | `disabled` | 识曲服务提供方（默认关闭） |
-| `MUSIC_RECOGNITION_API_KEY` | 空 | 识曲服务密钥（如启用） |
+| `MUSIC_RECOGNITION_API_KEY` | 空 | 预留：识曲服务密钥（当前版本服务端未接入，设置暂不生效） |
 
 ## 已知边界
 
 - **识曲默认关闭**：未配置真实识曲密钥时使用 disabled/mock，不会编造识别结果，歌名 / 歌手可手动填写。
+- **V2 边界**：文本谱/歌词可离线查看，已下载音乐可离线播放；创建、编辑和导入需连接 API。暂不支持图片/PDF 谱、自动换调、混合才艺演出歌单或公开点歌台。现有今晚歌单和演出模式仍用于舞蹈。
 - **依赖本机 API**：手机端需要能访问运行 API 的电脑（同一私有局域网）。离开这个网络时，依赖已缓存的内容。
 - **仍待完成的验收**：物理断网冷启动（T064）和 Docker 隔离构建 / 运行（T089）已通过，最终用户验收（T096）仍待签收；首次发布仍需使用者本人签收。
 
@@ -97,6 +102,7 @@ React 19 · TypeScript · Vite 7 ｜ Node.js 本地 API（`node:sqlite`）｜ Ca
 
 ## 更多文档
 
+- V2 增量计划：[specs/002-guitar-vocal/](specs/002-guitar-vocal/)
 - 规格与计划：[specs/001-personal-dance-library/](specs/001-personal-dance-library/)
 - 验证证据（真机 / 离线 / 音频 / Docker 等）：[docs/verification/](docs/verification/)
 - 当前开发交接快照：[docs/handoff/HANDOFF.md](docs/handoff/HANDOFF.md)

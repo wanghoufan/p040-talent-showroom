@@ -11,6 +11,7 @@ import { mimeForContainer } from './media/mime.mjs';
 import { deriveClip } from './media/clips.mjs';
 import { deleteDance } from './dances/delete.mjs';
 import { bulkUpdateDances } from './dances/bulk-update.mjs';
+import { listRepertoire,getRepertoire,saveRepertoire,attachRepertoireMedia,deleteRepertoire } from './repertoire/service.mjs';
 import { storeCover } from './media/covers.mjs';
 import { normalizeSourceLink } from './security/source-policy.mjs';
 import { serveStatic } from './static.mjs';
@@ -42,6 +43,20 @@ export function createApiServer(options={}) {
       const {db}=ctx;
       if(db&&req.method==='GET'&&path==='/api/catalog') return sendJson(res,200,getCatalog(db,url.searchParams));
       if(db&&req.method==='GET'&&path==='/api/sync/manifest') return sendJson(res,200,getManifest(db));
+      if(db&&path==='/api/repertoire'){
+        if(req.method==='GET')return sendJson(res,200,listRepertoire(db,url.searchParams));
+        if(req.method==='POST')return sendJson(res,201,saveRepertoire(db,null,await readJson(req,262144)));
+      }
+      const talentMatch=/^\/api\/repertoire\/([0-9a-f-]{36})(\/media)?$/.exec(path);
+      if(db&&talentMatch){
+        if(req.method==='POST'&&talentMatch[2])return sendJson(res,200,attachRepertoireMedia(db,talentMatch[1],await readJson(req)));
+        if(!talentMatch[2]){
+          const item=getRepertoire(db,talentMatch[1]);if(!item)return sendJson(res,404,{error:{code:'NOT_FOUND',message:'曲目不存在'}});
+          if(req.method==='GET')return sendJson(res,200,item);
+          if(req.method==='PATCH')return sendJson(res,200,saveRepertoire(db,talentMatch[1],await readJson(req,262144)));
+          if(req.method==='DELETE')return sendJson(res,200,deleteRepertoire(db,talentMatch[1]));
+        }
+      }
       if(db&&req.method==='PATCH'&&path==='/api/dances/bulk') return sendJson(res,200,bulkUpdateDances(db,await readJson(req,65536)));
       if(db&&path==='/api/playlists/tonight'){
         if(req.method==='GET') return sendJson(res,200,getPlaylist(db));

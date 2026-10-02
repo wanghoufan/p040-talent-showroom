@@ -1,3 +1,4 @@
+import { listRepertoire } from './repertoire/service.mjs';
 export const STATUSES=['CAN_DANCE','PRACTICING','WANT_TO_LEARN'];
 export const SCENES=['COOL','SEXY','OUTDOOR','TRANSITION'];
 export function sceneMask(tags) {
@@ -19,7 +20,7 @@ export function getManifest(db) {
   const rows=db.prepare('SELECT id FROM dance_items WHERE deleted_at IS NULL ORDER BY created_at DESC,id').all();
   const items=rows.map(({id})=>getDance(db,id));
   const playlist=db.prepare('SELECT dance_item_id AS id FROM tonight_playlist_items ORDER BY position').all().map(({id})=>id).filter(id=>items.some(item=>item.id===id));
-  return { catalogVersion:db.prepare('SELECT catalog_version AS v FROM catalog_meta WHERE singleton=1').get().v, mode:'FULL', count:items.length, items, playlist };
+  return { catalogVersion:db.prepare('SELECT catalog_version AS v FROM catalog_meta WHERE singleton=1').get().v, mode:'FULL', count:items.length, items, playlist, repertoire:listRepertoire(db).items };
 }
 export function getCatalog(db,params=new URLSearchParams()) {
   const status=params.get('status');

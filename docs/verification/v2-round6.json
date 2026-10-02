@@ -1,0 +1,120 @@
+{
+  "date": "2026-10-03",
+  "device": {
+    "serial": "IN9LZTAYV4UGU4JF",
+    "model": "22041216UC",
+    "name": "note11tpro"
+  },
+  "scope": "V2 guitar/vocals MVP + all-library download",
+  "silence": "Digital zero-sample WAV; STREAM_MUSIC 0; every exercised media element muted with volume 0; no scrcpy audio capture",
+  "checks": {
+    "device-online": {
+      "vocal": {
+        "muted": true,
+        "time": 0.654616,
+        "error": null
+      },
+      "report": {
+        "catalogVersion": 5,
+        "items": 2,
+        "downloaded": 2,
+        "skipped": 0,
+        "mediaSupported": true,
+        "syncedAt": "2026-10-02T17:14:15.241Z",
+        "readyItems": 2,
+        "failed": [],
+        "cancelled": false,
+        "complete": true
+      }
+    },
+    "partial": {
+      "catalogVersion": 5,
+      "items": 2,
+      "downloaded": 0,
+      "skipped": 1,
+      "mediaSupported": true,
+      "syncedAt": "2026-10-02T17:16:10.371Z",
+      "readyItems": 1,
+      "failed": [
+        {
+          "key": "/api/media/audio/eaa32fea-8142-42dd-82d6-dc1d45dc8ea0",
+          "title": "静音唱歌示范",
+          "kind": "audio"
+        }
+      ],
+      "cancelled": false,
+      "complete": false
+    },
+    "retry": {
+      "catalogVersion": 5,
+      "items": 2,
+      "downloaded": 1,
+      "skipped": 0,
+      "mediaSupported": true,
+      "syncedAt": "2026-10-02T17:16:34.562Z",
+      "readyItems": 2,
+      "failed": [],
+      "cancelled": false,
+      "complete": true
+    },
+    "offline": {
+      "network": "no default network, airplane enabled, wifi disabled",
+      "coldStart": true,
+      "guitar": {
+        "src": "http://localhost/_capacitor_file_/data/user/0/com.wanghoufan.dancelibrary.dev/files/dance-offline/audio-f81c1fd2.audio",
+        "muted": true,
+        "time": 0.673948,
+        "error": null
+      },
+      "vocal": {
+        "src": "http://localhost/_capacitor_file_/data/user/0/com.wanghoufan.dancelibrary.dev/files/dance-offline/audio-c9f0e4cf.audio",
+        "muted": true,
+        "time": 0.685292,
+        "error": null
+      },
+      "failedEditPreservesInput": true,
+      "deleteConfirmationCancelled": true,
+      "apk": "Bundled feature build before final navigation highlight; final APK navigation separately verified"
+    },
+    "extra": {
+      "cardFeedback": true,
+      "playbackRate": 1.25
+    },
+    "restored": {
+      "endpoint": "http://192.168.31.42:8791",
+      "danceCount": 31,
+      "cacheCount": 62,
+      "talents": 0,
+      "nav": "舞蹈\n吉他\n唱歌",
+      "removedQaCacheFiles": 2
+    }
+  },
+  "realData": {
+    "danceItems": 31,
+    "itemsEqualToPreMigrationSnapshot": true,
+    "realRepertoireItems": 0,
+    "demoDatabase": "isolated temporary SQLite, removed after QA"
+  },
+  "automated": {
+    "lint": 0,
+    "vitestFiles": 10,
+    "vitestTests": 26,
+    "nodeTests": 27,
+    "build": "PASS",
+    "gradleDebugAndUnsignedRelease": "PASS"
+  },
+  "apk": {
+    "debugSha256": "5757d93d7f0b326f5ab8389c505cd43f7cc2daba2078c4beaa7702e23f390391",
+    "debugBytes": 11305168,
+    "releaseUnsignedSha256": "3fa185bb3bee32e81f10372c9d55b1b15ca631767ed8f51dfcf093546a5d2f24",
+    "releaseUnsignedBytes": 8567746,
+    "signerCertificateSha256": "8e82a7975008e8ec87ff0f2ecadf495b5263effa34aaec9ab6f135ebea911cf3"
+  },
+  "finalApkNavigation": {
+    "guitar": true,
+    "vocal": true,
+    "libraryTabHighlighted": true,
+    "realDancesRestored": 31,
+    "noPlayback": true
+  }
+}

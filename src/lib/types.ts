@@ -11,5 +11,13 @@ export interface ImportDraft extends Partial<DanceItem> { link?:string; adapter?
 export interface ImportJob { id:string; status:'PENDING'|'PROCESSING'|'NEEDS_INPUT'|'READY'|'FAILED'; stage:ImportStage; errorCode?:string; draft?:ImportDraft; duplicateId?:string }
 export interface PendingShare { id:string; token?:string; sharedText?:string; streamUri?:string; mime?:string; normalizedUrl?:string; receivedAt:string; submitState:'PENDING'|'SUBMITTED'|'NEEDS_INPUT'|'OFFLINE_SAVED'; serverJobId?:string; lastError?:string }
 export interface Playlist { items:string[] }
-export interface OfflineManifest { catalogVersion:number; items:DanceItem[]; playlist:string[] }
+export interface OfflineManifest { catalogVersion:number; items:DanceItem[]; playlist:string[]; repertoire?:TalentItem[] }
 export interface DeviceSettings { themeMode:'system'|'light'|'dark'; apiEndpoint:string; lastSyncAt?:string; cachePolicyVersion:number }
+
+export type TalentKind = 'GUITAR' | 'VOCAL';
+export interface TalentItem {
+  id: string; kind: TalentKind; title: string; artist: string; learningStatus: LearningStatus;
+  originalKey: string; performanceKey: string; capo: number; scoreText: string; notes: string;
+  audioRole: 'REFERENCE' | 'ACCOMPANIMENT'; audio?: MediaFile; cover?: MediaFile;
+  sourceMediaId?: string; performanceClipId?: string; source?: SourceMedia; durationMs: number;
+}

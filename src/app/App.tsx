@@ -1,5 +1,7 @@
+import TalentLibraryPage from '../pages/TalentLibraryPage';
+import TalentDetailPage from '../pages/TalentDetailPage';
 import { useEffect } from 'react';
-import { NavLink, Route, Routes } from 'react-router-dom';
+import { NavLink, Route, Routes, useLocation } from 'react-router-dom';
 import { NAV_TABS } from './routes';
 import { ingestNativeShares, submitAllPending } from '../lib/pending-shares';
 import { onNativeShare } from '../native/share-target';
@@ -42,6 +44,7 @@ function EmptyShell({ title, hint }: EmptyShellProps) {
 }
 
 export default function App() {
+  const { pathname } = useLocation();
   useEffect(() => {
     // 启动即 drain 原生分享队列（冷启动可在冷启动后立即取到），再尝试提交。
     void (async () => {
@@ -74,6 +77,9 @@ export default function App() {
             path="/settings"
             element={<SettingsPage />}
           />
+          <Route path="/repertoire/item/:id" element={<TalentDetailPage/>}/>
+          <Route path="/repertoire/:kind/new" element={<TalentDetailPage/>}/>
+          <Route path="/repertoire/:kind" element={<TalentLibraryPage/>}/>
           <Route path="/imports/:id" element={<ImportReviewPage/>}/>
           <Route path="/dances/:id" element={<DanceDetailPage/>}/>
           <Route path="/reference/:id" element={<ReferenceVideoPage/>}/>
@@ -89,7 +95,7 @@ export default function App() {
             key={tab.key}
             to={tab.path}
             end={tab.path === '/'}
-            className={({ isActive }) => (isActive ? 'tab tab--active' : 'tab')}
+            className={({ isActive }) => (isActive || (tab.path === '/' && pathname.startsWith('/repertoire/')) ? 'tab tab--active' : 'tab')}
           >
             <span className="tab__label">{tab.label}</span>
           </NavLink>

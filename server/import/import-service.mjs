@@ -97,6 +97,7 @@ export function finalizeImport(db,id,body) {
   const row=db.prepare('SELECT status,draft_json FROM import_jobs WHERE id=?').get(id);
   if(!row) throw Object.assign(new Error('NOT_FOUND'),{status:404});
   const draft=JSON.parse(row.draft_json||'{}');
+  if(draft.finalizedRepertoireId) throw new Error('IMPORT_NOT_READY');
   if(draft.finalizedId) return getDance(db,draft.finalizedId);
   if(row.status!=='READY'||!draft.clip) throw Object.assign(new Error('IMPORT_NOT_READY'),{status:409});
   const status=body.learningStatus||'WANT_TO_LEARN'; if(!STATUSES.includes(status)) throw new Error('INVALID_STATUS');

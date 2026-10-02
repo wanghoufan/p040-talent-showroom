@@ -140,3 +140,23 @@ legend { margin-bottom:10px; font-size:15px; }
 .selection-badge { position:absolute; top:6px; left:6px; width:28px; height:28px; border:2px solid white; border-radius:50%; background:#0009; color:white; display:grid; place-items:center; font-size:19px; }
 .dance-card--selected .selection-badge { background:var(--primary); border-color:var(--primary); }
 .dance-card--selected .dance-card__cover { outline:3px solid var(--primary); outline-offset:-3px; }
+
+.download-progress { margin-top:16px; padding:12px; background:var(--surface-2); border-radius:10px; }
+.download-progress progress { width:100%; height:12px; accent-color:var(--primary); }
+.download-result summary { min-height:48px; display:flex; align-items:center; cursor:pointer; color:var(--primary); }
+.download-result ul { padding-left:20px; max-height:200px; overflow:auto; }
+
+.talent-nav { display:flex; gap:8px; margin:8px 0 18px; }
+.talent-nav a { flex:1; min-height:48px; display:grid; place-items:center; border:1px solid var(--line); border-radius:10px; text-decoration:none; color:var(--muted); background:var(--surface); }
+.talent-nav a.active { color:var(--primary); border-color:var(--primary); background:var(--surface-2); font-weight:700; }
+.talent-status { margin-bottom:18px; flex-wrap:wrap; }
+.talent-grid .dance-card__labels { margin-right:0; }
+.talent-grid .icon-link { margin-top:10px; width:100%; }
+.talent-editor label { margin:12px 0; }
+.talent-editor textarea { width:100%; padding:12px; border:1px solid var(--line); border-radius:8px; background:var(--surface); color:var(--text); font:inherit; line-height:1.65; resize:vertical; }
+.talent-key-row { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+.talent-facts { display:flex; gap:8px; flex-wrap:wrap; margin:16px 0; }
+.talent-facts span { padding:8px 12px; background:var(--surface-2); border-radius:8px; }
+.talent-score { white-space:pre-wrap; overflow-wrap:anywhere; font:18px/1.9 ui-monospace,monospace; }
+.talent-notes { white-space:pre-wrap; overflow-wrap:anywhere; }
+.talent-play { width:100%; min-height:64px; font-size:20px; }

@@ -56,6 +56,11 @@ export async function fileExists(path: string): Promise<boolean> {
   try { await Filesystem.stat({ path, directory: Directory.Data }); return true; } catch { return false; }
 }
 
+/** Existing cache must match expected size on disk; metadata alone cannot establish readiness. */
+export async function cachedFileValid(entry: MediaEntry, cached: CachedMedia): Promise<boolean> {
+  return (await sizeOf(cached.path)) === entry.sizeBytes;
+}
+
 /** 下载单个媒体到本地缓存；成功返回 CachedMedia。 */
 export async function downloadMedia(entry: MediaEntry): Promise<CachedMedia> {
   const dir = ROOT;
@@ -63,7 +68,7 @@ export async function downloadMedia(entry: MediaEntry): Promise<CachedMedia> {
   const target = filePath(entry);
   const temp = `${target}.tmp`;
   await Filesystem.deleteFile({ path: temp, directory: Directory.Data }).catch(() => undefined);
-  const result = await Filesystem.downloadFile({ url: mediaUrl(entry.url), path: temp, directory: Directory.Data });
+  const result = await Filesystem.downloadFile({ url: mediaUrl(entry.url), path: temp, directory: Directory.Data, connectTimeout: 10000, readTimeout: 20000 });
   const size = await sizeOf(temp);
   if (size == null || size !== entry.sizeBytes) {
     await Filesystem.deleteFile({ path: temp, directory: Directory.Data }).catch(() => undefined);
