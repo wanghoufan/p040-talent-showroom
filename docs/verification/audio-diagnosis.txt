@@ -21,3 +21,26 @@ App 侧（WebView 内 `document.querySelector('audio')`）：
 - 这不是产品代码缺陷，属设备音量/录屏路由状态。
 - 需用户配合：停止 MIUI 录屏、确认媒体音量，再复听。
 - 待用户确认“实际出声”后，本项方可记为通过。
+
+## 补充复验（2026-10-02，audio_flinger 客观证据）
+
+排除 dumpsys audio 的假象（020 教训：dumpsys 的 device 字段不可信），改看 `dumpsys media.audio_flinger` 的真实输出轨：
+
+- App 播放中（CDP）：`paused=false`、`currentTime` 前进（4.12/19.46s）、`volume=1`、`muted=false`、`error=null`。
+- flinger `AudioOut_BD` 线程：`Standby: no`、`Output devices: 0x8000 (AUDIO_DEVICE_OUT_REMOTE_SUBMIX)`、活跃轨 client pid=16190（= 本 App WebView）→ **App 声音确实被送进 remote_submix 虚拟采集设备，物理扬声器收不到**。
+- 另有一个 `type 2 (DUPLICATING)` 输出线程处于活跃（音频复制/采集路径）。
+- `dumpsys media_projection`：`(com.xiaomi.mirror, uid=1000): TYPE_SCREEN_CAPTURE` —— 投屏镜像进程持有屏幕采集会话；`am force-stop` 后短暂消失，随后**自动重注册**（系统包，`pm disable-user` 报 `Cannot disable system packages`）。
+- 处置尝试：媒体音量已调到 15；已 `force-stop` + 禁用录屏包；两次停采集会话后重播，`AudioOut_BD` **仍钉在 remote_submix** → 音频策略/输出轨为卡死状态，adb 侧无法翻转。
+
+## 结论（更新）
+
+- 根因**已在设备侧客观坐实**（音频输出被劫持到 remote_submix），非 App 代码缺陷；020 的三类修法（seekTo 顺序 / 素材响度 / 音频会话）对 040 均不适用（技术栈不同，且素材响度已用 ffmpeg volumedetect 排除）。
+- 该路由卡死需**重启手机**（或关闭系统「投屏/屏幕镜像」开关）方可复位；重启会断开无线 ADB，需用户配合，随后我再复验。
+
+## 闭环（2026-10-02，重启后复验 · 已解决）
+
+- 用户重启 note11tpro（重启后经 USB 接入，serial `IN9LZTAYV4UGU4JF` / 22041216UC）。
+- 复验：`media_projection` 无任何采集会话；`volume_music_speaker=15`；App 播放中 `paused=false`、`currentTime` 前进、`vol=1`、`err=null`。
+- flinger 真实输出轨 `AudioOut_15`：`Standby: no`、`Output devices: 0x2 (AUDIO_DEVICE_OUT_SPEAKER)` —— **输出已回到物理扬声器，REMOTE_SUBMIX 劫持消失**。
+- 定论：`P0 播放没有声音` = 设备侧音频路由卡死（输出被钉在 remote_submix 虚拟采集设备），**重启已复位**；**App 代码无缺陷，无需任何改动**。此前将原因归到「录屏/投屏进程在跑」属误判（停进程后路由未变即证伪），已更正。
+- 遗留：T064 物理断网冷启动（受网络/USB 条件限制，待现场）。
