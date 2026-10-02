@@ -1,0 +1,23 @@
+# 「播放没有声音」诊断（真机 note11tpro）
+
+日期：2026-10-02　设备：192.168.31.63:5555（Redmi Note 11T Pro+ / 22041216UC / xagapro）
+
+## 结论：App 播放链路正常，无声来自设备侧（媒体音量 0 + 音频被路由到录屏虚拟设备）
+
+## 证据
+
+App 侧（WebView 内 `document.querySelector('audio')`）：
+- `volume=1`、`muted=false`、`paused=false`、`currentTime` 由 0 前进（19.46s 曲目）。
+- `error=null`。
+- 系统日志：`requestAudioFocus() ... AA=USAGE_MEDIA ... callingPack=com.wanghoufan.dancelibrary.dev`（App 正确申请媒体音频焦点）。
+
+设备侧：
+- `settings get system volume_music_speaker` = **0**（扬声器媒体音量为 0）。用 6 次 `input keyevent 24` 提升后 `dumpsys audio` 显示 `STREAM_MUSIC streamVolume:14`。
+- `dumpsys audio` STREAM_MUSIC 段：`Devices: remote_submix(8000)`——当前输出设备是「远程子混音」（虚拟采集设备），非物理扬声器。
+- `ps -A` 存在 `com.miui.screenrecorder`（MIUI 录屏进程在运行，录屏会占用 remote_submix 路由）。
+
+## 说明
+
+- 这不是产品代码缺陷，属设备音量/录屏路由状态。
+- 需用户配合：停止 MIUI 录屏、确认媒体音量，再复听。
+- 待用户确认“实际出声”后，本项方可记为通过。

@@ -1,7 +1,8 @@
 import { Capacitor } from '@capacitor/core';
 import { Directory, Filesystem } from '@capacitor/filesystem';
 import { mediaUrl } from '../lib/api';
-import type { CachedMedia, MediaEntry } from '../lib/offline-manifest';
+import { isItemPlayable, type CachedIndex, type CachedMedia, type MediaEntry } from '../lib/offline-manifest';
+import type { DanceItem } from '../lib/types';
 
 /**
  * 离线媒体落盘（T060）。
@@ -29,6 +30,18 @@ function filePath(entry: MediaEntry): string {
 /** 本地文件在 WebView 中可播放的地址（原生转 file:// 桥接）。 */
 export function offlineUrl(uri: string): string {
   return Capacitor.convertFileSrc(uri);
+}
+
+/**
+ * 播放地址解析：离线文件就绪时优先用本地缓存，否则回落到网络地址。
+ * 曲库与演出模式共用，保证「已缓存条目离线冷启动仍可播放」（US5）。
+ */
+export function playbackSource(item: DanceItem, cached: CachedIndex): string {
+  if (isOfflineSupported()) {
+    const hit = cached[item.audio.url];
+    if (hit?.uri && isItemPlayable(item, cached)) return offlineUrl(hit.uri);
+  }
+  return mediaUrl(item.audio.url);
 }
 
 async function sizeOf(path: string): Promise<number | null> {

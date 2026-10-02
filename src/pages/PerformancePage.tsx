@@ -1,7 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { mediaUrl } from '../lib/api';
 import { readOfflineManifest, readCachedIndex, isItemPlayable } from '../lib/offline-manifest';
-import { offlineUrl, isOfflineSupported } from '../native/filesystem';
+import { playbackSource } from '../native/filesystem';
 import { useCatalog } from '../lib/catalog-store';
 import { fetchPlaylist } from '../lib/playlist';
 import SceneTagBar from '../components/SceneTagBar';
@@ -12,14 +11,6 @@ import type { DanceItem, SceneTag } from '../lib/types';
  * 默认只列「会跳」，四标签 AND；未缓存/损坏的曲目明确不可播。
  * 播放优先用离线文件，缺失时回落网络地址。
  */
-
-function sourceOf(item: DanceItem, playable: boolean): string {
-  if (playable && isOfflineSupported()) {
-    const hit = readCachedIndex()[item.audio.url];
-    if (hit) return offlineUrl(hit.uri);
-  }
-  return mediaUrl(item.audio.url);
-}
 
 export default function PerformancePage() {
   const { items: catalogItems } = useCatalog();
@@ -58,7 +49,7 @@ export default function PerformancePage() {
     if (!audio.current) return;
     if (!isItemPlayable(item, cached)) { setPlaying(false); setNotice('这首歌还没有离线缓存，请先在设置里同步。'); return; }
     setNotice('');
-    audio.current.src = sourceOf(item, true);
+    audio.current.src = playbackSource(item, cached);
     if (auto) void audio.current.play().then(() => setPlaying(true)).catch(() => setPlaying(false));
   };
   // 下一首/上一首只切换选中，不自动发声；必须再次点击播放。
