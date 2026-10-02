@@ -1,8 +1,9 @@
 # HANDOFF｜个人舞蹈曲库 V1.5
 
-更新时间：2026-10-02 18:05（Asia/Shanghai）。本文件取代此前过时的编排交接，是恢复开发的当前快照。
+更新时间：2026-10-02 18:30（Asia/Shanghai）。本文件取代此前过时的编排交接，是恢复开发的当前快照。
 
-> 恢复后新增：已构建并真机复验 **bundled 交付态 APK**（非 live 预览），修复 https→http mixed content 导致的接口/媒体被拦截；LAN 连通、31 曲库、同步 62 文件、快速播放均通过。详见 `docs/verification/bundled-build.txt`。用户已授权 commit+push(main)。仍未完成：T064 离线冷启动、「播放没有声音」实际出声验证。
+> **收尾轮（T094/T095 已完成）**：已生成 `docs/verification/traceability.md`（FR/SC 追溯矩阵）、`ui-visual-qa.md`（T083/SC-008）、`docker.md`（T089 静态）、`android-preflight.md`（T014/SC-009）、`HUMAN-GATE.md`（T095）；`tasks.md` 复选框按证据逐项更新（96 项，仅 T064/T089/T096 未勾）。本轮修复 FR-023 触控目标违规（`.playlist__handle` 44→48、`.playlist__move button` 40→48）。重建并重装 bundled debug APK（`682b7255…4bfce`，11,297,027 bytes）。自动化全套复跑全绿。已 commit+push(main)。
+> 仍为 PARTIAL：SC-001（空库逐步计数）、SC-004（停后端近似断网）、SC-010（未脚本化 20 次计数）；T064/T089 未勾。**「播放没有声音」属设备侧，待用户复听确认（P0，未判通过）。**
 
 ## 1. 当前状态与执行边界
 
@@ -96,9 +97,9 @@
 - 保留原始媒体。清缓存只删除可重下客户端缓存；主数据/来源视频删除须遵守二次确认与引用安全。
 - 暂停后未继续开发或真机测试。最终签收待用户，目标保持 paused。
 
-目标：完整实现并验证 V1.5 后进入 Human Gate。
-剩 P0：T064 完全断网冷启动（网络 ADB 只能以停后端近似）；「播放没有声音」需单独排查并证明实际出声；关键任务复选框/追溯矩阵未收尾。
-下一步：先排查无声音（WebView 媒体音量/系统媒体音量/静音属性），再做 T064 冷启动离线验证；随后 Docker 静态校验、自动化全套、release 可构建性、FR/SC 追溯矩阵、HUMAN-GATE.md。
+目标：完整实现并验证 V1.5 后进入 Human Gate（T096 待用户验收）。
+剩 P0：①「播放没有声音」实际出声（设备侧，待用户复听确认）；②T064 物理断网冷启动（网络 ADB 只能以停后端近似）。
+下一步：等待用户在 Human Gate 复听确认与决策（正式签名 / 长期部署 / 物理断网现场验收）；无技术阻塞。
 
 ## 7. 本轮（恢复后）已做
 
@@ -114,4 +115,16 @@
   - **T071 通过**：软删除 31→30，媒体保留，DB 恢复 deleted_at→31。
 - 新 APK：`app-debug.apk` 11,297,029 bytes，SHA-256 `aab1680e…15a8b0bb`（含 T083 修复）。
 - 仍未闭环：T092 升级保留数据、Docker 验证、T090 automated.md、T093 release 可构建性、T094 FR/SC 追溯矩阵、T095 HUMAN-GATE.md；「无声音」待用户复听确认。
+
+## 8. 收尾轮（本轮，T090–T095）
+
+- 清理残留后台任务：停掉 3 个重复 `node --watch`（端口冲突反复重启）与 2 个旧 server 实例、1 个 `du /proc` 任务；重启单一 API（`HOST=0.0.0.0 PORT=8791`）。
+- 自动化全套复跑（全绿）：`lint` 0 / `typecheck` 0 / Vitest 6 文件 11 用例 / `node:test` 20 用例 / `vite build`（`automated.md` 已更新）。
+- 新增证据：`traceability.md`（T094）、`ui-visual-qa.md`（T083/SC-008）、`docker.md`（T089）、`android-preflight.md`（T014/SC-009）、`HUMAN-GATE.md`（T095）。
+- FR-023 修复：`.playlist__handle` 44→48、`.playlist__move button` 40→48（`src/index.css`）。
+- `tasks.md` 复选框按证据更新：96 项，仅 **T064 / T089 / T096** 保持未勾。
+- 重建 bundled debug APK：11,297,027 bytes，SHA-256 `682b7255015aabbfa1c97e6aba6cda9bcdc3c162d48df6608274cf83beb4bfce`（`http://localhost`、无 server.url），`adb install -r` Success，真机冒烟 31 卡。
+- release unsigned 重建：8,560,222 bytes，SHA-256 `af3ddb72…9121ec`。
+- 已实现确认（原 item 8 闭环）：CORS/OPTIONS（`OPTIONS /api/catalog`=204）与静态 dist 服务（`GET /`=200、SPA 回退 200）已由 `server/index.mjs` + `server/static.mjs` 提供。
+- 提交与推送：见本轮 commit（main）。
 
