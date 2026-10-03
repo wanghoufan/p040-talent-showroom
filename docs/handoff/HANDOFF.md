@@ -1,13 +1,13 @@
 # HANDOFF｜P040 个人才艺曲库（舞蹈 / 吉他 / 唱歌）
 
-更新时间：2026-10-03 12:32（Asia/Shanghai）。本文件是唯一当前快照；历史过程见docs/verification/completion-round7.md、completion-round8.md，最终验收口径见completion-acceptance.md。
+更新时间：2026-10-03 12:39（Asia/Shanghai）。本文件是唯一当前快照；历史过程见docs/verification/completion-round7.md、completion-round8.md，最终验收口径见completion-acceptance.md。
 
 ## 当前范围与状态
 
 - PROJECT_PHASE=DEVELOP。用户已批准003六阶段连续施工，亲自开发/测试/真机/交付，不派子智能体、不恢复ORCA编排、不重复阶段批准。
 - 恢复业务基线main `ca2c3d8`。期间外部治理提交`ad131e9`已进入main，保留该既有提交，未由本轮修改中央规则。用户后续明确冻结吉他：保留已存在的代码、登记示例与QA记录，不继续开发或修改其数据。继续舞蹈、唱歌与公共功能；后续新增UI仅VOCAL，舞蹈选择角标修正限定非talent-grid。
 - 舞蹈/唱歌/公共实现及本轮回归已通过。最新47个前端测试、43个后端测试、lint/tsc/build、Java21离线Gradle debug+unsigned release通过。真实固定手机已安装最终debug并冷启动，主资源`index-COCJ26op.js`、CSS`index-gQ6gbIDL.css`。
-- 代码与文档尚待最终暂存审查、commit+push main，已有用户授权。不得reset/clean未提交工作区。非本轮AGENTS/中央治理变更不纳入提交。
+- 实现提交`8fd92c9`已commit+push main，远端HEAD核对一致。当前仅交付回执文档更新待提交；本轮未reset/clean。外部治理提交ad131e9完整保留，无关旧AGENTS备份未纳入提交。
 - 正式签名、长期部署、公网点歌、首次发布签收保持Human Gate；旧T096仍OPEN，历史SC部分验收不改为PASS。本轮debug交付不等于首次发布签收。
 
 ## 实现与真机证据
@@ -51,12 +51,13 @@
 - unsigned release：android/app/build/outputs/apk/release/app-release-unsigned.apk，11,192,738 bytes，SHA256 `e2b1d2ce3ea6c4dde28da4d841bcbd01f1fe035c9f6cf82a70d89c5708c02912`。未正式签名/未安装。
 - 构建使用Java21/现有SDK/Gradle --offline；新PDF.js与QR依赖已锁版本与integrity，不重复下载。生成public/pdf、dist、android assets、APK、var、temp不入Git。
 
-## 下一步任务
+## 交付回执与下一步
 
-1. 对最终源码和文档做暂存审查，不含凭据、真实素材、SQLite/备份、APK、AGENTS/中央规则等无关变动。
-2. 按已有授权commit+push main，核对远端HEAD，再将回执更新到本快照、C010和AC22。
-3. 给用户本轮debug交付结果与APK链接，明确吉他冻结、首次签收/正式签名/长期部署/公网仍OPEN。不要把旧T096改为通过。
+- 2026-10-03：实现`8fd92c93be61432f4c84d366b5a742c9d94ed843`推送origin/main成功；远端ls-remote一致。最终包对应此实现，之后仅改交付文档，无业务源修改。
+- 统一交付目录`var/交付/P040 才艺曲库丨2026-10-03`含调试APK、未签名发布APK、SHA256、交付说明；目录不入Git。调试APK复制后的hash与安装包相同。回执文档提交号以Git HEAD为准。
+- 本轮继续范围的代码、测试、有效前台验收、指定唱歌QA清理、数据保护、debug打包安装与main推送已交付；**不声称首次发布验收已完成**。
+- 下一步等待用户试用反馈；吉他保持冻结，收到用户新方案再续。旧T096/首次签收、正式签名、长期部署、公网点歌仍OPEN，不自动推进。
 
-目标：交付本轮舞蹈、唱歌和公共功能；吉他冻结。
-剩 P0：无已确认P0；提交推送待执行，首次发布签收与旧T096仍OPEN。
-下一步：暂存审查后提交推送main并核对远端回执。
+目标：本轮舞蹈、唱歌与公共功能已交付；吉他冻结。
+剩 P0：无已确认P0；首次发布签收与旧T096仍OPEN。
+下一步：等待用户试用反馈及后续吉他方案。

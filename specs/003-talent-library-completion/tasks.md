@@ -13,8 +13,8 @@
 |C007 IndexedDB迁移、离线修改/整批事务、版本冲突|已实现|已有真机冲突、断网冷启动持久；后续草稿保留算法回归、最终待同步0通过|
 |C008 离线文件保存与联网继续处理|已实现|分块SHA、坏文件失败/缺副本真机提示与移除通过；网络失败/取消竞态/权限回归通过|
 |C009 本地点歌台、私有设备配对、接受/拒绝|已实现|HTTP权限/去重/过期/限流通过；手机原生图片扫码→Chrome→接受/拒绝/关闭/历史清理通过|
-|C010 全回归、APK、证据、commit/push|验证通过、提交待执行|47前端+43后端、lint/build/Gradle通过；最终debug已安装冷启动，数据保护通过；main提交推送回执待落盘|
+|C010 全回归、APK、证据、commit/push|本轮开发交付|47前端+43后端、lint/build/Gradle通过；最终debug已安装冷启动，数据保护通过；实现8fd92c9已push main，远端一致；正式发布签收仍OPEN|
 
 状态随证据更新；实现不是验收通过。旧 V1.5 T096/SC 部分验收与首次签收仍保持原状态。
 
-续验证据：[completion-round8.md](../../docs/verification/completion-round8.md)。数据模型与接口已补充；最终交付仍须收齐有效前台证据，不以构建通过替代。
+续验证据：[completion-round8.md](../../docs/verification/completion-round8.md)。数据模型与接口已补充；最终有效前台证据已落盘，正式发布签收仍OPEN，不以本轮debug交付替代。
