@@ -1,1 +1,0 @@
-{"_example": true, "cost_cny": null, "date": "2026-09-09", "escalated": "NO", "escalation_reason": null, "executed_by": null, "chain_status": "ACCEPTED", "model": "codebuddy/deepseek-v4.1-flash", "note": "模板示例行，不参与统计，首个真实任务前删除", "project": "example", "result": "PASS", "rework": 0, "role": "builder", "task": "TASK-000-example", "tokens": null}
