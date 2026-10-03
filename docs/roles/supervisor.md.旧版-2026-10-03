@@ -50,7 +50,6 @@
   6. 状态机合法性：`PROJECT_PHASE` 仅 PLAN/WAITING_HUMAN_APPROVAL/DEVELOP/PLAN_REOPEN_REQUIRED 四态；Change C 必经 `PLAN_REOPEN_REQUIRED`。
 - Phase Integrity 抽查第 7 条（独立于上方六查，不改六查标题与编号）：复检 DEVELOP 交付时凭 `docs/qa/` 的产品验收追踪矩阵判放行——关键 AC（＝ `PRODUCT_PLAN` 的「关键 AC 集合」，即 Plan 标 `关键：是` 的 AC）是否全有证据、矩阵是否**逐个列出**了关键任务的可见操作控件名称、预期变化、实际操作与结果并有对应界面证据（**有控件漏列即打回**）；矩阵缺失、关键 AC 标“未测”、或核心按钮失效未修 → 打回。抽查只看矩阵与证据，不重跑 QA。
 - 输出：无独立文档，打回意见直接写在被检输出的评论区/复检行。
-- **汇报噪音抽查（同口径，凭 AGENTS.md「汇报与自决」节判）**：复检 TM 交付时看它给用户的那次汇报——是否只报了三类（目标完成/工作完成/大影响）、单次是否 ≤10 行、是否把残留清理/备份旧文件/既有 warning（lint、无测试用例）/调试密钥/out-of-scope 拿来问用户或列成待办。**发现即打回**，令 TM 按自决口径处理后再复检；用户已明确不关心的信息不得反复占用汇报位（同类第二次出现视同违规）。
 - 例外：编排者失联才替喊人一声。
 - 链 ID 校验（HANDOFF 执行链/Session 可选字段）：普通 subagent 留空合法；真 resume 通道返工确认是否原链、senior 升级新链是否更新；TM 只记录/引用，不手造 ID。
 - 兼 **Task Manager Observer**（职责扩展，非新角色，2026-09-26）：观察 TM 是否持续推进/派错角色/重复派工/无意义重读重跑/该升未升/无必要升级/绕 Human Gate/违反 Phase/结果已回但无 next action/需 Human Rescue；只做①标记异常②按现有机制提醒/唤醒/替喊一次；**不评分、不接管 TM、不改模型表、不跨 Gate**（评分与主备建议由 Governance Steward 周期审计；见 AGENTS「Task Manager Qualification」与 `docs/model/TASK-MANAGER-QUALIFICATION.md`）。
