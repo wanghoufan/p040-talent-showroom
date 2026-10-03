@@ -2,7 +2,7 @@
 
 English | [简体中文](README.md)
 
-A **personal-use** dance library: pull the music you actually dance to out of short videos and turn it into a collection you can filter, play offline, practice with, and perform from.
+A **personal-use** talent library: collect your own music, scores and lyrics, then filter, practice and perform with cached content offline.
 
 > The intended flow: collect songs at home (on a Mac), then take the phone out — **cold-start and play even with no network**, instead of scrambling through short-video apps on site.
 
@@ -11,7 +11,7 @@ A **personal-use** dance library: pull the music you actually dance to out of sh
 ## What it does
 
 - **Cut the dancing audio out of a video**: import a local video, auto-extract a clip, fine-tune start/end points, and keep the original video for review.
-- **Bulk classification**: use “Batch management” on the home screen to select multiple dances or all filtered results, then update progress or add/remove/replace scene tags together. Saving requires the local API.
+- **Bulk classification**: use “Batch management” on the home screen to select multiple dances or all filtered results, then update progress or add/remove/replace scene tags together. Edits can be saved offline on the phone and synchronize when the API is reachable.
 - **Filter by progress and scene**: 3 learning states (Want to learn / Practicing / Can dance) × 4 scene tags (Cool / Sexy / Outdoor / Transition) to quickly pick what to practice today.
 - **One-tap import from a share link**: share a short-video link into the app to create an entry; if the platform can't provide the media, the flow doesn't break — the link is kept so you can supply a local video later.
 - **Works offline**: cached dances can still be filtered and played with no network (offline performance).

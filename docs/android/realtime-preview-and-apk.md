@@ -10,15 +10,19 @@ adb version
 adb devices -l
 ```
 
+本项目要求 Java 21；共享环境文件若仍指向 Java 17，应在本次终端显式设置可用的 JDK 21，不修改用户 shell 配置。先检查端口占用，不关闭其他项目服务。真机固定 USB serial `IN9LZTAYV4UGU4JF`，将 `ANDROID_SERIAL` 设置为它。
+
 ## 2. USB real-time preview
 
 ```bash
 npm run dev -- --host 127.0.0.1 --port 5173
-npm run server:dev -- --host 127.0.0.1 --port 8791
+HOST=127.0.0.1 PORT=8791 npm run server:dev
 adb -s "$ANDROID_SERIAL" reverse tcp:5173 tcp:5173
 adb -s "$ANDROID_SERIAL" reverse tcp:8791 tcp:8791
 npx cap run android --target "$ANDROID_SERIAL" --live-reload --host 127.0.0.1 --port 5173
 ```
+
+API 从 `HOST` / `PORT` 环境变量读取配置，不读取 `--host` / `--port` 参数。以上 live reload 仅用于开发预览；最终交付需重新 build/sync，移除 `server.url` 后用 bundled APK 验收。当前包与安装证据以 [HANDOFF](../handoff/HANDOFF.md) 为准。
 
 如 `--target` ID 与 adb serial 不同，先 `npx cap run android --list` 映射；不要通过卸载 App“解决”。
 

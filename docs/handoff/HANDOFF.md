@@ -7,7 +7,7 @@
 - PROJECT_PHASE=DEVELOP。用户已批准003六阶段连续施工，亲自开发/测试/真机/交付，不派子智能体、不恢复ORCA编排、不重复阶段批准。
 - 恢复业务基线main `ca2c3d8`。期间外部治理提交`ad131e9`已进入main，保留该既有提交，未由本轮修改中央规则。用户后续明确冻结吉他：保留已存在的代码、登记示例与QA记录，不继续开发或修改其数据。继续舞蹈、唱歌与公共功能；后续新增UI仅VOCAL，舞蹈选择角标修正限定非talent-grid。
 - 舞蹈/唱歌/公共实现及本轮回归已通过。最新47个前端测试、43个后端测试、lint/tsc/build、Java21离线Gradle debug+unsigned release通过。真实固定手机已安装最终debug并冷启动，主资源`index-COCJ26op.js`、CSS`index-gQ6gbIDL.css`。
-- 实现提交`8fd92c9`已commit+push main，远端HEAD核对一致。当前仅交付回执文档更新待提交；本轮未reset/clean。外部治理提交ad131e9完整保留，无关旧AGENTS备份未纳入提交。
+- 实现提交`8fd92c9`及交付回执`ce94c22`已推送main并核对远端。本轮未reset/clean，外部治理提交ad131e9完整保留。
 - 正式签名、长期部署、公网点歌、首次发布签收保持Human Gate；旧T096仍OPEN，历史SC部分验收不改为PASS。本轮debug交付不等于首次发布签收。
 
 ## 实现与真机证据
@@ -50,6 +50,12 @@
 - 最终debug：android/app/build/outputs/apk/debug/app-debug.apk，14,043,223 bytes，SHA256 `cc9eb72ea2037fcec97a1dd703dd22ce2425c62c4146115da57c0bac1b2ed259`；dev包名、Android Debug签名有效；已覆盖安装、冷启动实测COCJ26op。
 - unsigned release：android/app/build/outputs/apk/release/app-release-unsigned.apk，11,192,738 bytes，SHA256 `e2b1d2ce3ea6c4dde28da4d841bcbd01f1fe035c9f6cf82a70d89c5708c02912`。未正式签名/未安装。
 - 构建使用Java21/现有SDK/Gradle --offline；新PDF.js与QR依赖已锁版本与integrity，不重复下载。生成public/pdf、dist、android assets、APK、var、temp不入Git。
+
+## 洁癖收尾（2026-10-03）
+
+- 删除无唯一内容的旧AGENTS副本（逐字等于ca2c3d8中的AGENTS.md）、已停用的var/qa-isolated测试库/媒体/测试APK，以及var/qa-qrcode.json临时二维码；清理已合并的本地codex/personal-dance-library分支。真实库、媒体、备份、三类示例、冻结吉他记录与最终交付包保留。
+- 修正回执待提交的过期状态；Human Gate文档改为当前验收边界与唯一快照/包证据指针；Android预览命令改用实际读取的HOST/PORT环境变量；双语README对齐离线批量编辑。
+- 代码：verified-current（无业务源码修改）。运行态：verified-current（开发API健康检查；手机验收沿用本轮最终证据，本次不操作手机）。文档：changed-and-verified（本地链接与差异检查）。规则：verified-current（不修改中央规则；override软链有效，账本校验LEDGER-OK；GOVERNANCE-STATE保留治理迁移时历史统计，非当前产品进度）。记忆：not-applicable（无授权的独立记忆入口）。工作区：changed-and-verified（指定残留清除，备份与交付包hash不变）。
 
 ## 交付回执与下一步
 
