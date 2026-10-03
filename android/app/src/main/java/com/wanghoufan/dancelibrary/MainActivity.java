@@ -12,6 +12,7 @@ public class MainActivity extends BridgeActivity {
     public void onCreate(Bundle savedInstanceState) {
         registerPlugin(ShareTargetPlugin.class);
         registerPlugin(ThemeBarsPlugin.class);
+        registerPlugin(SystemInsetsPlugin.class);
         super.onCreate(savedInstanceState);
         // cold start：App 未运行时从分享面板进入
         PendingShareStore.capture(this, getIntent());

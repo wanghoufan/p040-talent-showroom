@@ -6,6 +6,7 @@ import { BrowserRouter } from 'react-router-dom';
 import App from './app/App';
 import { applyTheme, parseStoredTheme, resolveTheme, systemPrefersDark, watchSystemTheme, THEME_STORAGE_KEY } from './app/theme';
 import { applySystemBars } from './native/theme-bars';
+import { watchSystemInsets } from './native/system-insets';
 import './app/theme.css';
 import './index.css';
 
@@ -16,6 +17,7 @@ const mode = parseStoredTheme(
 const initial = resolveTheme(mode, systemPrefersDark());
 applyTheme(initial, document.documentElement);
 void applySystemBars(initial === 'dark');
+watchSystemInsets();
 watchSystemTheme((prefersDark) => {
   if (parseStoredTheme(localStorage.getItem(THEME_STORAGE_KEY)) === 'system') {
     const resolved = resolveTheme(mode, prefersDark);
