@@ -1,0 +1,2 @@
+CREATE TABLE score_assets(id TEXT PRIMARY KEY,kind TEXT NOT NULL CHECK(kind IN('IMAGE','PDF')),mime TEXT NOT NULL,internal_path TEXT NOT NULL,sha256 TEXT NOT NULL,size_bytes INTEGER NOT NULL,pages INTEGER NOT NULL DEFAULT 1);
+CREATE TABLE score_links(kind TEXT NOT NULL,item_id TEXT NOT NULL,asset_id TEXT NOT NULL REFERENCES score_assets(id),position INTEGER NOT NULL,PRIMARY KEY(kind,item_id,asset_id),UNIQUE(kind,item_id,position));

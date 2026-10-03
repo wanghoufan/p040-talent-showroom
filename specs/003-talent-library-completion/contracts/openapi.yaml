@@ -1,0 +1,1037 @@
+openapi: 3.1.0
+info:
+  title: P040 completion local API
+  version: 3.0.0
+  description: >-
+    Implemented completion contracts. Guitar further development is frozen by user direction dated 2026-10-03.
+    No public deployment.
+servers:
+  - url: http://127.0.0.1:8791
+security:
+  - OwnerBearer: []
+paths:
+  /api/pair:
+    post:
+      summary: Pair this device
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: false
+                properties:
+                  token:
+                    type: string
+                required:
+                  - token
+        '400':
+          description: Invalid request; no partial write
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not found or closed/expired session
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: false
+              properties:
+                code:
+                  type: string
+              required:
+                - code
+  /api/library/bulk:
+    post:
+      summary: Atomic bulk update, trash, restore or purge
+      responses:
+        '200':
+          description: Success
+        '400':
+          description: Invalid request; no partial write
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Owner pairing required
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not found or closed/expired session
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Bulk'
+      description: >-
+        Fields must apply to every selected kind. Purge requires trashed records and keeps original media.
+        operationId exact retry returns the original result; reusing it for another payload is rejected.
+  /api/library/trash:
+    get:
+      summary: List trashed dance and talent records
+      responses:
+        '200':
+          description: Success
+        '400':
+          description: Invalid request; no partial write
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Owner pairing required
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not found or closed/expired session
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /api/demo-library:
+    get:
+      summary: List independently registered demos
+      responses:
+        '200':
+          description: Success
+        '400':
+          description: Invalid request; no partial write
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Owner pairing required
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not found or closed/expired session
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    post:
+      summary: Idempotently import missing demos without replacing edited records
+      responses:
+        '200':
+          description: Success
+        '400':
+          description: Invalid request; no partial write
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Owner pairing required
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not found or closed/expired session
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    delete:
+      summary: Clear registered demos and unshared self-made files
+      responses:
+        '200':
+          description: Success
+        '400':
+          description: Invalid request; no partial write
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Owner pairing required
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not found or closed/expired session
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      description: >-
+        Returns cleared refs and removedMedia IDs. Shared sources, clips and scores including trash references
+        are protected. Requires an online owner.
+  /api/programs/tonight:
+    get:
+      summary: Read mixed program
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Program'
+        '400':
+          description: Invalid request; no partial write
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Owner pairing required
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not found or closed/expired session
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    put:
+      summary: Replace mixed program with revision guard
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Program'
+        '400':
+          description: Invalid request; no partial write
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Owner pairing required
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not found or closed/expired session
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Program'
+      description: >-
+        Maximum 200 unique refs. Text-only items are valid. Deleted or missing items reject the whole request.
+        Legacy dance-only API remains compatible.
+  /api/library/{kind}/{id}/scores:
+    get:
+      summary: Read ordered score attachments
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Score'
+        '400':
+          description: Invalid request; no partial write
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Owner pairing required
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not found or closed/expired session
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    post:
+      summary: Upload validated original score
+      responses:
+        '201':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Score'
+        '400':
+          description: Invalid request; no partial write
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Owner pairing required
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not found or closed/expired session
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      description: >-
+        Raw binary body. Images up to 10MiB; PDF up to 25MiB and 100 pages; reject corrupt/encrypted files.
+        X-Score-Id supports exact retries.
+      requestBody:
+        required: true
+        content:
+          image/png:
+            schema:
+              type: string
+              format: binary
+          image/jpeg:
+            schema:
+              type: string
+              format: binary
+          image/webp:
+            schema:
+              type: string
+              format: binary
+          application/pdf:
+            schema:
+              type: string
+              format: binary
+      parameters:
+        - name: X-Score-Id
+          in: header
+          schema:
+            type: string
+            format: uuid
+    put:
+      summary: Reorder or unlink scores, keeping originals
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Score'
+        '400':
+          description: Invalid request; no partial write
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Owner pairing required
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not found or closed/expired session
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: false
+              properties:
+                items:
+                  type: array
+                  uniqueItems: true
+                  items:
+                    type: string
+                    format: uuid
+              required:
+                - items
+    parameters:
+      - name: kind
+        in: path
+        required: true
+        schema:
+          type: string
+          enum:
+            - DANCE
+            - GUITAR
+            - VOCAL
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+  /api/media/score/{id}:
+    get:
+      summary: Read private score, supports Range
+      responses:
+        '200':
+          description: Success
+        '400':
+          description: Invalid request; no partial write
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Owner pairing required
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not found or closed/expired session
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      description: Bearer credential or owner media query token required. No path input. Supports HEAD and 206 ranges.
+    head:
+      summary: Private score headers
+      responses:
+        '200':
+          description: Headers
+        '401':
+          description: Unauthorized
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+  /api/sync/operations:
+    post:
+      summary: Apply one durable offline operation
+      responses:
+        '200':
+          description: Success
+        '400':
+          description: Invalid request; no partial write
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Owner pairing required
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not found or closed/expired session
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Operation'
+      description: >-
+        Response status applied or conflict, revision and item/server version. Create/update fields follow the
+        existing dance/talent model. Program fields={items}; bulk fields={action,refs,baseRevisions,fields?}.
+        Exact retry is atomic and idempotent; conflicts never overwrite server data. Trash responses also return
+        program and programRevision so subsequent phone sorting uses the current program revision.
+  /api/sync/manifest:
+    get:
+      summary: Compatible snapshot with repertoire, scores, revision, isDemo and mixed program
+      responses:
+        '200':
+          description: Success
+        '400':
+          description: Invalid request; no partial write
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Owner pairing required
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not found or closed/expired session
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /api/request-sessions:
+    get:
+      summary: Read owner sessions and request queue
+      responses:
+        '200':
+          description: Success
+        '400':
+          description: Invalid request; no partial write
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Owner pairing required
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not found or closed/expired session
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    post:
+      summary: Publish selected item summaries for 24 hours
+      responses:
+        '201':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Session'
+        '400':
+          description: Invalid request; no partial write
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Owner pairing required
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not found or closed/expired session
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: false
+              properties:
+                items:
+                  type: array
+                  uniqueItems: true
+                  minItems: 1
+                  maxItems: 200
+                  items:
+                    $ref: '#/components/schemas/ItemRef'
+              required:
+                - items
+  /api/request-sessions/{sessionId}:
+    delete:
+      summary: Close the session immediately
+      responses:
+        '200':
+          description: Success
+        '400':
+          description: Invalid request; no partial write
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Owner pairing required
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not found or closed/expired session
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    parameters:
+      - name: sessionId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+  /api/request-sessions/{sessionId}/qr:
+    get:
+      summary: Local QR data URL with guest session token only
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: false
+                properties:
+                  image:
+                    type: string
+                required:
+                  - image
+        '400':
+          description: Invalid request; no partial write
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Owner pairing required
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not found or closed/expired session
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    parameters:
+      - name: sessionId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+  /api/requests/{id}:
+    post:
+      summary: Approve or reject a request
+      responses:
+        '200':
+          description: Success
+        '400':
+          description: Invalid request; no partial write
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Owner pairing required
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not found or closed/expired session
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: false
+              properties:
+                decision:
+                  enum:
+                    - ACCEPTED
+                    - REJECTED
+              required:
+                - decision
+      description: >-
+        Accepted pending request adds a unique item to the program. No automatic playback. Reprocessing
+        returns existing decision.
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+  /api/requests/history:
+    delete:
+      summary: Clear processed history, keeping pending requests and program
+      responses:
+        '200':
+          description: Success
+        '400':
+          description: Invalid request; no partial write
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Owner pairing required
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not found or closed/expired session
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /api/public/request-sessions/{token}:
+    get:
+      summary: Read only published titles and talent types
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: false
+                properties:
+                  expiresAt:
+                    type: integer
+                    minimum: 0
+                  items:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/PublicItem'
+                required:
+                  - expiresAt
+                  - items
+        '400':
+          description: Invalid request; no partial write
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not found or closed/expired session
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      security: []
+    parameters:
+      - name: token
+        in: path
+        required: true
+        schema:
+          type: string
+  /api/public/request-sessions/{token}/requests:
+    post:
+      summary: Submit guest request
+      responses:
+        '201':
+          description: Success
+        '400':
+          description: Invalid request; no partial write
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not found or closed/expired session
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: RATE_LIMIT or QUEUE_FULL
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GuestRequest'
+      description: >-
+        Same visitor/item pending request is deduplicated. Maximum five new requests/minute and 200
+        pending/session; no private fields or media addresses.
+    parameters:
+      - name: token
+        in: path
+        required: true
+        schema:
+          type: string
+components:
+  securitySchemes:
+    OwnerBearer:
+      type: http
+      scheme: bearer
+  schemas:
+    ItemRef:
+      type: object
+      additionalProperties: false
+      properties:
+        kind:
+          type: string
+          enum:
+            - DANCE
+            - GUITAR
+            - VOCAL
+        id:
+          type: string
+          format: uuid
+      required:
+        - kind
+        - id
+    Bulk:
+      type: object
+      additionalProperties: false
+      properties:
+        operationId:
+          type: string
+          format: uuid
+        action:
+          enum:
+            - update
+            - trash
+            - restore
+            - purge
+        refs:
+          type: array
+          uniqueItems: true
+          minItems: 1
+          maxItems: 1000
+          items:
+            $ref: '#/components/schemas/ItemRef'
+        fields:
+          $ref: '#/components/schemas/Classification'
+      required:
+        - operationId
+        - action
+        - refs
+    Classification:
+      type: object
+      additionalProperties: false
+      properties:
+        learningStatus:
+          enum:
+            - CAN_DANCE
+            - PRACTICING
+            - WANT_TO_LEARN
+        sceneMode:
+          enum:
+            - add
+            - remove
+            - replace
+        sceneTags:
+          type: array
+          uniqueItems: true
+          maxItems: 4
+          items:
+            enum:
+              - COOL
+              - SEXY
+              - OUTDOOR
+              - TRANSITION
+        originalKey:
+          type: string
+          maxLength: 40
+        performanceKey:
+          type: string
+          maxLength: 40
+        capo:
+          type: integer
+          minimum: 0
+          maximum: 12
+        audioRole:
+          enum:
+            - REFERENCE
+            - ACCOMPANIMENT
+      required: []
+    Program:
+      type: object
+      additionalProperties: false
+      properties:
+        revision:
+          type: integer
+          minimum: 0
+        items:
+          type: array
+          uniqueItems: true
+          minItems: 0
+          maxItems: 200
+          items:
+            $ref: '#/components/schemas/ItemRef'
+      required:
+        - revision
+        - items
+    Operation:
+      type: object
+      additionalProperties: false
+      properties:
+        operationId:
+          type: string
+          format: uuid
+        kind:
+          type: string
+          enum:
+            - DANCE
+            - GUITAR
+            - VOCAL
+        id:
+          type: string
+        action:
+          enum:
+            - create
+            - update
+            - trash
+            - restore
+            - program
+            - bulk
+        baseRevision:
+          type: integer
+          minimum: 0
+        fields:
+          type: object
+      required:
+        - operationId
+        - kind
+        - id
+        - action
+        - baseRevision
+    Score:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: uuid
+        kind:
+          enum:
+            - PDF
+            - IMAGE
+        mime:
+          type: string
+        url:
+          type: string
+        sha256:
+          type: string
+        sizeBytes:
+          type: integer
+          minimum: 0
+        pages:
+          type: integer
+          minimum: 1
+          maximum: 100
+        version:
+          type: integer
+          minimum: 0
+      required:
+        - id
+        - kind
+        - url
+        - sha256
+        - sizeBytes
+        - pages
+        - version
+    GuestRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        visitor:
+          type: string
+          format: uuid
+        kind:
+          type: string
+          enum:
+            - DANCE
+            - GUITAR
+            - VOCAL
+        id:
+          type: string
+          format: uuid
+        nickname:
+          type: string
+          maxLength: 40
+        note:
+          type: string
+          maxLength: 200
+      required:
+        - visitor
+        - kind
+        - id
+        - nickname
+        - note
+    PublicItem:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: uuid
+        kind:
+          type: string
+          enum:
+            - DANCE
+            - GUITAR
+            - VOCAL
+        title:
+          type: string
+      required:
+        - id
+        - kind
+        - title
+    Session:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: uuid
+        token:
+          type: string
+        expiresAt:
+          type: integer
+          minimum: 0
+        closed:
+          type: integer
+          enum:
+            - 0
+            - 1
+      required:
+        - id
+        - token
+        - expiresAt
+    Error:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: string
+            message:
+              type: string

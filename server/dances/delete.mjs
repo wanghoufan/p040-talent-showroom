@@ -1,3 +1,4 @@
+import { removeFromProgram } from '../program/service.mjs';
 import { unlinkSync } from 'node:fs';
 import { getDance, bumpCatalog } from '../catalog.mjs';
 import { controlledPath } from '../security/paths.mjs';
@@ -13,17 +14,18 @@ export function deleteDance(db, mediaRoot, id, { deleteMedia = false } = {}) {
 
   // 引用检查（排除本条目本身）。
   let sourceRefs = item.sourceMediaId
-    ? db.prepare('SELECT COUNT(*) AS n FROM dance_items WHERE source_media_id=? AND id<>? AND deleted_at IS NULL').get(item.sourceMediaId, id).n : 0;
-  let clipRefs = db.prepare('SELECT COUNT(*) AS n FROM dance_items WHERE performance_clip_id=? AND id<>? AND deleted_at IS NULL').get(item.performanceClipId, id).n;
+    ? db.prepare('SELECT COUNT(*) AS n FROM dance_items WHERE source_media_id=? AND id<>?').get(item.sourceMediaId, id).n : 0;
+  let clipRefs = db.prepare('SELECT COUNT(*) AS n FROM dance_items WHERE performance_clip_id=? AND id<>?').get(item.performanceClipId, id).n;
   let coverRefs = item.coverAssetId
-    ? db.prepare('SELECT COUNT(*) AS n FROM dance_items WHERE cover_asset_id=? AND id<>? AND deleted_at IS NULL').get(item.coverAssetId, id).n : 0;
+    ? db.prepare('SELECT COUNT(*) AS n FROM dance_items WHERE cover_asset_id=? AND id<>?').get(item.coverAssetId, id).n : 0;
 
-  sourceRefs += item.sourceMediaId ? db.prepare('SELECT COUNT(*) AS n FROM repertoire_items WHERE source_media_id=? AND deleted_at IS NULL').get(item.sourceMediaId).n : 0;
-  clipRefs += db.prepare('SELECT COUNT(*) AS n FROM repertoire_items WHERE performance_clip_id=? AND deleted_at IS NULL').get(item.performanceClipId).n;
-  coverRefs += item.coverAssetId ? db.prepare('SELECT COUNT(*) AS n FROM repertoire_items WHERE cover_asset_id=? AND deleted_at IS NULL').get(item.coverAssetId).n : 0;
+  sourceRefs += item.sourceMediaId ? db.prepare('SELECT COUNT(*) AS n FROM repertoire_items WHERE source_media_id=?').get(item.sourceMediaId).n : 0;
+  clipRefs += db.prepare('SELECT COUNT(*) AS n FROM repertoire_items WHERE performance_clip_id=?').get(item.performanceClipId).n;
+  coverRefs += item.coverAssetId ? db.prepare('SELECT COUNT(*) AS n FROM repertoire_items WHERE cover_asset_id=?').get(item.coverAssetId).n : 0;
 
   db.exec('BEGIN IMMEDIATE');
   try {
+    removeFromProgram(db,[{kind:'DANCE',id}]);
     db.prepare('UPDATE dance_items SET deleted_at=CURRENT_TIMESTAMP,updated_at=CURRENT_TIMESTAMP WHERE id=?').run(id);
     db.prepare('DELETE FROM tonight_playlist_items WHERE dance_item_id=?').run(id);
     bumpCatalog(db);

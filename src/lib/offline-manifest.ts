@@ -1,4 +1,5 @@
-import type { DanceItem, OfflineManifest } from './types';
+import {readMetadata,writeMetadata} from './local-database';
+import type { DanceItem, OfflineManifest, TalentItem } from './types';
 
 /**
  * 离线清单与就绪判定（T060）。
@@ -11,7 +12,7 @@ export interface MediaEntry {
   sha256: string;
   version: number;
   sizeBytes: number;
-  kind: 'audio' | 'cover';
+  kind: 'audio' | 'cover' | 'score';
 }
 
 export interface CachedMedia {
@@ -31,13 +32,13 @@ const CACHE_KEY = 'dance.offline.cache';
 
 export function readOfflineManifest(): OfflineManifest | null {
   try {
-    const raw = JSON.parse(localStorage.getItem(MANIFEST_KEY) || 'null');
+    const raw = JSON.parse(readMetadata(MANIFEST_KEY) || 'null');
     return raw && Array.isArray(raw.items) ? (raw as OfflineManifest) : null;
   } catch { return null; }
 }
 
 export function saveOfflineManifest(manifest: OfflineManifest): void {
-  localStorage.setItem(MANIFEST_KEY, JSON.stringify(manifest));
+  writeMetadata(MANIFEST_KEY, JSON.stringify(manifest));
 }
 
 export function readCachedIndex(): CachedIndex {
@@ -52,9 +53,10 @@ export function saveCachedIndex(index: CachedIndex): void {
 }
 
 /** 一首歌需要缓存的媒体项（音频 + 可选封面）。 */
-export function mediaEntries(item: DanceItem): MediaEntry[] {
-  const list: MediaEntry[] = [{ key: item.audio.url, url: item.audio.url, sha256: item.audio.sha256, version: item.audio.version, sizeBytes: item.audio.sizeBytes, kind: 'audio' }];
+export function mediaEntries(item: DanceItem|TalentItem): MediaEntry[] {
+  const list: MediaEntry[] = item.audio ? [{ key: item.audio.url, url: item.audio.url, sha256: item.audio.sha256, version: item.audio.version, sizeBytes: item.audio.sizeBytes, kind: 'audio' }]:[];
   if (item.cover) list.push({ key: item.cover.url, url: item.cover.url, sha256: item.cover.sha256, version: item.cover.version, sizeBytes: item.cover.sizeBytes, kind: 'cover' });
+  for(const score of item.scores||[])list.push({...score,key:score.url,kind:'score'});
   return list;
 }
 
@@ -74,7 +76,7 @@ export function isItemPlayable(item: DanceItem, cached: CachedIndex): boolean {
 }
 
 /** 需要下载的媒体项（缺失或已失效）。 */
-export function pendingEntries(items: DanceItem[], cached: CachedIndex): MediaEntry[] {
+export function pendingEntries(items: (DanceItem|TalentItem)[], cached: CachedIndex): MediaEntry[] {
   const pending: MediaEntry[] = [];
   for (const item of items) for (const entry of mediaEntries(item)) if (!isMediaReady(entry, cached)) pending.push(entry);
   return pending;

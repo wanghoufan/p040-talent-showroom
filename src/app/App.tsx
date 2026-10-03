@@ -1,3 +1,7 @@
+import GuestRequestPage from '../pages/GuestRequestPage';
+import RequestAdminPage from '../pages/RequestAdminPage';
+import TrashPage from '../pages/TrashPage';
+import { observeLayoutReservations } from './layout-reservations';
 import TalentLibraryPage from '../pages/TalentLibraryPage';
 import TalentDetailPage from '../pages/TalentDetailPage';
 import { useEffect } from 'react';
@@ -45,6 +49,8 @@ function EmptyShell({ title, hint }: EmptyShellProps) {
 
 export default function App() {
   const { pathname } = useLocation();
+  useEffect(()=>{window.scrollTo(0,0);},[pathname]);
+  useEffect(() => { const shell=document.querySelector<HTMLElement>('.app-shell'); return shell ? observeLayoutReservations(shell) : undefined; }, []);
   useEffect(() => {
     // 启动即 drain 原生分享队列（冷启动可在冷启动后立即取到），再尝试提交。
     void (async () => {
@@ -60,6 +66,7 @@ export default function App() {
     return () => { document.removeEventListener('visibilitychange', onVisible); window.removeEventListener('online', onOnline); unsubscribe(); };
   }, []);
 
+  if(pathname.startsWith('/request/'))return <Routes><Route path="/request/:token" element={<GuestRequestPage/>}/></Routes>;
   return (
     <div className="app-shell">
       <main className="app-main" id="main">
@@ -72,7 +79,7 @@ export default function App() {
             path="/tonight"
             element={<TonightPlaylistPage />}
           />
-          <Route path="/perform" element={<PerformancePage />} />
+          <Route path="/settings/requests" element={<RequestAdminPage/>}/><Route path="/settings/trash" element={<TrashPage/>}/><Route path="/perform" element={<PerformancePage />} />
           <Route
             path="/settings"
             element={<SettingsPage />}

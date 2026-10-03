@@ -160,3 +160,48 @@ legend { margin-bottom:10px; font-size:15px; }
 .talent-score { white-space:pre-wrap; overflow-wrap:anywhere; font:18px/1.9 ui-monospace,monospace; }
 .talent-notes { white-space:pre-wrap; overflow-wrap:anywhere; }
 .talent-play { width:100%; min-height:64px; font-size:20px; }
+
+/* Compact library A: explicit stacking and measured dock reservations. */
+.app-shell { --tabbar-height:72px; --dock-height:0px; }
+.app-main { padding:12px 12px calc(var(--tabbar-height) + var(--dock-height) + 24px); }
+.tabbar { z-index:30; isolation:isolate; }
+.mini-player,.batch-actions { bottom:var(--tabbar-height); z-index:20; }
+.modal-backdrop { z-index:50; }
+.library-header { display:flex; align-items:center; gap:8px; margin-bottom:8px; }
+.library-header .talent-nav { flex:1; min-width:0; margin:0; gap:4px; }
+.library-header .page-header__actions { gap:4px; }
+.library-header .batch-entry { min-height:48px; font-size:12px; padding:6px; }
+.library-header .icon-link,.library-header [aria-label="收录舞蹈"] { padding:6px; min-width:48px; }
+.library-search { display:flex; align-items:stretch; gap:8px; margin-bottom:10px; }
+.library-search .search { min-width:0; flex:1; margin:0; }
+.filter-entry { flex:0 0 auto; min-width:56px; max-width:130px; padding:4px 8px; }
+.filter-entry small { display:block; font-size:10px; }
+.library-layout { display:block; }
+.card-grid { gap:10px; }
+.dance-card { isolation:isolate; padding-bottom:8px; }
+.dance-card__cover { aspect-ratio:auto; min-height:80px; }
+.cover-art--card .cover-art__text { -webkit-line-clamp:2; font-size:14px; letter-spacing:0; }
+.cover-art--card { padding:8px 22px 16px 8px; gap:3px; }
+.cover-art--card .cover-art__glyph { font-size:65px; }
+.dance-card__labels { min-height:48px; align-content:center; }
+.quick-play { bottom:0; }
+.dance-card--active .cover-art__text { color:var(--primary); }
+.talent-grid .dance-card__labels { margin-right:0; }
+.talent-grid .icon-link { margin-top:0; }
+.check-row { flex-direction:row; align-items:center; min-height:48px; margin:8px 0; }
+.check-row input { width:24px; min-height:24px; }
+.demo-badge { position:absolute; top:3px; left:3px; z-index:2; font-size:10px; padding:0 3px; border-radius:3px; background:var(--surface); }
+.bulk-title-list{max-height:35vh;overflow:auto;padding-left:24px}.trash-row{display:flex;gap:12px;align-items:center;min-height:64px;border-bottom:1px solid var(--border)}.trash-row input{width:24px;height:24px}.trash-row small{display:block;color:var(--muted)}.batch-actions{flex-wrap:wrap;gap:6px;padding:8px}.batch-sheet input[type=checkbox]{width:24px;min-height:24px}
+.performance-score{font-size:20px;line-height:1.9;white-space:pre-wrap;overflow:auto;max-height:55vh;text-align:left;padding:12px;background:var(--surface);border-radius:12px}.score-reader__surface{max-height:65vh;overflow:auto;background:#fff}.score-reader canvas{max-width:none;display:block}.import-queue{max-height:45vh;overflow:auto}.library-header{flex-wrap:wrap}.talent-grid .dance-card__select{position:relative;width:100%;height:auto;display:block}.talent-grid .dance-card__select .cover-art{min-height:80px}
+.guest-page{padding:20px;max-width:700px;margin:auto}.request-qr{display:block;max-width:100%;margin:12px auto}.request-url{overflow-wrap:anywhere}.sync-conflict{padding:12px;border:1px solid var(--border);border-radius:12px;margin-top:12px}
+
+.playlist__drag {touch-action:none;flex-shrink:0;min-width:48px;}
+.playlist__row--dragging {outline:2px solid var(--accent);}
+
+/* Reserve the selection marker so large-font titles stay readable. */
+.dance-card__select .cover-art--card { padding-left:38px; }
+.card-grid:not(.talent-grid) .dance-card__select .demo-badge { left:auto; right:3px; }
+.card-grid:not(.talent-grid) .dance-card__select:has(.demo-badge) .cover-art--card { padding-right:42px; }
+
+/* 唱歌首页沿用舞蹈卡内播放与标签留白；吉他现状冻结。 */
+.vocal-grid .dance-card__labels { margin-right:38px; }

@@ -1,8 +1,11 @@
+import {listScores} from '../scores/service.mjs';
+import { removeFromProgram } from '../program/service.mjs';
 import { randomUUID } from 'node:crypto';
 import { STATUSES, bumpCatalog } from '../catalog.mjs';
 const KINDS=['GUITAR','VOCAL'];
-const fields=['kind','title','artist','learningStatus','originalKey','performanceKey','capo','scoreText','notes','audioRole'];
+const fields=['clientId','kind','title','artist','learningStatus','originalKey','performanceKey','capo','scoreText','notes','audioRole'];
 function validate(body,kind,creating=false){
+ if(body?.clientId!==undefined&&(!creating||typeof body.clientId!=='string'||!/^[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}$/.test(body.clientId)))throw Error('BAD_REQUEST');
  if(!body||Object.keys(body).some(k=>!fields.includes(k))||(!creating&&body.kind!==undefined))throw new Error('BAD_REQUEST');
  if(!KINDS.includes(kind))throw new Error('BAD_REQUEST');
  for(const [key,max] of [['title',200],['artist',200],['originalKey',40],['performanceKey',40],['scoreText',50000],['notes',10000]]){
@@ -13,10 +16,10 @@ function validate(body,kind,creating=false){
  if(body.capo!==undefined&&(!Number.isInteger(body.capo)||body.capo<0||body.capo>12||(kind==='VOCAL'&&body.capo!==0)))throw new Error('BAD_REQUEST');
  if(body.audioRole!==undefined&&!['REFERENCE','ACCOMPANIMENT'].includes(body.audioRole))throw new Error('BAD_REQUEST');
 }
-export function getRepertoire(db,id){
- const r=db.prepare(`SELECT r.*,c.sha256 AS audio_hash,c.size_bytes AS audio_size,c.version AS audio_version,c.duration_ms,c.start_ms,c.end_ms,c.source_preserving,m.source_kind,m.source_locator,m.sha256 AS source_hash,m.duration_ms AS source_duration,a.sha256 AS cover_hash,a.size_bytes AS cover_size FROM repertoire_items r LEFT JOIN performance_clips c ON c.id=r.performance_clip_id LEFT JOIN source_media m ON m.id=r.source_media_id LEFT JOIN assets a ON a.id=r.cover_asset_id WHERE r.id=? AND r.deleted_at IS NULL`).get(id);
+export function getRepertoire(db,id,includeDeleted=false){
+ const r=db.prepare(`SELECT r.*,c.sha256 AS audio_hash,c.size_bytes AS audio_size,c.version AS audio_version,c.duration_ms,c.start_ms,c.end_ms,c.source_preserving,m.source_kind,m.source_locator,m.sha256 AS source_hash,m.duration_ms AS source_duration,a.sha256 AS cover_hash,a.size_bytes AS cover_size FROM repertoire_items r LEFT JOIN performance_clips c ON c.id=r.performance_clip_id LEFT JOIN source_media m ON m.id=r.source_media_id LEFT JOIN assets a ON a.id=r.cover_asset_id WHERE r.id=? AND (r.deleted_at IS NULL OR ?)`).get(id,includeDeleted?1:0);
  if(!r)return null;
- return {id:r.id,kind:r.kind,title:r.title,artist:r.artist,learningStatus:r.learning_status,originalKey:r.original_key,performanceKey:r.performance_key,capo:r.capo,scoreText:r.score_text,notes:r.notes,audioRole:r.audio_role,sourceMediaId:r.source_media_id||undefined,performanceClipId:r.performance_clip_id||undefined,durationMs:r.duration_ms||0,
+ return {scores:listScores(db,{kind:r.kind,id:r.id}),revision:r.revision,isDemo:!!db.prepare("SELECT 1 FROM demo_records WHERE kind=? AND item_id=?").get(r.kind,r.id),id:r.id,kind:r.kind,title:r.title,artist:r.artist,learningStatus:r.learning_status,originalKey:r.original_key,performanceKey:r.performance_key,capo:r.capo,scoreText:r.score_text,notes:r.notes,audioRole:r.audio_role,sourceMediaId:r.source_media_id||undefined,performanceClipId:r.performance_clip_id||undefined,durationMs:r.duration_ms||0,
  audio:r.performance_clip_id?{id:r.performance_clip_id,url:`/api/media/audio/${r.performance_clip_id}`,sha256:r.audio_hash,sizeBytes:r.audio_size,version:r.audio_version,startMs:r.start_ms,endMs:r.end_ms,sourcePreserving:!!r.source_preserving}:undefined,
  cover:r.cover_asset_id?{id:r.cover_asset_id,url:`/api/media/cover/${r.cover_asset_id}`,sha256:r.cover_hash,sizeBytes:r.cover_size,version:1}:undefined,
  source:r.source_media_id?{id:r.source_media_id,sourceKind:r.source_kind,sourceLocator:r.source_locator||undefined,sha256:r.source_hash,durationMs:r.source_duration}:undefined};
@@ -31,7 +34,8 @@ export function saveRepertoire(db,id,body){
  const prior=id?getRepertoire(db,id):null;if(id&&!prior)throw Object.assign(new Error('NOT_FOUND'),{status:404});
  const kind=prior?.kind||body.kind;validate(body,kind,!id);
  const value={kind,title:'',artist:'',learningStatus:'WANT_TO_LEARN',originalKey:'',performanceKey:'',capo:0,scoreText:'',notes:'',audioRole:'REFERENCE',...prior,...body};
- const nextId=id||randomUUID();
+ const nextId=id||body.clientId||randomUUID();
+ if(!id&&body.clientId){const exists=getRepertoire(db,nextId);if(exists){if(exists.kind!==kind)throw Error('BAD_REQUEST');return exists;}}
  db.exec('BEGIN IMMEDIATE');
  try{
   if(!id)db.prepare('INSERT INTO repertoire_items(id,kind,title) VALUES(?,?,?)').run(nextId,kind,value.title.trim());
@@ -57,6 +61,6 @@ export function attachRepertoireMedia(db,id,body){
 }
 export function deleteRepertoire(db,id){
  if(!getRepertoire(db,id))throw Object.assign(new Error('NOT_FOUND'),{status:404});
- db.exec('BEGIN IMMEDIATE');try{db.prepare('UPDATE repertoire_items SET deleted_at=CURRENT_TIMESTAMP,updated_at=CURRENT_TIMESTAMP WHERE id=?').run(id);bumpCatalog(db);db.exec('COMMIT');}catch(e){db.exec('ROLLBACK');throw e;}
+ db.exec('BEGIN IMMEDIATE');try{removeFromProgram(db,[{kind:getRepertoire(db,id).kind,id}]);db.prepare('UPDATE repertoire_items SET deleted_at=CURRENT_TIMESTAMP,updated_at=CURRENT_TIMESTAMP WHERE id=?').run(id);bumpCatalog(db);db.exec('COMMIT');}catch(e){db.exec('ROLLBACK');throw e;}
  return {deleted:true,mediaDeleted:0};
 }

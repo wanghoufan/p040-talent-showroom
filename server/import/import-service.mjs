@@ -1,5 +1,5 @@
 import { randomUUID } from 'node:crypto';
-import { createWriteStream, mkdirSync, unlinkSync } from 'node:fs';
+import { createWriteStream, mkdirSync, unlinkSync, existsSync } from 'node:fs';
 import { join, relative } from 'node:path';
 import { Transform } from 'node:stream';
 import { pipeline } from 'node:stream/promises';
@@ -30,7 +30,8 @@ export function publicJob(db,id) {
   const job=db.prepare('SELECT * FROM import_jobs WHERE id=?').get(id);
   if(!job) return null;
   const draft=job.draft_json?JSON.parse(job.draft_json):null;
-  return {id:job.id,status:job.status,stage:job.stage,errorCode:job.error_code||undefined,duplicateId:draft?.duplicateId,draft:draft?{title:draft.title,artist:draft.artist,link:draft.link,adapter:draft.adapter,capability:draft.capability,learningStatus:'WANT_TO_LEARN',sceneTags:[],sourceMediaId:draft.sourceId,audio:draft.clip?{id:draft.clip.id,url:`/api/media/audio/${draft.clip.id}`,sha256:draft.clip.sha256,sizeBytes:draft.clip.sizeBytes,version:1}:undefined,cover:draft.cover?{id:draft.cover.id,url:`/api/media/cover/${draft.cover.id}`,sha256:draft.cover.sha256,sizeBytes:draft.cover.sizeBytes,version:1}:undefined,durationMs:draft.probe?.durationMs,candidates:draft.recognition?.candidates||[]}:undefined};
+  const duplicateRefs=draft?.identity?.sha256?[...db.prepare("SELECT d.id,'DANCE' AS kind FROM dance_items d JOIN source_media m ON m.id=d.source_media_id WHERE m.sha256=? AND d.deleted_at IS NULL").all(draft.identity.sha256),...db.prepare('SELECT r.id,r.kind FROM repertoire_items r JOIN source_media m ON m.id=r.source_media_id WHERE m.sha256=? AND r.deleted_at IS NULL').all(draft.identity.sha256)]:[];
+  return {duplicateRefs,id:job.id,status:job.status,stage:job.stage,errorCode:job.error_code||undefined,duplicateId:draft?.duplicateId,draft:draft?{title:draft.title,artist:draft.artist,link:draft.link,adapter:draft.adapter,capability:draft.capability,learningStatus:'WANT_TO_LEARN',sceneTags:[],sourceMediaId:draft.sourceId,audio:draft.clip?{id:draft.clip.id,url:`/api/media/audio/${draft.clip.id}`,sha256:draft.clip.sha256,sizeBytes:draft.clip.sizeBytes,version:1}:undefined,cover:draft.cover?{id:draft.cover.id,url:`/api/media/cover/${draft.cover.id}`,sha256:draft.cover.sha256,sizeBytes:draft.cover.sizeBytes,version:1}:undefined,durationMs:draft.probe?.durationMs,candidates:draft.recognition?.candidates||[]}:undefined};
 }
 export async function receiveFile(req,ctx,opts={}) {
   const {db,mediaRoot}=ctx;
@@ -41,15 +42,17 @@ export async function receiveFile(req,ctx,opts={}) {
     if(!existing) throw Object.assign(new Error('NOT_FOUND'),{status:404});
     if(existing.status!=='NEEDS_INPUT') throw Object.assign(new Error('BAD_REQUEST'),{status:409});
     id=existing.id;
-  } else id=randomUUID();
+  } else {id=req.headers['x-import-id']||randomUUID();if(typeof id!=='string'||!/^[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}$/.test(id))throw Error('BAD_REQUEST');const prior=publicJob(db,id);if(prior)return prior;}
+  ctx.receivingUploads??=new Set();if(ctx.receivingUploads.has(id))throw Object.assign(Error('IMPORT_BUSY'),{status:409});
   const file=join(mediaRoot,'source',id+'.media');
   const limit=512*1024*1024; let size=0;
   if(Number(req.headers['content-length'])>limit) throw Object.assign(new Error('UPLOAD_TOO_LARGE'),{status:413});
   const declared=req.headers['content-type']?.split(';')[0]||'';
   if(!/^(video\/|audio\/|application\/octet-stream$)/.test(declared)) throw Object.assign(new Error('INVALID_MEDIA'),{status:415});
+  ctx.receivingUploads.add(id);if(existsSync(file))unlinkSync(file);
   try {
     await pipeline(req,new Transform({transform(chunk,_,callback){size+=chunk.length;callback(size>limit?new Error('UPLOAD_TOO_LARGE'):null,chunk);}}),createWriteStream(file,{flags:'wx'}));
-  } catch(error) { try{unlinkSync(file);}catch{/* Keep the original upload error if cleanup fails. */} throw error; }
+  } catch(error) { try{unlinkSync(file);}catch{/* Keep the original upload error if cleanup fails. */} throw error; } finally {ctx.receivingUploads.delete(id);}
   const identity=await fileIdentity(file);
   const duplicate=db.prepare('SELECT d.id FROM dance_items d JOIN source_media m ON d.source_media_id=m.id WHERE m.sha256=? AND d.deleted_at IS NULL LIMIT 1').get(identity.sha256);
   let name='未识别舞蹈';

@@ -1,0 +1,10 @@
+ALTER TABLE dance_items ADD COLUMN revision INTEGER NOT NULL DEFAULT 1;
+ALTER TABLE repertoire_items ADD COLUMN revision INTEGER NOT NULL DEFAULT 1;
+CREATE TRIGGER dance_revision AFTER UPDATE ON dance_items WHEN NEW.revision=OLD.revision BEGIN UPDATE dance_items SET revision=OLD.revision+1 WHERE id=NEW.id; END;
+CREATE TRIGGER repertoire_revision AFTER UPDATE ON repertoire_items WHEN NEW.revision=OLD.revision BEGIN UPDATE repertoire_items SET revision=OLD.revision+1 WHERE id=NEW.id; END;
+CREATE TABLE operation_results(id TEXT PRIMARY KEY,fingerprint TEXT NOT NULL,result_json TEXT NOT NULL,created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP);
+CREATE TABLE demo_records(kind TEXT NOT NULL,item_id TEXT NOT NULL,slot TEXT NOT NULL UNIQUE,media_json TEXT NOT NULL DEFAULT '[]',PRIMARY KEY(kind,item_id));
+CREATE TABLE program_meta(singleton INTEGER PRIMARY KEY CHECK(singleton=1),revision INTEGER NOT NULL DEFAULT 1);
+INSERT INTO program_meta(singleton) VALUES(1);
+CREATE TABLE program_items(kind TEXT NOT NULL CHECK(kind IN('DANCE','GUITAR','VOCAL')),item_id TEXT NOT NULL,position INTEGER NOT NULL UNIQUE,PRIMARY KEY(kind,item_id));
+INSERT INTO program_items(kind,item_id,position) SELECT 'DANCE',dance_item_id,position FROM tonight_playlist_items;

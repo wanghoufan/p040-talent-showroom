@@ -23,7 +23,7 @@ function slot(key: string): string {
 }
 
 function filePath(entry: MediaEntry): string {
-  const ext = entry.kind === 'cover' ? 'img' : 'audio';
+  const ext = entry.kind === 'cover' ? 'img' : entry.kind==='score'?'score':'audio';
   return `${ROOT}/${entry.kind}-${slot(entry.key)}.${ext}`;
 }
 

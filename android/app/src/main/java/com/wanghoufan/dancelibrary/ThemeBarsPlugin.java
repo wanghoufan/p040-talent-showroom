@@ -34,6 +34,16 @@ public class ThemeBarsPlugin extends Plugin {
         call.resolve();
     }
 
+    @PluginMethod
+    public void keepAwake(PluginCall call) {
+        final boolean enabled = Boolean.TRUE.equals(call.getBoolean("enabled", false));
+        getActivity().runOnUiThread(() -> {
+            if (enabled) getActivity().getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+            else getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+            call.resolve();
+        });
+    }
+
     private void apply(boolean dark) {
         Window window = getActivity().getWindow();
         int color = dark ? DARK_BG : LIGHT_BG;

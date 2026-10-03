@@ -1,3 +1,5 @@
+import {flushLocalFiles} from './lib/offline-files';
+import {initializeLocalDatabase} from './lib/local-database';
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
@@ -27,6 +29,8 @@ if (container === null) {
   throw new Error('root container missing');
 }
 
+await initializeLocalDatabase().catch(()=>window.dispatchEvent(new Event('dance-storage-error')));
+void flushLocalFiles();window.addEventListener('online',()=>void flushLocalFiles());setInterval(()=>{if(document.visibilityState==='visible')void flushLocalFiles();},15000);document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible')void flushLocalFiles();});
 createRoot(container).render(
   <StrictMode>
     <BrowserRouter>

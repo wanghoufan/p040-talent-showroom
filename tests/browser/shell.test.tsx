@@ -5,7 +5,7 @@ import App from '../../src/app/App';
 describe('基础界面', () => {
   it('四个入口可访问，空库不向用户展示开发过程', () => {
     render(<MemoryRouter><App /></MemoryRouter>);
-    for (const name of ['曲库', '今晚歌单', '演出模式', '我的']) {
+    for (const name of ['曲库', '今晚节目单', '演出模式', '我的']) {
       expect(screen.getByRole('link', { name })).toBeVisible();
     }
     expect(screen.queryByText(/后续阶段|基础工程/)).not.toBeInTheDocument();

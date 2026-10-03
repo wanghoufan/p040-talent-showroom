@@ -1,105 +1,14 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
-import { readOfflineManifest, readCachedIndex, isItemPlayable } from '../lib/offline-manifest';
-import { playbackSource } from '../native/filesystem';
-import { useCatalog } from '../lib/catalog-store';
-import { fetchPlaylist } from '../lib/playlist';
-import SceneTagBar from '../components/SceneTagBar';
-import type { DanceItem, SceneTag } from '../lib/types';
-
-/**
- * 演出模式（T062/T063）。
- * 默认只列「会跳」，四标签 AND；未缓存/损坏的曲目明确不可播。
- * 播放优先用离线文件，缺失时回落网络地址。
- */
-
-export default function PerformancePage() {
-  const { items: catalogItems } = useCatalog();
-  const [offlineItems, setOfflineItems] = useState<DanceItem[] | null>(() => readOfflineManifest()?.items ?? null);
-  const [playlist, setPlaylist] = useState<string[]>(() => readOfflineManifest()?.playlist ?? []);
-  const [scenes, setScenes] = useState<SceneTag[]>([]);
-  const [index, setIndex] = useState(0);
-  const [playing, setPlaying] = useState(false);
-  const [notice, setNotice] = useState('');
-  const audio = useRef<HTMLAudioElement>(null);
-
-  useEffect(() => {
-    // 离线优先：先用清单快照渲染；联网时再刷新歌单，不阻塞首屏。
-    setOfflineItems(readOfflineManifest()?.items ?? null);
-    fetchPlaylist().then((data) => setPlaylist(data.items)).catch(() => undefined);
-  }, []);
-
-  const items = useMemo(() => (catalogItems.length ? catalogItems : (offlineItems ?? [])), [catalogItems, offlineItems]);
-
-  const cached = readCachedIndex();
-  // 今晚歌单非空时以其顺序为准，否则回落到「会跳」；两者都再叠加四标签 AND。
-  const list = useMemo(() => {
-    const base = playlist.length
-      ? playlist.map((id) => items.find((item) => item.id === id)).filter((x): x is DanceItem => Boolean(x))
-      : items.filter((item) => item.learningStatus === 'CAN_DANCE');
-    return base.filter((item) => scenes.every((tag) => item.sceneTags.includes(tag)));
-  }, [items, playlist, scenes]);
-  const current = list[Math.min(index, Math.max(list.length - 1, 0))];
-  const playable = current ? isItemPlayable(current, cached) : false;
-
-  useEffect(() => {
-    if (index > list.length - 1) setIndex(Math.max(list.length - 1, 0));
-  }, [list.length, index]);
-
-  const load = (item: DanceItem, auto: boolean) => {
-    if (!audio.current) return;
-    if (!isItemPlayable(item, cached)) { setPlaying(false); setNotice('这首歌还没有离线缓存，请先在设置里同步。'); return; }
-    setNotice('');
-    audio.current.src = playbackSource(item, cached);
-    if (auto) void audio.current.play().then(() => setPlaying(true)).catch(() => setPlaying(false));
-  };
-  // 下一首/上一首只切换选中，不自动发声；必须再次点击播放。
-  const select = (next: number) => {
-    setIndex(next); setPlaying(false); setNotice('');
-    const node = audio.current;
-    if (node) { node.pause(); node.removeAttribute('src'); node.load(); }
-  };
-  const toggle = () => {
-    if (!audio.current || !current) return;
-    if (playing) { audio.current.pause(); setPlaying(false); return; }
-    if (!audio.current.src) load(current, true); else void audio.current.play().then(() => setPlaying(true)).catch(() => setPlaying(false));
-  };
-  const restart = () => { if (audio.current) { audio.current.currentTime = 0; void audio.current.play().then(() => setPlaying(true)); } };
-
-  return (
-    <section>
-      <header className="page-header"><h1>演出模式</h1></header>
-      <p className="muted">演出前请在「我的 → 本地缓存」同步离线音乐。</p>
-      <SceneTagBar value={scenes} onChange={setScenes} />
-      {list.length === 0 ? (
-        <div className="empty-library"><h2>没有可演出的舞蹈</h2><p>{playlist.length ? '调整标签筛选，或先在今晚歌单准备好曲目。' : '先在「今晚歌单」挑选曲目，或在曲库把舞蹈标为「会跳」。'}</p></div>
-      ) : (
-        <>
-          <div className="perform-stage">
-            <p className="perform-title">{current?.title}</p>
-            <p className="muted">{current?.artist}{playable ? '' : ' · 未缓存'}</p>
-            <div className="perform-controls">
-              <button aria-label="上一首" disabled={index <= 0} onClick={() => select(index - 1)}>⏮</button>
-              <button className="primary perform-toggle" aria-label={playing ? '暂停' : '播放'} onClick={toggle}>{playing ? '⏸' : '▶'}</button>
-              <button aria-label="从头" onClick={restart}>↺</button>
-              <button aria-label="下一首" disabled={index >= list.length - 1} onClick={() => select(index + 1)}>⏭</button>
-            </div>
-            {notice && <p role="alert" className="notice">{notice}</p>}
-            <audio ref={audio} onEnded={() => setPlaying(false)} hidden />
-          </div>
-          <ol className="perform-list">
-            {list.map((item, i) => {
-              const ready = isItemPlayable(item, cached);
-              return (
-                <li key={item.id}>
-                  <button className={i === index ? 'perform-list__item perform-list__item--active' : 'perform-list__item'} onClick={() => select(i)}>
-                    <span>{item.title}</span><small>{ready ? '已缓存' : '未缓存，不可播'}</small>
-                  </button>
-                </li>
-              );
-            })}
-          </ol>
-        </>
-      )}
-    </section>
-  );
+import {lazy,Suspense} from 'react';const ScoreReader=lazy(()=>import('../components/ScoreReader'));
+import ScrollingText from '../components/ScrollingText';
+import {useEffect,useRef,useState} from 'react';
+import {useCatalog} from '../lib/catalog-store';import {useRepertoire} from '../lib/repertoire-store';
+import {storedProgram,fetchProgram,kindLabel,programAudio,type ProgramItem} from '../lib/program';
+import {isItemPlayable,readCachedIndex} from '../lib/offline-manifest';import {offlineUrl,cachedFileValid} from '../native/filesystem';
+import type {LibraryKind} from '../lib/library-management';import {keepScreenAwake} from '../native/theme-bars';
+export default function PerformancePage(){const {items:dances}=useCatalog(),{items:talents}=useRepertoire();const [program,setProgram]=useState(storedProgram),[kind,setKind]=useState<LibraryKind>('DANCE'),[index,setIndex]=useState(0),[playing,setPlaying]=useState(false),[notice,setNotice]=useState('');const audio=useRef<HTMLAudioElement>(null);const cached=readCachedIndex();
+ const catalog:ProgramItem[]=[...dances.map(i=>({...i,kind:'DANCE' as const})),...talents];const list=program.items.length?program.items.map(r=>catalog.find(i=>r.kind===i.kind&&r.id===i.id)).filter((i):i is ProgramItem=>!!i):catalog.filter(i=>i.kind===kind&&i.learningStatus==='CAN_DANCE');const current=list[Math.min(index,Math.max(list.length-1,0))];const source=current?programAudio(current):null;const currentId=useRef(current?.id);currentId.current=current?.id;
+ useEffect(()=>{void fetchProgram().then(setProgram).catch(()=>undefined);void keepScreenAwake(true);return()=>{void keepScreenAwake(false);};},[]);
+ useEffect(()=>{const a=audio.current;if(a?.getAttribute('src')){a.pause();a.removeAttribute('src');a.load();}setPlaying(false);setNotice('');},[current?.id]);
+ async function toggle(restart=false){const a=audio.current;if(!a||!source)return;if(playing&&!restart){a.pause();return;}const entry=cached[source.audio.url];if(!isItemPlayable(source,cached)||!entry||!(await cachedFileValid({...source.audio,key:source.audio.url,kind:'audio'},entry))){setNotice('这首音乐尚未下载或文件已丢失，请先准备离线演出。');return;}if(currentId.current!==source.id)return;const url=offlineUrl(entry.uri);if(!url){setNotice('本地音乐无法读取');return;}if(a.getAttribute('src')!==url)a.src=url;if(restart)a.currentTime=0;try{await a.play();setNotice('');}catch{setNotice('音乐无法播放，请重新下载后重试。');}}
+ return <section><header className="page-header"><h1>演出模式</h1></header><p className="muted">进入、切换和结束曲目后均等待你手动播放；演出时保持屏幕亮起。</p>{!program.items.length&&<select aria-label="默认才艺" value={kind} onChange={e=>{setKind(e.target.value as LibraryKind);setIndex(0);}}>{(['DANCE','GUITAR','VOCAL'] as const).map(k=><option key={k} value={k}>{kindLabel(k)}</option>)}</select>}{current?<><div className="perform-stage"><p className="perform-title">{current.title}</p><p>{kindLabel(current.kind)}{current.kind!=='DANCE'&&<> · {current.performanceKey||current.originalKey||'未设调'}{current.kind==='GUITAR'&&` · Capo ${current.capo}`}</>}</p><div className="perform-controls"><button aria-label="上一首" disabled={index<=0} onClick={()=>setIndex(index-1)}>⏮</button><button className="primary perform-toggle" aria-label={playing?'暂停':'播放'} disabled={!source} onClick={()=>void toggle()}>{playing?'⏸':'▶'}</button><button aria-label="从头" disabled={!source} onClick={()=>void toggle(true)}>↺</button><button aria-label="下一首" disabled={index>=list.length-1} onClick={()=>setIndex(index+1)}>⏭</button></div>{!source&&<p>此曲目只保存了文本，可直接看谱或歌词。</p>}{notice&&<p role="alert">{notice}</p>}<audio ref={audio} controls hidden={!source} onPlay={()=>setPlaying(true)} onPause={()=>setPlaying(false)} onEnded={()=>setPlaying(false)}/>{current.kind!=='DANCE'&&<ScrollingText text={current.scoreText||'暂未保存谱或歌词'}/>}{current.scores?.map(s=><Suspense key={s.id} fallback={<p>正在打开谱…</p>}><ScoreReader asset={s} offline/></Suspense>)}</div><ol className="perform-list">{list.map((i,n)=><li key={i.id}><button className={`perform-list__item${n===index?' perform-list__item--active':''}`} onClick={()=>setIndex(n)}><span>{i.title}</span><small>{kindLabel(i.kind)}</small></button></li>)}</ol></>:<p>没有可演出的曲目，请先加入今晚节目单。</p>}</section>;
 }

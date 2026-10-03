@@ -106,8 +106,12 @@ React 19 · TypeScript · Vite 7 ｜ Node.js local API (`node:sqlite`) ｜ Capac
 
 No open-source license is declared; this is a personal-use project.
 
-## V2 guitar and vocals MVP
+## Completion update
 
-Switch Dance / Guitar / Vocals above the library. Create a text-only song first, record its key, guitar Capo and chord/lyric text, then import your own audio or video. Vocals distinguish accompaniment from reference audio. Detail playback supports pause, looping and speed controls; key and Capo are notes, not audio transposition.
+The compact two-column home, bulk editing/trash/restore, durable offline edits and mixed program are implemented. Vocals use the same inline card playback control as dance. The phone can create vocal text items offline, queue media/score files, and resolve revision conflicts in Settings. Permanent record deletion and demo cleanup require the local API.
 
-Settings can download all three libraries’ music and covers with progress, failure details, cancellation after the current file and resumable retries. Text scores and lyrics remain available offline. Creating, editing and importing require the local API. Image/PDF scores, automatic transposition, mixed-talent performance queues and public song requests are outside this MVP; Tonight and Performance remain dance-only. See [V2 plan](specs/002-guitar-vocal/plan.md).
+Settings offers independently registered original demos with selective downloads and confirmed cleanup. Vocal image/PDF attachments support ordering, unlinking, zoom, PDF page bookmarks and offline reading; PDF.js assets are bundled. Lyrics can scroll automatically and pause on manual touch.
+
+The local song-request desk publishes only selected titles and types for 24 hours. Scan its QR on the same LAN; guests cannot access private lyrics, scores, notes or media. Owner pairing protects management and media endpoints. Requests are approved before joining the program. Public hosting, production signing and first-release acceptance remain Human Gates.
+
+Guitar code and data are preserved but further guitar development and data changes are frozen at the user's request on 2026-10-03, pending a revised design. See the [completion plan](specs/003-talent-library-completion/plan.md) and [current handoff](docs/handoff/HANDOFF.md) for verification boundaries.

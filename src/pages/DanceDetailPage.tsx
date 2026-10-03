@@ -1,3 +1,5 @@
+import {editLocally} from '../lib/offline-editing';
+import ScoreAttachments from '../components/ScoreAttachments';
 import { useEffect, useRef, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { api, jsonBody, mediaUrl } from '../lib/api';
@@ -28,7 +30,7 @@ export default function DanceDetailPage() {
   }, [id]);
 
   const patch = async (body: unknown) => {
-    try { const data = await api<DanceItem>(`/api/dances/${id}`, { method: 'PATCH', ...jsonBody(body) }); setItem(data); catalogChanged(); setError(''); }
+    try { const data = await editLocally({kind:'DANCE',id:id!},body as Record<string,unknown>) as unknown as DanceItem; setItem(data); catalogChanged(); setError(''); }
     catch { setError('修改未完成，请检查连接'); }
   };
   const uploadCover = async (file: File) => {
@@ -38,7 +40,7 @@ export default function DanceDetailPage() {
   // 安全删除（T071）：默认仅记录（软删除，不动媒体）；第二档才回收媒体文件，前端二次确认。
   const remove = async (deleteMedia: boolean) => {
     setDeleting(true);
-    try { await api(`/api/dances/${id}`, { method: 'DELETE', ...jsonBody({ deleteMedia }) }); catalogChanged(); navigate('/'); }
+    try { if(deleteMedia)await api(`/api/dances/${id}`,{method:'DELETE',...jsonBody({deleteMedia})});else await editLocally({kind:'DANCE',id:id!},{},'trash'); catalogChanged(); navigate('/'); }
     catch { setError('删除未完成，请检查连接'); setDeleting(false); setConfirmDelete(false); }
   };
 
@@ -54,7 +56,7 @@ export default function DanceDetailPage() {
         {item.source?.sourceKind === 'VIDEO' && <Link className="icon-link" to={`/reference/${item.sourceMediaId}`}>查看原视频</Link>}
       </div>
       <audio ref={audio} src={mediaUrl(item.audio.url)} onPlay={() => setPlaying(true)} onPause={() => setPlaying(false)} onEnded={() => setPlaying(false)} controls />
-      <ClipTrimmer item={item} onUpdated={setItem} />
+      <ScoreAttachments itemRef={{kind:'DANCE',id:item.id}} scores={item.scores||[]} onChange={scores=>{setItem({...item,scores});catalogChanged();}}/><ClipTrimmer item={item} onUpdated={setItem} />
       <fieldset><legend>学习状态</legend><div className="button-row">{STATUS_OPTIONS.map((o) => <button key={o.id} aria-pressed={item.learningStatus === o.id} onClick={() => void patch({ learningStatus: o.id })}>{o.label}</button>)}</div></fieldset>
       <fieldset><legend>场景标签</legend><div className="button-row">{SCENE_OPTIONS.map((o) => <button key={o.id} aria-pressed={item.sceneTags.includes(o.id)} onClick={() => void patch({ sceneTags: item.sceneTags.includes(o.id) ? item.sceneTags.filter((t) => t !== o.id) : [...item.sceneTags, o.id] })}>{o.label}</button>)}</div></fieldset>
       <div className="button-row">

@@ -1,99 +1,16 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
-import { useCatalog } from '../lib/catalog-store';
-import { fetchPlaylist, savePlaylist, moveItem } from '../lib/playlist';
-import { prepareOffline } from '../lib/sync';
-import { readCachedIndex, isItemPlayable } from '../lib/offline-manifest';
-import type { DanceItem } from '../lib/types';
-
-/**
- * 今晚歌单（T075/T076）。
- * 增删、拖动/上下移动排序并持久化；「准备离线演出」逐条下载校验，全部通过才 Ready。
- */
-export default function TonightPlaylistPage() {
-  const { items: catalog } = useCatalog();
-  const [ids, setIds] = useState<string[]>([]);
-  const [status, setStatus] = useState('');
-  const [busy, setBusy] = useState(false);
-  const [ready, setReady] = useState<boolean | null>(null);
-  const [dragFrom, setDragFrom] = useState<number | null>(null);
-  const listRef = useRef<HTMLOListElement>(null);
-
-  const byId = useMemo(() => new Map(catalog.map((item) => [item.id, item])), [catalog]);
-  const playlistItems = useMemo(() => ids.map((id) => byId.get(id)).filter((x): x is DanceItem => Boolean(x)), [ids, byId]);
-  const cached = readCachedIndex();
-
-  useEffect(() => {
-    fetchPlaylist().then((data) => setIds(data.items)).catch(() => setStatus('无法读取歌单，请确认已连接本地服务器'));
-  }, []);
-
-  const persist = (next: string[]) => {
-    setIds(next);
-    setReady(null);
-    savePlaylist(next).catch(() => setStatus('保存失败，请重试'));
-  };
-  const add = (id: string) => { if (!ids.includes(id)) persist([...ids, id]); };
-  const remove = (id: string) => persist(ids.filter((x) => x !== id));
-  const clearAll = () => { if (window.confirm('清空今晚歌单？')) persist([]); };
-
-  const prepare = async () => {
-    if (!playlistItems.length) return;
-    setBusy(true); setStatus('正在准备离线演出…');
-    try {
-      const result = await prepareOffline(playlistItems, (done, total) => setStatus(`正在缓存 ${done}/${total}`));
-      setReady(result.ready);
-      setStatus(result.ready ? `已准备好，${playlistItems.length} 首均可离线播放` : '未准备好：仍有条目缺失或损坏');
-    } catch { setStatus('准备失败，请确认已连接本地服务器'); } finally { setBusy(false); }
-  };
-
-  // 指针拖动排序：按落点所在行重排（触摸与鼠标通用）。
-  const onPointerMove = (event: React.PointerEvent) => {
-    if (dragFrom == null || !listRef.current) return;
-    const rows = [...listRef.current.querySelectorAll<HTMLElement>('[data-row]')];
-    const target = rows.findIndex((row) => { const r = row.getBoundingClientRect(); return event.clientY >= r.top && event.clientY <= r.bottom; });
-    if (target >= 0 && target !== dragFrom) { const next = moveItem(ids, dragFrom, target); setIds(next); setDragFrom(target); }
-  };
-  const onPointerUp = () => { if (dragFrom != null) { setDragFrom(null); setReady(null); savePlaylist(ids).catch(() => setStatus('保存失败，请重试')); } };
-
-  const notInList = catalog.filter((item) => !ids.includes(item.id));
-
-  return (
-    <section onPointerMove={onPointerMove} onPointerUp={onPointerUp} onPointerCancel={onPointerUp}>
-      <header className="page-header"><h1>今晚歌单</h1>{ids.length > 0 && <button onClick={clearAll}>清空</button>}</header>
-      {ids.length === 0 ? (
-        <div className="empty-library"><h2>今晚歌单还是空的</h2><p>从下面挑选今晚可能跳的舞，排好顺序。</p></div>
-      ) : (
-        <>
-          <div className="playlist-ready">
-            <button className="primary" disabled={busy} onClick={() => void prepare()}>{busy ? '准备中…' : '准备离线演出'}</button>
-            {ready !== null && <span className={ready ? 'ready-ok' : 'ready-bad'}>{ready ? '已准备好' : '未准备好'}</span>}
-          </div>
-          <ol className="playlist" ref={listRef}>
-            {playlistItems.map((item, index) => {
-              const ok = isItemPlayable(item, cached);
-              return (
-                <li key={item.id} data-row={index} className={dragFrom === index ? 'playlist__row playlist__row--dragging' : 'playlist__row'}>
-                  <button className="playlist__handle" aria-label="拖动排序" onPointerDown={() => setDragFrom(index)}>☰</button>
-                  <span className="playlist__title">{item.title}<small>{ok ? '已缓存' : '未缓存，不可播'}</small></span>
-                  <span className="playlist__move">
-                    <button aria-label="上移" disabled={index === 0} onClick={() => persist(moveItem(ids, index, index - 1))}>↑</button>
-                    <button aria-label="下移" disabled={index === ids.length - 1} onClick={() => persist(moveItem(ids, index, index + 1))}>↓</button>
-                    <button aria-label="移出歌单" onClick={() => remove(item.id)}>✕</button>
-                  </span>
-                </li>
-              );
-            })}
-          </ol>
-        </>
-      )}
-      {status && <p role="status" className="notice">{status}</p>}
-      <div className="playlist-add">
-        <h2>加入歌单</h2>
-        {notInList.length === 0 ? <p className="muted">曲库里的舞蹈都已加入。</p> : (
-          <ul className="playlist-add__list">
-            {notInList.map((item) => <li key={item.id}><button onClick={() => add(item.id)}>＋ {item.title}</button></li>)}
-          </ul>
-        )}
-      </div>
-    </section>
-  );
+import {useEffect,useState,useRef} from 'react';
+import {useCatalog} from '../lib/catalog-store';import {useRepertoire} from '../lib/repertoire-store';
+import {fetchProgram,saveProgram,storedProgram,kindLabel,programAudio,type ProgramItem} from '../lib/program';
+import {prepareOffline} from '../lib/sync';import {isItemPlayable,readCachedIndex} from '../lib/offline-manifest';
+import {moveItem} from '../lib/playlist';import type {LibraryKind} from '../lib/library-management';
+export default function TonightPlaylistPage(){const {items:dances}=useCatalog(),{items:talents}=useRepertoire();const [program,setProgram]=useState(storedProgram),[message,setMessage]=useState(''),[busy,setBusy]=useState(false),[query,setQuery]=useState(''),[kind,setKind]=useState<LibraryKind|'ALL'>('ALL'),[selected,setSelected]=useState<Set<string>>(new Set()),[confirm,setConfirm]=useState(false);
+ const dragging=useRef<{index:number;pointer:number}|null>(null);const [dragIndex,setDragIndex]=useState<number|null>(null);
+ function startDrag(event:React.PointerEvent<HTMLButtonElement>,index:number){event.preventDefault();event.currentTarget.setPointerCapture(event.pointerId);dragging.current={index,pointer:event.pointerId};setDragIndex(index);}
+ function endDrag(event:React.PointerEvent<HTMLButtonElement>){const drag=dragging.current;dragging.current=null;setDragIndex(null);if(!drag)return;const row=document.elementFromPoint(event.clientX,event.clientY)?.closest<HTMLElement>('[data-program-index]');if(row)void persist(moveItem(program.items,drag.index,Number(row.dataset.programIndex)));}
+ const catalog:ProgramItem[]=[...dances.map(i=>({...i,kind:'DANCE' as const})),...talents];const items=program.items.map(r=>catalog.find(i=>i.kind===r.kind&&i.id===r.id)).filter((i):i is ProgramItem=>!!i);const cached=readCachedIndex();
+ useEffect(()=>{const changed=()=>setProgram(storedProgram());window.addEventListener('dance-program-changed',changed);fetchProgram().then(setProgram).catch(()=>setMessage('当前显示手机保存的节目单'));return()=>window.removeEventListener('dance-program-changed',changed);},[]);
+ async function persist(refs:typeof program.items){setBusy(true);setMessage('');try{setProgram(await saveProgram({...program,items:refs}));setSelected(new Set());setConfirm(false);}catch{setMessage('保存失败或节目单已在另一端修改，当前顺序保留；请刷新后重试。');}finally{setBusy(false);}}
+ async function prepare(){setBusy(true);try{const result=items.length?await prepareOffline(items,(done,total)=>setMessage(`正在缓存 ${done}/${total}`)):{ready:true};setMessage(result.ready?'节目单已准备好，音乐可离线播放；文本曲目无需音频。':'仍有音乐缺失或损坏，请重试。');}catch{setMessage('准备失败，请检查连接后重试。');}finally{setBusy(false);}}
+ const remaining=catalog.filter(i=>!program.items.some(r=>r.kind===i.kind&&r.id===i.id)&&(kind==='ALL'||i.kind===kind)&&`${i.title} ${i.artist}`.toLowerCase().includes(query.toLowerCase()));
+ return <section><header className="page-header"><h1>今晚节目单</h1><button disabled={busy||!items.length} onClick={()=>setConfirm(true)}>清空</button></header><button className="primary" disabled={busy||!items.length} onClick={()=>void prepare()}>准备离线演出</button>{message&&<p role="status">{message}</p>}<ol className="playlist">{items.map((item,index)=><li className={`playlist__row${dragIndex===index?' playlist__row--dragging':''}`} data-program-index={index} key={item.kind+item.id}><button className="playlist__drag" aria-label={`拖动排序 ${item.title}`} disabled={busy} onPointerDown={e=>startDrag(e,index)} onPointerUp={endDrag} onPointerCancel={()=>{dragging.current=null;setDragIndex(null);}}>⠿</button><span className="playlist__title">{item.title}<small>{kindLabel(item.kind)} · {programAudio(item)?isItemPlayable(programAudio(item)!,cached)?'已缓存':'未缓存':'文本曲目'}</small></span><span className="playlist__move"><button disabled={busy||index===0} aria-label={`上移 ${item.title}`} onClick={()=>void persist(moveItem(program.items,index,index-1))}>↑</button><button disabled={busy||index===items.length-1} aria-label={`下移 ${item.title}`} onClick={()=>void persist(moveItem(program.items,index,index+1))}>↓</button><button disabled={busy} aria-label={`移出 ${item.title}`} onClick={()=>void persist(program.items.filter(r=>!(r.id===item.id&&r.kind===item.kind)))}>×</button></span></li>)}</ol>{!items.length&&<p>节目单为空，从下面选择舞蹈、吉他或唱歌。</p>}<h2>加入节目单</h2><div className="library-search"><input placeholder="搜索曲目" value={query} onChange={e=>{setQuery(e.target.value);setSelected(new Set());}}/><select aria-label="才艺类型" value={kind} onChange={e=>{setKind(e.target.value as typeof kind);setSelected(new Set());}}>{(['ALL','DANCE','GUITAR','VOCAL'] as const).map(k=><option key={k} value={k}>{k==='ALL'?'全部':kindLabel(k)}</option>)}</select></div><div className="button-row"><button disabled={busy} onClick={()=>setSelected(new Set(remaining.map(i=>i.id)))}>全选当前结果</button><button disabled={busy||!selected.size} onClick={()=>void persist([...program.items,...remaining.filter(i=>selected.has(i.id)).map(({kind,id})=>({kind,id}))])}>加入所选（{selected.size}）</button></div>{remaining.map(i=><label className="trash-row" key={i.id}><input type="checkbox" checked={selected.has(i.id)} onChange={()=>setSelected(old=>{const next=new Set(old);if(next.has(i.id))next.delete(i.id);else next.add(i.id);return next;})}/>{i.title} · {kindLabel(i.kind)}</label>)}{confirm&&<div className="modal-backdrop"><section className="import-sheet" role="dialog" aria-modal="true" aria-label="清空节目单"><h2>清空今晚节目单？</h2><p>只移除节目单中的 {items.length} 项，曲库内容保留。</p><div className="button-row"><button onClick={()=>setConfirm(false)}>取消</button><button disabled={busy} onClick={()=>void persist([])}>确认清空</button></div></section></div>}</section>;
 }
