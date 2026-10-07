@@ -42,6 +42,8 @@ temp/
 导入素材/
 按作品分割_MP3/
 android/local.properties
+android/keystore.properties
+.workbuddy/
 .tmp/
 .cache_busting/
 
