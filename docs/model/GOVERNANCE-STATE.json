@@ -1,5 +1,5 @@
 {
-  "rules_version": "2026-10-03-汇报与自决",
+  "rules_version": "2026-10-03-客户端无关",
   "synced_at": "2026-10-03",
   "project_phase_field": "DEVELOP",
   "task_ledger_rows": -1,

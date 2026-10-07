@@ -17,7 +17,7 @@ const MODEL_PROVIDERS = [
 // 已知合法模型全串（来自 USER_MODEL_OVERRIDE；不在表内但前缀合法的记 WARN，提醒更新）
 const KNOWN_MODELS = [
   "codebuddy/deepseek-v4.1-flash", "codebuddy/glm-5.3-flash",
-  "codex/gpt-6-sol", "codex/gpt-6-luna", "codex/gpt-5.6-luna",
+  "codex/gpt-6-sol", "codex/gpt-6.1-sol", "codex/gpt-6-luna", "codex/gpt-5.6-luna",
   "codex/gpt-5.6-terra", "codex/gpt-5.6-sol",
   "opencode/muse-spark-1.3-contributor-free", "opencode/muse-spark-1.3-contributor",
   "opencode/mimo-v2.5-free",

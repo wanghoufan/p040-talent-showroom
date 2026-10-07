@@ -3,7 +3,7 @@
 <!-- ORCA-RULES-BLOCK:BEGIN -->
 <!-- 本区块由治理母版 scripts/sync-old-projects.sh 于 2026-10-03 注入；只增不删，可重复运行原地更新。 -->
 <!-- 本项目 AGENTS.md 的其余内容（项目专属规矩）保持原样，冲突时以本区块为准。 -->
-## ORCA 规则增量（母版 2026-10-03-汇报与自决）
+## ORCA 规则增量（母版 2026-10-03-客户端无关）
 
 > 本区块只写**对外通用**的机制增量；派工细节见 `docs/roles/`，账本口径见下方条目。
 
@@ -20,8 +20,12 @@
   - **备份与旧文件**：确认不影响后续继续开发（无引用、非基线依赖）→ 直接删除、不问不报；确认会影响继续开发 → 保留到大阶段开发完成后再删，**不算待办、不上报、不催**。
   - **必须问的只有四类红线，且一次问全不分多轮**：① secrets 与正式凭据；② 删用户数据或任何不可逆删除；③ 生产环境/数据库/他人项目改动；④ commit/push 与远端写入授权（无明确指令一律不做，**不做也不上报**）。
   - **汇报形态**：单次汇报 ≤10 行＝三行心跳（目标/剩 P0/下一步）＋不超过 3 条要点；**禁把 pending/遗留/out-of-scope/未清除 warning 全量倒给用户**；遗留只列卡住本次目标的，其余进 HANDOFF 一行。**编排者啰嗦按违规打回**，supervisor 按同口径抽查。
+- **客户端无关与派工口自动探测（2026-10-03 定）**：本体系不绑定 Orca 或任何特定客户端。每轮开工先跑 `bash scripts/detect-client.sh` 认当前客户端，按 `mode` 派工、**不找用户填**——`window_subagent`＝该客户端有原生子代理（Orca／Trae／Qoder／Codex／Claude Code／opencode 等），窗口内直派、享真 resume／并行／worktree 隔离；`channel_cli`＝无原生子代理或未识别（保守默认），走通道 CLI 直调，只在汇报里带一句「当前客户端未识别，按 CLI 通道派」。表内 Runtime 列写「当前客户端窗口（自动探测）」即客户端无关，**一套包通用于任何客户端**；新客户端跑一次该脚本校准后加进映射即可。
+- **何时起本体系（2026-10-03 定）**：多阶段需 Human Gate／要产品验收留痕（AC 矩阵）／跨周或会交接／要发布上线留回执／多角色并行——命中任一才算大项目，按包内 README＋归位表**铺包**进项目根再开工（禁"复制一份规则再改"）；都不命中＝小活直接干，不铺包、不建账本、不起 Gate。**半套（套了却不落 AC/账本）按红线打回**。
+- **升级口径（2026-10-05 补，覆盖项目正文旧口径）**：计数单元＝**同一 task id（含返工子任务）**，只数 **supervisor 判 FAIL/打回该 Task 交付** 的次数（QA 自身任务判 FAIL 不计）；累计 2 次自动升 senior-expert（当次生效，不打断用户）；**senior 接手后被打回 2 次即停线找人**（不再升）。与项目正文旧口径（如"builder 连续失败 2 次"）冲突时**以本区块为准**。
+- **Phase Integrity 补两条抽查（2026-10-05）**：supervisor 复检须抽查①派工口是否由 `detect-client.sh` 的 `mode` 决定、禁通道角色套进客户端 subagent；②派工前是否跑过 `check-channel-preflight.sh` 且非 `CHANNEL-STALE`（STALE 仍派即打回）。详见 `docs/roles/supervisor.md` 第 8/9 条。
 - **红线（2026-09-29 增补）**：产品验收未落盘或关键 AC 未测、不得报完工/收工；首次发布未取得用户签收、不得报完工/收工；汇报只报三类小事自决（口径见上「汇报与自决」）。
-- **本项目迁移状态**：`docs/model/GOVERNANCE-STATE.json`（`rules_version`／`synced_at`／`project_phase_field`／`task_ledger_rows`／`agents_needs_manual_merge`／`product_acceptance_ac_added`）。
+- **本项目迁移状态**：`docs/model/GOVERNANCE-STATE.json`（`rules_version`／`synced_at`／`project_phase_field`／`task_ledger_rows`／`agents_block_injected`／`product_acceptance_ac_added`）。
 - **存量项目待办（不自动做，需项目 TM 判断）**：本项目实绩 Plan 需补「视觉与交互验收标准（AC 编号）＋关键 AC 集合＋发布类型」，否则新规则下收尾会被判**计划缺项**；完成后把 `product_acceptance_ac_added` 置 `true`。
 <!-- ORCA-RULES-BLOCK:END -->
 
