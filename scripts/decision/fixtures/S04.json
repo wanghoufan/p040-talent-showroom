@@ -1,1 +1,0 @@
-{"task": "生产环境支付回调出现竞态条件导致偶发丢单，需深入并发代码排查修复", "expected_class": "HARD_CODE", "expected": "HARD_CODE", "expected_excluded_ids": ["codebuddy__glm-5.3-flash__high"]}
