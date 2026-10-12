@@ -74,8 +74,8 @@ export function createApiServer(options={}) {
         if(req.method==='GET')return sendJson(res,200,getProgram(db));
         if(req.method==='PUT'){const body=await readJson(req);return sendJson(res,200,setProgram(db,body.items,body.revision));}
       }
-      if(db&&req.method==='GET'&&path==='/api/catalog') return sendJson(res,200,getCatalog(db,url.searchParams));
-      if(db&&req.method==='GET'&&path==='/api/sync/manifest') return sendJson(res,200,getManifest(db));
+      if(db&&req.method==='GET'&&path==='/api/catalog') return sendJson(res,200,getCatalog(db,url.searchParams,ctx.mediaRoot));
+      if(db&&req.method==='GET'&&path==='/api/sync/manifest') return sendJson(res,200,getManifest(db,ctx.mediaRoot));
       if(db&&path==='/api/repertoire'){
         if(req.method==='GET')return sendJson(res,200,listRepertoire(db,url.searchParams));
         if(req.method==='POST')return sendJson(res,201,saveRepertoire(db,null,await readJson(req,262144)));
@@ -116,7 +116,7 @@ export function createApiServer(options={}) {
       if(db&&match&&req.method==='POST') return sendJson(res,200,await storeCover(db,ctx.mediaRoot,match[1],req));
       match=/^\/api\/dances\/([0-9a-f-]{36})$/.exec(path);
       if(db&&match){
-        const item=getDance(db,match[1]);if(!item)return sendJson(res,404,{error:{code:'NOT_FOUND',message:'请求的内容不存在'}});
+        const item=getDance(db,match[1],false,ctx.mediaRoot);if(!item)return sendJson(res,404,{error:{code:'NOT_FOUND',message:'请求的内容不存在'}});
         if(req.method==='GET')return sendJson(res,200,item);
         if(req.method==='DELETE'){
           let body={};
@@ -136,7 +136,7 @@ export function createApiServer(options={}) {
             db.prepare('UPDATE song_identities SET title=?,artist=?,recognition_status=\'MANUAL\' WHERE id=(SELECT song_identity_id FROM dance_items WHERE id=?)').run(body.title?.trim()||item.title,body.artist===undefined?item.artist:body.artist.trim(),item.id);
             bumpCatalog(db);db.exec('COMMIT');
           }catch(error){db.exec('ROLLBACK');throw error;}
-          return sendJson(res,200,getDance(db,item.id));
+          return sendJson(res,200,getDance(db,item.id,false,ctx.mediaRoot));
         }
       }
       match=/^\/api\/media\/(audio|reference|cover)\/([0-9a-f-]{36})$/.exec(path);

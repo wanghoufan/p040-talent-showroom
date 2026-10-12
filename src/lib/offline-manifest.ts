@@ -12,7 +12,7 @@ export interface MediaEntry {
   sha256: string;
   version: number;
   sizeBytes: number;
-  kind: 'audio' | 'cover' | 'score';
+  kind: 'audio' | 'cover' | 'score' | 'reference';
 }
 
 export interface CachedMedia {
@@ -58,6 +58,16 @@ export function mediaEntries(item: DanceItem|TalentItem): MediaEntry[] {
   if (item.cover) list.push({ key: item.cover.url, url: item.cover.url, sha256: item.cover.sha256, version: item.cover.version, sizeBytes: item.cover.sizeBytes, kind: 'cover' });
   for(const score of item.scores||[])list.push({...score,key:score.url,kind:'score'});
   return list;
+}
+
+/**
+ * 原视频（source_media）的缓存项。刻意不进 mediaEntries：
+ * 体积大（全库约 360MB）且不影响「可离线播放」判定，须由用户单独触发下载。
+ */
+export function referenceEntries(item: DanceItem|TalentItem): MediaEntry[] {
+  const source = item.source;
+  if (!source?.url || typeof source.sizeBytes !== 'number') return [];
+  return [{ key: source.url, url: source.url, sha256: source.sha256, version: source.version ?? 1, sizeBytes: source.sizeBytes, kind: 'reference' }];
 }
 
 /** 单个媒体项是否就绪：缺失 / hash 不符 / version 不符 / 无可用 URI 均判 false。 */

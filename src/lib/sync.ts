@@ -2,12 +2,12 @@ import {mergeRemote} from './offline-editing';
 import {storedProgram} from './program';
 import {writeMetadata,localOperations} from './local-database';
 import { api } from './api';
-import { readCachedIndex, saveCachedIndex, readOfflineManifest, saveOfflineManifest, pendingEntries, mediaEntries, isMediaReady, isItemPlayable, type CachedIndex, type MediaEntry } from './offline-manifest';
+import { readCachedIndex, saveCachedIndex, readOfflineManifest, saveOfflineManifest, pendingEntries, mediaEntries, referenceEntries, isMediaReady, isItemPlayable, type CachedIndex, type MediaEntry } from './offline-manifest';
 import { downloadMedia, isOfflineSupported, cachedFileValid } from '../native/filesystem';
 import { readDeviceSettings, saveDeviceSettings } from './device-settings';
 import type { DanceItem, OfflineManifest, TalentItem } from './types';
 
-export interface SyncFailure { key: string; title: string; kind: 'audio' | 'cover' | 'score'; }
+export interface SyncFailure { key: string; title: string; kind: MediaEntry['kind']; }
 export interface SyncProgress {
   stage: 'manifest' | 'check' | 'download'; processed: number; total: number;
   downloaded: number; failed: number; pendingBytes: number; currentTitle?: string;
@@ -121,5 +121,62 @@ export async function prepareOffline(items: (DanceItem|TalentItem)[], onProgress
     if (!hit || !isMediaReady(entry, cached) || !(await cachedFileValid(entry,hit))) ready = false;
   }
   return { downloaded, total: pending.length, ready };
+  } finally { syncing = false; }
+}
+
+/** 原视频（source_media）离线缓存：独立于音乐下载，体积大须用户单独触发。 */
+const REFERENCE_REPORT_KEY = 'dance.offline.reference-report';
+export interface ReferenceSyncProgress { stage: 'manifest' | 'check' | 'download'; processed: number; total: number; downloaded: number; failed: number; pendingBytes: number; currentTitle?: string; }
+export interface ReferenceSyncResult { total: number; downloaded: number; skipped: number; mediaSupported: boolean; syncedAt: string; failed: number; cancelled: boolean; complete: boolean; }
+export function readReferenceReport(): ReferenceSyncResult | null {
+  try { const raw = JSON.parse(localStorage.getItem(REFERENCE_REPORT_KEY) || 'null'); return raw && typeof raw.total === 'number' ? (raw as ReferenceSyncResult) : null; } catch { return null; }
+}
+export function clearReferenceReport(): void { localStorage.removeItem(REFERENCE_REPORT_KEY); }
+function uniqueReferenceEntries(items: (DanceItem|TalentItem)[]): MediaEntry[] {
+  return [...new Map(items.flatMap(referenceEntries).map(entry => [entry.key, entry])).values()];
+}
+/** 原视频缓存计划：总数 / 已就绪 / 总体积。默认读本地清单；可传入刚拉取的清单以显示最新体积。 */
+export function referencePlan(manifest: OfflineManifest | null = readOfflineManifest()): { total: number; ready: number; bytes: number } {
+  const entries = manifest ? uniqueReferenceEntries(playableCatalog(manifest)) : [];
+  const cached = readCachedIndex();
+  return { total: entries.length, ready: entries.filter(entry => isMediaReady(entry, cached)).length, bytes: entries.reduce((sum, entry) => sum + entry.sizeBytes, 0) };
+}
+/** 下载全部原视频到手机；与音乐下载共用互斥锁与缓存索引，互不覆盖。 */
+export async function syncReferences(onProgress?: (progress: ReferenceSyncProgress) => void, options: { signal?: AbortSignal } = {}): Promise<ReferenceSyncResult> {
+  if (syncing) throw new Error('已有下载进行中，请稍后重试');
+  syncing = true;
+  try {
+    onProgress?.({ stage: 'manifest', processed: 0, total: 0, downloaded: 0, failed: 0, pendingBytes: 0 });
+    const signal = options.signal ? AbortSignal.any([options.signal, AbortSignal.timeout(15000)]) : undefined;
+    const manifest = await api<OfflineManifest>('/api/sync/manifest', { signal });
+    // 仅下过原视频、还没下过音乐时，本地无清单：补种一份，供离线显示缓存计划；不覆盖已有清单（避免冲掉音乐同步的合并结果）。
+    if (!readOfflineManifest()) saveOfflineManifest(manifest);
+    const all = playableCatalog(manifest);
+    const entries = uniqueReferenceEntries(all);
+    const titles = new Map(all.flatMap(item => referenceEntries(item).map(entry => [entry.key, item.title] as const)));
+    const cached = readCachedIndex();
+    const supported = isOfflineSupported();
+    onProgress?.({ stage: 'check', processed: 0, total: entries.length, downloaded: 0, failed: 0, pendingBytes: 0 });
+    if (supported) for (const entry of entries) {
+      const hit = cached[entry.key];
+      if (hit && (!isMediaReady(entry, cached) || !(await cachedFileValid(entry, hit)))) delete cached[entry.key];
+    }
+    const pending = entries.filter(entry => !isMediaReady(entry, cached));
+    const pendingBytes = pending.reduce((sum, entry) => sum + entry.sizeBytes, 0);
+    let downloaded = 0, processed = 0, failed = 0;
+    const progress = (currentTitle?: string) => onProgress?.({ stage: 'download', processed, total: pending.length, downloaded, failed, pendingBytes, currentTitle });
+    progress();
+    if (supported) for (const entry of pending) {
+      if (options.signal?.aborted) break;
+      progress(titles.get(entry.key));
+      try { cached[entry.key] = await downloadMedia(entry); downloaded += 1; saveCachedIndex(cached); }
+      catch { failed += 1; }
+      processed += 1;
+      progress();
+    }
+    const syncedAt = new Date().toISOString();
+    const result: ReferenceSyncResult = { total: entries.length, downloaded, skipped: pending.length - downloaded, mediaSupported: supported, syncedAt, failed, cancelled: !!options.signal?.aborted, complete: supported && processed === pending.length && failed === 0 };
+    localStorage.setItem(REFERENCE_REPORT_KEY, JSON.stringify(result));
+    return result;
   } finally { syncing = false; }
 }

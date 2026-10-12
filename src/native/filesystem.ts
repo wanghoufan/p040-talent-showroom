@@ -1,7 +1,7 @@
 import { Capacitor } from '@capacitor/core';
 import { Directory, Filesystem } from '@capacitor/filesystem';
 import { mediaUrl } from '../lib/api';
-import { isItemPlayable, type CachedIndex, type CachedMedia, type MediaEntry } from '../lib/offline-manifest';
+import { isItemPlayable, readCachedIndex, type CachedIndex, type CachedMedia, type MediaEntry } from '../lib/offline-manifest';
 import type { DanceItem } from '../lib/types';
 
 /**
@@ -23,7 +23,7 @@ function slot(key: string): string {
 }
 
 function filePath(entry: MediaEntry): string {
-  const ext = entry.kind === 'cover' ? 'img' : entry.kind==='score'?'score':'audio';
+  const ext = entry.kind === 'cover' ? 'img' : entry.kind==='score'?'score':entry.kind==='reference'?'mp4':'audio';
   return `${ROOT}/${entry.kind}-${slot(entry.key)}.${ext}`;
 }
 
@@ -42,6 +42,19 @@ export function playbackSource(item: DanceItem, cached: CachedIndex): string {
     if (hit?.uri && isItemPlayable(item, cached)) return offlineUrl(hit.uri);
   }
   return mediaUrl(item.audio.url);
+}
+
+/**
+ * 原视频播放地址解析：已缓存到手机且文件真实存在时用本地地址，否则回落网络。
+ * 与音乐播放解耦，原视频是否就绪不影响曲库离线可用。
+ */
+export async function referenceSource(sourceMediaId: string): Promise<{ src: string; offline: boolean }> {
+  const key = `/api/media/reference/${sourceMediaId}`;
+  if (isOfflineSupported()) {
+    const hit = readCachedIndex()[key];
+    if (hit?.uri && await fileExists(hit.path)) return { src: offlineUrl(hit.uri), offline: true };
+  }
+  return { src: mediaUrl(key), offline: false };
 }
 
 async function sizeOf(path: string): Promise<number | null> {

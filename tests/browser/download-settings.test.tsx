@@ -3,8 +3,9 @@ import { act, fireEvent, render, screen, waitFor } from '@testing-library/react'
 import { beforeEach, expect, it, vi } from 'vitest';
 import SettingsPage from '../../src/pages/SettingsPage';
 const stub = vi.hoisted(() => ({ run: vi.fn() }));
-vi.mock('../../src/lib/sync', () => ({ syncLibrary: stub.run, inspectOfflineLibrary: async () => ({ items: 3, readyItems: 2 }), readSyncReport: () => null, clearSyncReport: () => {} }));
+vi.mock('../../src/lib/sync', () => ({ syncLibrary: stub.run, inspectOfflineLibrary: async () => ({ items: 3, readyItems: 2 }), readSyncReport: () => null, clearSyncReport: () => {}, syncReferences: vi.fn(async () => ({ total: 0, downloaded: 0, skipped: 0, mediaSupported: true, syncedAt: '', failed: 0, cancelled: false, complete: true })), readReferenceReport: () => null, clearReferenceReport: () => {}, referencePlan: () => ({ total: 0, ready: 0, bytes: 0 }) }));
 vi.mock('../../src/native/filesystem', () => ({ offlineBytes: async () => 1000, clearOfflineMedia: async () => {}, isOfflineSupported: () => true }));
+vi.mock('../../src/lib/api', () => ({ api: vi.fn(async () => ({ catalogVersion: 1, items: [], playlist: [] })), jsonBody: (value: unknown) => value }));
 beforeEach(() => { localStorage.clear(); stub.run.mockReset(); });
 it('部分下载明确失败并提供名单与重试，不声称全部完成', async () => {
  stub.run.mockImplementation(async cb => { cb({ stage: 'download', processed: 3, total: 3, downloaded: 2, failed: 1, pendingBytes: 30 }); return { items: 3, readyItems: 2, mediaSupported: true, complete: false, cancelled: false, failed: [{ key: 'x', title: '失败曲目', kind: 'audio' }] }; });

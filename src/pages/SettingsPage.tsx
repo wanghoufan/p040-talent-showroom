@@ -2,14 +2,14 @@ import {api,jsonBody} from '../lib/api';
 import SyncControls from '../components/SyncControls';
 import DemoControls from '../components/DemoControls';
 import { Link } from 'react-router-dom';
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { applyTheme, resolveTheme, systemPrefersDark } from '../app/theme';
 import { readDeviceSettings, saveDeviceSettings, validateEndpoint } from '../lib/device-settings';
-import { syncLibrary, inspectOfflineLibrary, readSyncReport, clearSyncReport, type SyncProgress } from '../lib/sync';
+import { syncLibrary, inspectOfflineLibrary, readSyncReport, clearSyncReport, syncReferences, readReferenceReport, clearReferenceReport, referencePlan, type SyncProgress, type ReferenceSyncProgress, type ReferenceSyncResult } from '../lib/sync';
 import { offlineBytes, clearOfflineMedia, isOfflineSupported } from '../native/filesystem';
 import { applySystemBars } from '../native/theme-bars';
 import { readCachedIndex, saveCachedIndex, type CachedIndex } from '../lib/offline-manifest';
-import type { DeviceSettings } from '../lib/types';
+import type { DeviceSettings, OfflineManifest } from '../lib/types';
 
 function humanBytes(bytes: number): string {
   if (bytes < 1024) return `${bytes} B`;
@@ -31,9 +31,26 @@ export default function SettingsPage() {
   const [report, setReport] = useState(readSyncReport);
   const controller = useRef<AbortController | null>(null);
   const [stopping, setStopping] = useState(false);
+  const [refPlan, setRefPlan] = useState(referencePlan);
+  const [refProgress, setRefProgress] = useState<ReferenceSyncProgress | null>(null);
+  const [refReport, setRefReport] = useState<ReferenceSyncResult | null>(readReferenceReport);
+  const [refMessage, setRefMessage] = useState('');
+  const [refBusy, setRefBusy] = useState(false);
+  const [refStopping, setRefStopping] = useState(false);
+  const refController = useRef<AbortController | null>(null);
+  // 原视频计划以「联网拉到的清单」为准；本地清单可能落后（旧版服务器不返回 url/体积），只作离线兜底。
+  const refManifest = useRef<OfflineManifest | null>(null);
 
-  const refreshCache = async () => { setChecking(true); try { setOverview(await inspectOfflineLibrary()); setCache({ count: Object.keys(readCachedIndex()).length, bytes: await offlineBytes() }); } finally { setChecking(false); } };
-  useEffect(() => { void refreshCache().catch(() => setSyncMessage('缓存检查未完成，请稍后重试')); return () => controller.current?.abort(); }, []);
+  const refreshCache = useCallback(async () => { setChecking(true); try { setOverview(await inspectOfflineLibrary()); setCache({ count: Object.keys(readCachedIndex()).length, bytes: await offlineBytes() }); setRefPlan(refManifest.current ? referencePlan(refManifest.current) : referencePlan()); } finally { setChecking(false); } }, []);
+  // 先拉清单再做缓存检查，串行执行：避免慢的缓存检查用旧清单把最新体积/总数覆盖掉。
+  useEffect(() => { let active = true; void (async () => {
+    try {
+      const manifest = await api<OfflineManifest>('/api/sync/manifest').catch(() => null);
+      if (!active) return;
+      if (manifest) refManifest.current = manifest;
+      await refreshCache();
+    } catch { if (active) setSyncMessage('缓存检查未完成，请稍后重试'); }
+  })(); return () => { active = false; controller.current?.abort(); refController.current?.abort(); }; }, [refreshCache]);
 
   const theme = (themeMode: DeviceSettings['themeMode']) => { const next = { ...settings, themeMode }; saveDeviceSettings(next); setSettings(next); const resolved = resolveTheme(themeMode, systemPrefersDark()); applyTheme(resolved, document.documentElement); void applySystemBars(resolved === 'dark'); };
   const connect = async () => {
@@ -58,9 +75,21 @@ export default function SettingsPage() {
     finally { controller.current = null; setBusy(false); setStopping(false); setProgress(null); }
   };
   const stop = () => { setStopping(true); controller.current?.abort(); };
+  const syncReferencesFlow = async () => {
+    setRefBusy(true); setRefStopping(false); setRefProgress(null); setRefMessage('正在读取曲库…');
+    const abort = new AbortController(); refController.current = abort;
+    try {
+      const result = await syncReferences(setRefProgress, { signal: abort.signal });
+      setRefReport(result); setRefPlan(refManifest.current ? referencePlan(refManifest.current) : referencePlan());
+      setRefMessage(!result.mediaSupported ? '请在手机 App 内下载原视频，浏览器不会保存。' : result.cancelled ? `已停止下载，已保存的 ${result.downloaded} 个原视频可继续使用。` : result.complete ? `全部完成：${result.total} 个原视频已缓存，断网也能播放。` : `部分完成：${result.failed} 个失败，可重试；已下载的会保留。`);
+    } catch { setRefMessage(abort.signal.aborted ? '下载已停止，已完成的缓存保留。' : '下载未完成，请检查连接后重试；已有缓存保留。'); }
+    finally { refController.current = null; setRefBusy(false); setRefStopping(false); setRefProgress(null); }
+  };
+  const stopReferences = () => { setRefStopping(true); refController.current?.abort(); };
   const clearCache = async () => {
     await clearOfflineMedia();
     saveCachedIndex({} as CachedIndex); clearSyncReport(); setReport(null);
+    clearReferenceReport(); setRefReport(null);
     await refreshCache();
     setSyncMessage('离线缓存已清空');
   };
@@ -79,7 +108,7 @@ export default function SettingsPage() {
       <div className="settings-block">
         <h2>离线音乐</h2>
         <p>{checking ? '正在检查手机缓存…' : '可离线播放：'}{overview.readyItems}/{overview.items} 首</p>
-        <p className="muted">下载舞蹈、吉他、唱歌全曲库的音乐、封面和勾选的谱件到手机，拔线、断网也能播放。原视频不包含在此次下载中。</p>
+        <p className="muted">下载舞蹈、吉他、唱歌全曲库的音乐、封面和勾选的谱件到手机，拔线、断网也能播放。原视频体积较大，请用下方「原视频（离线看）」单独下载。</p>
         <p className="muted">已缓存 {cache.count} 个文件，占用 {humanBytes(cache.bytes)}。{isOfflineSupported() ? '' : '当前环境不落盘媒体。'}</p>
         <label className="check-row"><input type="checkbox" checked={includeScores} disabled={busy} onChange={e=>setIncludeScores(e.target.checked)}/>同时下载图片 / PDF 谱</label><div className="button-row">
           <button className="primary" disabled={busy || checking} onClick={() => void sync()}>下载全部音乐到手机</button>
@@ -98,8 +127,28 @@ export default function SettingsPage() {
         {syncMessage && !progress && <p role="status">{syncMessage}</p>}
         {!busy && report && <div className="download-result">
           {!syncMessage && <p>{report.mediaSupported ? `上次下载：${report.complete ? '全部完成' : report.cancelled ? '已停止' : '部分完成'}` : '上次仅保存了曲库清单，音乐未下载'}</p>}
-          {report.failed.length > 0 && <details><summary>失败文件 {report.failed.length} 个（点击查看）</summary><ul>{report.failed.map(file => <li key={file.key}>{file.title} · {file.kind === 'audio' ? '音乐' : file.kind==='score'?'谱件':'封面'}</li>)}</ul></details>}
+          {report.failed.length > 0 && <details><summary>失败文件 {report.failed.length} 个（点击查看）</summary><ul>{report.failed.map(file => <li key={file.key}>{file.title} · {file.kind === 'audio' ? '音乐' : file.kind==='score'?'谱件':file.kind==='reference'?'原视频':'封面'}</li>)}</ul></details>}
         </div>}
+      </div>
+      <div className="settings-block">
+        <h2>原视频（离线看）</h2>
+        <p>{checking ? '正在检查手机缓存…' : `已缓存到手机：${refPlan.ready}/${refPlan.total} 个`}</p>
+        <p className="muted">详情页「查看原视频」的那个原始视频。全部下载约 {humanBytes(refPlan.bytes)}，下载后断网也能直接播放，适合带出去给朋友看。和上方音乐分开下载，不拖慢平时听歌的下载。</p>
+        <div className="button-row">
+          <button className="primary" disabled={refBusy || checking} onClick={() => void syncReferencesFlow()}>下载全部原视频到手机</button>
+          {!refBusy && refReport?.mediaSupported && !refReport.complete && <button disabled={checking} onClick={() => void syncReferencesFlow()}>重试未完成</button>}
+          {refProgress && <button disabled={refStopping} onClick={stopReferences}>{refStopping ? '正在停止…' : '停止下载'}</button>}
+        </div>
+        {refProgress && <div className="download-progress" role="status">
+          {refProgress.stage === 'manifest' ? <p>正在读取曲库…</p> : refProgress.stage === 'check' ? <p>正在检查手机已有文件…</p> : <>
+            <progress aria-label="原视频下载进度" max={Math.max(refProgress.total, 1)} value={refProgress.processed} />
+            <p>已处理 {refProgress.processed}/{refProgress.total} 个 · 成功 {refProgress.downloaded} · 失败 {refProgress.failed}</p>
+            <p className="muted">本次需下载约 {humanBytes(refProgress.pendingBytes)}{refProgress.currentTitle ? ` · ${refProgress.currentTitle}` : ''}</p>
+          </>}
+          {refStopping && <p>当前文件结束后停止，已下载的原视频会保留。</p>}
+        </div>}
+        {refMessage && !refProgress && <p role="status">{refMessage}</p>}
+        {!refBusy && refReport && refReport.failed > 0 && !refMessage && <p role="status">上次下载：{refReport.complete ? '全部完成' : refReport.cancelled ? '已停止' : `部分完成，${refReport.failed} 个失败`}</p>}
       </div>
       <SyncControls/><DemoControls onChanged={refreshCache}/><div className="settings-block"><h2>曲目管理</h2><Link className="icon-link" to="/settings/requests">扫码点歌 →</Link><Link className="icon-link" to="/settings/trash">回收站 →</Link></div><div className="settings-block"><h2>舞蹈曲库</h2><p className="muted">收录舞蹈 · 学习 · 演出</p><p className="muted">V2 · 舞蹈 / 吉他 / 唱歌</p></div>
     </section>

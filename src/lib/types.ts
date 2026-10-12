@@ -3,7 +3,7 @@ export type LearningStatus = 'CAN_DANCE' | 'PRACTICING' | 'WANT_TO_LEARN';
 export type SceneTag = 'COOL' | 'SEXY' | 'OUTDOOR' | 'TRANSITION';
 export type ImportStage = 'ACQUIRE' | 'PROBE' | 'EXTRACT' | 'RECOGNIZE' | 'COVER' | 'REVIEW';
 export interface MediaFile { id:string; url:string; sha256:string; sizeBytes:number; version:number; durationMs?:number; startMs?:number; endMs?:number; sourcePreserving?:boolean }
-export interface SourceMedia { id:string; sourceKind:string; sourceLocator?:string; durationMs:number; sha256:string }
+export interface SourceMedia { id:string; sourceKind:string; sourceLocator?:string; durationMs:number; sha256:string; url?:string; sizeBytes?:number; version?:number }
 export interface PerformanceClip extends MediaFile { sourceMediaId:string; startMs:number; endMs:number; sourcePreserving:boolean }
 export interface SongIdentity { id:string; title:string; artist:string; recognitionStatus:'UNTRIED'|'MATCHED'|'AMBIGUOUS'|'FAILED'|'MANUAL' }
 export interface DanceItem { scores?:ScoreAsset[]; isDemo?:boolean; revision?:number; id:string; title:string; artist:string; learningStatus:LearningStatus; sceneTags:SceneTag[]; sourceMediaId?:string; performanceClipId:string; coverAssetId?:string; audio:MediaFile; cover?:MediaFile; source?:SourceMedia; durationMs:number }
