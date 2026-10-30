@@ -15,10 +15,39 @@ export interface Playlist { items:string[] }
 export interface OfflineManifest { program?:{revision:number;items:{kind:'DANCE'|TalentKind;id:string}[]}; catalogVersion:number; items:DanceItem[]; playlist:string[]; repertoire?:TalentItem[] }
 export interface DeviceSettings { themeMode:'system'|'light'|'dark'; apiEndpoint:string; lastSyncAt?:string; cachePolicyVersion:number }
 
+export type VocalSectionType = 'intro' | 'verse' | 'pre' | 'chorus' | 'bridge' | 'rap' | 'outro' | 'unknown';
+export type VocalRepetition = 'exact-lyrics' | 'same-melody-new-lyrics' | 'unverified';
+export interface VocalSection {
+  id: string; type: VocalSectionType; label: string; startMs: number; endMs: number;
+  repeatOf?: string; repetition?: VocalRepetition; source: 'manual' | 'algorithm';
+}
+export interface TimedLyric { id: string; startMs: number; text: string; sectionId?: string; endMs?: number }
+export interface LrcMetadata { title?: string; artist?: string; by?: string; offsetMs: number }
+export interface LrcDocument { metadata: LrcMetadata; lines: TimedLyric[]; untimedLines: string[]; hasUsableTiming: boolean; issues: string[] }
+export interface VocalTimeRange { startMs: number; endMs: number }
+export interface VocalLineLoop { startMs: number; endMs: number; startIndex: number; endIndex: number; count: number }
+export interface VocalPracticeSettings {
+  skipRap: boolean; wholeTrackLoop: boolean;
+  backwardSeconds: 5 | 10 | 15 | 30; forwardSeconds: 5 | 10 | 15 | 30;
+  customRepeatLines: number; playbackRate: number;
+}
+export type VocalTrackRole = 'original' | 'accompaniment';
+export interface VocalTrack { media: MediaFile; offsetMs?: number }
+export interface VocalTracks { original?: VocalTrack; accompaniment?: VocalTrack }
+export type PerformanceSource = VocalTrackRole;
+/** 与后端 server/repertoire/service.mjs 的 LANGUAGES 枚举一致；未标注时不猜。 */
+export type VocalLanguage = 'zh' | 'en' | 'ko';
+
 export type TalentKind = 'GUITAR' | 'VOCAL';
 export interface TalentItem {
   scores?:ScoreAsset[]; isDemo?: boolean; revision?: number; id: string; kind: TalentKind; title: string; artist: string; learningStatus: LearningStatus;
   originalKey: string; performanceKey: string; capo: number; scoreText: string; notes: string;
   audioRole: 'REFERENCE' | 'ACCOMPANIMENT'; audio?: MediaFile; cover?: MediaFile;
   sourceMediaId?: string; performanceClipId?: string; source?: SourceMedia; durationMs: number;
+  /**
+   * 以下为后端 VOCAL 字段（server/repertoire/service.mjs）：吉他一律为 undefined。
+   * `audio`/`audioRole` 仍是旧单音轨字段，与 `tracks` 中对应角色指向同一媒体，可安全并存。
+   * 缺失的轨保持缺失：不用原唱冒充伴奏，也不把同一条媒体复制成两个角色。
+   */
+  tracks?: VocalTracks; language?: VocalLanguage; lyrics?: TimedLyric[]; sections?: VocalSection[]; practice?: VocalPracticeSettings;
 }

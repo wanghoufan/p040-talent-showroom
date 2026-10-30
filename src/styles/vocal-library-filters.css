@@ -1,0 +1,9 @@
+/* 唱歌曲库：搜索下方两行常驻筛选（状态 / 语言），不折叠、不弹窗、无 Rap 筛选。 */
+.vocal-filters { display:flex; flex-direction:column; gap:6px; margin:0 0 10px; }
+.vocal-filters__row { display:flex; align-items:center; gap:6px; white-space:nowrap; overflow-x:auto; overscroll-behavior-x:contain; scrollbar-width:none; }
+.vocal-filters__row::-webkit-scrollbar { display:none; }
+.vocal-filters__label { flex:0 0 auto; width:30px; font-size:15px; color:var(--muted); }
+.vocal-filters__chip { flex:0 0 auto; height:36px; min-height:36px; padding:0 8px; border-radius:18px; font-size:15px; line-height:1; background:var(--surface); border:1px solid var(--line); }
+.vocal-filters__chip[aria-pressed="true"] { color:var(--primary); border-color:var(--primary); background:var(--surface-2); font-weight:700; }
+.vocal-filters__chip:disabled { opacity:.45; cursor:default; }
+.vocal-filters__hint { flex:0 0 auto; font-size:14px; color:var(--muted); }

@@ -1,0 +1,85 @@
+{
+  "tasks": [
+    {
+      "songId": "7624d66b-f476-51b3-878a-2793e69527b4",
+      "title": "Touch",
+      "command": [
+        "audio-separator",
+        "/mnt/data/P040-Local-AI-Import-V3.0/examples/sample_inputs/3LAU, Carly Paige - Touch.mp3",
+        "--model_filename",
+        "model_bs_roformer_ep_317_sdr_12.9755.yaml",
+        "--output_dir",
+        "/mnt/data/p040-separated/7624d66b-f476-51b3-878a-2793e69527b4",
+        "--output_format",
+        "FLAC",
+        "--single_stem",
+        "Instrumental",
+        "--custom_output_names",
+        "{\"Instrumental\": \"accompaniment\"}"
+      ],
+      "expectedOutput": "/mnt/data/p040-separated/7624d66b-f476-51b3-878a-2793e69527b4/accompaniment.flac",
+      "input": "/mnt/data/P040-Local-AI-Import-V3.0/examples/sample_inputs/3LAU, Carly Paige - Touch.mp3"
+    },
+    {
+      "songId": "57540a68-cf1a-5dff-bc37-a7abe2df1fd1",
+      "title": "미쳐",
+      "command": [
+        "audio-separator",
+        "/mnt/data/P040-Local-AI-Import-V3.0/examples/sample_inputs/4MINUTE - 미쳐.mp3",
+        "--model_filename",
+        "model_bs_roformer_ep_317_sdr_12.9755.yaml",
+        "--output_dir",
+        "/mnt/data/p040-separated/57540a68-cf1a-5dff-bc37-a7abe2df1fd1",
+        "--output_format",
+        "FLAC",
+        "--single_stem",
+        "Instrumental",
+        "--custom_output_names",
+        "{\"Instrumental\": \"accompaniment\"}"
+      ],
+      "expectedOutput": "/mnt/data/p040-separated/57540a68-cf1a-5dff-bc37-a7abe2df1fd1/accompaniment.flac",
+      "input": "/mnt/data/P040-Local-AI-Import-V3.0/examples/sample_inputs/4MINUTE - 미쳐.mp3"
+    },
+    {
+      "songId": "2cfed702-81ef-5dcf-b629-8be2cad005bd",
+      "title": "Mood (8D Audio)",
+      "command": [
+        "audio-separator",
+        "/mnt/data/P040-Local-AI-Import-V3.0/examples/sample_inputs/8D Tunes - Mood (8D Audio).mp3",
+        "--model_filename",
+        "model_bs_roformer_ep_317_sdr_12.9755.yaml",
+        "--output_dir",
+        "/mnt/data/p040-separated/2cfed702-81ef-5dcf-b629-8be2cad005bd",
+        "--output_format",
+        "FLAC",
+        "--single_stem",
+        "Instrumental",
+        "--custom_output_names",
+        "{\"Instrumental\": \"accompaniment\"}"
+      ],
+      "expectedOutput": "/mnt/data/p040-separated/2cfed702-81ef-5dcf-b629-8be2cad005bd/accompaniment.flac",
+      "input": "/mnt/data/P040-Local-AI-Import-V3.0/examples/sample_inputs/8D Tunes - Mood (8D Audio).mp3"
+    },
+    {
+      "songId": "2ac78582-1be4-5553-ad3b-63a95abbd8d5",
+      "title": "爱的恰恰",
+      "command": [
+        "audio-separator",
+        "/mnt/data/P040-Local-AI-Import-V3.0/examples/sample_inputs/宝石 Gem,俞天时,王洋 EVIS - 爱的恰恰 (1).mp3",
+        "--model_filename",
+        "model_bs_roformer_ep_317_sdr_12.9755.yaml",
+        "--output_dir",
+        "/mnt/data/p040-separated/2ac78582-1be4-5553-ad3b-63a95abbd8d5",
+        "--output_format",
+        "FLAC",
+        "--single_stem",
+        "Instrumental",
+        "--custom_output_names",
+        "{\"Instrumental\": \"accompaniment\"}"
+      ],
+      "expectedOutput": "/mnt/data/p040-separated/2ac78582-1be4-5553-ad3b-63a95abbd8d5/accompaniment.flac",
+      "input": "/mnt/data/P040-Local-AI-Import-V3.0/examples/sample_inputs/宝石 Gem,俞天时,王洋 EVIS - 爱的恰恰 (1).mp3"
+    }
+  ],
+  "note": "Commands are NOT executed; model must be installed and preflighted on Mac mini before running."
+}

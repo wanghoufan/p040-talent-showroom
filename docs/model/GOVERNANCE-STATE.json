@@ -1,8 +1,9 @@
 {
-  "rules_version": "2026-10-03-客户端无关",
-  "synced_at": "2026-10-03",
+  "rules_version": "2026-10-12-单智能体+账本机器校验+证据留存",
+  "synced_at": "2026-10-17",
   "project_phase_field": "DEVELOP",
   "task_ledger_rows": -1,
   "agents_block_injected": true,
-  "product_acceptance_ac_added": false
+  "product_acceptance_ac_added": false,
+  "execution_mode": "solo"
 }

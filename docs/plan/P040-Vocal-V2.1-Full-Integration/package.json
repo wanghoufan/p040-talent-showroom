@@ -1,0 +1,4 @@
+{
+  "name": "p040-vocal-v21-integration-starter", "private": true, "version": "0.1.0",
+  "scripts": {"typecheck": "tsc --noEmit", "test": "npm run compile && node --test tests/*.test.cjs", "compile": "tsc"}
+}

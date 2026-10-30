@@ -1,0 +1,316 @@
+{
+  "at": "2026-10-30T11:19:49.185Z",
+  "count": 20,
+  "bad": 0,
+  "lang": {
+    "zh": 7,
+    "en": 7,
+    "ko": 6
+  },
+  "rows": [
+    {
+      "title": "初爱",
+      "artist": "杨宗纬",
+      "mode": "ORIGINAL_ONLY",
+      "lang": "zh",
+      "lines": 42,
+      "sorted": true,
+      "firstMs": 6310,
+      "lastMs": 209860,
+      "audioMs": 233718,
+      "sections": 11,
+      "tracks": [
+        "original"
+      ]
+    },
+    {
+      "title": "歌舞:过年迪斯科",
+      "artist": "陈伟霆,张艺兴,宝石Gem",
+      "mode": "DUAL_TRACK",
+      "lang": "zh",
+      "lines": 97,
+      "sorted": true,
+      "firstMs": 5193,
+      "lastMs": 222270,
+      "audioMs": 227000,
+      "sections": 20,
+      "tracks": [
+        "original",
+        "accompaniment"
+      ]
+    },
+    {
+      "title": "隆里电丝x危险派对 (1FAN Remix)",
+      "artist": "FGOD",
+      "mode": "ORIGINAL_ONLY",
+      "lang": "zh",
+      "lines": 87,
+      "sorted": true,
+      "firstMs": 3000,
+      "lastMs": 219030,
+      "audioMs": 242244,
+      "sections": 9,
+      "tracks": [
+        "original"
+      ]
+    },
+    {
+      "title": "一生中最爱",
+      "artist": "谭咏麟",
+      "mode": "ORIGINAL_ONLY",
+      "lang": "zh",
+      "lines": 48,
+      "sorted": true,
+      "firstMs": 22797,
+      "lastMs": 245557,
+      "audioMs": 261538,
+      "sections": 6,
+      "tracks": [
+        "original"
+      ]
+    },
+    {
+      "title": "Alan Walker-All Falls Down (刘至佳  lambert remix)",
+      "artist": "刘至佳,Lambert凌杰",
+      "mode": "ORIGINAL_ONLY",
+      "lang": "en",
+      "lines": 41,
+      "sorted": true,
+      "firstMs": 688,
+      "lastMs": 74975,
+      "audioMs": 80136,
+      "sections": 5,
+      "tracks": [
+        "original"
+      ]
+    },
+    {
+      "title": "BIRTHDAY",
+      "artist": "建坤YOUNG",
+      "mode": "ORIGINAL_ONLY",
+      "lang": "zh",
+      "lines": 48,
+      "sorted": true,
+      "firstMs": 17909,
+      "lastMs": 159500,
+      "audioMs": 175091,
+      "sections": 6,
+      "tracks": [
+        "original"
+      ]
+    },
+    {
+      "title": "Bubble Pop!",
+      "artist": "泫雅",
+      "mode": "ORIGINAL_ONLY",
+      "lang": "ko",
+      "lines": 48,
+      "sorted": true,
+      "firstMs": 1500,
+      "lastMs": 192320,
+      "audioMs": 212194,
+      "sections": 8,
+      "tracks": [
+        "original"
+      ]
+    },
+    {
+      "title": "Clean Bandit Rather Be Without Me",
+      "artist": "9 Diuz",
+      "mode": "ORIGINAL_ONLY",
+      "lang": "en",
+      "lines": 83,
+      "sorted": true,
+      "firstMs": 650,
+      "lastMs": 218635,
+      "audioMs": 224862,
+      "sections": 10,
+      "tracks": [
+        "original"
+      ]
+    },
+    {
+      "title": "DjYaha-起風了 (DjYaha remix)",
+      "artist": "DjYaha",
+      "mode": "ORIGINAL_ONLY",
+      "lang": "zh",
+      "lines": 40,
+      "sorted": true,
+      "firstMs": 1972,
+      "lastMs": 197723,
+      "audioMs": 252787,
+      "sections": 4,
+      "tracks": [
+        "original"
+      ]
+    },
+    {
+      "title": "Dynamic female voice",
+      "artist": "阿光",
+      "mode": "ORIGINAL_ONLY",
+      "lang": "en",
+      "lines": 56,
+      "sorted": true,
+      "firstMs": 183,
+      "lastMs": 170723,
+      "audioMs": 186549,
+      "sections": 9,
+      "tracks": [
+        "original"
+      ]
+    },
+    {
+      "title": "Insomnia (불면증)",
+      "artist": "辉星",
+      "mode": "ORIGINAL_ONLY",
+      "lang": "ko",
+      "lines": 40,
+      "sorted": true,
+      "firstMs": 16680,
+      "lastMs": 194440,
+      "audioMs": 206023,
+      "sections": 8,
+      "tracks": [
+        "original"
+      ]
+    },
+    {
+      "title": "Jar Of Love",
+      "artist": "曲婉婷",
+      "mode": "ORIGINAL_ONLY",
+      "lang": "en",
+      "lines": 39,
+      "sorted": true,
+      "firstMs": 1080,
+      "lastMs": 210910,
+      "audioMs": 230547,
+      "sections": 9,
+      "tracks": [
+        "original"
+      ]
+    },
+    {
+      "title": "Let Go",
+      "artist": "石玺彤",
+      "mode": "ORIGINAL_ONLY",
+      "lang": "en",
+      "lines": 54,
+      "sorted": true,
+      "firstMs": 9547,
+      "lastMs": 197058,
+      "audioMs": 206206,
+      "sections": 22,
+      "tracks": [
+        "original"
+      ]
+    },
+    {
+      "title": "Lonely Christmas",
+      "artist": "陈奕迅",
+      "mode": "ORIGINAL_ONLY",
+      "lang": "zh",
+      "lines": 56,
+      "sorted": true,
+      "firstMs": 38440,
+      "lastMs": 258710,
+      "audioMs": 280960,
+      "sections": 6,
+      "tracks": [
+        "original"
+      ]
+    },
+    {
+      "title": "Papillon",
+      "artist": "王嘉尔",
+      "mode": "DUAL_TRACK",
+      "lang": "en",
+      "lines": 73,
+      "sorted": true,
+      "firstMs": 12180,
+      "lastMs": 167940,
+      "audioMs": 195036,
+      "sections": 16,
+      "tracks": [
+        "original",
+        "accompaniment"
+      ]
+    },
+    {
+      "title": "senorita (翻自 Shawn Mendes)",
+      "artist": "陈从雨xiaoyu0,石玺彤",
+      "mode": "DUAL_TRACK",
+      "lang": "en",
+      "lines": 124,
+      "sorted": true,
+      "firstMs": 1135,
+      "lastMs": 187182,
+      "audioMs": 190433,
+      "sections": 29,
+      "tracks": [
+        "original",
+        "accompaniment"
+      ]
+    },
+    {
+      "title": "베베 (BABE)",
+      "artist": "泫雅",
+      "mode": "DUAL_TRACK",
+      "lang": "ko",
+      "lines": 70,
+      "sorted": true,
+      "firstMs": 5690,
+      "lastMs": 189900,
+      "audioMs": 193328,
+      "sections": 15,
+      "tracks": [
+        "original",
+        "accompaniment"
+      ]
+    },
+    {
+      "title": "소나기 (Feat. 10cm)",
+      "artist": "龙俊亨,10cm",
+      "mode": "ORIGINAL_ONLY",
+      "lang": "ko",
+      "lines": 49,
+      "sorted": true,
+      "firstMs": 3480,
+      "lastMs": 195360,
+      "audioMs": 205013,
+      "sections": 8,
+      "tracks": [
+        "original"
+      ]
+    },
+    {
+      "title": "여름 안에서 (Live)",
+      "artist": "宋雨琦,泳勋,Felix",
+      "mode": "ORIGINAL_ONLY",
+      "lang": "ko",
+      "lines": 12,
+      "sorted": true,
+      "firstMs": 15630,
+      "lastMs": 70156,
+      "audioMs": 79273,
+      "sections": 2,
+      "tracks": [
+        "original"
+      ]
+    },
+    {
+      "title": "흉터 (Feat. 치타)",
+      "artist": "曺炯雨",
+      "mode": "ORIGINAL_ONLY",
+      "lang": "ko",
+      "lines": 58,
+      "sorted": true,
+      "firstMs": 8090,
+      "lastMs": 197510,
+      "audioMs": 216261,
+      "sections": 9,
+      "tracks": [
+        "original"
+      ]
+    }
+  ]
+}

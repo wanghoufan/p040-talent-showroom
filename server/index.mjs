@@ -13,6 +13,8 @@ import { pathToFileURL } from 'node:url';
 import { existsSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { readConfig } from './config.mjs';
+import { readVocalImportConfig } from './vocal-import/config.mjs';
+import { createVocalImportIntegration } from './vocal-import/integration.mjs';
 import { openDatabase } from './db/database.mjs';
 import { getCatalog,getDance,getManifest,getPlaylist,setPlaylist,STATUSES,sceneMask,bumpCatalog } from './catalog.mjs';
 import { receiveFile,publicJob,finalizeImport,startLinkImport } from './import/import-service.mjs';
@@ -39,6 +41,7 @@ async function readJson(req, maxBytes=32768) {
 }
 export function createApiServer(options={}) {
   const ctx={...options,pendingJobs:new Set()};
+  const vocalImport=options.vocalImport??null;
   const server=createServer(async(req, res) => {
     try {
       const url = new URL(req.url, 'http://localhost');const path=url.pathname;
@@ -55,6 +58,16 @@ export function createApiServer(options={}) {
       const publicMatch=/^\/api\/public\/request-sessions\/([A-Za-z0-9_-]{32})(\/requests)?$/.exec(path);
       if(db&&publicMatch){if(req.method==='GET'&&!publicMatch[2])return sendJson(res,200,publicSession(db,publicMatch[1]));if(req.method==='POST'&&publicMatch[2])return sendJson(res,201,guestRequest(db,publicMatch[1],await readJson(req)));return sendJson(res,404,{error:{code:'NOT_FOUND'}});}
       if(db&&path.startsWith('/api/')&&db.prepare('SELECT count(*) AS n FROM owner_credentials').get().n>0&&!authenticateOwner(db,req.headers.authorization?.replace(/^Bearer /,'')||(path.startsWith('/api/media/')?url.searchParams.get('owner'):null)))return sendJson(res,401,{error:{code:'UNAUTHORIZED',message:'请先在“我的”配对这台设备'}});
+      // V3.1 本地智能导入：必须挂在全局 owner 配对鉴权之后，绝不提前暴露本机目录能力。
+      // 设备尚未配对（owner_credentials 为空）时，上面的全局鉴权会放行其它接口，
+      // 但本机目录扫描/提取必须单独拒绝，不能变成未配对即可访问的公开接口。
+      if(vocalImport?.handle){
+        if(path==='/api/vocal-import'||path.startsWith('/api/vocal-import/')){
+          const ownerToken=req.headers.authorization?.replace(/^Bearer /,'')||null;
+          if(!db||!authenticateOwner(db,ownerToken))return sendJson(res,401,{error:{code:'UNAUTHORIZED',message:'请先配对这台设备'}});
+        }
+        if(await vocalImport.handle(req,res,url,ctx))return;
+      }
       if(db&&path==='/api/request-sessions'){
         if(req.method==='GET')return sendJson(res,200,{sessions:db.prepare('SELECT id,token,expires_at AS expiresAt,closed FROM request_sessions ORDER BY expires_at DESC LIMIT 20').all(),requests:db.prepare("SELECT r.*,COALESCE(d.title_override,s.title,t.title,'已删除曲目') AS title FROM guest_requests r LEFT JOIN dance_items d ON r.kind='DANCE' AND d.id=r.item_id LEFT JOIN song_identities s ON s.id=d.song_identity_id LEFT JOIN repertoire_items t ON r.kind<>'DANCE' AND t.id=r.item_id ORDER BY r.created_at DESC LIMIT 400").all()});
         if(req.method==='POST'){if(!authenticateOwner(db,req.headers.authorization?.replace(/^Bearer /,'')))return sendJson(res,401,{error:{code:'UNAUTHORIZED'}});return sendJson(res,201,createRequestSession(db,(await readJson(req)).items));}
@@ -142,7 +155,7 @@ export function createApiServer(options={}) {
       match=/^\/api\/media\/(audio|reference|cover)\/([0-9a-f-]{36})$/.exec(path);
       if(db&&match&&['GET','HEAD'].includes(req.method)){
         let row,type;
-        if(match[1]==='audio'){row=db.prepare('SELECT internal_audio_path AS path,codec FROM performance_clips WHERE id=?').get(match[2]);type=row?.codec==='mp3'?'audio/mpeg':'audio/mp4';}
+        if(match[1]==='audio'){row=db.prepare('SELECT internal_audio_path AS path,codec FROM performance_clips WHERE id=?').get(match[2]);type=row?.codec==='mp3'?'audio/mpeg':row?.codec==='flac'?'audio/flac':row?.codec==='wav'?'audio/wav':row?.codec==='ogg'?'audio/ogg':row?.codec==='opus'?'audio/ogg':'audio/mp4';}
         if(match[1]==='reference'){row=db.prepare('SELECT internal_path AS path,video_codec,audio_codec,container,source_kind FROM source_media WHERE id=?').get(match[2]);type=mimeForContainer(row?.container,row?.video_codec?'video':'audio',row?.video_codec||row?.audio_codec);}
         if(match[1]==='cover'){row=db.prepare('SELECT internal_path AS path FROM assets WHERE id=?').get(match[2]);type='image/jpeg';}
         if(row)return serveMedia(req,res,ctx.mediaRoot,row.path,type);
@@ -152,17 +165,20 @@ export function createApiServer(options={}) {
       sendJson(res, 404, { error: { code: 'NOT_FOUND', message: '请求的内容不存在' } });
     } catch(error) {
       if(res.headersSent){res.destroy();return;}
-      const messages={INVALID_MEDIA:'文件无法读取，请选择有效视频、音频或谱件',UPLOAD_TOO_LARGE:'文件超过大小限制',TOO_MANY_PAGES:'PDF 超过 100 页，请拆分后导入',RATE_LIMIT:'点歌太频繁，请等一分钟再试',QUEUE_FULL:'队列已满，请等待主人处理后再试',NOT_FOUND:'内容不存在，或点歌会话已关闭、过期',UNAUTHORIZED:'请先配对这台设备',CONFLICT:'内容已有新修改，请到同步待办选择保留版本'};
+      const messages={INVALID_MEDIA:'文件无法读取，请选择有效视频、音频或谱件',UPLOAD_TOO_LARGE:'文件超过大小限制',TOO_MANY_PAGES:'PDF 超过 100 页，请拆分后导入',RATE_LIMIT:'点歌太频繁，请等一分钟再试',QUEUE_FULL:'队列已满，请等待主人处理后再试',NOT_FOUND:'内容不存在，或点歌会话已关闭、过期',UNAUTHORIZED:'请先配对这台设备',CONFLICT:'内容已有新修改，请到同步待办选择保留版本',TRACK_EXISTS:'这条音轨已有文件；要更换请显式确认替换',DUPLICATE_TRACK:'同一份音频不能同时充当原唱和伴奏'};
       const known=['BAD_REQUEST','INVALID_STATUS','INVALID_TAGS','INVALID_TITLE','INVALID_ARTIST','INVALID_SOURCE','SOURCE_NOT_ALLOWED','IMPORT_NOT_READY','INVALID_CLIP','INVALID_PROVIDER_RESPONSE',...Object.keys(messages)];
       const code=error.name==='PasswordException'?'ENCRYPTED_PDF':known.includes(error.message)?error.message:'BAD_REQUEST';
       sendJson(res,error.status||400,{error:{code,message:code==='ENCRYPTED_PDF'?'PDF 已加密，请使用未加密文件':messages[code]||'请求无法完成，请检查内容后重试'}});
     }
   });
   const close=server.close.bind(server);
-  server.close=callback=>close(async error=>{
-    await Promise.allSettled([...ctx.pendingJobs]);
-    callback?.(error);
-  });
+  server.close=callback=>{
+    vocalImport?.close?.();
+    return close(async error=>{
+      await Promise.allSettled([...ctx.pendingJobs]);
+      callback?.(error);
+    });
+  };
   return server;
 }
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
@@ -170,10 +186,16 @@ if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) 
   const db = openDatabase(config.dbPath);
   const distPath = resolve('dist');
   const pairingFile=resolve(dirname(config.dbPath),'owner-pairing.json');mkdirSync(dirname(pairingFile),{recursive:true});if(!existsSync(pairingFile))writeFileSync(pairingFile,JSON.stringify({code:randomBytes(16).toString('hex')}),{mode:0o600});const pairCode=JSON.parse(readFileSync(pairingFile,'utf8')).code;
-  const server = createApiServer({pairCode,db,mediaRoot:config.mediaRoot,staticRoot:existsSync(distPath)?distPath:undefined});
-  server.on('error', () => { console.error('服务启动失败，请检查端口配置'); db.close(); process.exitCode = 1; });
+  const vocalImport=createVocalImportIntegration({
+    db,
+    mediaRoot:config.mediaRoot,
+    config:readVocalImportConfig(),
+    logger:console,
+  });
+  const server = createApiServer({pairCode,db,mediaRoot:config.mediaRoot,staticRoot:existsSync(distPath)?distPath:undefined,vocalImport});
+  server.on('error', () => { console.error('服务启动失败，请检查端口配置'); vocalImport?.close(); db.close(); process.exitCode = 1; });
   server.listen(config.port, config.host, () => console.log(`Dance API http://${config.host}:${config.port}`));
-  const shutdown=()=>server.close(()=>{db.close();process.exit(0);});
+  const shutdown=()=>{vocalImport?.close();server.close(()=>{db.close();process.exit(0);});};
   process.on('SIGTERM',shutdown);
   process.on('SIGINT',shutdown);
 }

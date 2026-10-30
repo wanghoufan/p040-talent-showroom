@@ -1,0 +1,334 @@
+{
+  "capturedAt": "2026-10-30",
+  "environment": {
+    "browser": "BrowserOS neo Chrome 155 (CDP 9113)",
+    "viewport": "390x844",
+    "api": "127.0.0.1:8793 isolated",
+    "database": "/tmp/p040-v21-qa-20261030/db/qa.db",
+    "media": "/tmp/p040-v21-qa-20261030/media",
+    "build": "npm run build",
+    "muted": true
+  },
+  "summary": {
+    "total": 52,
+    "passed": 52,
+    "failed": 0
+  },
+  "limitations": [
+    "真实离线播放需原生平台，本轮 BLOCKED",
+    "全量回归未执行",
+    "手机/ADB 未操作",
+    "音频元素静音，仅按时钟/状态判定"
+  ],
+  "results": [
+    {
+      "scenario": "练唱/曲库",
+      "status": "PASS",
+      "name": "cards=6 titles=[\"오리지널 데모 · 한국어 K-Pop · 合成导唱（非真人）\",\"Original Demo · English Hip-Hop · 合成导唱（非真人）\",\"原创演示 · 中文流行 · 合成导唱（非真人）\",\"原创示例\",\"原创演示 · 中文抒情 · 合成导唱（非真人）\",\"Original Demo · English Indie · 合成导唱（非真人）\"]",
+      "detail": ""
+    },
+    {
+      "scenario": "练唱/曲库",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "scenario": "练唱/曲库",
+      "status": "PASS",
+      "name": "[\"全部:false\",\"中文:false\",\"英文:false\",\"韩文:false\"]",
+      "detail": ""
+    },
+    {
+      "scenario": "练唱/曲库",
+      "status": "PASS",
+      "name": "♪별빛 궤도示例1:12오리지널 데모 · 한국어 K-Pop · 合成导唱（非真人）想学▶",
+      "detail": ""
+    },
+    {
+      "scenario": "练唱/曲库",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "scenario": "练唱/曲库",
+      "status": "PASS",
+      "name": "sections=7",
+      "detail": ""
+    },
+    {
+      "scenario": "练唱/曲库",
+      "status": "PASS",
+      "name": "Rap R1Rap0:29可跳过",
+      "detail": ""
+    },
+    {
+      "scenario": "练唱/曲库",
+      "status": "PASS",
+      "name": "lines=10",
+      "detail": ""
+    },
+    {
+      "scenario": "练唱/曲库",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "scenario": "练唱/曲库",
+      "status": "PASS",
+      "name": "[{\"text\":\"原唱\",\"pressed\":\"true\",\"disabled\":false},{\"text\":\"伴奏\",\"pressed\":\"false\",\"disabled\":false}]",
+      "detail": ""
+    },
+    {
+      "scenario": "练唱/曲库",
+      "status": "PASS",
+      "name": "{\"paused\":false,\"time\":1.475917,\"muted\":true,\"volume\":0,\"src\":\"209fcb92-ee97-4934-9f25-b7c7bc65f656\"}",
+      "detail": ""
+    },
+    {
+      "scenario": "练唱/曲库",
+      "status": "PASS",
+      "name": "0:05路灯拐了一个弯",
+      "detail": ""
+    },
+    {
+      "scenario": "练唱/曲库",
+      "status": "PASS",
+      "name": "line=0:37 audio=38.30s",
+      "detail": ""
+    },
+    {
+      "scenario": "练唱/曲库",
+      "status": "PASS",
+      "name": "{\"mode\":\"逐句循环 · 第 2～5 句 · 循环第 2～5 句，共 4 句\",\"time\":11.76}",
+      "detail": ""
+    },
+    {
+      "scenario": "练唱/曲库",
+      "status": "PASS",
+      "name": "time=12.05",
+      "detail": ""
+    },
+    {
+      "scenario": "练唱/曲库",
+      "status": "PASS",
+      "name": "前进 10 秒: 6.2 -> 16.4",
+      "detail": ""
+    },
+    {
+      "scenario": "练唱/曲库",
+      "status": "PASS",
+      "name": "before=16.40 after=16.49",
+      "detail": ""
+    },
+    {
+      "scenario": "练唱/曲库",
+      "status": "PASS",
+      "name": "{\"time\":16.487284,\"paused\":false,\"mode\":\"自由练习 · 已切换到伴奏\",\"src\":\"68ce11b4-9b1e-4ef2-9f51-3b62d0fb9219\"}",
+      "detail": ""
+    },
+    {
+      "scenario": "练唱/曲库",
+      "status": "PASS",
+      "name": "{\"time\":17.335382,\"paused\":false,\"pressed\":[\"true\",\"false\"]}",
+      "detail": ""
+    },
+    {
+      "scenario": "练唱/曲库",
+      "status": "PASS",
+      "name": "samples=[27.76,28.06,28.37,28.67,28.97,37.21]",
+      "detail": ""
+    },
+    {
+      "scenario": "练唱/曲库",
+      "status": "PASS",
+      "name": "[\"重播\",\"−15s\",\"❚❚ 暂停\",\"+30s\",\"循环\"]",
+      "detail": ""
+    },
+    {
+      "scenario": "练唱/曲库",
+      "status": "PASS",
+      "name": "{\"skipRap\":true,\"wholeTrackLoop\":false,\"backwardSeconds\":15,\"forwardSeconds\":30,\"customRepeatLines\":2,\"playbackRate\":1}",
+      "detail": ""
+    },
+    {
+      "scenario": "练唱/曲库",
+      "status": "PASS",
+      "name": "lyrics=10 sections=7",
+      "detail": ""
+    },
+    {
+      "scenario": "练唱/曲库",
+      "status": "PASS",
+      "name": "[\"重播\",\"−15s\",\"▶ 播放\",\"+30s\",\"循环\"]",
+      "detail": ""
+    },
+    {
+      "scenario": "练唱/曲库",
+      "status": "PASS",
+      "name": "{\"mode\":\"合练中 · 自动跳过 Rap · 合练一遍：从头播放 · 自动跳过 Rap · 到结尾停止\",\"time\":0.8,\"paused\":false}",
+      "detail": ""
+    },
+    {
+      "scenario": "练唱/曲库",
+      "status": "PASS",
+      "name": "{\"mode\":\"自由练习 · 合练一遍完成\",\"paused\":true}",
+      "detail": ""
+    },
+    {
+      "scenario": "练唱/曲库",
+      "status": "PASS",
+      "name": "{\"hasVocalPlayer\":false,\"hasAudio\":true,\"text\":true}",
+      "detail": ""
+    },
+    {
+      "scenario": "节目单/演出/回存/示例",
+      "status": "PASS",
+      "name": "status=201 id=29c2b17f-42fe-43a9-9bf3-b2603a45966a",
+      "detail": ""
+    },
+    {
+      "scenario": "节目单/演出/回存/示例",
+      "status": "PASS",
+      "name": "[\"⠿城市慢半拍唱歌 · 伴奏未缓存↑↓×\",\"⠿示例 · 四和弦练习吉他 · 未缓存↑↓×\"]",
+      "detail": ""
+    },
+    {
+      "scenario": "节目单/演出/回存/示例",
+      "status": "PASS",
+      "name": "⠿城市慢半拍唱歌 · 伴奏未缓存↑↓×",
+      "detail": ""
+    },
+    {
+      "scenario": "节目单/演出/回存/示例",
+      "status": "PASS",
+      "name": "仍有资源未就绪，其中 2 条唱歌音轨缺失；请按下方明细补全后重试。",
+      "detail": ""
+    },
+    {
+      "scenario": "节目单/演出/回存/示例",
+      "status": "PASS",
+      "name": "[\"城市慢半拍伴奏未缓存、原唱未缓存歌词 10 句（带时间） · 结构 7 段\"]",
+      "detail": ""
+    },
+    {
+      "scenario": "节目单/演出/回存/示例",
+      "status": "PASS",
+      "name": "{\"title\":\"城市慢半拍\",\"tracks\":[{\"text\":\"♫ 伴奏\",\"pressed\":\"true\",\"disabled\":false},{\"text\":\"♬ 原唱\",\"pressed\":\"false\",\"disabled\":false}],\"hint\":\"当前音轨：伴奏（未缓存，请先准备离线演出）\"}",
+      "detail": ""
+    },
+    {
+      "scenario": "节目单/演出/回存/示例",
+      "status": "PASS",
+      "name": "当前音轨：伴奏（未缓存，请先准备离线演出）",
+      "detail": ""
+    },
+    {
+      "scenario": "节目单/演出/回存/示例",
+      "status": "PASS",
+      "name": "{\"paused\":false,\"time\":1.28,\"muted\":true}",
+      "detail": ""
+    },
+    {
+      "scenario": "节目单/演出/回存/示例",
+      "status": "PASS",
+      "name": "跟着心跳慢半拍",
+      "detail": ""
+    },
+    {
+      "scenario": "节目单/演出/回存/示例",
+      "status": "PASS",
+      "name": "before=20.46 after=20.85",
+      "detail": ""
+    },
+    {
+      "scenario": "节目单/演出/回存/示例",
+      "status": "PASS",
+      "name": "{\"time\":20.854926,\"paused\":false,\"hint\":\"当前音轨：原唱（未缓存，请先准备离线演出）\"}",
+      "detail": ""
+    },
+    {
+      "scenario": "节目单/演出/回存/示例",
+      "status": "PASS",
+      "name": "{\"title\":\"示例 · 四和弦练习\",\"paused\":true,\"time\":0,\"hasTrackButtons\":0}",
+      "detail": ""
+    },
+    {
+      "scenario": "节目单/演出/回存/示例",
+      "status": "PASS",
+      "name": "{\"title\":\"示例 · 四和弦练习\",\"paused\":true,\"time\":0,\"hasTrackButtons\":0}",
+      "detail": ""
+    },
+    {
+      "scenario": "节目单/演出/回存/示例",
+      "status": "PASS",
+      "name": "{\"title\":\"城市慢半拍\",\"pressed\":[\"true\",\"false\"],\"paused\":true}",
+      "detail": ""
+    },
+    {
+      "scenario": "节目单/演出/回存/示例",
+      "status": "PASS",
+      "name": "[\"重播\",\"−30s\",\"▶ 播放\",\"+30s\",\"循环\"]",
+      "detail": ""
+    },
+    {
+      "scenario": "节目单/演出/回存/示例",
+      "status": "PASS",
+      "name": "[{\"action\":\"update\",\"state\":\"pending\",\"backward\":30}]",
+      "detail": ""
+    },
+    {
+      "scenario": "节目单/演出/回存/示例",
+      "status": "PASS",
+      "name": "before=15 during=15",
+      "detail": ""
+    },
+    {
+      "scenario": "节目单/演出/回存/示例",
+      "status": "PASS",
+      "name": "backward=30 rev=3->4",
+      "detail": ""
+    },
+    {
+      "scenario": "节目单/演出/回存/示例",
+      "status": "PASS",
+      "name": "[]",
+      "detail": ""
+    },
+    {
+      "scenario": "节目单/演出/回存/示例",
+      "status": "PASS",
+      "name": "同步与待办手机修改已同步重试同步待处理文件 0 个重试文件处理最近处理结果（0）",
+      "detail": ""
+    },
+    {
+      "scenario": "节目单/演出/回存/示例",
+      "status": "PASS",
+      "name": "已导入 8 首示例 / server=8",
+      "detail": ""
+    },
+    {
+      "scenario": "节目单/演出/回存/示例",
+      "status": "PASS",
+      "name": "试用示例已导入 8 首示例舞蹈 1 首、吉他 1 首，以及五首原创唱歌演示（旧版发声示例会一并导入），独立标记。重复导入会保留你对示例的修改。下载并导入示例清除示例示例已导入；请在手机 App 下载后离线试用。",
+      "detail": ""
+    },
+    {
+      "scenario": "节目单/演出/回存/示例",
+      "status": "PASS",
+      "name": "[\"普通曲目 保留验证\"]",
+      "detail": ""
+    },
+    {
+      "scenario": "节目单/演出/回存/示例",
+      "status": "PASS",
+      "name": "files 28 -> 0",
+      "detail": ""
+    },
+    {
+      "scenario": "节目单/演出/回存/示例",
+      "status": "PASS",
+      "name": "[]",
+      "detail": ""
+    }
+  ]
+}

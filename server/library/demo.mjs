@@ -1,4 +1,5 @@
 import {ensureDemoScore} from './demo-scores.mjs';
+import {importVocalDemos} from './vocal-demo.mjs';
 import { randomUUID } from 'node:crypto';
 import { mkdirSync,writeFileSync,unlinkSync,renameSync,existsSync } from 'node:fs';
 import { join,relative } from 'node:path';
@@ -21,20 +22,39 @@ export async function importDemo(db,mediaRoot){if(importing)throw Error('BUSY');
    else db.prepare("INSERT INTO repertoire_items(id,kind,title,artist,learning_status,original_key,performance_key,capo,score_text,audio_role,source_media_id,performance_clip_id) VALUES(?,?,?,'原创示例','WANT_TO_LEARN','C','C',0,?,?,?,?)").run(id,p.kind,p.title,p.text,p.kind==='VOCAL'?'ACCOMPANIMENT':'REFERENCE',sourceId,clipId);
    db.prepare('INSERT INTO demo_records(kind,item_id,slot,media_json) VALUES(?,?,?,?)').run(p.kind,id,p.slot,JSON.stringify([relative(mediaRoot,source),relative(mediaRoot,clip.path)]));bumpCatalog(db);db.exec('COMMIT');committed=true;await ensureDemoScore(db,mediaRoot,{kind:p.kind,id});
   }catch(e){if(db.isTransaction)db.exec('ROLLBACK');if(!committed)for(const path of [source,clip?.path].filter(Boolean))try{unlinkSync(path);}catch{/* Retain original error. */}throw e;}
- }return listDemo(db);
+ }await importVocalDemos(db,mediaRoot);
+ return listDemo(db);
  }finally{importing=false;}}
+/** 收集本条演示登记过的所有媒体：旧单轨列 + 唱歌双轨列，去重后按 demo 清单保护真实引用。 */
+function demoMedia(db,row){
+ const found=new Map();
+ const addClip=id=>{if(!id||found.has(id))return;const clip=db.prepare('SELECT source_media_id,internal_audio_path AS path FROM performance_clips WHERE id=?').get(id);if(clip)found.set(id,{kind:'clip',path:clip.path,sourceId:clip.source_media_id});};
+ const addSource=id=>{if(!id||found.has(id))return;const source=db.prepare('SELECT internal_path AS path FROM source_media WHERE id=?').get(id);if(source)found.set(id,{kind:'source',path:source.path});};
+ addSource(row.source_media_id);addClip(row.performance_clip_id);addClip(row.original_clip_id);addClip(row.accompaniment_clip_id);
+ for(const media of [...found.values()])if(media.kind==='clip')addSource(media.sourceId);
+ return found;
+}
+/** 删除后仍被两类曲库（含回收站）引用的媒体一律保留；只有 demo 清单里登记且无引用的文件才清理。 */
+function referenced(db,media){
+ return ['dance_items','repertoire_items'].reduce((n,table)=>n+db.prepare(media.kind==='source'
+  ?`SELECT count(*) AS n FROM ${table} WHERE source_media_id=?`
+  :`SELECT count(*) AS n FROM ${table} WHERE performance_clip_id=?${table==='repertoire_items'?' OR original_clip_id=? OR accompaniment_clip_id=?':''}`
+ ).get(...(media.kind==='source'?[media.id]:table==='repertoire_items'?[media.id,media.id,media.id]:[media.id])).n,0);
+}
 export function clearDemo(db,mediaRoot){
  const records=db.prepare('SELECT * FROM demo_records').all(),refs=records.map(r=>({kind:r.kind,id:r.item_id}));const moved=[];const removedMedia=[];
  db.exec('BEGIN IMMEDIATE');try{
   removeFromProgram(db,refs);
   for(const r of records){const table=r.kind==='DANCE'?'dance_items':'repertoire_items';const row=db.prepare(`SELECT * FROM ${table} WHERE id=?`).get(r.item_id);if(r.kind==='DANCE')db.prepare('DELETE FROM tonight_playlist_items WHERE dance_item_id=?').run(r.item_id);db.prepare(`DELETE FROM ${table} WHERE id=?`).run(r.item_id);
-   const scoreFiles=db.prepare('SELECT a.id,a.internal_path FROM score_links l JOIN score_assets a ON a.id=l.asset_id WHERE l.kind=? AND l.item_id=?').all(r.kind,r.item_id);db.prepare('DELETE FROM score_links WHERE kind=? AND item_id=?').run(r.kind,r.item_id);for(const score of scoreFiles){if(!JSON.parse(r.media_json).includes(score.internal_path)||db.prepare('SELECT count(*) AS n FROM score_links WHERE asset_id=?').get(score.id).n)continue;const path=controlledPath(mediaRoot,score.internal_path);if(existsSync(path)){const q=path+'.delete-'+randomUUID();renameSync(path,q);moved.push([path,q]);}removedMedia.push(score.id);}
+   const mediaPaths=new Set(JSON.parse(r.media_json));
+   const scoreFiles=db.prepare('SELECT a.id,a.internal_path FROM score_links l JOIN score_assets a ON a.id=l.asset_id WHERE l.kind=? AND l.item_id=?').all(r.kind,r.item_id);db.prepare('DELETE FROM score_links WHERE kind=? AND item_id=?').run(r.kind,r.item_id);for(const score of scoreFiles){if(!mediaPaths.has(score.internal_path)||db.prepare('SELECT count(*) AS n FROM score_links WHERE asset_id=?').get(score.id).n)continue;const path=controlledPath(mediaRoot,score.internal_path);if(existsSync(path)){const q=path+'.delete-'+randomUUID();renameSync(path,q);moved.push([path,q]);}removedMedia.push(score.id);}
    if(!row)continue;
-   // 当前记录删除后检查两类曲库，包括回收站，任何引用都保护文件。
-   const sources=row.source_media_id?db.prepare('SELECT internal_path FROM source_media WHERE id=?').get(row.source_media_id):null,clip=row.performance_clip_id?db.prepare('SELECT internal_audio_path AS internal_path FROM performance_clips WHERE id=?').get(row.performance_clip_id):null;
-   for(const [col,value,file] of [['source_media_id',row.source_media_id,sources],['performance_clip_id',row.performance_clip_id,clip]]){
-    if(!value||!file||!JSON.parse(r.media_json).includes(file.internal_path))continue;const count=['dance_items','repertoire_items'].reduce((n,t)=>n+db.prepare(`SELECT count(*) AS n FROM ${t} WHERE ${col}=?`).get(value).n,0);if(count)continue;
-    const path=controlledPath(mediaRoot,file.internal_path);if(existsSync(path)){const quarantine=path+'.delete-'+randomUUID();renameSync(path,quarantine);moved.push([path,quarantine]);}removedMedia.push(value);
+   // 双轨演示的原唱/伴奏都要纳入；删除当前记录后再判断引用，保护真实曲目或回收站仍在用的文件。
+   const media=demoMedia(db,row);
+   for(const [id,item] of media){
+    if(!mediaPaths.has(item.path))continue;
+    const ref={...item,id};if(referenced(db,ref))continue;
+    const path=controlledPath(mediaRoot,item.path);if(existsSync(path)){const quarantine=path+'.delete-'+randomUUID();renameSync(path,quarantine);moved.push([path,quarantine]);}removedMedia.push(id);
    }
   }db.exec('DELETE FROM demo_records');bumpCatalog(db);db.exec('COMMIT');
  }catch(e){db.exec('ROLLBACK');for(const [path,q] of moved.reverse())renameSync(q,path);throw e;}

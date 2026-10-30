@@ -1,0 +1,127 @@
+{
+  "beforeFix": {
+    "title": "Slow Cancel",
+    "status": "IMPORTED",
+    "cancelRequested": true,
+    "finishedAt": "2026-10-29T17:30:38.785Z",
+    "events": [
+      {
+        "seq": 1,
+        "event": "created",
+        "stage": "EXTRACT",
+        "status": "PENDING_EXTRACT",
+        "detail": {
+          "songId": "b23d43d9-5115-5373-997d-4679961c2319"
+        },
+        "createdAt": "2026-10-29 17:30:28"
+      },
+      {
+        "seq": 2,
+        "event": "claimed",
+        "stage": "EXTRACT",
+        "status": "EXTRACTING",
+        "detail": {
+          "owner": "vocal-import-local",
+          "attempt": 1
+        },
+        "createdAt": "2026-10-29 17:30:29"
+      },
+      {
+        "seq": 3,
+        "event": "extracted",
+        "stage": "VERIFY",
+        "status": "VERIFYING",
+        "detail": {
+          "relPath": "vocal-import/b23d43d9-5115-5373-997d-4679961c2319/QA - Slow Cancel_(Instrumental).wav"
+        },
+        "createdAt": "2026-10-29 17:30:38"
+      },
+      {
+        "seq": 4,
+        "event": "verified-artifacts",
+        "stage": "VERIFY",
+        "status": "VERIFYING",
+        "detail": {
+          "sizeBytes": 1764078,
+          "durationMs": 20000
+        },
+        "createdAt": "2026-10-29 17:30:38"
+      },
+      {
+        "seq": 5,
+        "event": "imported",
+        "stage": "IMPORT",
+        "status": "IMPORTED",
+        "detail": {
+          "status": "CREATED",
+          "repertoireId": "b23d43d9-5115-5373-997d-4679961c2319",
+          "originalClipId": "7c229cef-b2e6-5344-b5cf-888a2e67c149",
+          "accompanimentClipId": "e3daba60-224b-53fd-8e8d-eaa04a855b82",
+          "lyrics": 2
+        },
+        "createdAt": "2026-10-29 17:30:38"
+      }
+    ]
+  },
+  "afterFix": {
+    "title": "Slow Cancel Two",
+    "status": "CANCELLED",
+    "cancelRequested": true,
+    "finishedAt": "2026-10-29T17:32:13.374Z",
+    "events": [
+      {
+        "seq": 2,
+        "event": "claimed",
+        "stage": "EXTRACT",
+        "status": "EXTRACTING",
+        "detail": {
+          "owner": "vocal-import-local",
+          "attempt": 1
+        },
+        "createdAt": "2026-10-29 17:31:48"
+      },
+      {
+        "seq": 3,
+        "event": "cancel-requested",
+        "stage": "EXTRACT",
+        "status": "EXTRACTING",
+        "detail": {},
+        "createdAt": "2026-10-29 17:31:51"
+      },
+      {
+        "seq": 4,
+        "event": "cancelled",
+        "stage": "EXTRACT",
+        "status": "CANCELLED",
+        "detail": {},
+        "createdAt": "2026-10-29 17:32:13"
+      },
+      {
+        "seq": 5,
+        "event": "rescanned",
+        "stage": "EXTRACT",
+        "status": "CANCELLED",
+        "detail": {
+          "issues": [
+            "audio-role-unmarked-original-assumed"
+          ],
+          "preservedStatus": "CANCELLED"
+        },
+        "createdAt": "2026-10-29 17:33:43"
+      },
+      {
+        "seq": 6,
+        "event": "rescanned",
+        "stage": "EXTRACT",
+        "status": "CANCELLED",
+        "detail": {
+          "issues": [
+            "audio-role-unmarked-original-assumed"
+          ],
+          "preservedStatus": "CANCELLED"
+        },
+        "createdAt": "2026-10-29 17:36:37"
+      }
+    ]
+  }
+}

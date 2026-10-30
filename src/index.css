@@ -137,8 +137,11 @@ legend { margin-bottom:10px; font-size:15px; }
 .batch-actions span { white-space:nowrap; font-size:14px; }
 .batch-sheet label { margin-bottom:16px; }
 .batch-sheet fieldset { margin-top:8px; }
-.batch-tags { flex-wrap:nowrap; }
+.batch-tags { flex-wrap:wrap; }
 .batch-tags button { padding:8px 6px; min-width:48px; }
+.batch-group { margin-bottom:16px; }
+.batch-group__label { display:block; margin-bottom:8px; font-size:14px; color:var(--text); }
+.batch-group__hint { color:var(--muted); font-size:12px; }
 .dance-card__select { padding:0; width:100%; border:0; border-radius:9px; background:transparent; text-align:left; }
 .dance-card__select[aria-pressed="true"] { background:transparent; }
 .dance-card__labels { display:flex; flex-wrap:wrap; gap:3px; margin:6px 38px 0 0; color:var(--muted); font-size:10px; }
@@ -198,7 +201,7 @@ legend { margin-bottom:10px; font-size:15px; }
 .check-row { flex-direction:row; align-items:center; min-height:48px; margin:8px 0; }
 .check-row input { width:24px; min-height:24px; }
 .demo-badge { position:absolute; top:3px; left:3px; z-index:2; font-size:10px; padding:0 3px; border-radius:3px; background:var(--surface); }
-.bulk-title-list{max-height:35vh;overflow:auto;padding-left:24px}.trash-row{display:flex;gap:12px;align-items:center;min-height:64px;border-bottom:1px solid var(--border)}.trash-row input{width:24px;height:24px}.trash-row small{display:block;color:var(--muted)}.batch-actions{flex-wrap:wrap;gap:6px;padding:8px}.batch-sheet input[type=checkbox]{width:24px;min-height:24px}
+.bulk-title-list{max-height:35vh;overflow:auto;padding-left:24px}.trash-row{display:flex;flex-direction:row;gap:12px;align-items:center;min-height:64px;border-bottom:1px solid var(--border)}.trash-row input{width:24px;height:24px}.trash-row small{display:block;color:var(--muted)}.batch-actions{flex-wrap:wrap;gap:6px;padding:8px}.batch-sheet input[type=checkbox]{width:24px;min-height:24px}
 .performance-score{font-size:20px;line-height:1.9;white-space:pre-wrap;overflow:auto;max-height:55vh;text-align:left;padding:12px;background:var(--surface);border-radius:12px}.score-reader__surface{max-height:65vh;overflow:auto;background:#fff}.score-reader canvas{max-width:none;display:block}.import-queue{max-height:45vh;overflow:auto}.library-header{flex-wrap:wrap}.talent-grid .dance-card__select{position:relative;width:100%;height:auto;display:block}.talent-grid .dance-card__select .cover-art{min-height:80px}
 .guest-page{padding:20px;max-width:700px;margin:auto}.request-qr{display:block;max-width:100%;margin:12px auto}.request-url{overflow-wrap:anywhere}.sync-conflict{padding:12px;border:1px solid var(--border);border-radius:12px;margin-top:12px}
 

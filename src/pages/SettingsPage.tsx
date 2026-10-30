@@ -1,6 +1,8 @@
 import {api,jsonBody} from '../lib/api';
+import {createTimedSignal} from '../lib/abort-signal';
 import SyncControls from '../components/SyncControls';
 import DemoControls from '../components/DemoControls';
+import VocalImportManager from '../components/VocalImportManager';
 import { Link } from 'react-router-dom';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { applyTheme, resolveTheme, systemPrefersDark } from '../app/theme';
@@ -8,6 +10,7 @@ import { readDeviceSettings, saveDeviceSettings, validateEndpoint } from '../lib
 import { syncLibrary, inspectOfflineLibrary, readSyncReport, clearSyncReport, syncReferences, readReferenceReport, clearReferenceReport, referencePlan, type SyncProgress, type ReferenceSyncProgress, type ReferenceSyncResult } from '../lib/sync';
 import { offlineBytes, clearOfflineMedia, isOfflineSupported } from '../native/filesystem';
 import { applySystemBars } from '../native/theme-bars';
+import { readAppVersion } from '../native/app-version';
 import { readCachedIndex, saveCachedIndex, type CachedIndex } from '../lib/offline-manifest';
 import type { DeviceSettings, OfflineManifest } from '../lib/types';
 
@@ -40,6 +43,10 @@ export default function SettingsPage() {
   const refController = useRef<AbortController | null>(null);
   // 原视频计划以「联网拉到的清单」为准；本地清单可能落后（旧版服务器不返回 url/体积），只作离线兜底。
   const refManifest = useRef<OfflineManifest | null>(null);
+  const [appVersion, setAppVersion] = useState<{ version: string; build: string } | null>(null);
+
+  // 原生读真实安装包的 versionName / versionCode，用于核对手机上的构建号。
+  useEffect(() => { let active = true; void readAppVersion().then((v) => { if (active) setAppVersion({ version: v.version, build: v.build }); }).catch(() => undefined); return () => { active = false; }; }, []);
 
   const refreshCache = useCallback(async () => { setChecking(true); try { setOverview(await inspectOfflineLibrary()); setCache({ count: Object.keys(readCachedIndex()).length, bytes: await offlineBytes() }); setRefPlan(refManifest.current ? referencePlan(refManifest.current) : referencePlan()); } finally { setChecking(false); } }, []);
   // 先拉清单再做缓存检查，串行执行：避免慢的缓存检查用旧清单把最新体积/总数覆盖掉。
@@ -57,8 +64,10 @@ export default function SettingsPage() {
     setBusy(true); setMessage('');
     try {
       const address = validateEndpoint(endpoint, import.meta.env.DEV);
-      const response = await fetch(address + '/api/health', { signal: AbortSignal.timeout(5000) });
-      const data = await response.json();
+      const timed = createTimedSignal(5000);
+      let response: Response; let data: { ok?: boolean };
+      try { response = await fetch(address + '/api/health', { signal: timed.signal }); data = await response.json(); }
+      finally { timed.release(); }
       if (!response.ok || data.ok !== true) throw new Error();
       const next = { ...settings, apiEndpoint: address }; saveDeviceSettings(next); setSettings(next);
       setMessage('连接成功，服务器地址已保存');
@@ -106,6 +115,9 @@ export default function SettingsPage() {
         <label>设备配对码<input type="password" value={pairCode} onChange={e=>setPairCode(e.target.value)} autoComplete="off"/></label><button disabled={!pairCode||busy} onClick={()=>void api<{token:string}>('/api/pair',{method:'POST',...jsonBody({code:pairCode})}).then(r=>{localStorage.setItem('dance.owner-token',r.token);setPairCode('');setMessage('设备配对成功');}).catch(()=>setMessage('配对失败，请检查配对码'))}>配对这台设备</button><p className="muted">最近同步：{settings.lastSyncAt ? new Date(settings.lastSyncAt).toLocaleString() : '尚未同步'}</p>
       </div>
       <div className="settings-block">
+        <VocalImportManager />
+      </div>
+      <div className="settings-block">
         <h2>离线音乐</h2>
         <p>{checking ? '正在检查手机缓存…' : '可离线播放：'}{overview.readyItems}/{overview.items} 首</p>
         <p className="muted">下载舞蹈、吉他、唱歌全曲库的音乐、封面和勾选的谱件到手机，拔线、断网也能播放。原视频体积较大，请用下方「原视频（离线看）」单独下载。</p>
@@ -151,6 +163,7 @@ export default function SettingsPage() {
         {!refBusy && refReport && refReport.failed > 0 && !refMessage && <p role="status">上次下载：{refReport.complete ? '全部完成' : refReport.cancelled ? '已停止' : `部分完成，${refReport.failed} 个失败`}</p>}
       </div>
       <SyncControls/><DemoControls onChanged={refreshCache}/><div className="settings-block"><h2>曲目管理</h2><Link className="icon-link" to="/settings/requests">扫码点歌 →</Link><Link className="icon-link" to="/settings/trash">回收站 →</Link></div><div className="settings-block"><h2>舞蹈曲库</h2><p className="muted">收录舞蹈 · 学习 · 演出</p><p className="muted">V2 · 舞蹈 / 吉他 / 唱歌</p></div>
+      <div className="settings-block" data-testid="about-version"><h2>关于</h2><p>{appVersion ? `版本 ${appVersion.version}（构建 ${appVersion.build}）` : '正在读取版本…'}</p><p className="muted">个人舞蹈曲库 · 手机离线可用</p></div>
     </section>
   );
 }

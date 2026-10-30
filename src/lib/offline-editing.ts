@@ -1,10 +1,36 @@
 import {api,jsonBody,ApiError} from './api';import {commitLocal,localOperations,readMetadata} from './local-database';import type {ItemRef} from './library-management';import type {DanceItem,TalentItem} from './types';import type {Program} from './program';
 export interface LocalOperation extends ItemRef {operationId:string;action:'create'|'update'|'trash'|'restore'|'program'|'bulk';baseRevision:number;fields?:Record<string,unknown>;state?:'pending'|'conflict'|'failed';error?:string;server?:Record<string,unknown>|null;serverRevision?:number;}
 const keys={DANCE:'dance.catalog-snapshot',GUITAR:'dance.repertoire-snapshot',VOCAL:'dance.repertoire-snapshot'};
+/** 唱歌元数据（与后端 sync-operations 的 VOCAL_METADATA 同一白名单）。 */
+const VOCAL_FIELDS=['language','lyrics','sections','practice'] as const;
+/** 与后端 MAX_VOCAL_BYTES 一致：离线只排队小改动，完整分析联网走专用接口。 */
+const MAX_OPERATION_BYTES=65536;
+/** 媒体与版本号不能经离线编辑队列改写：音轨只能走带 importJobId 的导入关联接口。 */
+const IMMUTABLE_FIELDS=['tracks','audio','cover','sourceMediaId','performanceClipId','revision','id','kind'];
+/**
+ * 离线写操作的字段闸门：唱歌的歌词/结构/练习设置只能是「带 baseRevision 的 update」，
+ * 且必须是白名单里的已知字段。未知字段不静默丢弃，直接拒绝，避免本地看着成功、同步时才 400。
+ */
+function acceptedFields(kind:LocalOperation['kind'],action:LocalOperation['action'],fields:Record<string,unknown>):Record<string,unknown>{
+ if(IMMUTABLE_FIELDS.some(key=>fields[key]!==undefined))throw Error('音轨与媒体只能在联网时导入');
+ const vocal=VOCAL_FIELDS.filter(key=>fields[key]!==undefined);
+ if(!vocal.length)return fields;
+ if(kind!=='VOCAL'||action!=='update')throw Error('歌词和结构只能逐首保存');
+ if(JSON.stringify(fields).length>MAX_OPERATION_BYTES)throw Error('歌词或结构过大，请联网后在曲目页保存');
+ if(fields.language!==undefined&&!['zh','en','ko'].includes(fields.language as string))throw Error('语言取值无效');
+ if(fields.lyrics!==undefined&&!Array.isArray(fields.lyrics))throw Error('歌词格式无效');
+ if(fields.sections!==undefined&&!Array.isArray(fields.sections))throw Error('结构格式无效');
+ if(fields.practice!==undefined&&(!fields.practice||typeof fields.practice!=='object'||Array.isArray(fields.practice)))throw Error('练习设置格式无效');
+ return fields;
+}
 function snapshot(kind:ItemRef['kind']):(DanceItem|TalentItem)[]{return JSON.parse(readMetadata(keys[kind])||'[]');}
 export async function editLocally(ref:ItemRef,fields:Record<string,unknown>,action:LocalOperation['action']='update'){
- const items=snapshot(ref.kind),prior=items.find(i=>i.id===ref.id)||(action==='restore'?JSON.parse(readMetadata('dance.trash')||'[]').find((i:ItemRef)=>i.id===ref.id):undefined);if(action!=='create'&&!prior)throw Error('曲目不存在');const op:LocalOperation={...ref,operationId:crypto.randomUUID(),action,baseRevision:prior?.revision||0,...(['create','update'].includes(action)?{fields}:{})};
- const item={...(action==='create'?{id:ref.id,kind:ref.kind,title:'',artist:'',learningStatus:'WANT_TO_LEARN',originalKey:'',performanceKey:'',capo:0,scoreText:'',notes:'',audioRole:'REFERENCE',durationMs:0,revision:0}:prior),...fields};const next=action==='trash'?items.filter(i=>i.id!==ref.id):[...items.filter(i=>i.id!==ref.id),item];const values:Record<string,string>={[keys[ref.kind]]:JSON.stringify(next)};
+ const items=snapshot(ref.kind),prior=items.find(i=>i.id===ref.id)||(action==='restore'?JSON.parse(readMetadata('dance.trash')||'[]').find((i:ItemRef)=>i.id===ref.id):undefined);if(action!=='create'&&!prior)throw Error('曲目不存在');
+ const patch={...acceptedFields(ref.kind,action,fields)};
+ // 练习设置按服务端口径增量合并：只改一项时不把其余默认值清空。
+ if(patch.practice&&typeof patch.practice==='object'&&!Array.isArray(patch.practice))patch.practice={...(prior?.practice||{}),...patch.practice as Record<string,unknown>};
+ const op:LocalOperation={...ref,operationId:crypto.randomUUID(),action,baseRevision:prior?.revision||0,...(['create','update'].includes(action)?{fields:patch}:{})};
+ const item={...(action==='create'?{id:ref.id,kind:ref.kind,title:'',artist:'',learningStatus:'WANT_TO_LEARN',originalKey:'',performanceKey:'',capo:0,scoreText:'',notes:'',audioRole:'REFERENCE',durationMs:0,revision:0}:prior),...patch};const next=action==='trash'?items.filter(i=>i.id!==ref.id):[...items.filter(i=>i.id!==ref.id),item];const values:Record<string,string>={[keys[ref.kind]]:JSON.stringify(next)};
  const manifest=JSON.parse(readMetadata('dance.offline.manifest')||'null');if(manifest){if(ref.kind==='DANCE')manifest.items=next;else manifest.repertoire=next;if(action==='trash'){manifest.playlist=manifest.playlist.filter((id:string)=>id!==ref.id);if(manifest.program)manifest.program.items=manifest.program.items.filter((r:ItemRef)=>r.id!==ref.id);}values['dance.offline.manifest']=JSON.stringify(manifest);}
  let trash=JSON.parse(readMetadata('dance.trash')||'[]');if(action==='trash')trash=[...trash.filter((i:ItemRef)=>i.id!==ref.id),{...prior,kind:ref.kind,deletedAt:new Date().toISOString()}];if(action==='restore')trash=trash.filter((i:ItemRef)=>i.id!==ref.id);values['dance.trash']=JSON.stringify(trash);
  if(action==='trash'){const program=JSON.parse(readMetadata('dance.program')||'null');if(program){program.items=program.items.filter((r:ItemRef)=>r.id!==ref.id);values['dance.program']=JSON.stringify(program);}}
@@ -19,6 +45,11 @@ export function flushOperations():Promise<void>{return flushTask??=performFlush(
 function operationRefs(op:LocalOperation):ItemRef[]{return op.action==='program'?[]:op.action==='bulk'?(op.fields?.refs as ItemRef[]||[]):[{kind:op.kind,id:op.id}];}
 function related(a:LocalOperation,b:LocalOperation){return a.action==='program'&&b.action==='program'||operationRefs(a).some(r=>operationRefs(b).some(x=>r.kind===x.kind&&r.id===x.id));}
 async function performFlush(){
+ // 用户改完再存 = 明确的新意图：更早那条被服务器拒绝的 update 从未落盘，允许被后来的同曲修改取代，
+ // 否则一次失败就能把这首歌的修改和音频待办永久堵死。冲突仍需用户当面选择，不在此列。
+ const all=await localOperations<LocalOperation&{createdAt?:number}>();
+ const superseded=all.filter(op=>op.state==='failed'&&op.action==='update'&&all.some(o=>o.action==='update'&&o.kind===op.kind&&o.id===op.id&&(o.createdAt||0)>(op.createdAt||0)&&o.state!=='failed'));
+ if(superseded.length)await commitLocal({},[],superseded.map(op=>op.operationId));
  for(const original of await localOperations<LocalOperation>()){
   const queue=await localOperations<LocalOperation>(),op=queue.find(o=>o.operationId===original.operationId);
   if(!op||['conflict','failed'].includes(op.state||'')||queue.some(o=>['conflict','failed'].includes(o.state||'')&&related(o,op)))continue;
@@ -85,6 +116,8 @@ export async function resolveOperation(op:LocalOperation,fields:Record<string,un
 }
 export async function bulkLocally(action:'update'|'trash'|'restore',refs:ItemRef[],fields?:Record<string,unknown>){
  const kind=refs[0]?.kind;if(!kind||new Set(refs.map(r=>r.kind+':'+r.id)).size!==refs.length)throw Error('请选择有效曲目');
+ // 整批通道不承载单首的歌词/结构，避免逐句改动被批处理覆盖。
+ if(fields&&VOCAL_FIELDS.some(key=>fields[key]!==undefined))throw Error('歌词和结构只能逐首保存');
  const nextByKey=new Map<string,(DanceItem|TalentItem)[]>(),baseRevisions:Record<string,number>={},changed=[];let trash=JSON.parse(readMetadata('dance.trash')||'[]');
  for(const ref of refs){const key=keys[ref.kind],items=nextByKey.get(key)||snapshot(ref.kind),item=(action==='restore'?[...trash].reverse():items).find((i:ItemRef)=>i.id===ref.id);if(!item)throw Error('曲目不存在');baseRevisions[ref.id]=item.revision||0;
   if(action==='trash'){nextByKey.set(key,items.filter(i=>i.id!==ref.id));trash=[...trash.filter((i:ItemRef)=>i.id!==ref.id),{...item,kind:ref.kind,deletedAt:new Date().toISOString()}];}

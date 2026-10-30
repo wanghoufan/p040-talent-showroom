@@ -1,0 +1,112 @@
+{
+  "schema": "p040.local-ai-import.preflight.v1",
+  "mode": "read-only-scan",
+  "sourceRoot": "/mnt/data/P040-Local-AI-Import-V3.0/examples/sample_inputs",
+  "summary": {
+    "audioFiles": 6,
+    "originalCandidates": 5,
+    "lrcFiles": 5,
+    "exactPairs": 4,
+    "readyToExtract": 4,
+    "needsReview": 1,
+    "duplicates": 1,
+    "duplicateLyrics": 0,
+    "unpairedLrc": 1
+  },
+  "songs": [
+    {
+      "songId": "7624d66b-f476-51b3-878a-2793e69527b4",
+      "status": "ready-to-extract",
+      "title": "Touch",
+      "artist": "3LAU, Carly Paige",
+      "original": "3LAU, Carly Paige - Touch.mp3",
+      "originalHash": "79ce535e27a47bf358c5271f8a3c59d3d9f230791d15011d4c9bc55bb3f726bd",
+      "suppliedAccompaniment": null,
+      "lyrics": "3LAU,Carly Paige - Touch.lrc",
+      "lyricsProposal": null,
+      "timedLyricsCount": 2,
+      "durationMs": 3030,
+      "issues": [
+        "audio-role-unmarked-original-assumed"
+      ]
+    },
+    {
+      "songId": "57540a68-cf1a-5dff-bc37-a7abe2df1fd1",
+      "status": "ready-to-extract",
+      "title": "미쳐",
+      "artist": "4MINUTE",
+      "original": "4MINUTE - 미쳐.mp3",
+      "originalHash": "818ee3743c54eba3cb78f4896d508031b4bfa1869653cb644ac5c0aefb6da6a4",
+      "suppliedAccompaniment": null,
+      "lyrics": "4MINUTE - 미쳐.lrc",
+      "lyricsProposal": null,
+      "timedLyricsCount": 2,
+      "durationMs": 3030,
+      "issues": [
+        "audio-role-unmarked-original-assumed"
+      ]
+    },
+    {
+      "songId": "1991910d-c6b8-5b06-9d61-31771b6654e4",
+      "status": "needs-review",
+      "title": "Midsummer Madness",
+      "artist": "88rising, Joji, Rich Brian, AUGUST 08",
+      "original": "88rising, Joji, Rich Brian, AUGUST 08 - Midsummer Madness.mp3",
+      "originalHash": "d85f15eba5f32a6424bf5a7a074671d3aed83c0ed7cb6146aca615908cd35b92",
+      "suppliedAccompaniment": null,
+      "lyrics": null,
+      "lyricsProposal": "88rising,Joji,Rich Brian - Midsummer Madness.lrc",
+      "timedLyricsCount": 0,
+      "durationMs": 3030,
+      "issues": [
+        "lyrics-needs-confirmation",
+        "audio-role-unmarked-original-assumed"
+      ]
+    },
+    {
+      "songId": "2cfed702-81ef-5dcf-b629-8be2cad005bd",
+      "status": "ready-to-extract",
+      "title": "Mood (8D Audio)",
+      "artist": "8D Tunes",
+      "original": "8D Tunes - Mood (8D Audio).mp3",
+      "originalHash": "dd71bf3ef9a45621e0f61e8379662629c6b80dce22d04ef1498b6d07e579dc52",
+      "suppliedAccompaniment": null,
+      "lyrics": "8D Tunes - Mood (8D Audio).lrc",
+      "lyricsProposal": null,
+      "timedLyricsCount": 1,
+      "durationMs": 3030,
+      "issues": [
+        "audio-role-unmarked-original-assumed"
+      ]
+    },
+    {
+      "songId": "2ac78582-1be4-5553-ad3b-63a95abbd8d5",
+      "status": "ready-to-extract",
+      "title": "爱的恰恰",
+      "artist": "宝石 Gem,俞天时,王洋 EVIS",
+      "original": "宝石 Gem,俞天时,王洋 EVIS - 爱的恰恰 (1).mp3",
+      "originalHash": "bb24b145a1fea8eaacc84b21d6608cd46de1473c3654c5ac75368df0f43308ae",
+      "suppliedAccompaniment": null,
+      "lyrics": "宝石 Gem,俞天时,王洋 EVIS - 爱的恰恰.lrc",
+      "lyricsProposal": null,
+      "timedLyricsCount": 1,
+      "durationMs": 3030,
+      "issues": [
+        "audio-role-unmarked-original-assumed",
+        "duplicate-suffix"
+      ]
+    }
+  ],
+  "duplicateFiles": [
+    {
+      "duplicate": "4MINUTE - 미쳐 (1).mp3",
+      "sameAs": "4MINUTE - 미쳐.mp3",
+      "hash": "818ee3743c54eba3cb78f4896d508031b4bfa1869653cb644ac5c0aefb6da6a4"
+    }
+  ],
+  "duplicateLyrics": [],
+  "unpairedLrc": [
+    "88rising,Joji,Rich Brian - Midsummer Madness.lrc"
+  ],
+  "orphanAccompaniments": []
+}

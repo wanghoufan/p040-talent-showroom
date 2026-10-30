@@ -12,6 +12,8 @@ import { readCachedIndex } from '../lib/offline-manifest';
 import type { ImportJob, TalentItem, TalentKind } from '../lib/types';
 import TalentEditor, { type TalentFields } from '../components/TalentEditor';
 import CoverArt from '../components/CoverArt';
+import VocalPracticePlayer from '../components/VocalPracticePlayer';
+import VocalImportPanel from '../components/VocalImportPanel';
 export default function TalentDetailPage() {
  const { id, kind: pathKind } = useParams(); const navigate = useNavigate(); const { items, error: catalogError, loaded } = useRepertoire();
  const item = items.find(x => x.id === id); const creating = !id; const kind: TalentKind = item?.kind || (pathKind === 'guitar' ? 'GUITAR' : 'VOCAL'); const listPath = `/repertoire/${kind === 'GUITAR' ? 'guitar' : 'vocal'}`;
@@ -61,10 +63,10 @@ export default function TalentDetailPage() {
  {(creating || editing) ? <TalentEditor key={id || kind} kind={kind} item={item} onSave={save} onCancel={() => creating ? navigate(listPath) : setEditing(false)} /> : item && <>
  <CoverArt title={item.title} variant="detail" /><h2 className="detail-title">{item.title}</h2><p className="muted">{item.artist || '未填写歌手'} · {talentStatuses(kind).find(s => s.id === item.learningStatus)?.label}</p>
  <div className="talent-facts"><span>原调 {item.originalKey || '未填写'}</span><span>{kind === 'GUITAR' ? '演奏调' : '演唱调'} {item.performanceKey || '未填写'}</span>{kind === 'GUITAR' && <span>Capo {item.capo}</span>}</div>
- {item.audio ? <div className="settings-block"><p>{item.audioRole === 'ACCOMPANIMENT' ? '伴奏' : '原唱 / 示范'}</p><button className="primary talent-play" onClick={play}>{paused ? '播放音乐' : '暂停音乐'}</button><audio ref={audio} controls loop={loop} onPlay={() => setPaused(false)} onPause={() => setPaused(true)} onEnded={() => setPaused(true)} />
+ {kind === 'VOCAL' ? <><VocalPracticePlayer key={item.id} item={item} onRequestImport={() => document.getElementById('vocal-import-original')?.click()} /><VocalImportPanel item={item} /></> : item.audio ? <div className="settings-block"><p>{item.audioRole === 'ACCOMPANIMENT' ? '伴奏' : '原唱 / 示范'}</p><button className="primary talent-play" onClick={play}>{paused ? '播放音乐' : '暂停音乐'}</button><audio ref={audio} controls loop={loop} onPlay={() => setPaused(false)} onPause={() => setPaused(true)} onEnded={() => setPaused(true)} />
  <div className="button-row"><button aria-pressed={loop} onClick={() => setLoop(!loop)}>{loop ? '循环已开启' : '单曲循环'}</button><label>播放速度<select value={rate} onChange={e => setRate(e.target.value)}>{['0.5','0.75','1','1.25','1.5'].map(x => <option key={x} value={x}>{x}×</option>)}</select></label></div></div> : <p className="notice">这是文本曲目，可直接看谱或歌词；导入自己的音频后可播放。</p>}
- <div className="settings-block"><h2>{kind === 'GUITAR' ? '和弦 / 歌词文本谱' : '歌词'}</h2>{item.scoreText ? <ScrollingText text={item.scoreText}/> : <p className="muted">尚未填写，点“编辑曲目”粘贴文本。</p>}</div>{item.notes && <div className="settings-block"><h2>练习备注</h2><p className="talent-notes">{item.notes}</p></div>}
- <ScoreAttachments itemRef={{kind,id:item.id}} scores={item.scores||[]} onChange={scores=>rememberRepertoire({...item,scores})}/><div className="button-row"><button disabled={busy} onClick={() => setEditing(true)}>编辑曲目</button><button disabled={busy} onClick={() => file.current?.click()}>{item.audio ? '重新导入练习音乐' : '导入音频 / 视频'}</button></div>
+ {kind === 'GUITAR' && <div className="settings-block"><h2>和弦 / 歌词文本谱</h2>{item.scoreText ? <ScrollingText text={item.scoreText}/> : <p className="muted">尚未填写，点“编辑曲目”粘贴文本。</p>}</div>}{item.notes && <div className="settings-block"><h2>练习备注</h2><p className="talent-notes">{item.notes}</p></div>}
+ <ScoreAttachments itemRef={{kind,id:item.id}} scores={item.scores||[]} onChange={scores=>rememberRepertoire({...item,scores})}/><div className="button-row"><button disabled={busy} onClick={() => setEditing(true)}>编辑曲目</button>{kind !== 'VOCAL' && <button disabled={busy} onClick={() => file.current?.click()}>{item.audio ? '重新导入练习音乐' : '导入音频 / 视频'}</button>}</div>
  <input type="file" ref={file} accept="audio/*,video/*" hidden onChange={e => { const selected = e.target.files?.[0]; if (selected) void importMedia(selected); e.target.value = ''; }} />
  {pending && !busy && <button onClick={() => void importMedia()}>继续未完成导入</button>}{busy && <p role="status">正在保存或处理音频，请稍候…</p>}
  {item.source?.sourceKind === 'VIDEO' && <Link className="icon-link" to={`/reference/${item.sourceMediaId}`}>查看原视频（需连接 Mac Mini）</Link>}

@@ -1,0 +1,42 @@
+P040 Local AI Import V3.0 — isolated test record
+Date: 2026-10-30
+
+1. Python regression tests:
+   python -m unittest discover -s tests -q
+   Result: 31 tests passed, 0 failures, 0 errors.
+   Includes filename normalization, 3-language LRC, duplicated and mismatched files,
+   symlink avoidance, non-overwriting, source/target boundary, runner dry-run.
+
+2. End-to-end CLI preflight on six SYNTHETIC DEMO MP3 files + five ORIGINAL demo LRC files.
+   These fixtures are sine-wave mock audio; NOT any of the user's copyrighted files.
+   Output scan summary:
+      audioFiles: 6; originalCandidates: 5; lrcFiles: 5
+      exactPairs: 4; readyToExtract: 4; needsReview: 1
+      duplicates: 1; duplicateLyrics: 0; unpairedLrc: 1
+   Recognized unusual filename cases analogous to user's screenshot:
+   - 3LAU comma/space mismatch: auto pair
+   - 4MINUTE Korean: auto pair
+   - Chinese song with (1): auto pair
+   - 8D edition isolated from ordinary version
+   - 88rising shortened artist names: proposal only (needs review)
+
+3. Extractor task handoff dry-run:
+   python tool/run_separation.py examples/separation-tasks.json --result examples/separation-dry-run.json
+   Result: 4 tasks with status dry-run, no media generated, no user source written.
+
+4. Environment limits:
+   - audio-separator ML model not installed or run in this container; M4/Metal model inference NOT tested.
+   - No performance, separation quality, or lyrics audio alignment measured on the user's music.
+   - P040 Mac Mini project accessed read-only; no API/DB/app code changes committed there.
+   - No real Android device was operated.
+
+5. Boundaries:
+   This proof of concept validates safe matching and task planning only. Main developer
+   must integrate with existing Node/SQLite sourceMedia + performanceClips + track records,
+   run actual Mac M4 audio separation A/B, and verify playback on Android.
+
+## V3.1 Real-path/screenshot targeted QA
+- 5 new real-sample-auditor tests passed (total 36 unit tests).
+- Mac external-volume path is not mounted in this ChatGPT container. Real MP3 bytes, separation quality, local Mac access, Android deployment are NOT verified.
+- Real sample target path: /Volumes/三星/网易云音乐/音乐（用于转换）
+- ZIP integrity revalidated.

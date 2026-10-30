@@ -2,7 +2,27 @@ import { useState } from 'react';
 import { SCENE_OPTIONS, STATUS_OPTIONS } from '../lib/filters';
 import { talentStatuses } from '../lib/repertoire-store';
 import type { LearningStatus, SceneTag, TalentKind } from '../lib/types';
-export interface LibraryFilterValue { status: LearningStatus | null; scenes: SceneTag[]; demoOnly: boolean; cachedOnly: boolean; }
+export type VocalLanguage = 'ZH' | 'EN' | 'KO';
+export interface VocalLanguageValue { status: LearningStatus | null; language: VocalLanguage | null }
+const LANGUAGE_OPTIONS: ReadonlyArray<{ id: VocalLanguage; label: string }> = [{ id: 'ZH', label: '中文' }, { id: 'EN', label: '英文' }, { id: 'KO', label: '韩文' }];
+const STATUS_OPTIONS_VOCAL: ReadonlyArray<{ id: LearningStatus | null; label: string }> = [{ id: null, label: '全部' }, { id: 'WANT_TO_LEARN', label: '想学' }, { id: 'PRACTICING', label: '练习中' }, { id: 'CAN_DANCE', label: '已学会' }];
+// 语言按钮只对真实存在语言的曲目开放；无数据时禁用并明示，不按歌名或歌手猜测。
+export function VocalLibraryFilters({ value, availableLanguages, onChange }: { value: VocalLanguageValue; availableLanguages: VocalLanguage[]; onChange: (value: VocalLanguageValue) => void }) {
+ const hintId = 'vocal-language-hint', missing = availableLanguages.length === 0;
+ return <div className="vocal-filters">
+  <div className="vocal-filters__row" role="group" aria-label="按学习状态筛选">
+   <span className="vocal-filters__label">状态</span>
+   {STATUS_OPTIONS_VOCAL.map(option => <button key={option.label} className="vocal-filters__chip" aria-pressed={value.status === option.id} onClick={() => onChange({ ...value, status: option.id })}>{option.label}</button>)}
+  </div>
+  <div className="vocal-filters__row" role="group" aria-label="按语言筛选">
+   <span className="vocal-filters__label">语言</span>
+   <button className="vocal-filters__chip" aria-pressed={!value.language} onClick={() => onChange({ ...value, language: null })}>全部</button>
+   {LANGUAGE_OPTIONS.map(option => <button key={option.id} className="vocal-filters__chip" aria-pressed={value.language === option.id} disabled={!availableLanguages.includes(option.id)} aria-describedby={missing ? hintId : undefined} onClick={() => onChange({ ...value, language: option.id })}>{option.label}</button>)}
+   {missing && <span className="vocal-filters__hint" id={hintId}>暂无语言信息</span>}
+  </div>
+ </div>;
+}
+export interface LibraryFilterValue { status: LearningStatus | null; language?: VocalLanguage | null; scenes: SceneTag[]; demoOnly: boolean; cachedOnly: boolean; }
 export default function LibraryFilters({ kind, value, onChange }: { kind: 'DANCE' | TalentKind; value: LibraryFilterValue; onChange: (value: LibraryFilterValue) => void }) {
  const [draft,setDraft]=useState(value),[open,setOpen]=useState(false);
  const statuses=kind==='DANCE'?STATUS_OPTIONS:talentStatuses(kind);

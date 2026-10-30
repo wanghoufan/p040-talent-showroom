@@ -1,0 +1,64 @@
+/* V3.1 本地智能导入：管理面板与手机任务状态条。字号遵循项目界面下限。 */
+.vocal-import { display:flex; flex-direction:column; gap:12px; }
+.vocal-import h2 { font-size:23px; margin:0; }
+.vocal-import h3 { font-size:23px; margin:0; }
+.vocal-import__lead { margin:0; font-size:19px; line-height:1.6; color:var(--text); }
+.vocal-import__lead strong { color:var(--primary); }
+.vocal-import__hint { margin:0; font-size:15px; line-height:1.55; color:var(--muted); }
+.vocal-import__hint code, .vocal-import-review code { font-size:15px; overflow-wrap:anywhere; }
+.vocal-import__error { margin:0; font-size:15px; line-height:1.55; color:#f87171; }
+.vocal-import__notice { margin:0; padding:12px; border:1px solid var(--line); border-radius:10px; background:var(--surface-2); font-size:15px; line-height:1.55; display:flex; flex-direction:column; gap:4px; }
+.vocal-import__notice--warn { border-color:#f59e0b; }
+.vocal-import__roots { display:flex; flex-direction:column; gap:10px; }
+.vocal-import__root-row { display:flex; flex-wrap:wrap; gap:8px; }
+.vocal-import__root { display:flex; flex-direction:column; align-items:flex-start; gap:2px; min-height:56px; padding:8px 12px; text-align:left; font-size:15px; }
+.vocal-import__root strong { font-size:19px; line-height:1.3; }
+.vocal-import__root small { font-size:15px; color:var(--muted); overflow-wrap:anywhere; }
+.vocal-import__root[aria-pressed="true"] { border-color:var(--primary); background:var(--surface-2); }
+.vocal-import__field { font-size:15px; gap:6px; }
+.vocal-import__field input { font-size:19px; }
+.vocal-import__actions { display:flex; flex-wrap:wrap; gap:8px; }
+.vocal-import__actions button { font-size:15px; min-height:48px; padding:8px 16px; }
+.vocal-import__jobs { display:flex; flex-direction:column; gap:10px; margin-top:8px; }
+.vocal-import__jobs-head { display:flex; align-items:center; justify-content:space-between; gap:8px; }
+.vocal-import__jobs-head button { font-size:15px; min-height:44px; padding:6px 14px; }
+.vocal-import__list { list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:10px; }
+
+.vocal-import-job { display:flex; flex-direction:column; gap:6px; padding:12px; border:1px solid var(--line); border-radius:12px; background:var(--surface); }
+.vocal-import-job--warn { border-color:#f59e0b; }
+.vocal-import-job--bad { border-color:#e06666; }
+.vocal-import-job--ok { border-color:var(--primary); }
+.vocal-import-job__head { display:flex; align-items:flex-start; justify-content:space-between; gap:8px; }
+.vocal-import-job__title { margin:0; font-size:23px; font-weight:700; line-height:1.35; overflow-wrap:anywhere; }
+.vocal-import-status { flex:0 0 auto; padding:3px 10px; border:1px solid var(--line); border-radius:999px; background:var(--surface-2); font-size:15px; font-weight:700; line-height:1.4; }
+.vocal-import-job--warn .vocal-import-status { color:#f59e0b; border-color:#f59e0b; }
+.vocal-import-job--bad .vocal-import-status { color:#f87171; border-color:#e06666; }
+.vocal-import-job--ok .vocal-import-status { color:var(--primary); border-color:var(--primary); }
+.vocal-import-job--run .vocal-import-status { color:var(--primary); border-color:var(--primary); }
+.vocal-import-job--muted .vocal-import-status { color:var(--muted); }
+.vocal-import-job__meta { margin:0; font-size:15px; line-height:1.55; color:var(--muted); overflow-wrap:anywhere; }
+.vocal-import-job__issues { margin:0; padding-left:20px; font-size:15px; line-height:1.55; color:var(--text); }
+.vocal-import-job__review { display:flex; flex-direction:column; gap:4px; }
+.vocal-import-job__review-label { margin:0; font-size:15px; font-weight:700; line-height:1.5; color:var(--text); }
+.vocal-import-job__actions { display:flex; flex-wrap:wrap; gap:8px; margin-top:2px; }
+.vocal-import-job__actions button { font-size:15px; min-height:44px; padding:6px 14px; }
+
+.vocal-import-review { display:flex; flex-direction:column; gap:12px; }
+.vocal-import-review h3 { font-size:23px; margin:0; }
+.vocal-import-review p { margin:0; color:var(--muted); font-size:15px; }
+.vocal-import-review .vocal-import__field { display:flex; flex-direction:column; }
+.vocal-import-review .vocal-import__actions button { flex:1; }
+
+/* 手机唱歌曲库顶部的任务状态条（紧凑，不新增一级 Tab）。 */
+.vocal-import-status-bar { display:flex; flex-direction:column; gap:6px; margin:0 0 10px; padding:10px 12px; border:1px solid var(--line); border-radius:12px; background:var(--surface); }
+.vocal-import-status-bar__head { display:flex; align-items:center; justify-content:space-between; gap:8px; }
+.vocal-import-status-bar__title { font-size:23px; font-weight:700; }
+.vocal-import-status-bar__head button { font-size:15px; min-height:40px; padding:4px 12px; }
+.vocal-import-status-bar__summary { margin:0; font-size:15px; line-height:1.5; color:var(--muted); }
+.vocal-import-status-bar__list { list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:6px; }
+.vocal-import-status-bar__item { display:flex; align-items:center; justify-content:space-between; gap:8px; font-size:15px; line-height:1.45; }
+.vocal-import-status-bar__item span { overflow-wrap:anywhere; }
+.vocal-import-status-bar__item button { font-size:15px; min-height:40px; padding:4px 12px; flex:0 0 auto; }
+.vocal-import-status-bar__actions { display:flex; flex-wrap:wrap; gap:10px; align-items:center; }
+.vocal-import-status-bar__actions a { font-size:15px; color:var(--primary); min-height:40px; display:inline-flex; align-items:center; }
+.vocal-import-status-bar__actions button { font-size:15px; min-height:40px; padding:4px 12px; }

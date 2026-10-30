@@ -1,0 +1,85 @@
+/* 唱歌详情练唱播放器（V2.1）：结构地图 + 同步歌词 + 固定在四 Tab 上方的练唱 dock。
+   只服务唱歌详情；吉他详情沿用原音频控件，不受本文件影响。 */
+
+.vocal-practice { display: block; }
+.vocal-block { margin: 18px 0; padding-bottom: 18px; border-bottom: 1px solid var(--line); }
+.vocal-block h2 { margin: 0 0 10px; font-size: 23px; letter-spacing: -.5px; }
+
+/* 结构地图：彩色时间带 + 两列紧凑段落 */
+.vocal-timeline { display: flex; gap: 2px; height: 10px; margin-bottom: 10px; border-radius: 6px; overflow: hidden; background: var(--surface-2); }
+.vocal-timeline__seg { flex-basis: 0; min-width: 4px; background: var(--surface-2); }
+.vocal-timeline__seg--intro, .vocal-timeline__seg--outro { background: #9aa4b266; }
+.vocal-timeline__seg--verse { background: #3f7cff66; }
+.vocal-timeline__seg--pre { background: #7a5cff66; }
+.vocal-timeline__seg--chorus { background: #e2569466; }
+.vocal-timeline__seg--bridge { background: #16a39466; }
+.vocal-timeline__seg--rap { background: #f08c0066; }
+.vocal-timeline__seg--unknown { background: #9aa4b233; }
+
+.vocal-sections { list-style: none; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px; margin: 0; padding: 0; }
+.vocal-sections li { min-width: 0; }
+.vocal-section { display: flex; flex-wrap: wrap; align-items: baseline; gap: 2px 6px; width: 100%; min-height: 44px; padding: 6px 8px; text-align: left; border-radius: 10px; }
+.vocal-section--rap { border-color: #f08c0088; }
+.vocal-section__label { font-size: 15px; font-weight: 700; }
+.vocal-section__type { font-size: 14px; color: var(--muted); }
+.vocal-section__time { margin-left: auto; font-size: 14px; color: var(--muted); font-variant-numeric: tabular-nums; }
+.vocal-section__note { flex-basis: 100%; font-size: 14px; color: var(--muted); }
+.vocal-section__skip { flex-basis: 100%; font-size: 14px; color: var(--primary); font-weight: 700; }
+
+/* 歌词：标题下方单行循环条，点句定位 */
+.vocal-lyrics__head { display: flex; flex-direction: column; gap: 8px; }
+.vocal-lyrics__head h2 { margin-bottom: 0; }
+.vocal-loopbar { display: flex; align-items: center; gap: 6px; flex-wrap: nowrap; overflow-x: auto; overscroll-behavior-x: contain; scrollbar-width: none; }
+.vocal-loopbar::-webkit-scrollbar { display: none; }
+.vocal-loopbar__label { flex: 0 0 auto; font-size: 15px; color: var(--muted); }
+.vocal-loopbar button { flex: 0 0 auto; min-height: 36px; padding: 0 10px; border-radius: 18px; font-size: 15px; }
+
+.vocal-lyrics { list-style: none; margin: 10px 0 0; padding: 0; max-height: 42dvh; overflow-y: auto; overscroll-behavior-y: contain; }
+.vocal-line { display: flex; align-items: flex-start; gap: 10px; width: 100%; min-height: 44px; padding: 8px; text-align: left; background: transparent; border: 0; border-radius: 10px; }
+.vocal-line__time { flex: 0 0 auto; min-width: 40px; padding-top: 3px; font-size: 14px; color: var(--muted); font-variant-numeric: tabular-nums; }
+.vocal-line__text { flex: 1 1 auto; font-size: 19px; line-height: 1.45; }
+/* 句序号靠右，时间靠左：练唱时能直接报「第几句」。 */
+.vocal-line__index { flex: 0 0 auto; min-width: 22px; padding-top: 3px; font-size: 14px; text-align: right; color: var(--muted); font-variant-numeric: tabular-nums; }
+.vocal-line--active { background: var(--surface-2); }
+.vocal-line--active .vocal-line__text { color: var(--primary); font-weight: 700; }
+.vocal-line--plain { align-items: flex-start; }
+
+.vocal-empty { margin: 0; padding: 10px 12px; font-size: 15px; color: var(--muted); background: var(--surface); border-radius: 10px; }
+.vocal-hint { margin: 8px 0 0; font-size: 14px; color: var(--muted); }
+.vocal-missing { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 12px 0; padding: 10px 12px; font-size: 15px; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; }
+.vocal-missing button { min-height: 40px; padding: 0 12px; font-size: 15px; }
+
+/* 练唱 dock：固定在底部四 Tab 之上，只纵向滚动内容 */
+.vocal-dock { position: fixed; left: 50%; transform: translateX(-50%); width: min(100%, 800px); bottom: var(--tabbar-height, 72px); z-index: 25; display: flex; flex-direction: column; gap: 6px; padding: 8px 10px 10px; background: var(--surface); border-top: 1px solid var(--line); box-shadow: 0 -6px 20px #0004; }
+.vocal-dock button { min-height: 44px; padding: 6px 8px; font-size: 15px; white-space: nowrap; }
+.vocal-dock__meta { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.vocal-trackbar { display: flex; gap: 4px; min-width: 0; }
+.vocal-track { min-height: 36px !important; padding: 0 12px !important; border-radius: 18px; font-size: 15px; }
+.vocal-dock__clock { flex: 0 0 auto; font-size: 14px; color: var(--muted); font-variant-numeric: tabular-nums; }
+.vocal-dock__progress { width: 100%; min-height: 24px; margin: 0; padding: 0; border: 0; background: transparent; accent-color: var(--primary); }
+.vocal-dock__controls { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 4px; }
+.vocal-dock__controls button { padding: 6px 2px; font-size: 15px; }
+.vocal-dock__play { font-weight: 700; }
+.vocal-dock__extra { display: flex; align-items: center; gap: 4px; }
+.vocal-dock__extra button { flex: 1 1 0; min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+.vocal-dock__rate { display: flex; flex: 0 0 auto; flex-direction: row; align-items: center; gap: 4px; font-size: 15px; color: var(--muted); }
+.vocal-dock__rate select { width: auto; min-height: 40px; padding: 0 6px; font-size: 15px; }
+.vocal-dock__mode { margin: 0; font-size: 14px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.vocal-audio { display: none; }
+.vocal-dock-spacer { flex: 0 0 auto; }
+
+@media (max-width: 380px) {
+  .vocal-dock__rate > span { display: none; }
+  .vocal-dock__controls button { font-size: 14px; }
+}
+
+/* 练习设置：单向底部弹层，只改练唱习惯 */
+.vocal-sheet { width: min(100%, 650px); max-height: 88dvh; overflow-y: auto; background: var(--surface); border-radius: 22px 22px 0 0; padding: 20px 18px calc(20px + var(--inset-bottom)); }
+.vocal-sheet__head { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.vocal-sheet__head h2 { margin: 0; font-size: 23px; }
+.vocal-sheet__head button { min-height: 44px; min-width: 44px; padding: 0 10px; font-size: 17px; }
+.vocal-field { margin: 16px 0 0; padding: 0; border: 0; }
+.vocal-field legend { padding: 0; font-size: 15px; color: var(--muted); }
+.vocal-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+.vocal-chips button { min-height: 44px; padding: 0 14px; border-radius: 22px; font-size: 15px; }
+.vocal-sheet__done { width: 100%; margin-top: 20px; min-height: 48px; font-size: 17px; font-weight: 700; }

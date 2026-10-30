@@ -1,0 +1,72 @@
+/* 演出模式（V2.1 KTV）：单列手机布局，配合同一页的舞蹈/吉他单音轨。
+   只服务 PerformancePage 与 TonightPlaylistPage 的唱歌明细；不改全局壳层与四 Tab。 */
+
+.perform-page { display: block; }
+.perform-count { flex: 0 0 auto; font-size: 15px; color: var(--muted); font-variant-numeric: tabular-nums; }
+.perform-note { margin: 0 0 14px; font-size: 15px; line-height: 1.6; color: var(--muted); }
+
+.perform-stage { text-align: center; padding: 8px 0 20px; }
+.perform-kicker { margin: 0 0 2px; font-size: 15px; color: var(--muted); }
+.perform-title { font-size: 30px; font-weight: 800; letter-spacing: -.6px; margin: 0 0 4px; line-height: 1.25; }
+.perform-meta { margin: 0; font-size: 15px; color: var(--muted); }
+
+/* 现场音轨：默认伴奏，未提供的轨直接禁用而不是拿另一轨顶替 */
+.perform-tracks { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin: 18px 0 10px; }
+.perform-track { min-height: 56px; font-size: 19px; font-weight: 700; border-radius: 12px; }
+.perform-track[aria-pressed="true"] { background: var(--primary); border-color: var(--primary); color: #fff; }
+
+.perform-alert { margin: 10px 0 0; padding: 10px 12px; font-size: 15px; line-height: 1.55; text-align: left; color: #b3403f; background: var(--surface-2); border-left: 4px solid #c8453f; border-radius: 10px; }
+[data-theme="dark"] .perform-alert, [data-theme="dark"] .prep-report__bad { color: #ff9d99; }
+.perform-hint { margin: 8px 0 0; font-size: 15px; color: var(--muted); }
+
+/* 结构时间轴：只标位置，不提供练唱用的跳段/循环 */
+.perform-structure-wrap { margin: 14px 0 0; }
+.perform-structure { display: flex; gap: 2px; height: 10px; border-radius: 6px; overflow: hidden; background: var(--surface-2); }
+.perform-structure__seg { flex-basis: 0; min-width: 4px; background: var(--surface-2); }
+.perform-structure__seg--intro, .perform-structure__seg--outro { background: #9aa4b266; }
+.perform-structure__seg--verse { background: #3f7cff66; }
+.perform-structure__seg--pre { background: #7a5cff66; }
+.perform-structure__seg--chorus { background: #e2569466; }
+.perform-structure__seg--bridge { background: #16a39466; }
+.perform-structure__seg--rap { background: #f08c0066; }
+.perform-structure__seg--unknown { background: #9aa4b233; }
+.perform-structure__seg--active { outline: 2px solid var(--text); outline-offset: -2px; }
+.perform-section-label { margin: 6px 0 0; font-size: 15px; color: var(--muted); }
+
+.perform-progress { display: flex; align-items: center; gap: 10px; margin: 16px 0 4px; }
+.perform-clock { flex: 0 0 auto; min-width: 44px; font-size: 15px; color: var(--muted); font-variant-numeric: tabular-nums; }
+.perform-seek { width: 100%; min-height: 32px; margin: 0; padding: 0; border: 0; background: transparent; accent-color: var(--primary); }
+
+.perform-controls { display: flex; align-items: center; justify-content: center; gap: 14px; margin-top: 10px; }
+.perform-controls button { min-width: 56px; min-height: 56px; font-size: 24px; border-radius: 50%; }
+.perform-toggle { min-width: 76px !important; min-height: 76px !important; font-size: 30px !important; }
+.perform-audio { display: none; }
+
+/* 同步歌词：大字号，只做阅读与定位 */
+.perform-lyrics { list-style: none; margin: 18px 0 0; padding: 0; max-height: 38dvh; overflow-y: auto; overscroll-behavior-y: contain; text-align: left; }
+.perform-lyrics li { margin: 0 0 4px; }
+.perform-line { display: block; width: 100%; padding: 10px 12px; min-height: 48px; text-align: left; font-size: 23px; line-height: 1.45; background: transparent; border: 0; border-radius: 10px; }
+.perform-line--active { background: var(--surface-2); color: var(--primary); font-weight: 700; }
+
+.perform-list { list-style: none; margin: 24px 0 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+.perform-list__item { display: flex; justify-content: space-between; align-items: center; gap: 10px; width: 100%; min-height: 48px; text-align: left; font-size: 19px; }
+.perform-list__item small { flex: 0 0 auto; color: var(--muted); font-size: 15px; }
+.perform-list__item--active { border-color: var(--primary); color: var(--primary); }
+
+/* 节目单离线准备明细：缺哪条音轨、歌词与结构状态都如实列出 */
+.prep-note { margin: 8px 0 0; font-size: 15px; line-height: 1.6; color: var(--muted); }
+.prep-report { list-style: none; margin: 12px 0 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+.prep-report__row { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 2px 10px; padding: 10px 12px; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; }
+.prep-report__row strong { font-size: 19px; }
+.prep-report__bad, .prep-report__ok { font-size: 15px; font-weight: 700; text-align: right; }
+.prep-report__bad { color: #b3403f; }
+.prep-report__ok { color: var(--primary); }
+.prep-report__meta { grid-column: 1 / -1; font-size: 15px; color: var(--muted); }
+
+@media (max-width: 380px) {
+  .perform-title { font-size: 26px; }
+  .perform-line { font-size: 21px; }
+  .perform-controls { gap: 8px; }
+  .perform-controls button { min-width: 48px; min-height: 48px; font-size: 21px; }
+  .perform-toggle { min-width: 64px !important; min-height: 64px !important; font-size: 26px !important; }
+}

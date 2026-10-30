@@ -1,0 +1,335 @@
+{
+  "noAuthRoots": {
+    "status": 401,
+    "body": {
+      "error": {
+        "code": "UNAUTHORIZED",
+        "message": "请先在“我的”配对这台设备"
+      }
+    }
+  },
+  "roots": {
+    "status": 200,
+    "body": {
+      "roots": [
+        {
+          "id": "qa-music",
+          "label": "QA 临时音乐",
+          "available": true
+        }
+      ]
+    }
+  },
+  "absoluteBody": {
+    "status": 403,
+    "body": {
+      "error": {
+        "code": "PATH_NOT_ALLOWED",
+        "message": "不接受本机绝对路径，请使用服务端登记过的 rootId"
+      }
+    }
+  },
+  "absoluteSubPath": {
+    "status": 403,
+    "body": {
+      "error": {
+        "code": "PATH_NOT_ALLOWED",
+        "message": "只接受白名单根目录下的相对路径，不接受本机绝对路径"
+      }
+    }
+  },
+  "dotdotSubPath": {
+    "status": 403,
+    "body": {
+      "error": {
+        "code": "PATH_NOT_ALLOWED",
+        "message": "路径不能包含 .."
+      }
+    }
+  },
+  "symlinkSubPath": {
+    "status": 403,
+    "body": {
+      "error": {
+        "code": "PATH_NOT_ALLOWED",
+        "message": "不允许通过符号链接访问目录"
+      }
+    }
+  },
+  "jobs": [
+    {
+      "title": "Touch",
+      "status": "IMPORTED",
+      "stage": "IMPORT",
+      "cancelRequested": false,
+      "attempts": 0,
+      "maxAttempts": 3,
+      "error": null,
+      "lyrics": {
+        "relPath": "3LAU,Carly Paige - Touch.lrc",
+        "sha256": "3db49f485a4a87255b4cc9e0bd0999ce1c2433f4295f222967d9678a1b43d187",
+        "timedLines": 3
+      }
+    },
+    {
+      "title": "Midsummer Madness",
+      "status": "IMPORTED",
+      "stage": "IMPORT",
+      "cancelRequested": false,
+      "attempts": 0,
+      "maxAttempts": 3,
+      "error": null,
+      "lyrics": {
+        "relPath": "88rising,Joji,Rich Brian - Midsummer Madness.lrc",
+        "sha256": "eaf95e2e0d0642571bb14bfd6fb6bb6ceae1cbc92f3167e655e1e401602a0dc5",
+        "timedLines": 0
+      }
+    },
+    {
+      "title": "Cancel Me",
+      "status": "IMPORTED",
+      "stage": "IMPORT",
+      "cancelRequested": false,
+      "attempts": 0,
+      "maxAttempts": 3,
+      "error": null,
+      "lyrics": {
+        "relPath": "QA - Cancel Me.lrc",
+        "sha256": "53a40e3bed8b91cabe1c175e662002952b5a201864d0c2b182c4c8c7e130e6f3",
+        "timedLines": 2
+      }
+    },
+    {
+      "title": "Fail Me",
+      "status": "FAILED",
+      "stage": "EXTRACT",
+      "cancelRequested": false,
+      "attempts": 3,
+      "maxAttempts": 3,
+      "error": {
+        "code": "SEPARATOR_FAILED",
+        "message": "本机伴奏提取进程失败（退出码 1）"
+      },
+      "lyrics": {
+        "relPath": "QA - Fail Me.lrc",
+        "sha256": "785f0d9d5afc59f29d6f8fcaca764faf86c159138c31924b440b3e5df90613a5",
+        "timedLines": 2
+      }
+    },
+    {
+      "title": "Mood (8D Audio)",
+      "status": "IMPORTED",
+      "stage": "IMPORT",
+      "cancelRequested": false,
+      "attempts": 0,
+      "maxAttempts": 3,
+      "error": null,
+      "lyrics": {
+        "relPath": "8D Tunes - Mood (8D Audio).lrc",
+        "sha256": "4a3c35e84a73bb3cdcbd7b1acedc64a6b7881babf836c8f950ae222f576fbfb1",
+        "timedLines": 2
+      }
+    },
+    {
+      "title": "미쳐",
+      "status": "IMPORTED",
+      "stage": "IMPORT",
+      "cancelRequested": false,
+      "attempts": 0,
+      "maxAttempts": 3,
+      "error": null,
+      "lyrics": {
+        "relPath": "4MINUTE - 미쳐.lrc",
+        "sha256": "f43840788c4231ab6f7be74fa62cb3799f232e617e3fd2dacb424c2c513413c3",
+        "timedLines": 3
+      }
+    },
+    {
+      "title": "爱的恰恰",
+      "status": "IMPORTED",
+      "stage": "IMPORT",
+      "cancelRequested": false,
+      "attempts": 0,
+      "maxAttempts": 3,
+      "error": null,
+      "lyrics": {
+        "relPath": "宝石 Gem,俞天时,王洋 EVIS - 爱的恰恰.lrc",
+        "sha256": "036675561e06a521c08f30f18dcb29da30050087647d976c434e482494bb242d",
+        "timedLines": 3
+      }
+    },
+    {
+      "title": "Slow Cancel",
+      "status": "IMPORTED",
+      "stage": "IMPORT",
+      "cancelRequested": true,
+      "attempts": 0,
+      "maxAttempts": 3,
+      "error": null,
+      "lyrics": {
+        "relPath": "QA - Slow Cancel.lrc",
+        "sha256": "0c5dc67ea062a22b99d992f921e1af6cd056124e8d6ac12f6b5df9ecece46418",
+        "timedLines": 2
+      }
+    },
+    {
+      "title": "Slow Cancel Two",
+      "status": "CANCELLED",
+      "stage": "EXTRACT",
+      "cancelRequested": true,
+      "attempts": 0,
+      "maxAttempts": 3,
+      "error": null,
+      "lyrics": {
+        "relPath": "QA - Slow Cancel Two.lrc",
+        "sha256": "643154d563881b54ba8368dca48659118cc17b92c7933a20f0028a520834e15c",
+        "timedLines": 2
+      }
+    },
+    {
+      "title": "Recovery",
+      "status": "PENDING_EXTRACT",
+      "stage": "EXTRACT",
+      "cancelRequested": false,
+      "attempts": 0,
+      "maxAttempts": 3,
+      "error": null,
+      "lyrics": {
+        "relPath": "QA - Recovery.lrc",
+        "sha256": "5def1a8ab784310f10a508450ddbb2e5f915fb625d570f72b1f4595f736851d4",
+        "timedLines": 2
+      }
+    },
+    {
+      "title": "Star Unkind (Lanfranchi & Farina Radio)",
+      "status": "PENDING_EXTRACT",
+      "stage": "EXTRACT",
+      "cancelRequested": false,
+      "attempts": 0,
+      "maxAttempts": 3,
+      "error": null,
+      "lyrics": {
+        "relPath": "2Someone,Lanfranchi - Star Unkind (Lanfranchi & Farina Radio).lrc",
+        "sha256": "4772513580d52165214c4f38e4ed409d93e8325c3784085ae67e1893ffdd5ffa",
+        "timedLines": 3
+      }
+    }
+  ],
+  "recovery": {
+    "status": "PENDING_EXTRACT",
+    "events": [
+      {
+        "seq": 1,
+        "event": "created",
+        "stage": "EXTRACT",
+        "status": "PENDING_EXTRACT",
+        "detail": {
+          "songId": "26495aed-5edf-5c3b-882a-6f1509e1f8da"
+        },
+        "createdAt": "2026-10-29 17:33:43"
+      },
+      {
+        "seq": 2,
+        "event": "claimed",
+        "stage": "EXTRACT",
+        "status": "EXTRACTING",
+        "detail": {
+          "owner": "vocal-import-local",
+          "attempt": 1
+        },
+        "createdAt": "2026-10-29 17:33:43"
+      },
+      {
+        "seq": 3,
+        "event": "recovered",
+        "stage": "EXTRACT",
+        "status": "PENDING_EXTRACT",
+        "detail": {
+          "from": "EXTRACTING"
+        },
+        "createdAt": "2026-10-29 17:33:57"
+      },
+      {
+        "seq": 4,
+        "event": "rescanned",
+        "stage": "EXTRACT",
+        "status": "PENDING_EXTRACT",
+        "detail": {
+          "issues": [
+            "audio-role-unmarked-original-assumed"
+          ],
+          "preservedStatus": null
+        },
+        "createdAt": "2026-10-29 17:36:37"
+      }
+    ]
+  },
+  "touchItem": {
+    "id": "6b3683ff-cda9-5c73-9dee-1a5786edc2f0",
+    "title": "Touch",
+    "kind": "VOCAL",
+    "lyrics": [
+      {
+        "id": "line-1",
+        "startMs": 1000,
+        "text": "Touch the sky"
+      },
+      {
+        "id": "line-2",
+        "startMs": 5500,
+        "text": "Hold on tight"
+      },
+      {
+        "id": "line-3",
+        "startMs": 10000,
+        "text": "We are alive"
+      }
+    ],
+    "tracks": {
+      "original": {
+        "media": {
+          "id": "79cfb18a-79fa-5d31-9b0a-9b30f6374b4e",
+          "url": "/api/media/audio/79cfb18a-79fa-5d31-9b0a-9b30f6374b4e",
+          "sha256": "4314a93784a1a4985d55c1f44d1e54fd49a8a4b457d3cc157407bb2471df8ab2",
+          "sizeBytes": 120316,
+          "version": 1,
+          "startMs": 0,
+          "endMs": 30000,
+          "sourcePreserving": true,
+          "durationMs": 30000
+        },
+        "offsetMs": 0
+      },
+      "accompaniment": {
+        "media": {
+          "id": "1eb559cf-1101-5ceb-8598-aaf215121a24",
+          "url": "/api/media/audio/1eb559cf-1101-5ceb-8598-aaf215121a24",
+          "sha256": "57cfcf9b3bcd5ede001cd9aeed4330120487bc7f6c33cd730e603f2f3cd0d4cd",
+          "sizeBytes": 1764078,
+          "version": 1,
+          "startMs": 0,
+          "endMs": 20000,
+          "sourcePreserving": false,
+          "durationMs": 20000
+        },
+        "offsetMs": 0
+      }
+    }
+  },
+  "starResolved": {
+    "status": "PENDING_EXTRACT",
+    "lyrics": {
+      "relPath": "2Someone,Lanfranchi - Star Unkind (Lanfranchi & Farina Radio).lrc",
+      "sha256": "4772513580d52165214c4f38e4ed409d93e8325c3784085ae67e1893ffdd5ffa",
+      "timedLines": 3
+    },
+    "issues": [
+      "audio-role-unmarked-original-assumed"
+    ]
+  },
+  "tempSource": {
+    "sha256": "4314a93784a1a4985d55c1f44d1e54fd49a8a4b457d3cc157407bb2471df8ab2",
+    "size": 120316,
+    "mtimeMs": 1793294910763
+  }
+}

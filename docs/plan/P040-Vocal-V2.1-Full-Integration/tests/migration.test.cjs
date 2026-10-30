@@ -1,0 +1,20 @@
+const {test}=require('node:test');
+const a=require('node:assert/strict');
+const {readFileSync}=require('node:fs');
+const {join}=require('node:path');
+const {DatabaseSync}=require('node:sqlite');
+const migration=readFileSync(join(__dirname,'../server/db/migrations/0007_vocal_practice.sql'),'utf8');
+test('SQL migration is additive and classifies existing vocal-only single tracks',()=>{
+  const db=new DatabaseSync(':memory:');
+  db.exec('PRAGMA foreign_keys=ON; CREATE TABLE performance_clips(id TEXT PRIMARY KEY); CREATE TABLE repertoire_items(id TEXT PRIMARY KEY,kind TEXT,audio_role TEXT,performance_clip_id TEXT REFERENCES performance_clips(id));');
+  db.exec("INSERT INTO performance_clips(id) VALUES('o'),('a'),('g'); INSERT INTO repertoire_items(id,kind,audio_role,performance_clip_id) VALUES('s1','VOCAL','REFERENCE','o'),('s2','VOCAL','ACCOMPANIMENT','a'),('g1','GUITAR','REFERENCE','g'),('s3','VOCAL','REFERENCE',NULL)");
+  db.exec('BEGIN IMMEDIATE'); db.exec(migration); db.exec('COMMIT');
+  const rows=db.prepare('SELECT song_id,role,performance_clip_id FROM vocal_tracks ORDER BY song_id').all();
+  a.deepEqual(rows.map(x=>Object.values(x)),[['s1','original','o'],['s2','accompaniment','a']]);
+  a.equal(db.prepare("SELECT performance_clip_id FROM repertoire_items WHERE id='g1'").get().performance_clip_id,'g');
+  a.equal(db.prepare("SELECT count(*) AS n FROM vocal_tracks WHERE song_id='g1'").get().n,0);
+  db.exec("INSERT INTO vocal_tracks(song_id,role,performance_clip_id) VALUES ('s1','accompaniment','a')");
+  a.equal(db.prepare("SELECT count(*) AS n FROM vocal_tracks WHERE song_id='s1'").get().n,2);
+  a.throws(()=>db.exec("INSERT INTO vocal_tracks(song_id,role,performance_clip_id) VALUES('s1','original','a')"));
+  db.close();
+});

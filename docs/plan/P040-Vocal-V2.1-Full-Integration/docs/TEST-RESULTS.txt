@@ -1,0 +1,182 @@
+
+> p040-vocal-v21-integration-starter@0.1.0 test
+> npm run compile && node --test tests/*.test.cjs
+
+
+> p040-vocal-v21-integration-starter@0.1.0 compile
+> tsc
+
+TAP version 13
+# (node:5016) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: SQL migration is additive and classifies existing vocal-only single tracks
+ok 1 - SQL migration is additive and classifies existing vocal-only single tracks
+  ---
+  duration_ms: 3.056737
+  type: 'test'
+  ...
+# Subtest: demo fixture harbor has timed lyric lines
+ok 2 - demo fixture harbor has timed lyric lines
+  ---
+  duration_ms: 1.504953
+  type: 'test'
+  ...
+# Subtest: demo fixture city has timed lyric lines
+ok 3 - demo fixture city has timed lyric lines
+  ---
+  duration_ms: 0.305109
+  type: 'test'
+  ...
+# Subtest: demo fixture window has timed lyric lines
+ok 4 - demo fixture window has timed lyric lines
+  ---
+  duration_ms: 0.2728
+  type: 'test'
+  ...
+# Subtest: demo fixture pulse has timed lyric lines
+ok 5 - demo fixture pulse has timed lyric lines
+  ---
+  duration_ms: 0.923399
+  type: 'test'
+  ...
+# Subtest: demo fixture orbit has timed lyric lines
+ok 6 - demo fixture orbit has timed lyric lines
+  ---
+  duration_ms: 0.216456
+  type: 'test'
+  ...
+# Subtest: reject KTV fake tracks sharing same file, detect severe time drift
+ok 7 - reject KTV fake tracks sharing same file, detect severe time drift
+  ---
+  duration_ms: 0.21913
+  type: 'test'
+  ...
+# Subtest: parse basic LRC: BOM, Chinese/English/Korean, line end from next timestamp
+ok 8 - parse basic LRC: BOM, Chinese/English/Korean, line end from next timestamp
+  ---
+  duration_ms: 3.213422
+  type: 'test'
+  ...
+# Subtest: parse timestamps, multiple tags, duplicate timestamp, out of range
+ok 9 - parse timestamps, multiple tags, duplicate timestamp, out of range
+  ---
+  duration_ms: 0.736407
+  type: 'test'
+  ...
+# Subtest: parse LRC offset and nearest lyric at time
+ok 10 - parse LRC offset and nearest lyric at time
+  ---
+  duration_ms: 0.334833
+  type: 'test'
+  ...
+# Subtest: no LRC timestamps disallows line looping rather than faking accuracy
+ok 11 - no LRC timestamps disallows line looping rather than faking accuracy
+  ---
+  duration_ms: 0.187322
+  type: 'test'
+  ...
+# Subtest: Rap skip is half-open and merges neighboring and overlapping ranges
+ok 12 - Rap skip is half-open and merges neighboring and overlapping ranges
+  ---
+  duration_ms: 0.504168
+  type: 'test'
+  ...
+# Subtest: two Rap ranges in a heavily rapped track are both skipped
+ok 13 - two Rap ranges in a heavily rapped track are both skipped
+  ---
+  duration_ms: 0.343357
+  type: 'test'
+  ...
+# Subtest: repeat last 4 lines incl selected line 8 => lines 5..8
+ok 14 - repeat last 4 lines incl selected line 8 => lines 5..8
+  ---
+  duration_ms: 0.481654
+  type: 'test'
+  ...
+# Subtest: explicit rap lyric loop overrides global Rap skipping
+ok 15 - explicit rap lyric loop overrides global Rap skipping
+  ---
+  duration_ms: 0.120622
+  type: 'test'
+  ...
+# Subtest: validate malformed section, dangling reference; constrain seek
+ok 16 - validate malformed section, dangling reference; constrain seek
+  ---
+  duration_ms: 0.351379
+  type: 'test'
+  ...
+# Subtest: legacy audioRole maps exactly one track; no invented opposite audio
+ok 17 - legacy audioRole maps exactly one track; no invented opposite audio
+  ---
+  duration_ms: 0.633092
+  type: 'test'
+  ...
+# Subtest: same physical file not downloaded twice
+ok 18 - same physical file not downloaded twice
+  ---
+  duration_ms: 0.152679
+  type: 'test'
+  ...
+# Subtest: file role is inferred conservatively and normalized
+ok 19 - file role is inferred conservatively and normalized
+  ---
+  duration_ms: 0.991822
+  type: 'test'
+  ...
+# Subtest: switch from original to accompaniment keeps current position, state and rate
+ok 20 - switch from original to accompaniment keeps current position, state and rate
+  ---
+  duration_ms: 0.679432
+  type: 'test'
+  ...
+# Subtest: switch when paused remains paused
+ok 21 - switch when paused remains paused
+  ---
+  duration_ms: 0.15293
+  type: 'test'
+  ...
+# Subtest: no accompaniment throws before touching original playback
+ok 22 - no accompaniment throws before touching original playback
+  ---
+  duration_ms: 0.314233
+  type: 'test'
+  ...
+# Subtest: unavailable cache URL does not touch original playback
+ok 23 - unavailable cache URL does not touch original playback
+  ---
+  duration_ms: 0.975137
+  type: 'test'
+  ...
+# Subtest: failed target audio rolls back previous source and playback
+ok 24 - failed target audio rolls back previous source and playback
+  ---
+  duration_ms: 0.311669
+  type: 'test'
+  ...
+# Subtest: global LRC offset applies even when metadata is after lines
+ok 25 - global LRC offset applies even when metadata is after lines
+  ---
+  duration_ms: 0.129265
+  type: 'test'
+  ...
+# Subtest: Rap at song tail stops one-time rehearsal but wraps normal loop
+ok 26 - Rap at song tail stops one-time rehearsal but wraps normal loop
+  ---
+  duration_ms: 0.121252
+  type: 'test'
+  ...
+# Subtest: manual file pairing identifies song, separates original/accompaniment/LRC
+ok 27 - manual file pairing identifies song, separates original/accompaniment/LRC
+  ---
+  duration_ms: 9.399205
+  type: 'test'
+  ...
+1..27
+# tests 27
+# suites 0
+# pass 27
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 91.249766

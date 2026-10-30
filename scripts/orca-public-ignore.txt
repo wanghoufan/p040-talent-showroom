@@ -1,0 +1,55 @@
+# ORCA 治理块｜公开仓不收录清单（母版托管单一真源，勿手改）
+#
+# 用途：注入到各项目根 .gitignore 的「ORCA 治理块」，让公开作品仓不收录 ORCA 通用脚手架，
+#       但保留本项目自己的过程文档（计划/评审/交接/账本/经验），作为云端备份。
+#
+# 边界＝A1（只隐藏通用框架，保留本项目历史）：
+#   - 本清单列出的＝每个项目都一样的**通用脚手架** → 隐藏
+#   - 未列出的项目自有文档（PRODUCT_PLAN_*.md / BUGS-*.md / HANDOFF.md /
+#     docs/model/*.jsonl / 经验一句话.md / 应用 README.md 等）→ **保留在公开仓**，作备份
+#
+# 重要：只写「已提交的 ORCA 脚手架」；应用自己的 README.md / README.en.md 绝不在此列
+#       （那是作品首页，必须保留）。
+#
+# 维护：改动此文件＝改动所有项目的忽略块；改完请跑
+#       bash scripts/check-sync.sh 确认两包一致，并重新对目标仓执行
+#       bash scripts/orca-gitignore.sh <项目根> --untrack
+
+# ── 根级规则与版本文件 ─────────────────────────────
+/AGENTS.md
+/ORCA治理体系说明.md
+/USER_MODEL_OVERRIDE.md
+/GOVERNANCE_VERSION
+/归位表.template.md
+
+# ── 根级提示词（包内平铺；老项目可能也在 docs/prompts/，见下）──
+/编排者提示词.md
+/外部开发者提示词.md
+/Orca 编排治理监督者提示词.md
+/Orca 通用编排者持续推进协议.md
+/迁移整理提示词.md
+/agent.md
+
+# ── 角色卡 / 规范 / 模板 / 提示词 / 全景图（通用脚手架）──
+/docs/roles/
+/docs/sop/
+/docs/templates/
+/docs/prompts/
+/docs/assets/orca-*.png
+
+# ── TM 资格测试规范（通用；各项目自己的 docs/model/*.jsonl 账本不在此列，保留）──
+/docs/model/TASK-MANAGER-QUALIFICATION.md
+
+# ── 各目录下的 .template.md 模板（通用；同目录实例文档保留）──
+/docs/pm/*.template.md
+/docs/plan/*.template.md
+/docs/qa/*.template.md
+/docs/review/*.template.md
+/docs/handoff/*.template.md
+
+# ── 脚本（通用工具链）─────────────────────────────
+/scripts/model/
+/scripts/decision/
+/scripts/orchestration/
+/scripts/detect-client.sh
+/scripts/check-channel-preflight.sh

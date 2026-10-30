@@ -1,0 +1,77 @@
+{
+  "mode": "dry-run",
+  "results": [
+    {
+      "songId": "7624d66b-f476-51b3-878a-2793e69527b4",
+      "status": "dry-run",
+      "command": [
+        "audio-separator",
+        "/mnt/data/P040-Local-AI-Import-V3.0/examples/sample_inputs/3LAU, Carly Paige - Touch.mp3",
+        "--model_filename",
+        "model_bs_roformer_ep_317_sdr_12.9755.yaml",
+        "--output_dir",
+        "/mnt/data/p040-separated/7624d66b-f476-51b3-878a-2793e69527b4",
+        "--output_format",
+        "FLAC",
+        "--single_stem",
+        "Instrumental",
+        "--custom_output_names",
+        "{\"Instrumental\": \"accompaniment\"}"
+      ]
+    },
+    {
+      "songId": "57540a68-cf1a-5dff-bc37-a7abe2df1fd1",
+      "status": "dry-run",
+      "command": [
+        "audio-separator",
+        "/mnt/data/P040-Local-AI-Import-V3.0/examples/sample_inputs/4MINUTE - 미쳐.mp3",
+        "--model_filename",
+        "model_bs_roformer_ep_317_sdr_12.9755.yaml",
+        "--output_dir",
+        "/mnt/data/p040-separated/57540a68-cf1a-5dff-bc37-a7abe2df1fd1",
+        "--output_format",
+        "FLAC",
+        "--single_stem",
+        "Instrumental",
+        "--custom_output_names",
+        "{\"Instrumental\": \"accompaniment\"}"
+      ]
+    },
+    {
+      "songId": "2cfed702-81ef-5dcf-b629-8be2cad005bd",
+      "status": "dry-run",
+      "command": [
+        "audio-separator",
+        "/mnt/data/P040-Local-AI-Import-V3.0/examples/sample_inputs/8D Tunes - Mood (8D Audio).mp3",
+        "--model_filename",
+        "model_bs_roformer_ep_317_sdr_12.9755.yaml",
+        "--output_dir",
+        "/mnt/data/p040-separated/2cfed702-81ef-5dcf-b629-8be2cad005bd",
+        "--output_format",
+        "FLAC",
+        "--single_stem",
+        "Instrumental",
+        "--custom_output_names",
+        "{\"Instrumental\": \"accompaniment\"}"
+      ]
+    },
+    {
+      "songId": "2ac78582-1be4-5553-ad3b-63a95abbd8d5",
+      "status": "dry-run",
+      "command": [
+        "audio-separator",
+        "/mnt/data/P040-Local-AI-Import-V3.0/examples/sample_inputs/宝石 Gem,俞天时,王洋 EVIS - 爱的恰恰 (1).mp3",
+        "--model_filename",
+        "model_bs_roformer_ep_317_sdr_12.9755.yaml",
+        "--output_dir",
+        "/mnt/data/p040-separated/2ac78582-1be4-5553-ad3b-63a95abbd8d5",
+        "--output_format",
+        "FLAC",
+        "--single_stem",
+        "Instrumental",
+        "--custom_output_names",
+        "{\"Instrumental\": \"accompaniment\"}"
+      ]
+    }
+  ]
+}

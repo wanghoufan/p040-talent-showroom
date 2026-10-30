@@ -1,0 +1,341 @@
+{
+  "meta": {
+    "generatedAt": "2026-10-30T12:20:00+0800",
+    "updatedAt": "2026-10-30T12:22:00+0800",
+    "checkerRole": "verify-subagent (read-only)",
+    "project": "P040 ing-才艺展示厅",
+    "isolationEnvDir": "var/vocal-v31-work/real-qa-20261030",
+    "apiBase": "http://127.0.0.1:28794",
+    "sqliteDb": "var/vocal-v31-work/real-qa-20261030/db/qa.db",
+    "mediaRoot": "var/vocal-v31-work/real-qa-20261030/media",
+    "musicRoot": "var/vocal-v31-work/real-qa-20261030/music",
+    "separator": {
+      "binary": "var/vocal-v31-work/.venv/bin/audio-separator",
+      "version": "0.47.2",
+      "modelFile": "model_bs_roformer_ep_317_sdr_12.9755.ckpt",
+      "modelBytes": 639331213,
+      "outputFormat": "flac",
+      "singleStem": "Instrumental"
+    },
+    "method": "只读：sqlite3 -readonly / GET /api/vocal-import/jobs / GET /api/repertoire / GET /api/media/audio / shasum -a 256 / ffprobe；未改库、未改源文件、未重启服务、未操作手机"
+  },
+  "overall": "PASS",
+  "songs": [
+    {
+      "title": "덤더럼 (Dumhdurum)",
+      "artist": "Apink",
+      "songId": "4528bfad-2e59-5425-96a9-3581dd2a810c",
+      "jobId": "ca7cc747-ba7c-4d65-b272-4178ce6afbe9",
+      "verdict": "PASS",
+      "check1_job": {
+        "verdict": "PASS",
+        "status": "IMPORTED",
+        "stage": "IMPORT",
+        "importMode": "DUAL_TRACK",
+        "attempts": 0,
+        "maxAttempts": 3,
+        "lastErrorCode": null,
+        "lastErrorMessage": null,
+        "language": "ko",
+        "events": [
+          {"seq": 1, "event": "created", "status": "PENDING_EXTRACT", "at": "2026-10-30T03:20:46Z"},
+          {"seq": 2, "event": "claimed", "status": "EXTRACTING", "at": "2026-10-30T03:23:59Z"},
+          {"seq": 3, "event": "extracted", "status": "VERIFYING", "at": "2026-10-30T03:36:37Z"},
+          {"seq": 4, "event": "verified-artifacts", "status": "VERIFYING", "at": "2026-10-30T03:36:37Z"},
+          {"seq": 5, "event": "imported", "status": "IMPORTED", "at": "2026-10-30T03:36:37Z"}
+        ],
+        "extractionWallClock": "2026-10-30T11:23:59+0800 → 2026-10-30T11:36:37+0800 = 12m38s"
+      },
+      "check2_artifacts": {
+        "verdict": "PASS",
+        "source": "vocal_import_jobs.artifacts_json + vocal_import_artifacts + performance_clips",
+        "note": "artifacts_json 只登记 accompaniment；原唱由 importer 落成 performance_clips/source_media 并复制到 media/vocal-import/<songId>/original.mp3",
+        "original": {
+          "clipId": "86dcf18b-755d-5a8d-a2cc-5a45e02ac174",
+          "sourceMediaId": "55f78af5-1713-51d8-81be-0d70bfa9aa1a",
+          "relPath": "vocal-import/4528bfad-2e59-5425-96a9-3581dd2a810c/original.mp3",
+          "sizeBytes": 8325250,
+          "sha256": "8b7de7748240e40e595559d272364696aa0bee2f0edde2d853bf78c0895247b7",
+          "durationMs": 208053,
+          "codec": "mp3",
+          "sourcePreserving": true,
+          "model": null,
+          "separator": null
+        },
+        "accompaniment": {
+          "clipId": "5cb3dc74-4cc8-5b6f-8c5c-83353afa0eaa",
+          "relPath": "vocal-import/4528bfad-2e59-5425-96a9-3581dd2a810c/runs/vocal-import-local-6582f4b6261fd17c/Apink - 덤더럼(Dumhdurum)_(Instrumental)_model_bs_roformer_ep_317_sdr_12.flac",
+          "sizeBytes": 22958141,
+          "sha256": "db07ab09bcc84ca7e2d409cc129e1c9c67770c7f1752f41e47011252eea7f250",
+          "durationMs": 208053,
+          "codec": "flac",
+          "outputFormat": "flac",
+          "model": "model_bs_roformer_ep_317_sdr_12.9755.ckpt",
+          "separator": "audio-separator",
+          "state": "ready",
+          "qualityState": "unverified"
+        },
+        "shaDistinct": true,
+        "durationDeltaMs": 0,
+        "durationToleranceMs": 4161,
+        "durationWithinTolerance": true,
+        "toleranceRule": "max(2000ms, 2% × 源时长 208053ms) = 4161ms"
+      },
+      "check3_mediaFiles": {
+        "verdict": "PASS",
+        "original": {
+          "path": "media/vocal-import/4528bfad-2e59-5425-96a9-3581dd2a810c/original.mp3",
+          "exists": true,
+          "sizeBytes": 8325250,
+          "sha256": "8b7de7748240e40e595559d272364696aa0bee2f0edde2d853bf78c0895247b7",
+          "matchesDb": true,
+          "ffprobeFormat": "mp3",
+          "ffprobeDurationSec": 208.053333,
+          "ffprobeCodec": "mp3"
+        },
+        "accompaniment": {
+          "path": "media/vocal-import/4528bfad-2e59-5425-96a9-3581dd2a810c/runs/vocal-import-local-6582f4b6261fd17c/Apink - 덤더럼(Dumhdurum)_(Instrumental)_model_bs_roformer_ep_317_sdr_12.flac",
+          "exists": true,
+          "sizeBytes": 22958141,
+          "sha256": "db07ab09bcc84ca7e2d409cc129e1c9c67770c7f1752f41e47011252eea7f250",
+          "matchesDb": true,
+          "ffprobeFormat": "flac",
+          "ffprobeDurationSec": 208.053333,
+          "ffprobeCodec": "flac"
+        },
+        "apiMediaCheck": {
+          "original": {"http": 200, "contentType": "audio/mpeg", "contentLength": 8325250},
+          "accompaniment": {"http": 200, "contentType": "audio/flac", "contentLength": 22958141}
+        }
+      },
+      "check4_repertoire": {
+        "verdict": "PASS",
+        "source": "repertoire_items + performance_clips + source_media + GET /api/repertoire/<songId>",
+        "kind": "VOCAL",
+        "title": "덤더럼 (Dumhdurum)",
+        "artist": "Apink",
+        "vocalLanguage": "ko",
+        "internalAudioRole": "ACCOMPANIMENT（默认播放轨=伴奏；双轨字段均在）",
+        "tracks": {
+          "original": {"clipId": "86dcf18b-755d-5a8d-a2cc-5a45e02ac174", "sha256": "8b7de7748240e40e595559d272364696aa0bee2f0edde2d853bf78c0895247b7", "sizeBytes": 8325250, "durationMs": 208053, "sourcePreserving": true},
+          "accompaniment": {"clipId": "5cb3dc74-4cc8-5b6f-8c5c-83353afa0eaa", "sha256": "db07ab09bcc84ca7e2d409cc129e1c9c67770c7f1752f41e47011252eea7f250", "sizeBytes": 22958141, "durationMs": 208053, "sourcePreserving": false}
+        },
+        "lyrics": {
+          "lrcRelPath": "Apink - 덤더럼(Dumhdurum).lrc",
+          "lrcTimedLines": 44,
+          "dbLyricsTimedLines": 44,
+          "repertoireLyricsJsonLines": 44,
+          "apiLyricsLines": 44,
+          "firstLine": {"startMs": 17048, "text": "Hey 느낌이 너무 이상한 걸 좀"},
+          "lastLine": {"startMs": 200670, "text": "내 맘은 덤더럼 덤덤"},
+          "match": true,
+          "note": "LRC 前 3 行为富文本 JSON 头（作词/作曲/编曲），项目 parseLrcFile 归入 plainLines，不计入 timedLines"
+        }
+      }
+    },
+    {
+      "title": "Touch",
+      "artist": "3LAU, Carly Paige",
+      "songId": "78fcc0fd-ee50-508e-a170-3e09e6fedc1f",
+      "jobId": "ad517e4e-a3a3-47f7-b2eb-4313ca5cf8ae",
+      "verdict": "PASS",
+      "check1_job": {
+        "verdict": "PASS",
+        "status": "IMPORTED",
+        "stage": "IMPORT",
+        "importMode": "DUAL_TRACK",
+        "attempts": 0,
+        "lastErrorCode": null,
+        "language": "zh（误标，见 observations）",
+        "events": [
+          {"seq": 1, "event": "created", "status": "PENDING_EXTRACT", "at": "2026-10-30T03:20:46Z"},
+          {"seq": 2, "event": "claimed", "status": "EXTRACTING", "at": "2026-10-30T03:20:46Z"},
+          {"seq": 3, "event": "recovered", "status": "EXTRACTING", "at": "2026-10-30T04:05:47Z", "detail": "expired-lease-runtime"},
+          {"seq": 4, "event": "claimed", "status": "EXTRACTING", "at": "2026-10-30T04:05:47Z"},
+          {"seq": 5, "event": "extracted", "status": "VERIFYING", "at": "2026-10-30T04:17:29Z"},
+          {"seq": 6, "event": "verified-artifacts", "status": "VERIFYING", "at": "2026-10-30T04:17:29Z"},
+          {"seq": 7, "event": "imported", "status": "IMPORTED", "at": "2026-10-30T04:17:29Z"}
+        ],
+        "extractionWallClock": "第二次领取 12:05:47 → 入库 12:17:29 = 11m42s",
+        "firstAttemptNote": "首轮提取于 11:20:46 领取、11:23–11:40 服务器进程退出后中断；任务未标失败，租约 45 分钟到期后由队列 recover() 自动回收重跑"
+      },
+      "check2_artifacts": {
+        "verdict": "PASS",
+        "original": {
+          "clipId": "0d31a89b-6a53-5403-90be-4e801f6e2188",
+          "relPath": "vocal-import/78fcc0fd-ee50-508e-a170-3e09e6fedc1f/original.mp3",
+          "sizeBytes": 10009259,
+          "sha256": "b76193882e06503df3438c45567e22d8c07c71f9acb2a4cb565eb04a26c24cee",
+          "durationMs": 205773,
+          "codec": "mp3",
+          "sourcePreserving": true,
+          "model": null,
+          "separator": null
+        },
+        "accompaniment": {
+          "clipId": "71a06435-b3ce-556a-b360-15205d1c7cc4",
+          "relPath": "vocal-import/78fcc0fd-ee50-508e-a170-3e09e6fedc1f/runs/vocal-import-local-6a973e8d12d2b45f/3LAU, Carly Paige - Touch_(Instrumental)_model_bs_roformer_ep_317_sdr_12.flac",
+          "sizeBytes": 23041860,
+          "sha256": "e79414eeee86c048f7eba79163e7cd0fd0178ed5f7517a9b4269856148a70352",
+          "durationMs": 205773,
+          "codec": "flac",
+          "outputFormat": "flac",
+          "model": "model_bs_roformer_ep_317_sdr_12.9755.ckpt",
+          "separator": "audio-separator",
+          "state": "ready",
+          "qualityState": "unverified"
+        },
+        "shaDistinct": true,
+        "durationDeltaMs": 0,
+        "durationToleranceMs": 4115,
+        "durationWithinTolerance": true,
+        "toleranceRule": "max(2000ms, 2% × 源时长 205773ms) = 4115ms"
+      },
+      "check3_mediaFiles": {
+        "verdict": "PASS",
+        "original": {
+          "path": "media/vocal-import/78fcc0fd-ee50-508e-a170-3e09e6fedc1f/original.mp3",
+          "exists": true,
+          "sizeBytes": 10009259,
+          "sha256": "b76193882e06503df3438c45567e22d8c07c71f9acb2a4cb565eb04a26c24cee",
+          "matchesDb": true,
+          "ffprobeFormat": "mp3",
+          "ffprobeDurationSec": 205.772721,
+          "ffprobeCodec": ["mp3", "mjpeg(封面)"]
+        },
+        "accompaniment": {
+          "path": "media/vocal-import/78fcc0fd-ee50-508e-a170-3e09e6fedc1f/runs/vocal-import-local-6a973e8d12d2b45f/3LAU, Carly Paige - Touch_(Instrumental)_model_bs_roformer_ep_317_sdr_12.flac",
+          "exists": true,
+          "sizeBytes": 23041860,
+          "sha256": "e79414eeee86c048f7eba79163e7cd0fd0178ed5f7517a9b4269856148a70352",
+          "matchesDb": true,
+          "ffprobeFormat": "flac",
+          "ffprobeDurationSec": 205.772721,
+          "ffprobeCodec": "flac"
+        },
+        "apiMediaCheck": {
+          "original": {"http": 200, "contentType": "audio/mpeg", "contentLength": 10009259},
+          "accompaniment": {"http": 200, "contentType": "audio/flac", "contentLength": 23041860}
+        }
+      },
+      "check4_repertoire": {
+        "verdict": "PASS",
+        "kind": "VOCAL",
+        "title": "Touch",
+        "artist": "3LAU, Carly Paige",
+        "vocalLanguage": "zh（误标，来源 job.language，见 observations）",
+        "internalAudioRole": "ACCOMPANIMENT（默认播放轨=伴奏；双轨字段均在）",
+        "tracks": {
+          "original": {"clipId": "0d31a89b-6a53-5403-90be-4e801f6e2188", "sha256": "b76193882e06503df3438c45567e22d8c07c71f9acb2a4cb565eb04a26c24cee", "sizeBytes": 10009259, "durationMs": 205773, "sourcePreserving": true},
+          "accompaniment": {"clipId": "71a06435-b3ce-556a-b360-15205d1c7cc4", "sha256": "e79414eeee86c048f7eba79163e7cd0fd0178ed5f7517a9b4269856148a70352", "sizeBytes": 23041860, "durationMs": 205773, "sourcePreserving": false}
+        },
+        "lyrics": {
+          "lrcRelPath": "3LAU,Carly Paige - Touch.lrc",
+          "lrcTimedLines": 50,
+          "dbLyricsTimedLines": 50,
+          "repertoireLyricsJsonLines": 50,
+          "apiLyricsLines": 50,
+          "firstLine": {"startMs": 8470, "text": "No talk, seven days"},
+          "lastLine": {"startMs": 188680, "text": "Do you feel the way we're falling outta touch?"},
+          "match": true,
+          "note": "LRC 前 2 行为富文本 JSON 头；另有 1 个只有时间戳无文本的行按规则丢弃"
+        }
+      }
+    },
+    {
+      "title": "爱的恰恰",
+      "artist": "宝石Gem,俞天时,王洋EVIS",
+      "songId": "e771557f-4ade-5249-86a6-00f9b42fa2a5",
+      "jobId": "81ff2cd8-1d6a-43ed-97f6-24c555be043b",
+      "verdict": "EXPECTED_NEEDS_REVIEW",
+      "check1_job": {
+        "status": "NEEDS_REVIEW",
+        "stage": "MATCH",
+        "importMode": "NONE",
+        "attempts": 0,
+        "issues": ["audio-role-unmarked-original-assumed", "filename-id3-artist-conflict"],
+        "note": "按要求属预期歧义，不计缺陷；未做人工核对后的入库验证"
+      },
+      "check2_artifacts": {"verdict": "N/A"},
+      "check3_mediaFiles": {"verdict": "N/A"},
+      "check4_repertoire": {"verdict": "N/A"}
+    }
+  ],
+  "check5_sourceReadOnly": {
+    "verdict": "PASS",
+    "checkedAt": "2026-10-30T11:35:00+0800（并在 12:20 复核 DB 中 source_sha256 未变）",
+    "method": "shasum -a 256 于 music 根目录，未修改任何文件（mtime 保持 10月30 11:20）",
+    "files": [
+      {"name": "3LAU, Carly Paige - Touch.mp3", "sizeBytes": 10009259, "sha256": "b76193882e06503df3438c45567e22d8c07c71f9acb2a4cb565eb04a26c24cee", "dbSourceSha256": "b76193882e06503df3438c45567e22d8c07c71f9acb2a4cb565eb04a26c24cee", "match": true},
+      {"name": "Apink - 덤더럼(Dumhdurum).mp3", "sizeBytes": 8325250, "sha256": "8b7de7748240e40e595559d272364696aa0bee2f0edde2d853bf78c0895247b7", "dbSourceSha256": "8b7de7748240e40e595559d272364696aa0bee2f0edde2d853bf78c0895247b7", "match": true},
+      {"name": "宝石Gem,俞天时,王洋EVIS - 爱的恰恰.mp3", "sizeBytes": 7792450, "sha256": "f49e42fbb510358b46345ecebadb215bcdaf3552890b7644ca99bbb5545f6db7", "dbSourceSha256": "f49e42fbb510358b46345ecebadb215bcdaf3552890b7644ca99bbb5545f6db7", "match": true}
+    ],
+    "lrc": [
+      {"name": "3LAU,Carly Paige - Touch.lrc", "sha256": "341ec7d4e7ad6b4e9499950150b90bb3823878488757d9e96d464597aa79228f", "dbLyricsSha256": "341ec7d4e7ad6b4e9499950150b90bb3823878488757d9e96d464597aa79228f", "timedLines": 50, "dbTimedLines": 50, "match": true},
+      {"name": "Apink - 덤더럼(Dumhdurum).lrc", "sha256": "3a358a315349c7527c308bcf1de19d941aac1ae459a24d2f9ccd108fc02ed6e9", "dbLyricsSha256": "3a358a315349c7527c308bcf1de19d941aac1ae459a24d2f9ccd108fc02ed6e9", "timedLines": 44, "dbTimedLines": 44, "match": true},
+      {"name": "宝石Gem,俞天时,王洋EVIS - 爱的恰恰.lrc", "sha256": "9dd94c7fe08d663ae7b71942ab59b82aaab444db99edfa26c7ffa6481589f0fb", "dbLyricsSha256": "9dd94c7fe08d663ae7b71942ab59b82aaab444db99edfa26c7ffa6481589f0fb", "timedLines": 70, "dbTimedLines": 70, "match": true}
+    ],
+    "originalArtifactsMatchSource": "原唱产物 SHA 与源 mp3 SHA 完全一致（复制而非重编码，sourcePreserving=true）"
+  },
+  "check6_realSeparator": {
+    "verdict": "PASS",
+    "separatorField": "audio-separator",
+    "artifactModelField": "model_bs_roformer_ep_317_sdr_12.9755.ckpt",
+    "installedVersion": "0.47.2",
+    "modelFilePresent": true,
+    "modelFileBytes": 639331213,
+    "artifactCodec": "flac",
+    "artifactOutputFormat": "flac",
+    "processEvidence": [
+      "11:23:59–11:36:37 观察到 Dumhdurum 的 audio-separator 子进程（父进程 server/index.mjs），参数含 --model_filename model_bs_roformer_ep_317_sdr_12.9755.ckpt --output_format flac --single_stem Instrumental",
+      "12:05:47–12:17:29 观察到 Touch 的 audio-separator 子进程（PID 34030），进程退出后立即出现 extracted/verified-artifacts/imported 事件"
+    ],
+    "note": "伴奏均为真实分离产物（flac 22.96/23.04 MB，时长与原曲一致），非复制原唱"
+  },
+  "observations": [
+    {
+      "id": "OBS-1",
+      "severity": "低",
+      "title": "英文歌 Touch 的 vocal_language 被标为 zh",
+      "detail": "scan 的 detectLanguage 先判韩文、再判汉字；Touch 的 LRC 头两行是中文富文本头（作词/作曲），于是整首被判 zh，job.language=zh 一路带入 repertoire_items.vocal_language。歌词实际为英文。",
+      "impact": "不影响双轨与播放；会影响按语言区分的练习/发音/展示逻辑。Dumhdurum（含韩文）判为 ko 正常。",
+      "evidence": "server/vocal-import/canonical.mjs:135-142；DB vocal_import_jobs.language='zh'；LRC 首两行含中文"
+    },
+    {
+      "id": "OBS-2",
+      "severity": "中",
+      "title": "首轮提取因服务进程退出而中断，任务未标失败、租约锁 45 分钟",
+      "detail": "11:20:46 claimed 后，服务器进程（连同启动它的 shell）在 11:23–11:40 间消失；任务停在 EXTRACTING、attempts 仍为 0，旧租约 45 分钟才过期，只能等队列 recover() 在 12:05:47 回收重跑，额外多花约 45 分钟。",
+      "impact": "单首墙钟时间从约 12 分钟拉长到约 55 分钟；无数据损坏（重跑走独立 run 目录，旧目录空）。",
+      "evidence": "vocal_import_events seq3 recovered(expired-lease-runtime) seq4 claimed；媒体目录两套 runs/"
+    },
+    {
+      "id": "OBS-3",
+      "severity": "低",
+      "title": "recover 重跑不增加 attempts 计数",
+      "detail": "recovered+re-claimed 后 attempts 仍为 0，事件里 attempt 仍显示 1；仅失败才累加。",
+      "impact": "重试次数无法反映真实执行次数，排障时需看事件流而非 attempts。",
+      "evidence": "vocal_import_jobs.attempts=0；vocal_import_events detail attempt=1"
+    },
+    {
+      "id": "OBS-4",
+      "severity": "低",
+      "title": "artifacts_json 不登记原唱工件",
+      "detail": "artifacts_json 只有 accompaniment；原唱信息分散在 performance_clips + source_media。",
+      "impact": "若下游只读 artifacts_json 会误判“无原唱”；本次核验已按 performance_clips 补齐。"
+    }
+  ],
+  "limitations": [
+    "未做听测：伴奏是否真的去除人声未验证（qualityState=unverified）。主开发者已在真机完成 Dumhdurum 播放/音轨切换/离线播放测试；Touch 与 Dumhdurum 的听感仍需人工确认。",
+    "仅 2 首真实歌曲完成全链路（Touch、Dumhdurum），非 20 首规模；爱的恰恰 停在 NEEDS_REVIEW。",
+    "歌词只核对时间行数与首尾行，未逐行比对文本。",
+    "未验证手机端 UI、边听边录、离线缓存等下游功能。",
+    "未跑任何自动化测试；本次仅只读核验。"
+  ],
+  "evidenceRaw": {
+    "pollLog": "docs/qa/evidence-2026-10-30-real-import/raw/poll.log",
+    "watchLog": "docs/qa/evidence-2026-10-30-real-import/raw/watch.log",
+    "snapshots": "docs/qa/evidence-2026-10-30-real-import/raw/snapshot-*.json",
+    "scripts": "docs/qa/evidence-2026-10-30-real-import/scripts/"
+  }
+}

@@ -49,9 +49,9 @@ describe('曲库批量分类', () => {
     fireEvent.click(screen.getByRole('button', { name: '批量管理' }));
     fireEvent.click(screen.getByRole('button', { name: '选择 甲舞' }));
     fireEvent.click(screen.getByRole('button', { name: '修改分类（1首）' }));
-    fireEvent.change(screen.getByLabelText('学习状态'), { target: { value: 'PRACTICING' } });
-    fireEvent.change(screen.getByLabelText('标签操作'), { target: { value: 'add' } });
-    fireEvent.click(within(screen.getByRole('dialog')).getByRole('button', { name: '户外' }));
+    const dialog = within(screen.getByRole('dialog'));
+    fireEvent.click(dialog.getByRole('button', { name: '正在练' }));
+    fireEvent.click(dialog.getByRole('button', { name: '户外' }));
     fireEvent.click(screen.getByRole('button', { name: '确认修改' }));
     await waitFor(() => expect(screen.queryByRole('dialog')).not.toBeInTheDocument());
     await waitFor(()=>expect(requests).toHaveLength(1));expect(requests[0]).toMatchObject({action:'bulk',fields:{refs:[{kind:'DANCE',id:items[0].id}],fields:{learningStatus:'PRACTICING',sceneMode:'add',sceneTags:['OUTDOOR']}}});
@@ -71,7 +71,7 @@ describe('曲库批量分类', () => {
     fireEvent.click(screen.getByRole('button', { name: '选择 甲舞' }));
     fireEvent.click(screen.getByRole('button', { name: '修改分类（1首）' }));
     vi.spyOn(localDB,'commitLocal').mockRejectedValueOnce(Error('QuotaExceeded'));
-    fireEvent.change(screen.getByLabelText('学习状态'), { target: { value: 'CAN_DANCE' } });
+    fireEvent.click(within(screen.getByRole('dialog')).getByRole('button', { name: '会跳' }));
     fireEvent.click(screen.getByRole('button', { name: '确认修改' }));
     expect(await screen.findByRole('alert')).toHaveTextContent('未能保存');
     expect(screen.getByRole('button', { name: '确认修改' })).toBeEnabled();

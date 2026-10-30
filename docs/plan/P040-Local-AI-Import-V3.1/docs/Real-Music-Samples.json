@@ -1,0 +1,107 @@
+{
+  "schema": "p040.real-music-sample-manifest.v1",
+  "sourceRoot": "/Volumes/三星/网易云音乐/音乐（用于转换）",
+  "sourceIsMacLocalPath": true,
+  "safety": {
+    "readOnly": true,
+    "recursive": true,
+    "doNotModifySource": true,
+    "doNotCopyToChat": true,
+    "doNotPublishAudio": true
+  },
+  "samples": [
+    {
+      "id": "T01",
+      "scenario": "英文｜逗号空格不一致（基本配对）",
+      "audio": [
+        "3LAU, Carly Paige - Touch.mp3"
+      ],
+      "lyrics": [
+        "3LAU,Carly Paige - Touch.lrc"
+      ],
+      "expected": "auto-pair-if-valid"
+    },
+    {
+      "id": "T02",
+      "scenario": "英文｜多歌手逗号与 Radio 版本标识",
+      "audio": [
+        "2Someone, Lanfranchi, Farina - Star Unkind (Lanfranchi & Farina Radio).mp3"
+      ],
+      "lyrics": [
+        "2Someone,Lanfranchi,Farina - Star Unkind (Lanfranchi & Farina Radio).lrc"
+      ],
+      "expected": "auto-pair-if-valid"
+    },
+    {
+      "id": "T03",
+      "scenario": "韩文｜Unicode、时间轴和字符编码",
+      "audio": [
+        "4MINUTE - 미쳐.mp3"
+      ],
+      "lyrics": [
+        "4MINUTE - 미쳐.lrc"
+      ],
+      "expected": "auto-pair-if-valid"
+    },
+    {
+      "id": "T04",
+      "scenario": "英文｜标准文件名与完整歌词",
+      "audio": [
+        "5 Seconds of Summer - Teeth.mp3"
+      ],
+      "lyrics": [
+        "5 Seconds of Summer - Teeth.lrc"
+      ],
+      "expected": "auto-pair-if-valid"
+    },
+    {
+      "id": "T05",
+      "scenario": "中文｜(1) 重复副本，避免把两个不同版本覆盖",
+      "audio": [
+        "宝石 Gem,俞天时,王洋 EVIS - 爱的恰恰 (1).mp3",
+        "宝石 Gem,俞天时,王洋 EVIS - 爱的恰恰.mp3"
+      ],
+      "lyrics": [
+        "宝石 Gem,俞天时,王洋 EVIS - 爱的恰恰 (1).lrc",
+        "宝石 Gem,俞天时,王洋 EVIS - 爱的恰恰.lrc"
+      ],
+      "expected": "duplicate-check"
+    },
+    {
+      "id": "T06",
+      "scenario": "英文｜8D Audio 特殊版本，警惕短/无时间戳 LRC",
+      "audio": [
+        "8D Tunes - Mood (8D Audio).mp3"
+      ],
+      "lyrics": [
+        "8D Tunes - Mood (8D Audio).lrc"
+      ],
+      "expected": "version-isolation-check"
+    },
+    {
+      "id": "T07",
+      "scenario": "英文｜多人署名不一致，必须待核对而非强配",
+      "audio": [
+        "88rising, Joji, Rich Brian, AUGUST 08 - Midsummer Madness.mp3"
+      ],
+      "lyrics": [
+        "88rising,Joji,Rich Brian - Midsummer Madness.lrc"
+      ],
+      "expected": "needs-review"
+    },
+    {
+      "id": "T08",
+      "scenario": "中文/英文｜翻唱版本与 (1) 副本，保留来源与版本",
+      "audio": [
+        "陈从雨xiaoyu0,石玺彤 - senorita (翻自 Shawn Mendes) (1).mp3",
+        "陈从雨xiaoyu0,石玺彤 - senorita (翻自 Shawn Mendes).mp3"
+      ],
+      "lyrics": [
+        "陈从雨xiaoyu0,石玺彤 - senorita (翻自 Shawn Mendes) (1).lrc",
+        "陈从雨xiaoyu0,石玺彤 - senorita (翻自 Shawn Mendes).lrc"
+      ],
+      "expected": "cover-duplicate-check",
+      "optional": true
+    }
+  ]
+}
