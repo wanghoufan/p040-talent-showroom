@@ -133,7 +133,7 @@ export function nameIdentity(fileName) {
  * 网易云等来源常把它们写进歌词行（甚至带时戳），中文署名会把英文歌判成中文（BUG-V31-QA-004）。
  * `封面` 是真实样本 `石玺彤 - Let Go.lrc` 里出现过的署名行，同样不计入。
  */
-const CREDIT_LINE_PATTERN =
+export const CREDIT_LINE_PATTERN =
   /^(?:作词|作曲|编曲|词|曲|制作人|监制|出品|混音|母带|和声|录音|配唱|演唱|原唱|策划|企划|校对|翻译|文案|制作|封面)\s*[:：]|^(?:lyrics|composed|written|produced|arranged)\s*(?:by)?\s*[:：]/i;
 
 /**

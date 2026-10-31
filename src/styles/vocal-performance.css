@@ -42,8 +42,8 @@
 .perform-toggle { min-width: 76px !important; min-height: 76px !important; font-size: 30px !important; }
 .perform-audio { display: none; }
 
-/* 同步歌词：大字号，只做阅读与定位 */
-.perform-lyrics { list-style: none; margin: 18px 0 0; padding: 0; max-height: 38dvh; overflow-y: auto; overscroll-behavior-y: contain; text-align: left; }
+/* 同步歌词：大字号，只做阅读与定位（先给 vh 兜底，真机 WebView 丢弃 dvh 时仍能限高滚动） */
+.perform-lyrics { list-style: none; margin: 18px 0 0; padding: 0; max-height: 38vh; max-height: 38dvh; overflow-y: auto; overscroll-behavior-y: contain; text-align: left; }
 .perform-lyrics li { margin: 0 0 4px; }
 .perform-line { display: block; width: 100%; padding: 10px 12px; min-height: 48px; text-align: left; font-size: 23px; line-height: 1.45; background: transparent; border: 0; border-radius: 10px; }
 .perform-line--active { background: var(--surface-2); color: var(--primary); font-weight: 700; }
@@ -70,3 +70,9 @@
   .perform-controls button { min-width: 48px; min-height: 48px; font-size: 21px; }
   .perform-toggle { min-width: 64px !important; min-height: 64px !important; font-size: 26px !important; }
 }
+
+/* 演出译文：默认收起，手动切换后逐行显示在原文下方；字号不低于正文下限。 */
+.perform-translation { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-top: 10px; }
+.perform-translation button { min-height: 36px; font-size: 15px; }
+.perform-translation__meta { font-size: 14px; color: var(--muted); }
+.perform-line__translation { display: block; padding: 0 12px 8px; font-size: 17px; line-height: 1.45; color: var(--muted); }

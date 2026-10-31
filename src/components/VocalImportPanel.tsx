@@ -5,6 +5,7 @@ import { editLocally } from '../lib/offline-editing';
 import { parseLrc, resolveLineTimings, resolveTracks, trackPairStatus } from '../lib/vocal';
 import type { TalentItem } from '../lib/types';
 import VocalSectionEditor from './VocalSectionEditor';
+import VocalStructureDraftPanel from './VocalStructureDraftPanel';
 import '../styles/vocal-practice.css';
 
 /**
@@ -21,12 +22,14 @@ type Role = keyof typeof ROLE_LABEL;
 
 interface Props {
   item: TalentItem;
+  /** 结构草稿应用后回写前端缓存，详情页不必整页刷新。 */
+  onUpdated?: (item: TalentItem) => void;
 }
 
 const rowStyle = { display: 'grid', gap: '6px', marginTop: '8px' } as const;
 const inputStyle = { minHeight: '44px', padding: '0 10px', fontSize: '19px' } as const;
 
-export default function VocalImportPanel({ item }: Props) {
+export default function VocalImportPanel({ item, onUpdated }: Props) {
   const [notice, setNotice] = useState('');
   const [error, setError] = useState('');
   const [busy, setBusy] = useState(false);
@@ -135,6 +138,10 @@ export default function VocalImportPanel({ item }: Props) {
       <p className="vocal-hint" id="vocal-ai-hint">
         本地智能导入已在「我的 → 本地智能导入」可用：在 Mac mini 上扫描已登记的音乐文件夹，用本机模型提取伴奏（人声分离，不是生成新伴奏），音频不上传云端；需先连接并配对 Mac mini，手机不运行提取模型。上面的手动导入仍可随时补录或替换音轨。
       </p>
+
+      <h3 style={{ margin: '18px 0 4px', fontSize: '19px' }}>原唱结构分析</h3>
+      <p className="vocal-hint">直接读原唱混音猜段落边界与相似段，不做人声/伴奏分离；结果是草稿，确认后才替换正式结构。</p>
+      <VocalStructureDraftPanel item={item} hasOriginalTrack={Boolean(tracks.original)} onUpdated={onUpdated} />
 
       {notice && <p className="vocal-hint" role="status">{notice}</p>}
       {error && <p className="vocal-hint" role="alert">{error}</p>}

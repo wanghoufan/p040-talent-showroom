@@ -13,7 +13,7 @@ import { bumpCatalog } from '../catalog.mjs';
 import { createAccompanimentVerifier } from './accompaniment-verify.mjs';
 import { fail } from './errors.mjs';
 import { parseLrcFile } from './lrc.mjs';
-import { buildSections } from './sections.mjs';
+import { splitBilingualLrc, textHash } from '../vocal-translation/translation.mjs';
 import { withTransaction } from './store.mjs';
 import { uuid5, VOCAL_IMPORT_NAMESPACE } from './uuid5.mjs';
 
@@ -64,18 +64,35 @@ function insideMediaRoot(mediaRoot, relPath) {
   return absolute;
 }
 
-/** LRC → 既有 `lyrics_json` 结构。无时间戳不伪造，空行丢弃。 */
-function lyricsFromLrc(filePath) {
+/**
+ * LRC → 既有 `lyrics_json` 结构。无时间戳不伪造，空行丢弃。
+ * 双语 LRC（韩/英原词 + 中文译文行）在首次入库时按时间邻近拆开：
+ * 原文留在 lyrics，中文译文另存 translations，句 id 绑定原唱行，时间轴不变。
+ */
+function lyricsFromLrc(filePath, language) {
   const doc = parseLrcFile(filePath);
-  const lines = doc.timedLines
-    .filter(line => line.text && line.text.trim())
-    .slice(0, MAX_LYRICS)
-    .map((line, index) => ({
-      id: `line-${index + 1}`,
-      startMs: Math.max(0, Math.round(line.startMs)),
-      text: line.text.trim().slice(0, MAX_LINE_CHARS),
-    }));
-  return lines;
+  const { lines: original, translations: paired } = splitBilingualLrc(
+    doc.timedLines.filter(line => line.text && line.text.trim()),
+    language,
+  );
+  const lines = original.slice(0, MAX_LYRICS).map((line, index) => ({
+    id: `line-${index + 1}`,
+    startMs: Math.max(0, Math.round(line.startMs)),
+    text: line.text.trim().slice(0, MAX_LINE_CHARS),
+  }));
+  const byId = new Map(lines.map(line => [line.id, line.text]));
+  const translations = [];
+  for (let index = 0; index < lines.length; index += 1) {
+    const text = paired[index];
+    if (!text) continue;
+    translations.push({
+      id: lines[index].id,
+      text: String(text).trim().slice(0, MAX_LINE_CHARS),
+      source: 'lrc',
+      sourceHash: textHash(byId.get(lines[index].id)),
+    });
+  }
+  return { lines, translations };
 }
 
 export function createRepertoireImporter({ db, mediaRoot, policy, verifyAccompaniment = null, logger = null } = {}) {
@@ -274,17 +291,23 @@ export function createRepertoireImporter({ db, mediaRoot, policy, verifyAccompan
       sourceSizeBytes,
     });
 
-    const lyrics = job.lyrics?.relPath
+    const language = ['zh', 'en', 'ko'].includes(job.language) ? job.language : null;
+    const { lines: lyrics, translations } = job.lyrics?.relPath
       ? (() => {
           const resolved = policy.resolveFile(job.rootId, job.lyrics.relPath);
-          return lyricsFromLrc(resolved.filePath);
+          return lyricsFromLrc(resolved.filePath, language);
         })()
-      : [];
+      : { lines: [], translations: [] };
 
     // 原唱轨、歌词、结构已有记录就保留（不静默替换人工选择）；伴奏只在没有旧伴奏或用户明确选择新伴奏时合并。
     const alreadyTracked =
       existing && Boolean(existing.original_clip_id) && (existing.accompaniment_clip_id ?? null) === (accompanimentClipId ?? null);
     const existingLyrics = existing ? parseJson(existing.lyrics_json, []) : [];
+    const existingTranslations = existing ? parseJson(existing.translations_json, {}) : {};
+    const hasStoredTranslations = Array.isArray(existingTranslations?.lines) && existingTranslations.lines.length > 0;
+    const translationDoc = translations.length
+      ? JSON.stringify({ version: 1, language: 'zh', lines: translations, updatedAt: new Date().toISOString() })
+      : '{}';
     if (alreadyTracked && (!Array.isArray(existingLyrics) || existingLyrics.length > 0 || lyrics.length === 0)) {
       return {
         status: 'UNCHANGED',
@@ -329,16 +352,15 @@ export function createRepertoireImporter({ db, mediaRoot, policy, verifyAccompan
 
       const title = String(job.title ?? '').trim().slice(0, 200) || '未命名歌曲';
       const artist = String(job.artist ?? '').trim().slice(0, 200);
-      const language = ['zh', 'en', 'ko'].includes(job.language) ? job.language : null;
-      // 结构按歌词重复与留白推测（不猜旋律）；用户在结构编辑器里可改。
-      const sections = buildSections(lyrics, sourceDurationMs);
+      // V3.2：导入不再用「重复歌词句 ⇒ 副歌」猜结构。结构必须来自原唱音频分析，
+      // 由 server/vocal-structure 生成草稿、用户确认后才写入；这里只留空，界面显示「待分析」。
 
       if (!existing) {
         db.prepare(
           `INSERT INTO repertoire_items(
-            id,kind,title,artist,learning_status,audio_role,vocal_language,lyrics_json,sections_json,practice_json,
+            id,kind,title,artist,learning_status,audio_role,vocal_language,lyrics_json,translations_json,sections_json,practice_json,
             source_media_id,original_clip_id,accompaniment_clip_id,performance_clip_id,original_offset_ms,accompaniment_offset_ms
-          ) VALUES(?,'VOCAL',?,?,'WANT_TO_LEARN',?,?,?,?,'{}',?,?,?,?,0,0)`,
+          ) VALUES(?,'VOCAL',?,?,'WANT_TO_LEARN',?,?,?,?,?,'{}',?,?,?,?,0,0)`,
         ).run(
           repertoireId,
           title,
@@ -346,7 +368,8 @@ export function createRepertoireImporter({ db, mediaRoot, policy, verifyAccompan
           accompanimentClipId ? 'ACCOMPANIMENT' : 'REFERENCE',
           language,
           JSON.stringify(lyrics),
-          JSON.stringify(sections),
+          translationDoc,
+          '[]',
           sourceId,
           originalClipId,
           accompanimentClipId,
@@ -365,9 +388,8 @@ export function createRepertoireImporter({ db, mediaRoot, policy, verifyAccompan
       // 人工歌词/结构优先：只在该曲目尚无歌词时才补 LRC；已有内容一律不动。
       // 原唱轨已有记录就保留，避免把手工选择的原唱顶掉；无旧伴奏时才合并新伴奏。
       const fillLyrics = Array.isArray(existingLyrics) && existingLyrics.length === 0 && lyrics.length > 0;
-      // 结构同理：只在曲目还没有结构时才补，已有（含手工编辑的）一律不动。
-      const existingSections = parseJson(existing.sections_json, []);
-      const fillSections = sections.length > 0 && (!Array.isArray(existingSections) || existingSections.length === 0);
+      // LRC 自带译文只在该曲目还没有任何译文时补入；人工/AI 译文一律不覆盖。
+      const fillTranslations = fillLyrics && !hasStoredTranslations && translations.length > 0;
       if (originalOnly) {
         db.prepare(
           `UPDATE repertoire_items SET
@@ -375,10 +397,10 @@ export function createRepertoireImporter({ db, mediaRoot, policy, verifyAccompan
             original_clip_id=COALESCE(original_clip_id,?),
             vocal_language=COALESCE(vocal_language,?),
             lyrics_json=CASE WHEN ? THEN ? ELSE lyrics_json END,
-            sections_json=CASE WHEN ? THEN ? ELSE sections_json END,
+            translations_json=CASE WHEN ? THEN ? ELSE translations_json END,
             updated_at=CURRENT_TIMESTAMP
           WHERE id=?`,
-        ).run(sourceId, originalClipId, language, fillLyrics ? 1 : 0, JSON.stringify(lyrics), fillSections ? 1 : 0, JSON.stringify(sections), repertoireId);
+        ).run(sourceId, originalClipId, language, fillLyrics ? 1 : 0, JSON.stringify(lyrics), fillTranslations ? 1 : 0, translationDoc, repertoireId);
         bumpCatalog(db);
         return {
           status: 'MERGED_ORIGINAL_ONLY',
@@ -386,6 +408,7 @@ export function createRepertoireImporter({ db, mediaRoot, policy, verifyAccompan
           originalClipId,
           accompanimentClipId: existingAccompanimentClipId(existing),
           lyricsFilled: fillLyrics,
+          translationsFilled: fillTranslations,
         };
       }
       db.prepare(
@@ -397,7 +420,7 @@ export function createRepertoireImporter({ db, mediaRoot, policy, verifyAccompan
           audio_role=CASE WHEN COALESCE(original_clip_id,accompaniment_clip_id,performance_clip_id) IS NULL THEN 'ACCOMPANIMENT' ELSE audio_role END,
           vocal_language=COALESCE(vocal_language,?),
           lyrics_json=CASE WHEN ? THEN ? ELSE lyrics_json END,
-          sections_json=CASE WHEN ? THEN ? ELSE sections_json END,
+          translations_json=CASE WHEN ? THEN ? ELSE translations_json END,
           updated_at=CURRENT_TIMESTAMP
         WHERE id=?`,
       ).run(
@@ -408,8 +431,8 @@ export function createRepertoireImporter({ db, mediaRoot, policy, verifyAccompan
         language,
         fillLyrics ? 1 : 0,
         JSON.stringify(lyrics),
-        fillSections ? 1 : 0,
-        JSON.stringify(sections),
+        fillTranslations ? 1 : 0,
+        translationDoc,
         repertoireId,
       );
       bumpCatalog(db);
@@ -419,6 +442,7 @@ export function createRepertoireImporter({ db, mediaRoot, policy, verifyAccompan
         originalClipId,
         accompanimentClipId,
         lyricsFilled: fillLyrics,
+        translationsFilled: fillTranslations,
         ...(replacedAccompanimentClipId ? { replacedAccompanimentClipId } : {}),
       };
     });

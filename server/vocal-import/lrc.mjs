@@ -1,4 +1,5 @@
 import { readFileSync } from 'node:fs';
+import { CREDIT_LINE_PATTERN } from './canonical.mjs';
 
 /**
  * LRC 解析：只读、保留原文，不伪造时间戳。
@@ -9,6 +10,19 @@ import { readFileSync } from 'node:fs';
 const TIME_PATTERN = /\[(\d{1,4}):(\d{1,2})(?:[.:](\d{1,3}))?\]/g;
 const META_PATTERN = /^\[(ar|ti|al|offset|by|length):([^\]]*)\]\s*$/i;
 const MAX_LINE_CHARS = 4000;
+
+/** 网易云纯音乐占位行，与 canonical 共用同一份判定。 */
+const INSTRUMENTAL_PLACEHOLDER = /^[纯純]音乐[，,、]?\s*请欣赏[。.!！]?$/;
+
+/**
+ * 署名/占位行不是歌词：`作词 : XXX`、`Lyrics by: XXX`、`纯音乐，请欣赏` 等。
+ * 导入时直接丢弃，避免它们进库后被当成一句歌词去显示和翻译（BUG 待修项「导入端未过滤署名行」）。
+ */
+function isCreditOrPlaceholder(text) {
+  const value = String(text ?? '').trim();
+  if (!value) return false;
+  return CREDIT_LINE_PATTERN.test(value) || INSTRUMENTAL_PLACEHOLDER.test(value);
+}
 
 function fractionMs(digits) {
   if (!digits) return 0;
@@ -36,13 +50,14 @@ export function parseLrcText(raw) {
     const stamps = [...line.matchAll(TIME_PATTERN)];
     if (!stamps.length) {
       // 纯文本歌词保留；`[...]` 开头的未知标签视为无效标签，不伪装成歌词。
-      if (!line.startsWith('[')) plainLines.push(line);
-      else invalidTags += 1;
+      if (line.startsWith('[')) invalidTags += 1;
+      else if (!isCreditOrPlaceholder(line)) plainLines.push(line);
       continue;
     }
     const content = line.replace(TIME_PATTERN, '').trim();
-    // 与客户端 `parseLrc` 一致：只有时间戳没有歌词的行不制造空句。
-    if (!content) continue;
+    // 与客户端 `parseLrc` 一致：只有时间戳没有歌词的行不制造空句；
+    // 署名行（作词/作曲/编曲…）与纯音乐占位行同样不制造句子。
+    if (!content || isCreditOrPlaceholder(content)) continue;
     for (const stamp of stamps) {
       const minute = Number(stamp[1]);
       const second = Number(stamp[2]);

@@ -2,9 +2,11 @@ import type {
   LrcDocument, LrcMetadata, MediaFile, PerformanceSource, TalentItem, TimedLyric,
   VocalLineLoop, VocalPracticeSettings, VocalSection, VocalTimeRange, VocalTrack, VocalTrackRole, VocalTracks,
 } from './types';
+import { isRapConfirmed } from './vocal/structure';
 
 export * from './vocal/tracks';
 export * from './vocal/import-contract';
+export * from './vocal/translation';
 
 const TIMESTAMP_SOURCE = /\[(\d{1,4}):(\d{1,2})(?:[.:](\d{1,3}))?\]/g;
 const METADATA_SOURCE = /^\[([a-zA-Z]+):([^\]]*)\]$/;
@@ -118,10 +120,25 @@ export function sortSections(sections: readonly VocalSection[]): VocalSection[] 
   return [...sections].sort((a, b) => a.startMs - b.startMs || a.endMs - b.endMs || a.id.localeCompare(b.id));
 }
 
+export interface ValidateSectionsOptions {
+  /**
+   * 本次编辑前已经落库的结构。用来看某个段尾是不是「旧边界」：
+   * 旧数据的段尾可能比音轨时长多几十毫秒（分析按解码样本算时长，比容器时长长 28–40ms），
+   * 这类以前就落过库的边界不应该挡住用户对其它段落的修改；新造出来的越界仍然拒绝。
+   */
+  persisted?: readonly VocalSection[];
+}
+
 /** 结构校验：越界、开始 ≥ 结束、重复 id、重叠、重复目标缺失都应拒绝保存。 */
-export function validateSections(sections: readonly VocalSection[], durationMs?: number): string[] {
+export function validateSections(
+  sections: readonly VocalSection[],
+  durationMs?: number,
+  options: ValidateSectionsOptions = {},
+): string[] {
   const issues: string[] = [];
   const ids = new Set<string>();
+  // 只比对段尾：越界只发生在段尾，且与服务端「以前落过库的边界值」口径一致。
+  const persistedEnds = new Set((options.persisted ?? []).map((section) => section.endMs));
   for (const section of sections) {
     if (!section.id) issues.push('MISSING_ID');
     else if (ids.has(section.id)) issues.push(`DUPLICATE_ID:${section.id}`);
@@ -132,7 +149,9 @@ export function validateSections(sections: readonly VocalSection[], durationMs?:
     } else {
       if (section.startMs < 0) issues.push(`${section.id}:NEGATIVE_START`);
       if (section.endMs <= section.startMs) issues.push(`${section.id}:EMPTY_RANGE`);
-      if (isPositiveNumber(durationMs) && section.endMs > durationMs) issues.push(`${section.id}:OUT_OF_RANGE`);
+      if (isPositiveNumber(durationMs) && section.endMs > durationMs && !persistedEnds.has(section.endMs)) {
+        issues.push(`${section.id}:OUT_OF_RANGE`);
+      }
     }
     if (section.repeatOf === section.id) issues.push(`${section.id}:SELF_REPEAT`);
   }
@@ -192,9 +211,15 @@ export function mergeRapRanges(ranges: readonly VocalTimeRange[], durationMs?: n
   return merged;
 }
 
+/**
+ * 只有逐段显式确认过的 Rap 段才参与自动跳过。
+ * `source='manual'` 只代表「结构被人工保存过」，不等于 Rap 已确认；SDD AC-05。
+ */
 export function rapRangesFromSections(sections: readonly VocalSection[], durationMs?: number): VocalTimeRange[] {
   return mergeRapRanges(
-    sections.filter((section) => section.type === 'rap').map((section) => ({ startMs: section.startMs, endMs: section.endMs })),
+    sections
+      .filter(isRapConfirmed)
+      .map((section) => ({ startMs: section.startMs, endMs: section.endMs })),
     durationMs,
   );
 }
@@ -339,8 +364,18 @@ export function resolveTracks(item: Pick<TalentItem, 'kind' | 'audio' | 'audioRo
   return tracks;
 }
 
-export interface TrackPairCheck {
-  state: 'ready' | 'one-track' | 'missing' | 'same-media' | 'needs-alignment';
+/**
+ * 曲目可用最长时长，与服务端 `maxDuration` 同一口径：
+ * `item.durationMs` 可能只是旧单音轨/伴奏的时长，原唱轨更长时按音轨算。
+ * 结构边界校验必须用这个值，否则合法边界会被误判越界。
+ */
+export function talentDurationMs(
+  item: Pick<TalentItem, 'kind' | 'audio' | 'audioRole' | 'tracks' | 'durationMs'>,
+): number {
+  return Math.max(0, item.durationMs || 0, ...Object.values(resolveTracks(item)).map((track) => track?.media.durationMs || 0));
+}
+
+export interface TrackPairCheck {  state: 'ready' | 'one-track' | 'missing' | 'same-media' | 'needs-alignment';
   detail?: string;
 }
 

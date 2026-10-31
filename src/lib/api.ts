@@ -6,7 +6,7 @@ export function mediaUrl(path:string):string {
   const base=readDeviceSettings().apiEndpoint||window.location.origin;
   const token=localStorage.getItem('dance.owner-token');return base+path+(token?'?owner='+encodeURIComponent(token):'');
 }
-export class ApiError extends Error {status:number;constructor(message:string,status:number){super(message);this.status=status;}}
+export class ApiError extends Error {status:number;payload:unknown;constructor(message:string,status:number,payload:unknown=null){super(message);this.status=status;this.payload=payload;}}
 // 静态页/代理兜底常把 HTML 或空响应当 /api 结果返回；统一换成可理解的连接提示，避免把 HTML、URL 或 token 带进界面。
 export const CONNECTION_ERROR_MESSAGE='无法连接本地服务，请检查服务器地址与网络后重试';
 function isAbortError(error:unknown):boolean{return error instanceof DOMException?error.name==='AbortError':(error as {name?:unknown}|null)?.name==='AbortError';}
@@ -30,7 +30,7 @@ export async function api<T>(path:string,options:RequestInit={}):Promise<T>{
     throw new ApiError(CONNECTION_ERROR_MESSAGE,0);
   } finally { timed?.release(); }
   const value=await readJson(res);
-  if(!res.ok)throw new ApiError((value as {error?:{message?:string}}|null)?.error?.message||'操作未完成，请重试',res.status);
+  if(!res.ok)throw new ApiError((value as {error?:{message?:string}}|null)?.error?.message||'操作未完成，请重试',res.status,value);
   return value as T;
 }
 /** 大文件上传等长耗时请求：用调用方指定时限，而不是 api 默认的 15 秒。 */

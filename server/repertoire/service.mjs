@@ -2,10 +2,13 @@ import {listScores} from '../scores/service.mjs';
 import { removeFromProgram } from '../program/service.mjs';
 import { randomUUID } from 'node:crypto';
 import { STATUSES, bumpCatalog } from '../catalog.mjs';
+import {
+  mergeTranslations, normalizeTranslations, translationSourceOf, withStaleness,
+} from '../vocal-translation/translation.mjs';
 
 const KINDS=['GUITAR','VOCAL'];
 const BASE_FIELDS=['clientId','kind','title','artist','learningStatus','originalKey','performanceKey','capo','scoreText','notes','audioRole'];
-const VOCAL_FIELDS=['language','lyrics','sections','practice'];
+const VOCAL_FIELDS=['language','lyrics','sections','practice','translations'];
 const fields=[...BASE_FIELDS,...VOCAL_FIELDS];
 const TRACK_ROLES=['original','accompaniment'];
 const LEGACY_ROLE={original:'REFERENCE',accompaniment:'ACCOMPANIMENT'};
@@ -47,14 +50,22 @@ function normalizeSections(input){
   if(!Number.isInteger(raw.startMs)||!Number.isInteger(raw.endMs)||raw.startMs<0||raw.endMs<=raw.startMs)throw Error('INVALID_SECTIONS');
   if(raw.repetition!==undefined&&!REPETITIONS.includes(raw.repetition))throw Error('INVALID_SECTIONS');
   if(raw.repeatOf!==undefined&&(!isId(raw.repeatOf)||raw.repeatOf===raw.id))throw Error('INVALID_SECTIONS');
+  if(raw.rapApproved!==undefined&&typeof raw.rapApproved!=='boolean')throw Error('INVALID_SECTIONS');
   const source=raw.source===undefined?'manual':raw.source;if(!SOURCES.includes(source))throw Error('INVALID_SECTIONS');
-  return {id:raw.id,type:raw.type,label:raw.label.trim(),startMs:raw.startMs,endMs:raw.endMs,...(raw.repeatOf?{repeatOf:raw.repeatOf}:{}),...(raw.repetition?{repetition:raw.repetition}:{}),source};
+  // Rap 显式确认状态只对 rap 段有意义；缺字段表示旧数据，读取端按旧行为兼容。
+  return {id:raw.id,type:raw.type,label:raw.label.trim(),startMs:raw.startMs,endMs:raw.endMs,...(raw.repeatOf?{repeatOf:raw.repeatOf}:{}),...(raw.repetition?{repetition:raw.repetition}:{}),...(raw.type==='rap'&&typeof raw.rapApproved==='boolean'?{rapApproved:raw.rapApproved}:{}),source};
  });
  const ordered=[...rows].sort((a,b)=>a.startMs-b.startMs||a.endMs-b.endMs||a.id.localeCompare(b.id));
  const alias=new Map(),merged=[];
  for(const row of ordered){
   const last=merged[merged.length-1];
-  if(last&&row.type==='rap'&&last.type==='rap'&&row.startMs<=last.endMs){alias.set(row.id,last.id);last.endMs=Math.max(last.endMs,row.endMs);continue;}
+  if(last&&row.type==='rap'&&last.type==='rap'&&row.startMs<=last.endMs){
+   alias.set(row.id,last.id);last.endMs=Math.max(last.endMs,row.endMs);
+   // 合并后区间变了：两段都显式确认为 true 才保持 true；旧数据缺字段则不凭空确认。
+   if(last.rapApproved===undefined&&row.rapApproved===undefined)delete last.rapApproved;
+   else last.rapApproved=last.rapApproved===true&&row.rapApproved===true;
+   continue;
+  }
   if(last&&row.startMs<last.endMs)throw Error('INVALID_SECTIONS');
   merged.push({...row});
  }
@@ -100,6 +111,20 @@ function reconcileLyrics(lyrics,alias,sectionIds){
  });
 }
 
+/**
+ * 读译文：按当前歌词过滤悬空行，并计算「原文已改」；译文永远不写回 lyrics_json。
+ * 库里的脏数据（重复 id 等）不拖垮整个曲目读取，按空译文处理。
+ */
+function readTranslations(row,lyrics){
+ let doc={};try{doc=parseJson(row.translations_json,{})}catch{doc={}}
+ try{
+  const normalized=normalizeTranslations(doc,lyrics);
+  if(!normalized.lines.length)return undefined;
+  const lines=withStaleness(normalized.lines,lyrics);
+  return {version:normalized.version,language:normalized.language,source:translationSourceOf(lines),lines,...(doc.updatedAt?{updatedAt:doc.updatedAt}:{}),...(doc.provider?{provider:doc.provider}:{}),...(doc.model?{model:doc.model}:{})};
+ }catch{return undefined}
+}
+
 function clipMedia(db,id){
  const clip=db.prepare('SELECT sha256,size_bytes,version,start_ms,end_ms,source_preserving,duration_ms FROM performance_clips WHERE id=?').get(id);
  return clip?{id,url:`/api/media/audio/${id}`,sha256:clip.sha256,sizeBytes:clip.size_bytes,version:clip.version,startMs:clip.start_ms,endMs:clip.end_ms,sourcePreserving:!!clip.source_preserving,durationMs:clip.duration_ms}:null;
@@ -133,6 +158,8 @@ export function getRepertoire(db,id,includeDeleted=false){
   item.sections=parseJson(r.sections_json,[]);
   item.practice={...PRACTICE_DEFAULTS,...parseJson(r.practice_json,{})};
   item.tracks=Object.keys(tracks).length?tracks:undefined;
+  const translations=readTranslations(r,item.lyrics);
+  if(translations)item.translations=translations;
  }
  return item;
 }
@@ -161,15 +188,52 @@ export function saveRepertoire(db,id,body,options={}){
   const practice=normalizePractice({...(prior?.practice||{}),...(body.practice||{})});
   if(body.language!==undefined&&body.language!==null&&!LANGUAGES.includes(body.language))throw Error('INVALID_LANGUAGE');
   const duration=maxDuration(prior);
-  if(duration>0&&sections.some(section=>section.endMs>duration))throw Error('INVALID_SECTIONS');
+  /**
+   * 旧边界安全处理：旧结构的段尾可能比音轨时长多几十毫秒（分析按解码样本算时长，
+   * 容器/播放器会短 28–40ms）。这类「以前就落过库」的边界不能挡住其它段落的保存，
+   * 也不改写它的数值；这次新造出来的越界仍然拒绝。
+   * `allowLegacyOverhangIds` 只给「恢复冻结快照」这类服务端可信来源用。
+   */
+  const priorEnds=new Set((prior?.sections||[]).map(section=>section.endMs));
+  const legacyOverhangAllowed=section=>priorEnds.has(section.endMs)||Boolean(options.allowLegacyOverhangIds?.has(section.id));
+  if(duration>0&&sections.some(section=>section.endMs>duration&&!legacyOverhangAllowed(section)))throw Error('INVALID_SECTIONS');
   if(duration>0&&lyrics.some(line=>line.startMs>=duration))throw Error('INVALID_LYRICS');
-  vocal={language:body.language===undefined?(prior?.language??null):body.language,lyrics,sections,practice};
+  /**
+   * 译文合并：默认按不可覆盖规则合并；只有人工纠错接口显式 `replace:true` 才整份替换。
+   * 歌词换行/删行后自动丢弃悬空译文，绝不因为译文去改动歌词时间轴。
+   */
+  const priorLines=prior?.translations?.lines||[];
+  const lyricIds=new Set(lyrics.map(line=>line.id));
+  let translationLines=priorLines.filter(line=>lyricIds.has(line.id));
+  if(body.translations!==undefined){
+   if(!body.translations||typeof body.translations!=='object'||Array.isArray(body.translations))throw Error('INVALID_TRANSLATIONS');
+   const incoming=normalizeTranslations(body.translations,lyrics);
+   translationLines=body.translations.replace===true?incoming.lines:mergeTranslations(translationLines,incoming.lines);
+  }
+  translationLines=translationLines.filter(line=>lyricIds.has(line.id));
+  const priorJson=prior?.translations?JSON.stringify(priorLines):'[]';
+  const nextJson=JSON.stringify(translationLines);
+  const translationMeta=body.translations&&typeof body.translations==='object'?body.translations:{};
+  const doc={version:1,language:'zh',lines:translationLines};
+  // 只在译文真的变化时更新时间戳，避免练习设置每次保存都让「译文已更新」跳动。
+  if(nextJson!==priorJson||body.translations!==undefined){
+   doc.updatedAt=new Date().toISOString();
+   const provider=translationMeta.provider??prior?.translations?.provider;
+   const model=translationMeta.model??prior?.translations?.model;
+   if(provider)doc.provider=provider;
+   if(model)doc.model=model;
+  }else{
+   if(prior?.translations?.updatedAt)doc.updatedAt=prior.translations.updatedAt;
+   if(prior?.translations?.provider)doc.provider=prior.translations.provider;
+   if(prior?.translations?.model)doc.model=prior.translations.model;
+  }
+  vocal={language:body.language===undefined?(prior?.language??null):body.language,lyrics,sections,practice,translations:doc};
  }
  const nextId=id||body.clientId||randomUUID();
  if(!id&&body.clientId){const exists=getRepertoire(db,nextId);if(exists){if(exists.kind!==kind)throw Error('BAD_REQUEST');return exists;}}
  const write=()=>{
   if(!id)db.prepare('INSERT INTO repertoire_items(id,kind,title) VALUES(?,?,?)').run(nextId,kind,value.title.trim());
-  if(vocal)db.prepare('UPDATE repertoire_items SET title=?,artist=?,learning_status=?,original_key=?,performance_key=?,capo=?,score_text=?,notes=?,audio_role=?,vocal_language=?,lyrics_json=?,sections_json=?,practice_json=?,updated_at=CURRENT_TIMESTAMP WHERE id=?').run(value.title.trim(),value.artist.trim(),value.learningStatus,value.originalKey.trim(),value.performanceKey.trim(),value.capo,value.scoreText,value.notes,value.audioRole,vocal.language,JSON.stringify(vocal.lyrics),JSON.stringify(vocal.sections),JSON.stringify(vocal.practice),nextId);
+  if(vocal)db.prepare('UPDATE repertoire_items SET title=?,artist=?,learning_status=?,original_key=?,performance_key=?,capo=?,score_text=?,notes=?,audio_role=?,vocal_language=?,lyrics_json=?,sections_json=?,practice_json=?,translations_json=?,updated_at=CURRENT_TIMESTAMP WHERE id=?').run(value.title.trim(),value.artist.trim(),value.learningStatus,value.originalKey.trim(),value.performanceKey.trim(),value.capo,value.scoreText,value.notes,value.audioRole,vocal.language,JSON.stringify(vocal.lyrics),JSON.stringify(vocal.sections),JSON.stringify(vocal.practice),JSON.stringify(vocal.translations),nextId);
   else db.prepare('UPDATE repertoire_items SET title=?,artist=?,learning_status=?,original_key=?,performance_key=?,capo=?,score_text=?,notes=?,audio_role=?,updated_at=CURRENT_TIMESTAMP WHERE id=?').run(value.title.trim(),value.artist.trim(),value.learningStatus,value.originalKey.trim(),value.performanceKey.trim(),value.capo,value.scoreText,value.notes,value.audioRole,nextId);
   // audioRole 变更时让旧单音轨指针继续指向该角色对应音轨，保持字段与文件精确一致。
   if(kind==='VOCAL'&&body.audioRole!==undefined){const target=prior?.tracks?.[ROLE_OF[value.audioRole]]?.media.id;if(target)db.prepare('UPDATE repertoire_items SET performance_clip_id=? WHERE id=?').run(target,nextId);}

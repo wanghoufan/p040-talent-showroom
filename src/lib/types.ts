@@ -20,6 +20,8 @@ export type VocalRepetition = 'exact-lyrics' | 'same-melody-new-lyrics' | 'unver
 export interface VocalSection {
   id: string; type: VocalSectionType; label: string; startMs: number; endMs: number;
   repeatOf?: string; repetition?: VocalRepetition; source: 'manual' | 'algorithm';
+  /** Rap 区间是否经用户逐段显式确认；只有 true 才允许练唱自动跳过。旧数据无此字段。 */
+  rapApproved?: boolean;
 }
 export interface TimedLyric { id: string; startMs: number; text: string; sectionId?: string; endMs?: number }
 export interface LrcMetadata { title?: string; artist?: string; by?: string; offsetMs: number }
@@ -38,6 +40,18 @@ export type PerformanceSource = VocalTrackRole;
 /** 与后端 server/repertoire/service.mjs 的 LANGUAGES 枚举一致；未标注时不猜。 */
 export type VocalLanguage = 'zh' | 'en' | 'ko';
 
+/**
+ * 歌词中文译文：只存译文，不复制原文时间轴。
+ * `id` 必须对应 `lyrics` 的行 id；`source` 决定能否被 AI 覆盖（manual 永不被覆盖）。
+ * `stale` 是读时派生的「原文已改」标记，不落库。
+ */
+export type VocalTranslationSource = 'lrc' | 'ai' | 'manual';
+export interface VocalTranslationLine { id: string; text: string; source: VocalTranslationSource; stale?: boolean }
+export interface VocalTranslations {
+  version?: number; language: 'zh'; source?: 'lrc' | 'ai' | 'manual' | 'mixed' | 'none';
+  lines: VocalTranslationLine[]; updatedAt?: string; provider?: string; model?: string;
+}
+
 export type TalentKind = 'GUITAR' | 'VOCAL';
 export interface TalentItem {
   scores?:ScoreAsset[]; isDemo?: boolean; revision?: number; id: string; kind: TalentKind; title: string; artist: string; learningStatus: LearningStatus;
@@ -50,4 +64,5 @@ export interface TalentItem {
    * 缺失的轨保持缺失：不用原唱冒充伴奏，也不把同一条媒体复制成两个角色。
    */
   tracks?: VocalTracks; language?: VocalLanguage; lyrics?: TimedLyric[]; sections?: VocalSection[]; practice?: VocalPracticeSettings;
+  translations?: VocalTranslations;
 }

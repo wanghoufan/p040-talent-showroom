@@ -15,6 +15,11 @@ import { resolve } from 'node:path';
 import { readConfig } from './config.mjs';
 import { readVocalImportConfig } from './vocal-import/config.mjs';
 import { createVocalImportIntegration } from './vocal-import/integration.mjs';
+import { createStructureAnalyzer, structureAnalyzerConfig } from './vocal-structure/analyzer.mjs';
+import { mountStructureRoutes } from './vocal-structure/routes.mjs';
+import { createCodebuddyTranslator, translationProviderConfig } from './vocal-translation/provider.mjs';
+import { createVocalTranslationService } from './vocal-translation/service.mjs';
+import { mountTranslationRoutes } from './vocal-translation/routes.mjs';
 import { openDatabase } from './db/database.mjs';
 import { getCatalog,getDance,getManifest,getPlaylist,setPlaylist,STATUSES,sceneMask,bumpCatalog } from './catalog.mjs';
 import { receiveFile,publicJob,finalizeImport,startLinkImport } from './import/import-service.mjs';
@@ -42,6 +47,8 @@ async function readJson(req, maxBytes=32768) {
 export function createApiServer(options={}) {
   const ctx={...options,pendingJobs:new Set()};
   const vocalImport=options.vocalImport??null;
+  const structure=options.structure??null;
+  const translation=options.translation??null;
   const server=createServer(async(req, res) => {
     try {
       const url = new URL(req.url, 'http://localhost');const path=url.pathname;
@@ -68,6 +75,10 @@ export function createApiServer(options={}) {
         }
         if(await vocalImport.handle(req,res,url,ctx))return;
       }
+      // V3.2 结构地图：会读本机原曲，必须同样要求 owner 配对（路由内部再校验一次）。
+      if(structure?.handle&&await structure.handle(req,res,url,ctx))return;
+      // 歌词译文：批量翻译会经 CodeBuddy 通道联网，必须 owner 配对；只读写译文，不动歌词时间轴。
+      if(translation?.handle&&await translation.handle(req,res,url,ctx))return;
       if(db&&path==='/api/request-sessions'){
         if(req.method==='GET')return sendJson(res,200,{sessions:db.prepare('SELECT id,token,expires_at AS expiresAt,closed FROM request_sessions ORDER BY expires_at DESC LIMIT 20').all(),requests:db.prepare("SELECT r.*,COALESCE(d.title_override,s.title,t.title,'已删除曲目') AS title FROM guest_requests r LEFT JOIN dance_items d ON r.kind='DANCE' AND d.id=r.item_id LEFT JOIN song_identities s ON s.id=d.song_identity_id LEFT JOIN repertoire_items t ON r.kind<>'DANCE' AND t.id=r.item_id ORDER BY r.created_at DESC LIMIT 400").all()});
         if(req.method==='POST'){if(!authenticateOwner(db,req.headers.authorization?.replace(/^Bearer /,'')))return sendJson(res,401,{error:{code:'UNAUTHORIZED'}});return sendJson(res,201,createRequestSession(db,(await readJson(req)).items));}
@@ -192,7 +203,36 @@ if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) 
     config:readVocalImportConfig(),
     logger:console,
   });
-  const server = createApiServer({pairCode,db,mediaRoot:config.mediaRoot,staticRoot:existsSync(distPath)?distPath:undefined,vocalImport});
+  // V3.2 结构分析：未配置 P040_STRUCTURE_PYTHON 时接口返回 503 + 明确说明，曲目保持「待分析」。
+  const structureConfig=structureAnalyzerConfig();
+  const analyzer=createStructureAnalyzer(structureConfig);
+  const structure={
+    analyzer,
+    handle:mountStructureRoutes({
+      db,
+      mediaRoot:config.mediaRoot,
+      analyzer,
+      getRepertoire,
+      saveRepertoire,
+      workDir:structureConfig.workDir||resolve('var/vocal-v31-work/structure'),
+      authorize:token=>Boolean(token)&&authenticateOwner(db,token),
+      logger:console,
+    }),
+  };
+  // 歌词译文：默认通道是 CodeBuddy CLI（云端模型），不是本地模型；未配置时接口明确返回不可用。
+  const translationConfig=translationProviderConfig();
+  const translator=createCodebuddyTranslator(translationConfig);
+  const translationService=createVocalTranslationService({db,translator,logger:console});
+  const translation={
+    translator,
+    service:translationService,
+    handle:mountTranslationRoutes({
+      service:translationService,
+      authorize:req=>Boolean(req.headers.authorization?.replace(/^Bearer /,''))&&authenticateOwner(db,req.headers.authorization.replace(/^Bearer /,'')),
+      logger:console,
+    }),
+  };
+  const server = createApiServer({pairCode,db,mediaRoot:config.mediaRoot,staticRoot:existsSync(distPath)?distPath:undefined,vocalImport,structure,translation});
   server.on('error', () => { console.error('服务启动失败，请检查端口配置'); vocalImport?.close(); db.close(); process.exitCode = 1; });
   server.listen(config.port, config.host, () => console.log(`Dance API http://${config.host}:${config.port}`));
   const shutdown=()=>{vocalImport?.close();server.close(()=>{db.close();process.exit(0);});};

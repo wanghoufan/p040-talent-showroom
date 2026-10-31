@@ -2,7 +2,7 @@ import {api,jsonBody,ApiError} from './api';import {commitLocal,localOperations,
 export interface LocalOperation extends ItemRef {operationId:string;action:'create'|'update'|'trash'|'restore'|'program'|'bulk';baseRevision:number;fields?:Record<string,unknown>;state?:'pending'|'conflict'|'failed';error?:string;server?:Record<string,unknown>|null;serverRevision?:number;}
 const keys={DANCE:'dance.catalog-snapshot',GUITAR:'dance.repertoire-snapshot',VOCAL:'dance.repertoire-snapshot'};
 /** 唱歌元数据（与后端 sync-operations 的 VOCAL_METADATA 同一白名单）。 */
-const VOCAL_FIELDS=['language','lyrics','sections','practice'] as const;
+const VOCAL_FIELDS=['language','lyrics','sections','practice','translations'] as const;
 /** 与后端 MAX_VOCAL_BYTES 一致：离线只排队小改动，完整分析联网走专用接口。 */
 const MAX_OPERATION_BYTES=65536;
 /** 媒体与版本号不能经离线编辑队列改写：音轨只能走带 importJobId 的导入关联接口。 */
@@ -21,6 +21,7 @@ function acceptedFields(kind:LocalOperation['kind'],action:LocalOperation['actio
  if(fields.lyrics!==undefined&&!Array.isArray(fields.lyrics))throw Error('歌词格式无效');
  if(fields.sections!==undefined&&!Array.isArray(fields.sections))throw Error('结构格式无效');
  if(fields.practice!==undefined&&(!fields.practice||typeof fields.practice!=='object'||Array.isArray(fields.practice)))throw Error('练习设置格式无效');
+ if(fields.translations!==undefined&&(!fields.translations||typeof fields.translations!=='object'||Array.isArray(fields.translations)||!Array.isArray((fields.translations as {lines?:unknown}).lines)))throw Error('译文格式无效');
  return fields;
 }
 function snapshot(kind:ItemRef['kind']):(DanceItem|TalentItem)[]{return JSON.parse(readMetadata(keys[kind])||'[]');}

@@ -3,7 +3,7 @@ import {createHash} from 'node:crypto';
 import {validateRefs,rowFor,itemFor,tableFor} from './library/refs.mjs';import {validateFields,bulkLibrary} from './library/service.mjs';import {STATUSES,sceneMask,bumpCatalog} from './catalog.mjs';import {getProgram,writeProgram,removeFromProgram} from './program/service.mjs';
 const columns={title:'title',artist:'artist',learningStatus:'learning_status',sceneTags:'scene_mask',originalKey:'original_key',performanceKey:'performance_key',capo:'capo',scoreText:'score_text',notes:'notes',audioRole:'audio_role'};
 // 唱歌元数据：只允许显式白名单字段，绝不把任意对象直接写进列映射。
-const VOCAL_METADATA=['language','lyrics','sections','practice'];
+const VOCAL_METADATA=['language','lyrics','sections','practice','translations'];
 const VOCAL_LANGUAGES=['zh','en','ko'];
 // 离线队列只用于小改动；完整歌词/结构分析走专用接口，避免单条同步操作里塞大 JSON。
 const MAX_VOCAL_BYTES=65536;
@@ -19,6 +19,7 @@ function applyVocalOperation(db,op,vocal,hash){
  if(vocal.lyrics!==undefined&&!Array.isArray(vocal.lyrics))throw Error('BAD_REQUEST');
  if(vocal.sections!==undefined&&!Array.isArray(vocal.sections))throw Error('BAD_REQUEST');
  if(vocal.practice!==undefined&&(!vocal.practice||typeof vocal.practice!=='object'||Array.isArray(vocal.practice)))throw Error('BAD_REQUEST');
+ if(vocal.translations!==undefined&&(!vocal.translations||typeof vocal.translations!=='object'||Array.isArray(vocal.translations)||!Array.isArray(vocal.translations.lines)))throw Error('BAD_REQUEST');
  const ref={kind:op.kind,id:op.id},current=rowFor(db,ref),revision=current?.revision||0;
  if(!current||current.deleted_at||revision!==op.baseRevision)return {status:'conflict',revision,server:current?{...getRepertoire(db,op.id,true),deletedAt:current.deleted_at}:null};
  const plain=Object.fromEntries(Object.entries(op.fields).filter(([key])=>!VOCAL_METADATA.includes(key)));
