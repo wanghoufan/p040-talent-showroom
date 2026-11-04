@@ -49,8 +49,10 @@ for lg in TASK-MODEL-LOG DISPATCH-LOG; do
       # 2026-10-17 G3 修：原先硬编码 --allow-example，等于把「母版只留 _example 空壳」这条
       # 规则在**项目仓也一并放过** —— 而本脚本会随包分发到每个项目。母版才允许降级。
       exflag=""
+      # 2026-10-31：母版搬入治理仓《体系管家》，原按 4.Templates（PC）绝对路径判定已失效。
+      # 改按母版目录名判定（仓根路径含该名即母版），不写死机器路径。
       case "$(git rev-parse --show-toplevel 2>/dev/null)" in
-        *"/4.Templates（PC）"*) exflag="--allow-example" ;;
+        *"ORCA V2.1 治理模板 丨 分发版-2026-09-11"*) exflag="--allow-example" ;;
       esac
       if ! node scripts/model/check-ledger.mjs docs/model $exflag; then
         echo "PRE-COMMIT-GUARD 拦截：账本机器校验未过（check-ledger exit≠0），见上方 LEDGER-FAIL" >&2

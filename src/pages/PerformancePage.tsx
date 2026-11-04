@@ -5,7 +5,7 @@ import {storedProgram,fetchProgram,kindLabel,programAudio,type ProgramItem} from
 import {readCachedIndex,isMediaReady,type CachedIndex} from '../lib/offline-manifest';import {offlineUrl,cachedFileValid,isOfflineSupported} from '../native/filesystem';
 import {mediaUrl} from '../lib/api';import {keepScreenAwake} from '../native/theme-bars';
 import {defaultVocalSource,hasVocalTrack,lineAtTime,resolveLineTimings,resolveTracks,sectionAtTime,sortSections,switchVocalTrack,trackPairStatus} from '../lib/vocal';
-import {readTranslations,summarizeTranslations,translationIndex,translationToggleLabel} from '../lib/vocal/translation';
+import {isRedundantTranslation,readTranslations,summarizeTranslations,translationIndex,translationToggleLabel} from '../lib/vocal/translation';
 import type {LibraryKind} from '../lib/library-management';
 import type {MediaFile,PerformanceSource,TimedLyric,VocalSection,VocalTracks} from '../lib/types';
 import '../styles/vocal-performance.css';
@@ -232,7 +232,7 @@ export default function PerformancePage(){
       ?<p className="perform-alert" role="alert">同源提示：原唱与伴奏指向同一个音频文件，不能当作真实双轨，也不会用原唱冒充伴奏；请导入独立的伴奏文件后再按伴奏演出。</p>
       :missingAccompaniment&&<p className="perform-alert" role="alert">未提供伴奏：这条曲目没有伴奏音轨，不能按伴奏演出；如需跟唱原唱，请手动选择「原唱」。原唱不会被当作伴奏自动播出。</p>}
      {!missingAccompaniment&&<p className="perform-hint">{source?`当前音轨：${trackLabel(source)}（${trackIsCached(tracks,source,cached)?'已缓存':'未缓存，请先准备离线演出'}）`:'请选择音轨'}</p>}
-     {translations&&(
+     {translations&&current.language!=='zh'&&(
       <div className="perform-translation" role="group" aria-label="演出中文译文">
        <button type="button" aria-pressed={showTranslation} onClick={()=>setShowTranslation(value=>!value)}>
         {translationToggleLabel(current.language,showTranslation)}
@@ -262,10 +262,11 @@ export default function PerformancePage(){
     <audio ref={audio} className="perform-audio" preload="metadata" onLoadedMetadata={handleLoaded} onDurationChange={handleLoaded} onTimeUpdate={()=>{const element=audio.current;if(element)setTimeMs(Math.max(0,Math.round(element.currentTime*1000)-offsetMs));}} onPlay={()=>setPlaying(true)} onPause={()=>setPlaying(false)} onEnded={()=>setPlaying(false)} onError={()=>setNotice('音轨加载失败，请检查文件是否已缓存或网络连接。')}/>
     {lyrics.length?<ol className="perform-lyrics" aria-label="同步歌词" ref={lyricsBox}>
       {lyrics.map((line,lineIndex)=>{
-        const translation=showTranslation?translationByLine.get(line.id):null;
+        const translation=showTranslation&&!(current.kind==='VOCAL'&&current.language==='zh')?translationByLine.get(line.id):null;
+        const redundant=translation?isRedundantTranslation(line.text,translation.text):false;
         return <li key={line.id}>
           <button type="button" className={`perform-line${lineIndex===activeLine?' perform-line--active':''}`} aria-current={lineIndex===activeLine?'true':undefined} onClick={()=>seekTo(line.startMs)}>{line.text}</button>
-          {translation&&<span className="perform-line__translation">{translation.text}{translation.stale?'（原文已改）':''}</span>}
+          {translation&&!redundant&&<span className="perform-line__translation">{translation.text}{translation.stale?'（原文已改）':''}</span>}
         </li>;
       })}
     </ol>

@@ -1,5 +1,5 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { syncLibrary, readSyncReport, prepareOffline } from '../../src/lib/sync';
+import { syncLibrary, readSyncReport, prepareOffline, planDownload } from '../../src/lib/sync';
 import { readCachedIndex } from '../../src/lib/offline-manifest';
 import type { DanceItem } from '../../src/lib/types';
 const native = vi.hoisted(() => ({ supported: true, files: new Map<string, number>(), fail: new Set<string>(), downloads: [] as string[], afterDownload: () => {} }));
@@ -48,6 +48,42 @@ describe('全部音乐下载', () => {
   expect(JSON.parse(localStorage.getItem('dance.repertoire-snapshot')!)[1].scoreText).toBe('第一行\n第二行');
  });
 
+ it('onlyIds 只下载指定曲目，其它曲目不动，已缓存的不重下', async () => {
+  const result = await syncLibrary(undefined, { onlyIds: ['2'] });
+  expect(native.downloads).toEqual([location.origin + '/api/media/audio/2']);
+  expect(Object.keys(readCachedIndex())).toEqual(['/api/media/audio/2']);
+  expect(result.items).toBe(1); expect(result.readyItems).toBe(1); expect(result.complete).toBe(true);
+  // 再下一次同一首：全部命中，0 次网络请求。
+  native.downloads = [];
+  const again = await syncLibrary(undefined, { onlyIds: ['2'] });
+  expect(native.downloads).toEqual([]); expect(again.readyItems).toBe(1); expect(again.complete).toBe(true);
+  // 未指定的曲目仍保持未缓存，随后下载全部时才补齐。
+  expect(readCachedIndex()['/api/media/audio/1']).toBeUndefined();
+  await syncLibrary(); expect(native.downloads).toHaveLength(2);
+ });
+ it('onlyIds 不打扰其它曲目已有缓存', async () => {
+  await syncLibrary();
+  const first = readCachedIndex()['/api/media/audio/1'];
+  native.files.delete(readCachedIndex()['/api/media/audio/2'].path); native.downloads = [];
+  const result = await syncLibrary(undefined, { onlyIds: ['2'] });
+  expect(native.downloads).toEqual([location.origin + '/api/media/audio/2']);
+  expect(readCachedIndex()['/api/media/audio/1']).toEqual(first);
+  expect(result.items).toBe(1); expect(result.readyItems).toBe(1);
+ });
+ it('onlyIds 仍尊重 includeScores=false，不下载谱件但仍下音频与封面', async () => {
+  const withScore: DanceItem = { ...items[0], cover: { ...items[0].audio, id: 'c1', url: '/api/media/cover/1' }, scores: [{ ...items[0].audio, id: 's1', url: '/api/media/score/1', kind: 'IMAGE', mime: 'image/png', pages: 1 }] };
+  vi.stubGlobal('fetch', vi.fn(async () => new Response(JSON.stringify({ catalogVersion: 1, items: [withScore], playlist: [] }))));
+  const result = await syncLibrary(undefined, { onlyIds: ['1'], includeScores: false });
+  expect(native.downloads).toEqual([location.origin + '/api/media/audio/1', location.origin + '/api/media/cover/1']);
+  expect(result.complete).toBe(true);
+ });
+ it('planDownload 先算体积，只统计未缓存文件', async () => {
+  await syncLibrary(undefined, { onlyIds: ['1'] });
+  const plan = planDownload(['1', '3']);
+  expect(plan.items).toBe(2); expect(plan.pending).toBe(1); expect(plan.bytes).toBe(10); expect(plan.ready).toBe(false);
+  expect(planDownload(['1']).ready).toBe(true);
+  expect(planDownload(['3']).bytes).toBe(10);
+ });
  it('全部下载进行中不能启动歌单下载覆盖缓存索引，完成后锁释放', async () => {
   let release!: () => void;
   vi.stubGlobal('fetch', vi.fn(async () => { await new Promise<void>(r => { release = r; }); return new Response(JSON.stringify({ catalogVersion: 1, items, playlist: [] })); }));

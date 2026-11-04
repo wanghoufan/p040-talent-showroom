@@ -176,11 +176,10 @@ test('新建曲目：原唱兜底入库走 INSERT 分支，返回 CREATED_ORIGIN
         expectsAccompaniment: false,
       });
 
-      // 歌词与结构按 LRC 落进对应 JSON 列，不是被挤到相邻列。
+      // 歌词按 LRC 落进对应 JSON 列，不是被挤到相邻列。
       assert.deepEqual(JSON.parse(row.lyrics_json).map(line => line.text), ['第一句', '第二句']);
-      const sections = JSON.parse(row.sections_json);
-      assert.ok(sections.length > 0, '有时间戳歌词应推出结构');
-      assert.ok(sections.every(section => typeof section.label === 'string' && Number.isFinite(section.startMs)));
+      // V3.2 起导入不猜结构：没有原唱音频分析就不写 sections_json，界面显示「待分析」。
+      assert.deepEqual(JSON.parse(row.sections_json), [], '导入期不得用歌词重复推断主副歌');
 
       const item = getRepertoire(db, songId);
       assert.ok(item.tracks.original?.media?.id);

@@ -1,0 +1,29 @@
+/**
+ * P040 V1.3 R2 §5：结构工作室波形的触摸补丁样式。
+ * 只由 VocalStructureStudio 引入，不改动 vocal-practice.css（其他任务在改）。
+ */
+
+/* 手指按下不滚动、不缩放、不选中文字；否则安卓 WebView 会把 pointermove 当滚动吞掉 */
+.vocal-wave {
+  touch-action: none;
+  -ms-touch-action: none;
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* 分界线的透明热区：视觉上完全不可见，但一定参与命中（fill-opacity:0 在某些 WebView 上会被跳过） */
+.vocal-wave__hit {
+  fill: none;
+  stroke: transparent;
+  stroke-width: 1;
+  pointer-events: all;
+  cursor: ew-resize;
+  touch-action: none;
+}
+
+/* 波形柱和色带只是背景，别抢走指针目标；拖动判定统一由 SVG / 热区处理 */
+.vocal-wave__peak,
+.vocal-wave__band {
+  pointer-events: none;
+}

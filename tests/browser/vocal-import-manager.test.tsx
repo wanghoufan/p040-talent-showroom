@@ -1,7 +1,7 @@
 /// <reference types="node" />
 import { readFileSync } from 'node:fs';
 import { MemoryRouter, Route, Routes } from 'react-router-dom';
-import { act, fireEvent, render, screen, waitFor, within } from '@testing-library/react';
+import { act, cleanup, fireEvent, render, screen, waitFor, within } from '@testing-library/react';
 import { afterEach, beforeEach, expect, it, vi } from 'vitest';
 import { IDBFactory } from 'fake-indexeddb';
 import { initializeLocalDatabase } from '../../src/lib/local-database';
@@ -572,7 +572,11 @@ it('唱歌曲库保留两行筛选并显示任务状态条，吉他页不出现�
   expect(document.querySelectorAll('.vocal-filters__row')).toHaveLength(2);
   expect(screen.getByLabelText('本地导入任务状态')).toBeInTheDocument();
 
-  fireEvent.click(screen.getByRole('link', { name: '吉他' }));
+  /* 类别切换已上移到 App 底栏（§8 V1.3-R2）：直接以吉他路由重进，验证同一行为。 */
+  cleanup();
+  await act(async () => {
+    render(<MemoryRouter initialEntries={['/repertoire/guitar']}><Routes><Route path="/repertoire/:kind" element={<TalentLibraryPage />} /></Routes></MemoryRouter>);
+  });
   expect(await screen.findByText('吉他曲')).toBeVisible();
   expect(document.querySelectorAll('.vocal-filters__row')).toHaveLength(0);
   expect(screen.queryByLabelText('本地导入任务状态')).not.toBeInTheDocument();

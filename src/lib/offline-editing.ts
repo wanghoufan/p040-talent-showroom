@@ -1,3 +1,4 @@
+import { uuid } from './uuid';
 import {api,jsonBody,ApiError} from './api';import {commitLocal,localOperations,readMetadata} from './local-database';import type {ItemRef} from './library-management';import type {DanceItem,TalentItem} from './types';import type {Program} from './program';
 export interface LocalOperation extends ItemRef {operationId:string;action:'create'|'update'|'trash'|'restore'|'program'|'bulk';baseRevision:number;fields?:Record<string,unknown>;state?:'pending'|'conflict'|'failed';error?:string;server?:Record<string,unknown>|null;serverRevision?:number;}
 const keys={DANCE:'dance.catalog-snapshot',GUITAR:'dance.repertoire-snapshot',VOCAL:'dance.repertoire-snapshot'};
@@ -30,14 +31,14 @@ export async function editLocally(ref:ItemRef,fields:Record<string,unknown>,acti
  const patch={...acceptedFields(ref.kind,action,fields)};
  // 练习设置按服务端口径增量合并：只改一项时不把其余默认值清空。
  if(patch.practice&&typeof patch.practice==='object'&&!Array.isArray(patch.practice))patch.practice={...(prior?.practice||{}),...patch.practice as Record<string,unknown>};
- const op:LocalOperation={...ref,operationId:crypto.randomUUID(),action,baseRevision:prior?.revision||0,...(['create','update'].includes(action)?{fields:patch}:{})};
+ const op:LocalOperation={...ref,operationId:uuid(),action,baseRevision:prior?.revision||0,...(['create','update'].includes(action)?{fields:patch}:{})};
  const item={...(action==='create'?{id:ref.id,kind:ref.kind,title:'',artist:'',learningStatus:'WANT_TO_LEARN',originalKey:'',performanceKey:'',capo:0,scoreText:'',notes:'',audioRole:'REFERENCE',durationMs:0,revision:0}:prior),...patch};const next=action==='trash'?items.filter(i=>i.id!==ref.id):[...items.filter(i=>i.id!==ref.id),item];const values:Record<string,string>={[keys[ref.kind]]:JSON.stringify(next)};
  const manifest=JSON.parse(readMetadata('dance.offline.manifest')||'null');if(manifest){if(ref.kind==='DANCE')manifest.items=next;else manifest.repertoire=next;if(action==='trash'){manifest.playlist=manifest.playlist.filter((id:string)=>id!==ref.id);if(manifest.program)manifest.program.items=manifest.program.items.filter((r:ItemRef)=>r.id!==ref.id);}values['dance.offline.manifest']=JSON.stringify(manifest);}
  let trash=JSON.parse(readMetadata('dance.trash')||'[]');if(action==='trash')trash=[...trash.filter((i:ItemRef)=>i.id!==ref.id),{...prior,kind:ref.kind,deletedAt:new Date().toISOString()}];if(action==='restore')trash=trash.filter((i:ItemRef)=>i.id!==ref.id);values['dance.trash']=JSON.stringify(trash);
  if(action==='trash'){const program=JSON.parse(readMetadata('dance.program')||'null');if(program){program.items=program.items.filter((r:ItemRef)=>r.id!==ref.id);values['dance.program']=JSON.stringify(program);}}
  await commitLocal(values,[op]);notify();void flushOperations();return item as TalentItem;
 }
-export async function programLocally(program:Program){await commitLocal({'dance.program':JSON.stringify(program)},[{operationId:crypto.randomUUID(),kind:'DANCE',id:'program',action:'program',baseRevision:program.revision,fields:{items:program.items}}]);notify();void flushOperations();return program;}
+export async function programLocally(program:Program){await commitLocal({'dance.program':JSON.stringify(program)},[{operationId:uuid(),kind:'DANCE',id:'program',action:'program',baseRevision:program.revision,fields:{items:program.items}}]);notify();void flushOperations();return program;}
 export async function mergeRemote<T extends {id:string;revision?:number}>(kind:ItemRef['kind'],remote:T[]):Promise<T[]>{const ops=await localOperations<LocalOperation>(),pending=new Set(ops.filter(o=>o.action!=='program').flatMap(o=>o.action==='bulk'?(o.fields?.refs as ItemRef[]).filter(r=>r.kind===kind).map(r=>r.id):o.kind===kind?[o.id]:[])),local=snapshot(kind) as unknown as T[],trash=JSON.parse(readMetadata('dance.trash')||'[]');const remoteItems=remote.filter(i=>!pending.has(i.id)&&!trash.some((t:ItemRef&{revision:number})=>t.kind===kind&&t.id===i.id&&(t.revision||0)>(i.revision||0))).map(i=>{const prior=local.find(l=>l.id===i.id);return prior&&(prior.revision||0)>(i.revision||0)?prior:i;});return [...remoteItems,...local.filter(i=>pending.has(i.id))];}
 
 function notify(){window.dispatchEvent(new Event('dance-repertoire-changed'));window.dispatchEvent(new Event('dance-catalog-changed'));window.dispatchEvent(new Event('dance-sync-changed'));window.dispatchEvent(new Event('dance-program-changed'));}
@@ -89,10 +90,10 @@ export async function resolveOperation(op:LocalOperation,fields:Record<string,un
  if(op.action==='bulk'){
   const refs=operationRefs(op),serverItems=(op.server?.items||[]) as (ItemRef&{revision:number;deletedAt?:string})[];
   if(fields===null){const current=snapshot(op.kind);values[keys[op.kind]]=JSON.stringify([...current.filter(i=>!refs.some(r=>r.id===i.id)),...serverItems.filter(i=>!i.deletedAt)]);}
-  else{const baseRevisions=Object.fromEntries(serverItems.map(i=>[i.id,i.revision]));replacement={...op,operationId:crypto.randomUUID(),fields:{...op.fields,...(op.fields?.action==='update'?{fields}:{}),baseRevisions},state:'pending',server:undefined,serverRevision:undefined};}
+  else{const baseRevisions=Object.fromEntries(serverItems.map(i=>[i.id,i.revision]));replacement={...op,operationId:uuid(),fields:{...op.fields,...(op.fields?.action==='update'?{fields}:{}),baseRevisions},state:'pending',server:undefined,serverRevision:undefined};}
  }else if(fields===null){
   if(op.action==='program')values['dance.program']=JSON.stringify(op.server);else values[keys[op.kind]]=JSON.stringify([...snapshot(op.kind).filter(i=>i.id!==op.id),...(op.server&&!op.server.deletedAt?[op.server]:[])]);
- }else replacement={...op,operationId:crypto.randomUUID(),action:op.server?.deletedAt&&op.action==='update'?'restore':op.action==='create'&&op.server?'update':!op.server&&op.kind!=='DANCE'&&op.action==='update'?'create':op.action,baseRevision:op.serverRevision||0,fields:['trash','restore'].includes(op.action)?undefined:fields,state:'pending',server:undefined,serverRevision:undefined};
+ }else replacement={...op,operationId:uuid(),action:op.server?.deletedAt&&op.action==='update'?'restore':op.action==='create'&&op.server?'update':!op.server&&op.kind!=='DANCE'&&op.action==='update'?'create':op.action,baseRevision:op.serverRevision||0,fields:['trash','restore'].includes(op.action)?undefined:fields,state:'pending',server:undefined,serverRevision:undefined};
  if(fields===null&&op.action!=='program'){
   const refs=operationRefs(op),remote:(ItemRef&{revision?:number;deletedAt?:unknown})[]=op.action==='bulk'?(op.server?.items||[]) as (ItemRef&{revision:number;deletedAt?:string})[]:op.server?[{...op.server,kind:op.kind,id:op.id}]:[];
   const trash=JSON.parse(readMetadata('dance.trash')||'[]').filter((i:ItemRef)=>!refs.some(r=>r.id===i.id));values['dance.trash']=JSON.stringify([...trash,...remote.filter(i=>i.deletedAt)]);
@@ -127,7 +128,7 @@ export async function bulkLocally(action:'update'|'trash'|'restore',refs:ItemRef
  const values:Record<string,string>={'dance.trash':JSON.stringify(trash)};for(const [key,next] of nextByKey)values[key]=JSON.stringify(next);
  const manifest=JSON.parse(readMetadata('dance.offline.manifest')||'null');if(manifest){if(values[keys.DANCE])manifest.items=JSON.parse(values[keys.DANCE]);if(values[keys.GUITAR])manifest.repertoire=JSON.parse(values[keys.GUITAR]);if(action==='trash'){manifest.playlist=manifest.playlist.filter((id:string)=>!refs.some(r=>r.id===id));if(manifest.program)manifest.program.items=manifest.program.items.filter((r:ItemRef)=>!refs.some(i=>i.id===r.id));}values['dance.offline.manifest']=JSON.stringify(manifest);}
  if(action==='trash'){const program=JSON.parse(readMetadata('dance.program')||'null');if(program){program.items=program.items.filter((r:ItemRef)=>!refs.some(i=>i.id===r.id));values['dance.program']=JSON.stringify(program);}}
- await commitLocal(values,[{operationId:crypto.randomUUID(),kind,id:crypto.randomUUID(),action:'bulk',baseRevision:0,fields:{action,refs,baseRevisions,...(fields?{fields}:{})}}]);notify();void flushOperations();return {items:changed,catalogVersion:manifest?.catalogVersion||0};
+ await commitLocal(values,[{operationId:uuid(),kind,id:uuid(),action:'bulk',baseRevision:0,fields:{action,refs,baseRevisions,...(fields?{fields}:{})}}]);notify();void flushOperations();return {items:changed,catalogVersion:manifest?.catalogVersion||0};
 }
 
 export async function retryOperation(op:LocalOperation){await commitLocal({},[{...op,state:"pending",error:undefined}]);notify();await flushOperations();}

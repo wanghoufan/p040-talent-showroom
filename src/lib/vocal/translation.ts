@@ -77,8 +77,12 @@ export function summarizeTranslations(
   translations: VocalTranslations | null,
   language?: VocalLanguage,
 ): TranslationSummary {
+  // 中文原唱只有一个中文层：没有「译文」这个概念，绝不给 UI 累计缺译文。
+  if (language === 'zh') {
+    return { total: 0, translated: 0, missing: 0, manual: 0, ai: 0, lrc: 0, stale: 0 };
+  }
   const nonEmpty = lyrics.filter(line => line.text && line.text.trim());
-  const sourceLines = nonEmpty.filter(line => !isNonLyricLine(line.text) && (language === 'zh' || !isChineseText(line.text)));
+  const sourceLines = nonEmpty.filter(line => !isNonLyricLine(line.text) && !isChineseText(line.text));
   const ids = new Set(sourceLines.map(line => line.id));
   const lines = (translations?.lines || []).filter(line => ids.has(line.id));
   return {
@@ -90,6 +94,19 @@ export function summarizeTranslations(
     lrc: lines.filter(line => line.source === 'lrc').length,
     stale: lines.filter(line => line.stale).length,
   };
+}
+
+/**
+ * 同文译文判定：去掉空白、标点与大小写差异后，译文与原文完全一致即视为冗余。
+ * 中文原唱下旧数据里可能残留「中文 → 同一句中文」的译文，渲染层必须不显示。
+ */
+export function isRedundantTranslation(source: string, target: string): boolean {
+  const normalize = (value: string): string => String(value ?? '')
+    .normalize('NFKC')
+    .toLowerCase()
+    .replace(/[\s\p{P}]/gu, '');
+  const left = normalize(source);
+  return left.length > 0 && left === normalize(target);
 }
 
 /**

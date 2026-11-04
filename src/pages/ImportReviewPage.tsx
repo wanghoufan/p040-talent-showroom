@@ -1,6 +1,8 @@
 import { useEffect,useRef,useState } from 'react';
 import { Link,useNavigate,useParams } from 'react-router-dom';
-import { api,jsonBody,mediaUrl } from '../lib/api';
+import { api,jsonBody,mediaUrl,ApiError } from '../lib/api';
+import { forgetImport } from '../lib/pending-imports';
+import { removeShareByJob,updateShareByJob } from '../lib/pending-shares';
 import { catalogChanged } from '../lib/catalog-store';
 import { STATUS_OPTIONS,SCENE_OPTIONS } from '../lib/filters';
 import type { DanceItem,ImportJob,LearningStatus,SceneTag } from '../lib/types';
@@ -13,7 +15,7 @@ import CoverArt from '../components/CoverArt';
  * - NEEDS_INPUT 时补充本地视频走 supplement，保留原分享链接（不丢链接）。
  */
 export default function ImportReviewPage(){
-  const {id}=useParams(); const navigate=useNavigate();
+  const {id}=useParams(); const jobId=id??''; const navigate=useNavigate();
   const [job,setJob]=useState<ImportJob|null>(null),[error,setError]=useState('');
   const [title,setTitle]=useState(''),[artist,setArtist]=useState('');
   const [status,setStatus]=useState<LearningStatus>('WANT_TO_LEARN'),[scenes,setScenes]=useState<SceneTag[]>([]);
@@ -27,9 +29,15 @@ export default function ImportReviewPage(){
         const next=await api<ImportJob>(`/api/imports/${id}`);
         if(!active) return;
         setJob(next);
+        if(next.status==='FAILED') forgetImport(jobId);
         if(next.status==='READY'&&!initialized){ setTitle(next.draft?.title||'未识别舞蹈'); setArtist(next.draft?.artist||''); initialized=true; }
         if(['PENDING','PROCESSING'].includes(next.status)) timer=setTimeout(()=>void poll(),400);
-      }catch{ if(active) setError('暂时无法读取收录进度，请检查连接'); }
+      }catch(error){
+        if(!active) return;
+        // 服务器已没有这条任务（重启换库/被清理）：留在“未完成收录”里只会点了继续也打不开，直接移除并说明。
+        if(error instanceof ApiError&&error.status===404){forgetImport(jobId);setError('这条收录已不存在，请重新导入');return;}
+        setError('暂时无法读取收录进度，请检查连接');
+      }
     };
     void poll();
     return ()=>{ active=false; clearTimeout(timer); };
@@ -37,12 +45,12 @@ export default function ImportReviewPage(){
 
   const save=async()=>{
     setBusy(true); setError('');
-    try{ const item=await api<DanceItem>(`/api/imports/${id}/finalize`,{method:'POST',...jsonBody({title,artist,learningStatus:status,sceneTags:scenes})}); catalogChanged(); navigate(`/dances/${item.id}`,{replace:true}); }
+    try{ const item=await api<DanceItem>(`/api/imports/${id}/finalize`,{method:'POST',...jsonBody({title,artist,learningStatus:status,sceneTags:scenes})}); forgetImport(jobId); removeShareByJob(jobId); catalogChanged(); navigate(`/dances/${item.id}`,{replace:true}); }
     catch{ setError('保存未完成，请重试'); setBusy(false); }
   };
   const supplement=async(file:File)=>{
     setBusy(true); setError('');
-    try{ await api<ImportJob>(`/api/imports/${id}/supplement`,{method:'POST',headers:{'Content-Type':file.type||'application/octet-stream','X-File-Name':encodeURIComponent(file.name)},body:file}); window.location.reload(); }
+    try{ await api<ImportJob>(`/api/imports/${id}/supplement`,{method:'POST',headers:{'Content-Type':file.type||'application/octet-stream','X-File-Name':encodeURIComponent(file.name)},body:file}); updateShareByJob(jobId,'SUBMITTED'); window.location.reload(); }
     catch{ setError('补充视频未完成，请确认文件有效并重试'); setBusy(false); }
   };
   const candidates=job?.draft?.candidates||[];

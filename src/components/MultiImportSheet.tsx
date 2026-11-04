@@ -1,3 +1,4 @@
+import { uuid } from '../lib/uuid';
 import {useRef,useState} from 'react';
 import {queueFile,readLocalText} from '../lib/offline-files';
 import {editLocally} from '../lib/offline-editing';
@@ -34,7 +35,7 @@ export default function MultiImportSheet({kind,onClose}:{kind:LibraryKind;onClos
   setError('');
   const list=Array.from(files);
   if(kind!=='VOCAL'){
-   setEntries(list.map(file=>({key:crypto.randomUUID(),file,title:file.name.replace(/\.[^.]+$/,''),entryKind:isLyricFile(file.name)?'lyrics':'audio',state:file.size>512*1024*1024?'failed':'waiting',error:file.size>512*1024*1024?'文件超过 512MiB':undefined})));
+   setEntries(list.map(file=>({key:uuid(),file,title:file.name.replace(/\.[^.]+$/,''),entryKind:isLyricFile(file.name)?'lyrics':'audio',state:file.size>512*1024*1024?'failed':'waiting',error:file.size>512*1024*1024?'文件超过 512MiB':undefined})));
    return;
   }
   // 唱歌：先按歌名分组，再把同一组的原唱、伴奏、LRC 落到同一个 songId。
@@ -59,16 +60,16 @@ export default function MultiImportSheet({kind,onClose}:{kind:LibraryKind;onClos
    if(!group.audio.length){
     // 只有歌词没有音频时不单独建曲目，明确提示而不是造出一首空歌。
     const file=group.lyrics as File;
-    next.push({key:crypto.randomUUID(),file,title:group.title,entryKind:'lyrics',state:'failed',retryable:false,error:'这首歌只有歌词文件，缺少音频；请一起选择原唱或伴奏后再导入'});
-    for(const clash of group.conflicts)next.push({key:crypto.randomUUID(),file:clash.file,title:group.title,role:clash.role,entryKind:'audio',state:'failed',retryable:false,error:clash.role==='accompaniment'?'这首歌已有伴奏文件，这一份未导入；如需更换请在曲目详情页替换':'这首歌已有原唱文件，这一份未导入；如需更换请在曲目详情页替换'});
+    next.push({key:uuid(),file,title:group.title,entryKind:'lyrics',state:'failed',retryable:false,error:'这首歌只有歌词文件，缺少音频；请一起选择原唱或伴奏后再导入'});
+    for(const clash of group.conflicts)next.push({key:uuid(),file:clash.file,title:group.title,role:clash.role,entryKind:'audio',state:'failed',retryable:false,error:clash.role==='accompaniment'?'这首歌已有伴奏文件，这一份未导入；如需更换请在曲目详情页替换':'这首歌已有原唱文件，这一份未导入；如需更换请在曲目详情页替换'});
     continue;
    }
-   const songId=crypto.randomUUID();
+   const songId=uuid();
    // 每条音频都带 createFields：队列按任意顺序处理都不会因曲目尚未创建而 404，创建动作本身按 songId 幂等。
-   group.audio.forEach(item=>next.push({key:crypto.randomUUID(),file:item.file,title:group.title,songId,role:item.role,entryKind:'audio',hint:item.role==='original'&&guessLocalFileRole(item.file.name).role==='unknown'?'用途未标注，先按原唱处理，可在详情页替换':undefined,state:item.file.size>512*1024*1024?'failed':'waiting',error:item.file.size>512*1024*1024?'文件超过 512MiB':undefined}));
-   if(group.lyrics)next.push({key:crypto.randomUUID(),file:group.lyrics,title:group.title,songId,entryKind:'lyrics',state:'waiting'});
+   group.audio.forEach(item=>next.push({key:uuid(),file:item.file,title:group.title,songId,role:item.role,entryKind:'audio',hint:item.role==='original'&&guessLocalFileRole(item.file.name).role==='unknown'?'用途未标注，先按原唱处理，可在详情页替换':undefined,state:item.file.size>512*1024*1024?'failed':'waiting',error:item.file.size>512*1024*1024?'文件超过 512MiB':undefined}));
+   if(group.lyrics)next.push({key:uuid(),file:group.lyrics,title:group.title,songId,entryKind:'lyrics',state:'waiting'});
    // 冲突文件单独列出并保持 failed：用户能看到被拒绝的是哪一个，也不会悄悄少一条音轨。
-   for(const clash of group.conflicts)next.push({key:crypto.randomUUID(),file:clash.file,title:group.title,songId,role:clash.role,entryKind:'audio',state:'failed',retryable:false,error:`同一首歌只能有一个${clash.role==='accompaniment'?'伴奏':'原唱'}文件，这一份未导入，也不会覆盖已选文件；如需更换请在曲目详情页替换`});
+   for(const clash of group.conflicts)next.push({key:uuid(),file:clash.file,title:group.title,songId,role:clash.role,entryKind:'audio',state:'failed',retryable:false,error:`同一首歌只能有一个${clash.role==='accompaniment'?'伴奏':'原唱'}文件，这一份未导入，也不会覆盖已选文件；如需更换请在曲目详情页替换`});
   }
   setEntries(next);
  };

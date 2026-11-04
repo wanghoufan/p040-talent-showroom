@@ -187,3 +187,35 @@ node server/index.mjs
 1. 前台进程 `Ctrl+C` 即停止导入 worker 与 API；已入队任务保留在数据库中，不会自动继续。
 2. 只是不想再用：取消 `VOCAL_IMPORT_*` 环境变量并重启，导入接口不再挂载，前端显示未配置；不要删除数据库或媒体目录。
 3. 需要彻底回退时，先备份数据库和 `MEDIA_ROOT/vocal-import/`，再按版本管理流程处理；本说明不授权删除任何用户数据。
+
+## 11. V3.2 原唱结构分析（直接读混音，不做分离）
+
+**它是什么**：读原唱混音计算乐段边界与声学相似候选，生成 A1/B1/U1 结构草稿；不生成伴奏、不做人声分离、不联网、不上传音频。
+
+1. **分析环境（独立 venv，不含分离模型）**
+   ```bash
+   uv venv var/vocal-v31-work/structure-venv --python 3.12
+   uv pip install --python var/vocal-v31-work/structure-venv/bin/python "librosa==0.11.0" "numpy>=1.26,<3" "scipy>=1.11"
+   ```
+   该 venv 内 `audio_separator` / `demucs` / `spleeter` / `torch` 均为 False；旧的 `var/vocal-v31-work/.venv` 装了 `audio_separator`，**不要**用它跑结构分析。
+2. **环境变量**：`P040_STRUCTURE_PYTHON`（缺省自动使用上面的 venv）、`P040_STRUCTURE_TIMEOUT_MS`（默认 180000）、`P040_STRUCTURE_WORKDIR`（默认 `var/vocal-v31-work/structure`）。
+3. **迁移**：`node server/db/migrate.mjs` 会建 `vocal_structure_drafts`（只新增一表，不动 `repertoire_items`）。生产库迁移仍需用户授权。
+4. **接口**（需 owner 配对）：`GET/POST/PUT/DELETE /api/repertoire/:id/structure-draft`、`POST .../restore`、`GET .../current`。
+5. **数据边界**：草稿只进 `vocal_structure_drafts`；只有 `PUT` 应用才写正式 `sections_json`，且全部 `source='manual'`；生成草稿时冻结旧结构，可 `restore`；已有手工结构的曲目需显式 `replaceManual`。
+6. **安全守卫**：分析前后核对原曲 SHA/大小，中途变化即 `SOURCE_CHANGED`；结果里出现分离模块即 `SEPARATION_DETECTED` 并拒绝；脚本 `MODEL_VERSION` 与 `analyzer.mjs` 不一致即拒绝。
+7. **已知限制**：主歌/副歌不是分类模型输出，只是「同一声学簇重复 + 平均音量」的候选（`typeCandidate`），必须人工确认；相似候选是声学和声/音色相似，不等于同旋律；未标注段不会自动变成主副歌。
+
+## 12. V3.3 歌词中文译文（CodeBuddy 云端通道，不是本地模型）
+
+**它是什么**：把逐句歌词翻译成简体中文，译文按歌词行 `id` 另存，原文时间轴与原文文本都不改。默认顺序：LRC 自带中文译文 → 本地缓存 → CodeBuddy 通道。
+
+1. **通道与如实说明**：`scripts/codebuddy-auto.sh --model deepseek-v4.1-flash --effort high -y -p ...`。运行时由本机 CLI 连接 CodeBuddy 云端，**歌词原文会离开本机**；这不是本地模型，也不使用付费翻译 API。`/opt/homebrew/bin/llama-server` 虽存在，但本流程不启动、不加载权重、不使用。
+2. **环境变量**：`P040_TRANSLATE_SCRIPT`（默认 `scripts/codebuddy-auto.sh`）、`P040_TRANSLATE_MODEL`（默认 `deepseek-v4.1-flash`）、`P040_TRANSLATE_EFFORT`、`P040_TRANSLATE_TIMEOUT_MS`（默认 180000）、`P040_TRANSLATE_RETRIES`（默认 2）、`P040_TRANSLATE_DISABLED=1` 可整体关闭通道。
+3. **迁移**：`0010_vocal_translation.sql` 只新增 `translations_json` 列与 `vocal_translation_cache` 表，不改旧列；生产库迁移仍需用户授权。
+4. **接口**（需 owner 配对）：
+   - `POST /api/repertoire/:id/translations/translate`：批量翻译缺失句；返回 `COMPLETE / PARTIAL / CHANNEL_UNAVAILABLE / NOTHING_TO_DO`、`failed[]`、`remaining`。
+   - `PUT /api/repertoire/:id/translations` `{lines:[{id,text}]}`：人工纠错，`manual` 覆盖一切；空文本只删除该句。
+5. **不可覆盖规则**：`manual` 永不被 AI/LRC 覆盖；`lrc` 可覆盖 `ai`；`ai` 只填空或刷新 `ai` 自己。所有写入统一过 `saveRepertoire`，歌词时间轴不动。
+6. **缓存与离线**：命中 `vocal_translation_cache` 不再调通道；译文随曲目同步到手机，断网仍可显示；断网时新翻译会明确失败，不会写假译文。
+7. **批量脚本**：`node scripts/translate-lyrics-batch.mjs --db <隔离库> --ids ... --out <目录>` 或 `--all-korean`。只用于隔离库，不读生产库、不碰源素材、不做分离、不播放声音。
+8. **已知限制**：译文质量需要人工审校；LRC 双语拆行依赖时间邻近（同时间戳优先，≤1000ms 且行距 ≤3）；歌词改动后旧译文保留并标 `stale`，需人工确认或重译。

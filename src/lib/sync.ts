@@ -99,8 +99,40 @@ export async function inspectOfflineLibrary(): Promise<{ items: number; readyIte
   return { items: items.filter(hasAudio).length, readyItems: items.filter(item => hasAudio(item) && audioReady(item, cached)).length };
 }
 
-/** Retry rechecks current manifest and downloads only missing/invalid files. Stop after the current file. */
-export async function syncLibrary(onProgress?: (progress: SyncProgress) => void, options: { signal?: AbortSignal; demoOnly?: boolean;includeScores?:boolean } = {}): Promise<SyncResult> {
+export interface DownloadPlan {
+  /** 参与统计的曲目数。 */
+  items: number;
+  /** 去重后的媒体文件数。 */
+  entries: number;
+  /** 仍需下载的文件数。 */
+  pending: number;
+  /** 仍需下载的体积（字节）。 */
+  bytes: number;
+  /** 该范围内是否已全部落盘（无媒体项的文本曲目为 false，由调用方决定是否显示）。 */
+  ready: boolean;
+}
+/**
+ * 只计算不下载：给定曲目的媒体体积与已就绪情况，供「下载这首歌 / 想学歌单 / 今晚节目单」先算体积。
+ * 判定与 syncLibrary 完全一致（hash/size/version 合法才算已缓存），因此这里显示 0 字节时不会重下。
+ */
+export function planMedia(items: (DanceItem|TalentItem)[], options: { includeScores?: boolean } = {}): DownloadPlan {
+  const entries = uniqueEntries(items).filter(entry => options.includeScores !== false || entry.kind !== 'score');
+  const cached = readCachedIndex();
+  const pending = entries.filter(entry => !isMediaReady(entry, cached));
+  return { items: items.length, entries: entries.length, pending: pending.length, bytes: pending.reduce((sum, entry) => sum + entry.sizeBytes, 0), ready: entries.length > 0 && pending.length === 0 };
+}
+/** 按曲目 id 计算下载计划；清单缺省读本地清单，也可传入页面上刚拉到的清单。 */
+export function planDownload(ids?: string[], options: { includeScores?: boolean; manifest?: OfflineManifest | null } = {}): DownloadPlan {
+  const manifest = options.manifest === undefined ? readOfflineManifest() : options.manifest;
+  const scope = (manifest ? playableCatalog(manifest) : []).filter(item => !ids || ids.includes(item.id));
+  return planMedia(scope, { includeScores: options.includeScores });
+}
+
+/**
+ * Retry rechecks current manifest and downloads only missing/invalid files. Stop after the current file.
+ * `onlyIds` 把范围收窄到指定曲目（单曲 / 想学 / 节目单）；其余曲目的缓存既不动也不重下。
+ */
+export async function syncLibrary(onProgress?: (progress: SyncProgress) => void, options: { signal?: AbortSignal; demoOnly?: boolean;includeScores?:boolean; onlyIds?: string[] } = {}): Promise<SyncResult> {
   if (syncing) throw new Error('已有下载进行中，请稍后重试');
   syncing = true;
   try {
@@ -113,7 +145,7 @@ export async function syncLibrary(onProgress?: (progress: SyncProgress) => void,
     saveOfflineManifest(manifest);
     writeMetadata('dance.catalog-snapshot', JSON.stringify(manifest.items));
     writeMetadata('dance.repertoire-snapshot', JSON.stringify(manifest.repertoire || []));
-    const items = playableCatalog(manifest).filter(item => !options.demoOnly || item.isDemo);
+    const items = playableCatalog(manifest).filter(item => (!options.onlyIds || options.onlyIds.includes(item.id)) && (!options.demoOnly || item.isDemo));
     onProgress?.({ stage: 'check', processed: 0, total: items.length, downloaded: 0, failed: 0, pendingBytes: 0 });
     if (supported) await validateCache(items, cached);
     const pending = uniqueEntries(items).filter(entry => (options.includeScores!==false||entry.kind!=='score')&&!isMediaReady(entry, cached));

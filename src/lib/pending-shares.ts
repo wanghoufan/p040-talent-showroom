@@ -1,4 +1,4 @@
-import { api, jsonBody } from './api';
+import { api, jsonBody, ApiError } from './api';
 import { drainNativeShares, isNativePlatform, type NativeShare } from '../native/share-target';
 import type { ImportJob, PendingShare } from './types';
 
@@ -105,7 +105,7 @@ export async function submitShare(id: string): Promise<PendingShare | undefined>
     }
   } catch (error) {
     // 网络不可达 → 离线保存可重试；服务器明确拒绝 → 该来源暂不支持自动收录。
-    if (error instanceof TypeError || (error instanceof DOMException && error.name === 'TimeoutError')) {
+    if (error instanceof ApiError && error.status === 0) {
       patch(id, { submitState: 'OFFLINE_SAVED', lastError: '离线，已保存待联网重试' });
     } else {
       patch(id, { submitState: 'NEEDS_INPUT', lastError: error instanceof Error ? error.message : '该来源暂不支持自动收录' });
@@ -122,4 +122,23 @@ export async function submitAllPending(): Promise<void> {
 
 export function removePendingShare(id: string): void {
   write(read().filter((item) => item.id !== id));
+}
+
+/** 补充视频/确认保存后同步队列状态，避免重开 App 仍停在「需要补充本地视频」。 */
+export function updateShareByJob(jobId: string, state: 'SUBMITTED' | 'NEEDS_INPUT'): void {
+  const items = read();
+  let changed = false;
+  const next = items.map((item) => {
+    if (item.serverJobId !== jobId) return item;
+    changed = true;
+    return { ...item, submitState: state, lastError: state === 'SUBMITTED' ? undefined : item.lastError };
+  });
+  if (changed) write(next);
+}
+
+/** 收录确认保存后移除对应分享条目。 */
+export function removeShareByJob(jobId: string): void {
+  const items = read();
+  const next = items.filter((item) => item.serverJobId !== jobId);
+  if (next.length !== items.length) write(next);
 }

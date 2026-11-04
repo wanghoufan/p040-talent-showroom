@@ -2,12 +2,15 @@ import {editLocally} from '../lib/offline-editing';
 import ScoreAttachments from '../components/ScoreAttachments';
 import { useEffect, useRef, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import { api, jsonBody, mediaUrl } from '../lib/api';
+import { api, jsonBody } from '../lib/api';
+import { readCachedIndex } from '../lib/offline-manifest';
+import { playbackSource } from '../native/filesystem';
 import { catalogChanged, storedCatalog } from '../lib/catalog-store';
 import { STATUS_OPTIONS, SCENE_OPTIONS } from '../lib/filters';
 import type { DanceItem } from '../lib/types';
 import ClipTrimmer from '../components/ClipTrimmer';
 import CoverArt from '../components/CoverArt';
+import DownloadItemButton from '../components/DownloadItemButton';
 
 export default function DanceDetailPage() {
   const { id } = useParams();
@@ -54,8 +57,9 @@ export default function DanceDetailPage() {
       <div className="primary-actions">
         <button className="primary" onClick={() => { if (!audio.current) return; if (playing) audio.current.pause(); else void audio.current.play().catch(() => setError('音乐无法播放，请检查连接')); }}>{playing ? '暂停音乐' : '播放音乐'}</button>
         {item.source?.sourceKind === 'VIDEO' && <Link className="icon-link" to={`/reference/${item.sourceMediaId}`}>查看原视频</Link>}
+        <DownloadItemButton item={item} />
       </div>
-      <audio ref={audio} src={mediaUrl(item.audio.url)} onPlay={() => setPlaying(true)} onPause={() => setPlaying(false)} onEnded={() => setPlaying(false)} controls />
+      <audio ref={audio} src={playbackSource(item, readCachedIndex())} onPlay={() => setPlaying(true)} onPause={() => setPlaying(false)} onEnded={() => setPlaying(false)} controls />
       <ScoreAttachments itemRef={{kind:'DANCE',id:item.id}} scores={item.scores||[]} onChange={scores=>{setItem({...item,scores});catalogChanged();}}/><ClipTrimmer item={item} onUpdated={setItem} />
       <fieldset><legend>学习状态</legend><div className="button-row">{STATUS_OPTIONS.map((o) => <button key={o.id} aria-pressed={item.learningStatus === o.id} onClick={() => void patch({ learningStatus: o.id })}>{o.label}</button>)}</div></fieldset>
       <fieldset><legend>场景标签</legend><div className="button-row">{SCENE_OPTIONS.map((o) => <button key={o.id} aria-pressed={item.sceneTags.includes(o.id)} onClick={() => void patch({ sceneTags: item.sceneTags.includes(o.id) ? item.sceneTags.filter((t) => t !== o.id) : [...item.sceneTags, o.id] })}>{o.label}</button>)}</div></fieldset>

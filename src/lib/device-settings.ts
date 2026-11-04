@@ -8,8 +8,8 @@ export function validateEndpoint(input:string,allowLoopback=false):string {
   const host=url.hostname.toLowerCase();
   const parts=host.split('.').map(Number);
   const ipv4=parts.length===4 && parts.every(x=>Number.isInteger(x)&&x>=0&&x<=255);
-  const privateHost=ipv4&&(parts[0]===10||(parts[0]===192&&parts[1]===168)||(parts[0]===172&&parts[1]>=16&&parts[1]<=31));
-  const localName=host.endsWith('.local')&&host.length>6;
+  const privateHost=ipv4&&(parts[0]===10||(parts[0]===192&&parts[1]===168)||(parts[0]===172&&parts[1]>=16&&parts[1]<=31)||(parts[0]===100&&parts[1]>=64&&parts[1]<=127));
+  const localName=(host.endsWith('.local')&&host.length>6)||(host.endsWith('.ts.net')&&host.length>7);
   const loopback=host==='localhost'||host==='127.0.0.1'||host==='[::1]';
   if(!privateHost&&!localName&&!(allowLoopback&&loopback)) throw new Error('仅支持可信本地或私有网络地址');
   return url.origin;

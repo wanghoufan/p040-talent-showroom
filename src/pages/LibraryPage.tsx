@@ -1,6 +1,5 @@
 import BulkActionSheet from '../components/BulkActionSheet';
 import { addToProgram,bulkRequest,runBulk } from '../lib/library-management';
-import TalentNav from '../components/TalentNav';
 import { useRef, useState } from 'react';
 import { useCatalog } from '../lib/catalog-store';
 import { filterDances } from '../lib/filters';
@@ -12,6 +11,7 @@ import LibraryFilters from '../components/LibraryFilters';
 import DanceCard from '../components/DanceCard';
 import ImportSheet from '../components/ImportSheet';
 import PendingShares from '../components/PendingShares';
+import PendingImports from '../components/PendingImports';
 import BatchEditSheet, { type ClassificationChange } from '../components/BatchEditSheet';
 
 export default function LibraryPage() {
@@ -64,8 +64,9 @@ export default function LibraryPage() {
     void a.play().then(() => setPaused(false)).catch(() => setPlayError('音乐无法播放，请检查连接或离线缓存'));
   };
   return <section>
-    <header className="library-header"><TalentNav /><div className="page-header__actions"><button className="batch-entry" disabled={!items.length} onClick={toggleBatch}>{batchMode ? '退出批量' : '批量管理'}</button><button aria-label="收录舞蹈" disabled={batchMode} onClick={() => setImporting(true)}>＋</button></div></header>
+    <header className="library-header"><div className="page-header__actions"><button className="batch-entry" disabled={!items.length} onClick={toggleBatch}>{batchMode ? '退出批量' : '批量管理'}</button><button aria-label="收录舞蹈" disabled={batchMode} onClick={() => setImporting(true)}>＋</button></div></header>
     <PendingShares />
+    <PendingImports />
     <div className="library-search"><input className="search" type="search" aria-label="搜索舞蹈" placeholder="搜索歌名或歌手" value={query} onChange={event => { setQuery(event.target.value); clearSelection(); }} />
     <LibraryFilters kind="DANCE" value={{status,scenes,demoOnly,cachedOnly}} onChange={v=>{setStatus(v.status);setScenes(v.scenes);setDemoOnly(v.demoOnly);setCachedOnly(v.cachedOnly);clearSelection();}} /></div>
     {error && <p className="notice">{error}</p>}

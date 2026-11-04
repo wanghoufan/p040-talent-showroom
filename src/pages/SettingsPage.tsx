@@ -4,10 +4,11 @@ import SyncControls from '../components/SyncControls';
 import DemoControls from '../components/DemoControls';
 import VocalImportManager from '../components/VocalImportManager';
 import { Link } from 'react-router-dom';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { applyTheme, resolveTheme, systemPrefersDark } from '../app/theme';
 import { readDeviceSettings, saveDeviceSettings, validateEndpoint } from '../lib/device-settings';
-import { syncLibrary, inspectOfflineLibrary, readSyncReport, clearSyncReport, syncReferences, readReferenceReport, clearReferenceReport, referencePlan, type SyncProgress, type ReferenceSyncProgress, type ReferenceSyncResult } from '../lib/sync';
+import { syncLibrary, inspectOfflineLibrary, readSyncReport, clearSyncReport, syncReferences, readReferenceReport, clearReferenceReport, referencePlan, planDownload, type SyncProgress, type ReferenceSyncProgress, type ReferenceSyncResult } from '../lib/sync';
+import { wantToLearnIds, tonightProgramIds } from '../lib/download-presets';
 import { offlineBytes, clearOfflineMedia, isOfflineSupported } from '../native/filesystem';
 import { applySystemBars } from '../native/theme-bars';
 import { readAppVersion } from '../native/app-version';
@@ -44,11 +45,13 @@ export default function SettingsPage() {
   // 原视频计划以「联网拉到的清单」为准；本地清单可能落后（旧版服务器不返回 url/体积），只作离线兜底。
   const refManifest = useRef<OfflineManifest | null>(null);
   const [appVersion, setAppVersion] = useState<{ version: string; build: string } | null>(null);
+  // 两个歌单先算 id 与体积，用户点之前就能看到要下多少；不点不下载。
+  const [presets, setPresets] = useState<{ want: string[]; program: string[] }>({ want: [], program: [] });
 
   // 原生读真实安装包的 versionName / versionCode，用于核对手机上的构建号。
   useEffect(() => { let active = true; void readAppVersion().then((v) => { if (active) setAppVersion({ version: v.version, build: v.build }); }).catch(() => undefined); return () => { active = false; }; }, []);
 
-  const refreshCache = useCallback(async () => { setChecking(true); try { setOverview(await inspectOfflineLibrary()); setCache({ count: Object.keys(readCachedIndex()).length, bytes: await offlineBytes() }); setRefPlan(refManifest.current ? referencePlan(refManifest.current) : referencePlan()); } finally { setChecking(false); } }, []);
+  const refreshCache = useCallback(async () => { setChecking(true); try { setOverview(await inspectOfflineLibrary()); setCache({ count: Object.keys(readCachedIndex()).length, bytes: await offlineBytes() }); setRefPlan(refManifest.current ? referencePlan(refManifest.current) : referencePlan()); setPresets({ want: wantToLearnIds(refManifest.current), program: tonightProgramIds() }); } finally { setChecking(false); } }, []);
   // 先拉清单再做缓存检查，串行执行：避免慢的缓存检查用旧清单把最新体积/总数覆盖掉。
   useEffect(() => { let active = true; void (async () => {
     try {
@@ -59,6 +62,11 @@ export default function SettingsPage() {
     } catch { if (active) setSyncMessage('缓存检查未完成，请稍后重试'); }
   })(); return () => { active = false; controller.current?.abort(); refController.current?.abort(); }; }, [refreshCache]);
 
+  const presetPlans = useMemo(() => ({
+    want: planDownload(presets.want, { manifest: refManifest.current ?? undefined, includeScores }),
+    program: planDownload(presets.program, { manifest: refManifest.current ?? undefined, includeScores }),
+  }), [presets, includeScores]);
+  const presetLabel = (name: string, ids: string[], plan: { ready: boolean; bytes: number }) => ids.length === 0 ? `暂无${name}` : plan.ready ? `${name}已离线（${ids.length} 首）` : `下载${name}（${ids.length} 首 · 约 ${humanBytes(plan.bytes)}）`;
   const theme = (themeMode: DeviceSettings['themeMode']) => { const next = { ...settings, themeMode }; saveDeviceSettings(next); setSettings(next); const resolved = resolveTheme(themeMode, systemPrefersDark()); applyTheme(resolved, document.documentElement); void applySystemBars(resolved === 'dark'); };
   const connect = async () => {
     setBusy(true); setMessage('');
@@ -73,13 +81,14 @@ export default function SettingsPage() {
       setMessage('连接成功，服务器地址已保存');
     } catch { setMessage('连接失败，请检查本地地址、网络和服务器状态'); } finally { setBusy(false); }
   };
-  const sync = async () => {
+  // onlyIds 用于「想学歌单 / 今晚节目单」：只下这几首，其余曲目的缓存不动。
+  const sync = async (onlyIds?: string[]) => {
     setBusy(true); setStopping(false); setProgress(null); setSyncMessage('正在读取曲库…');
     const abort = new AbortController(); controller.current = abort;
     try {
-      const result = await syncLibrary(setProgress, { signal: abort.signal,includeScores });
+      const result = await syncLibrary(setProgress, { signal: abort.signal,includeScores, ...(onlyIds ? { onlyIds } : {}) });
       setReport(result); setSettings(readDeviceSettings()); await refreshCache();
-      setSyncMessage(!result.mediaSupported ? `已保存 ${result.items} 首曲库清单；请在手机 App 下载音乐，浏览器不会保存离线音乐。` : result.cancelled ? `已停止下载，已保存的 ${result.readyItems} 首音乐可继续使用。` : result.complete ? `全部完成：${result.readyItems}/${result.items} 首音乐可离线播放。` : `部分完成：${result.readyItems}/${result.items} 首音乐可离线播放，${result.failed.length} 个文件失败，可重试。`);
+      setSyncMessage(!result.mediaSupported ? `已保存 ${result.items} 首曲库清单；请在手机 App 下载音乐，浏览器不会保存离线音乐。` : result.cancelled ? `已停止下载，已保存的 ${result.readyItems} 首音乐可继续使用。` : result.complete ? `${onlyIds ? '歌单下载完成' : '全部完成'}：${result.readyItems}/${result.items} 首音乐可离线播放。` : `部分完成：${result.readyItems}/${result.items} 首音乐可离线播放，${result.failed.length} 个文件失败，可重试。`);
     } catch { setSyncMessage(abort.signal.aborted ? '下载已停止，已完成的缓存保留。' : '下载未完成，请检查 Mac Mini 连接后重试；已有缓存保留。'); }
     finally { controller.current = null; setBusy(false); setStopping(false); setProgress(null); }
   };
@@ -124,6 +133,8 @@ export default function SettingsPage() {
         <p className="muted">已缓存 {cache.count} 个文件，占用 {humanBytes(cache.bytes)}。{isOfflineSupported() ? '' : '当前环境不落盘媒体。'}</p>
         <label className="check-row"><input type="checkbox" checked={includeScores} disabled={busy} onChange={e=>setIncludeScores(e.target.checked)}/>同时下载图片 / PDF 谱</label><div className="button-row">
           <button className="primary" disabled={busy || checking} onClick={() => void sync()}>下载全部音乐到手机</button>
+          <button disabled={busy || checking || !presets.want.length} onClick={() => void sync(presets.want)}>{presetLabel('想学歌单', presets.want, presetPlans.want)}</button>
+          <button disabled={busy || checking || !presets.program.length} onClick={() => void sync(presets.program)}>{presetLabel('今晚节目单', presets.program, presetPlans.program)}</button>
           {!busy && report?.mediaSupported && !report.complete && <button disabled={checking} onClick={() => void sync()}>重试未完成下载</button>}
           {progress && <button disabled={stopping} onClick={stop}>{stopping ? '正在停止…' : '停止下载'}</button>}
           <button disabled={busy || checking || cache.count === 0} onClick={() => void clearCache()}>清空离线缓存</button>

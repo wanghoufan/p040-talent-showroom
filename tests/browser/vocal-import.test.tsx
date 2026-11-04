@@ -94,15 +94,15 @@ it('结构人工校准保存为 manual，非法区间明确报错且不落盘', 
   fireEvent.click(screen.getByRole('button', { name: '手工标注歌曲结构' }));
   const dialog = screen.getByRole('dialog', { name: '校准歌曲结构' });
   fireEvent.click(screen.getByRole('button', { name: '新增一段' }));
-  fireEvent.change(screen.getByLabelText('第 1 段名称'), { target: { value: 'A1' } });
-  fireEvent.change(screen.getByLabelText('第 1 段开始秒数'), { target: { value: '5' } });
-  fireEvent.change(screen.getByLabelText('第 1 段结束秒数'), { target: { value: '2' } });
+  // V3.2 起段落编号自动生成（A1/B1…），用户只填时间。
+  fireEvent.change(screen.getByLabelText('本段开始秒数'), { target: { value: '5' } });
+  fireEvent.change(screen.getByLabelText('本段结束秒数'), { target: { value: '2' } });
   fireEvent.click(screen.getByRole('button', { name: '保存结构' }));
 
   await waitFor(() => expect(screen.getByText(/结束时间必须晚于开始时间/)).toBeVisible());
   expect(snapshot()[0].sections).toBeUndefined();
 
-  fireEvent.change(screen.getByLabelText('第 1 段结束秒数'), { target: { value: '30' } });
+  fireEvent.change(screen.getByLabelText('本段结束秒数'), { target: { value: '30' } });
   fireEvent.click(screen.getByRole('button', { name: '保存结构' }));
 
   await waitFor(() => expect(dialog.isConnected).toBe(false));

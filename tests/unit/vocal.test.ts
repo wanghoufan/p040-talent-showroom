@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest';
 import {
   assignSectionIds, availableVocalSources, defaultVocalSource, hasVocalTrack, lineAtTime, lineLoopFor,
   mapLegacyAudioRole, mergeRapRanges, parseLrc, rapRangeAt, rapRangesFromSections, resolveLineTimings,
-  sectionAtTime, skipRapTarget, sortSections, validateSections, vocalTracksFromLegacy,
+  sectionAtTime, skipRapTarget, sortSections, talentDurationMs, validateSections, vocalTracksFromLegacy,
 } from '../../src/lib/vocal';
 import type { MediaFile, TimedLyric, VocalSection } from '../../src/lib/types';
 
@@ -89,6 +89,36 @@ describe('结构段', () => {
     expect(validateSections([section({ id: 'A', repeatOf: 'A' })])).toContain('A:SELF_REPEAT');
   });
 
+  it('旧边界：原样保留的历史尾段不判越界，改动过或新增的越界仍然拒绝', () => {
+    const durationMs = 219572;
+    // 旧数据段尾 219600 比真实音轨多 28ms；原样保留时不能挡住其它段落的保存。
+    const persisted = [
+      section({ id: 'A', startMs: 212740, endMs: 219600 }),
+      section({ id: 'B', startMs: 200000, endMs: 212740 }),
+    ];
+    expect(validateSections(persisted, durationMs)).toContain('A:OUT_OF_RANGE');
+    expect(validateSections(persisted, durationMs, { persisted })).toEqual([]);
+
+    // 同 id 但边界被改成新的越界值：不再享受旧边界豁免。
+    const edited = [section({ id: 'A', startMs: 212740, endMs: 220000 }), section({ id: 'B', startMs: 200000, endMs: 212740 })];
+    expect(validateSections(edited, durationMs, { persisted })).toContain('A:OUT_OF_RANGE');
+
+    // 新增段落越界同样拒绝。
+    const added = [...persisted, section({ id: 'C', startMs: 219600, endMs: 220000 })];
+    expect(validateSections(added, durationMs, { persisted })).toContain('C:OUT_OF_RANGE');
+  });
+
+  it('曲目最长时长按音轨算，不被较短的 item.durationMs 截断', () => {
+    const base = {
+      kind: 'VOCAL' as const, audioRole: 'REFERENCE' as const, durationMs: 219560,
+      tracks: { original: { media: { ...media, id: 'm-original', durationMs: 219572 } } },
+    };
+    expect(talentDurationMs(base)).toBe(219572);
+    expect(talentDurationMs({ ...base, tracks: undefined })).toBe(219560);
+    // 不是唱歌曲目时不做音轨补位，避免把别的曲目时长算进来。
+    expect(talentDurationMs({ kind: 'GUITAR', audioRole: 'REFERENCE', durationMs: 1000, tracks: { original: { media: { ...media, durationMs: 99999 } } } })).toBe(1000);
+  });
+
   it('半开区间定位与排序稳定', () => {
     const sections = [section({ id: 'B', startMs: 1000, endMs: 2000 }), section({ id: 'A', startMs: 0, endMs: 1000 })];
     expect(sortSections(sections).map((item) => item.id)).toEqual(['A', 'B']);
@@ -124,6 +154,22 @@ describe('Rap 区间', () => {
     expect(ranges).toEqual([{ startMs: 4000, endMs: 22000 }, { startMs: 34000, endMs: 54000 }]);
     expect(rapRangeAt(21999, ranges)?.endMs).toBe(22000);
     expect(rapRangeAt(22000, ranges)).toBeNull();
+  });
+
+  it('算法写的 rap 段在用户确认前不参与跳过', () => {
+    const ranges = rapRangesFromSections([
+      section({ id: 'R1', type: 'rap', startMs: 4000, endMs: 22000, source: 'algorithm' }),
+      section({ id: 'R2', type: 'rap', startMs: 34000, endMs: 54000 }),
+    ]);
+    expect(ranges).toEqual([{ startMs: 34000, endMs: 54000 }]);
+  });
+
+  it('草稿应用后的 manual 段不算确认：只有 rapApproved=true 才跳过', () => {
+    const ranges = rapRangesFromSections([
+      section({ id: 'R1', type: 'rap', startMs: 4000, endMs: 22000, source: 'manual', rapApproved: false }),
+      section({ id: 'R2', type: 'rap', startMs: 34000, endMs: 54000, source: 'manual', rapApproved: true }),
+    ]);
+    expect(ranges).toEqual([{ startMs: 34000, endMs: 54000 }]);
   });
 
   it('跳段带 30ms 缓冲、可关闭、夹取总时长且不制造回跳', () => {

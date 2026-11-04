@@ -4,9 +4,12 @@ import TrashPage from '../pages/TrashPage';
 import { observeLayoutReservations } from './layout-reservations';
 import TalentLibraryPage from '../pages/TalentLibraryPage';
 import TalentDetailPage from '../pages/TalentDetailPage';
-import { useEffect } from 'react';
-import { NavLink, Route, Routes, useLocation } from 'react-router-dom';
-import { NAV_TABS } from './routes';
+import { useEffect, useRef } from 'react';
+import { Link, Route, Routes, useLocation } from 'react-router-dom';
+import { NAV_TABS, activeNavKey } from './routes';
+import { storedRepertoire } from '../lib/repertoire-store';
+import TalentNav from '../components/TalentNav';
+import '../styles/nav-v13.css';
 import { ingestNativeShares, submitAllPending } from '../lib/pending-shares';
 import { onNativeShare } from '../native/share-target';
 import LibraryPage from '../pages/LibraryPage';
@@ -49,6 +52,14 @@ function EmptyShell({ title, hint }: EmptyShellProps) {
 
 export default function App() {
   const { pathname } = useLocation();
+  // 详情页 pathname 不含类别；先用缓存曲目解析，缓存缺失时沿用最近一次的才艺 Tab。
+  const lastTalentTab = useRef<'vocal' | 'guitar'>('vocal');
+  const activeKey = activeNavKey(
+    pathname,
+    (id) => storedRepertoire().find((item) => item.id === id)?.kind ?? null,
+    lastTalentTab.current,
+  );
+  if (activeKey === 'vocal' || activeKey === 'guitar') lastTalentTab.current = activeKey;
   useEffect(()=>{window.scrollTo(0,0);},[pathname]);
   useEffect(() => { const shell=document.querySelector<HTMLElement>('.app-shell'); return shell ? observeLayoutReservations(shell) : undefined; }, []);
   useEffect(() => {
@@ -69,6 +80,7 @@ export default function App() {
   if(pathname.startsWith('/request/'))return <Routes><Route path="/request/:token" element={<GuestRequestPage/>}/></Routes>;
   return (
     <div className="app-shell">
+      <TalentNav />
       <main className="app-main" id="main">
         <Routes>
           <Route
@@ -97,16 +109,20 @@ export default function App() {
         </Routes>
       </main>
       <nav className="tabbar" aria-label="主导航">
-        {NAV_TABS.map((tab) => (
-          <NavLink
-            key={tab.key}
-            to={tab.path}
-            end={tab.path === '/'}
-            className={({ isActive }) => (isActive || (tab.path === '/' && pathname.startsWith('/repertoire/')) ? 'tab tab--active' : 'tab')}
-          >
-            <span className="tab__label">{tab.label}</span>
-          </NavLink>
-        ))}
+        {NAV_TABS.map((tab) => {
+          const active = tab.key === activeKey;
+          return (
+            <Link
+              key={tab.key}
+              to={tab.path}
+              className={active ? 'tab tab--active' : 'tab'}
+              aria-current={active ? 'page' : undefined}
+              data-tab={tab.key}
+            >
+              <span className="tab__label">{tab.label}</span>
+            </Link>
+          );
+        })}
       </nav>
     </div>
   );

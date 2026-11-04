@@ -30,7 +30,7 @@
 ### 新项目大项目·一句话（复制即可）
 
 ```text
-按 /Users/zzymima0000/Developer/coding/4.Templates（PC）/2026-09-09 丨 MAC 丨 ORCA V2.1 治理模板 丨 分发版-2026-09-11/新项目模板包/README.md 和它的归位表，把 ORCA 治理模板铺进这个项目根目录（USER_MODEL_OVERRIDE.md 建软链指母版，别拷实文件），铺完你就是本项目编排者。项目是 XXX，第一阶段，计划。
+按 /Users/zzymima0000/Developer/coding/1.Active/000-alw-个人偏好-电脑治理仓库-skill管理/体系管家/2026-09-09 丨 MAC 丨 ORCA V2.1 治理模板 丨 分发版-2026-09-11/新项目模板包/README.md 和它的归位表，把 ORCA 治理模板铺进这个项目根目录（USER_MODEL_OVERRIDE.md 建软链指母版，别拷实文件），铺完你就是本项目编排者。项目是 XXX，第一阶段，计划。
 ```
 
 之后每一单你只说**业务目标 ＋ 口令**（下面三个口令），铺包/派工/落账/验收全由编排者自己走完。
@@ -109,7 +109,7 @@ bash "<母版路径>/scripts/restore-framework.sh" <项目根>
 - **绝不覆盖**你的应用代码、`README.md`、产品计划、评审、交接、账本、经验；
 - 补完按提示跑两条自检（`check-channel-preflight.sh` / `check-ledger.mjs`）即可继续开发。
 
-> 本机母版（`4.Templates…/ORCA V2.1 治理模板`）本身就是云端公开仓（`wanghoufan/orca-v2.1-governance`），本机丢了还能拉回来——治理体系本身永远丢不了。
+> 本机母版（`体系管家/ORCA V2.1 治理模板`）本身就是云端公开仓（`wanghoufan/orca-v2.1-governance`），本机丢了还能拉回来——治理体系本身永远丢不了。
 
 ## 主开发者开发使用说明（2026-10-10 用户定，2026-10-17 改名与澄清）
 

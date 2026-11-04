@@ -352,3 +352,45 @@
 .vocal-map__notice { margin: 0 0 8px; padding: 8px 10px; font-size: 15px; line-height: 1.45; color: var(--text); background: var(--surface-2); border-radius: 10px; }
 /* 抽屉里的正文不再用 14px：提示、来源说明都是要读的正文。 */
 .vocal-studio .vocal-hint, .vocal-drawer .vocal-hint { font-size: 15px; line-height: 1.45; }
+
+/* ===== V1.3-R2：沉浸顶栏「地图」入口（原「分段」按钮位置） ===== */
+.vocal-immersive__map { min-height: 44px; padding: 0 10px; border-radius: 14px; font-size: 15px; white-space: nowrap; }
+.vocal-immersive__map[aria-pressed='true'] { color: var(--primary); border-color: var(--primary); background: var(--surface-2); }
+
+/* ===== V1.3-R2：逐句循环范围 =====
+   用户口径：要重复的那 2/4/N 句必须被「框出来」，不是只标当前句。
+   相邻行用左右边框连成一个整框，首行补上边框、末行补下边框；当前句在框内再加一层强调。
+   色弱/黑白屏靠边框与字重区分，不只靠底色。 */
+.vocal-line--loop-range {
+  background: color-mix(in srgb, var(--primary) 9%, transparent);
+  border-left: 2px solid var(--primary);
+  border-right: 2px solid color-mix(in srgb, var(--primary) 55%, transparent);
+  border-radius: 0;
+}
+.vocal-line--loop-range.is-loop-first {
+  border-top: 2px solid var(--primary);
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+  padding-top: 5px;
+}
+.vocal-line--loop-range.is-loop-last {
+  border-bottom: 2px solid var(--primary);
+  border-bottom-left-radius: 12px;
+  border-bottom-right-radius: 12px;
+  padding-bottom: 5px;
+}
+.vocal-line--loop-range .vocal-line__text { color: var(--text); }
+.vocal-line--loop-current {
+  background: color-mix(in srgb, var(--primary) 20%, transparent);
+}
+.vocal-line--loop-current .vocal-line__text { color: var(--primary); font-weight: 700; }
+
+/* 沉浸页恢复左右信息后仍要放得下：窄屏压缩间距，390px 以上按正常节奏。 */
+.vocal-practice.is-immersive .vocal-line { gap: 7px; padding: 4px 6px; }
+.vocal-practice.is-immersive .vocal-line__time { min-width: 38px; font-size: 13px; }
+.vocal-practice.is-immersive .vocal-line__index { min-width: 18px; font-size: 13px; }
+@media (max-width: 360px) {
+  .vocal-practice.is-immersive .vocal-line { gap: 5px; padding: 4px 4px; }
+  .vocal-practice.is-immersive .vocal-line__time { min-width: 34px; font-size: 12px; }
+  .vocal-practice.is-immersive .vocal-line__index { min-width: 16px; font-size: 12px; }
+}

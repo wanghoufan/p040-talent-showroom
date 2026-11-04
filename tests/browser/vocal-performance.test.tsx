@@ -290,3 +290,49 @@ it('快速切曲时旧曲目的异步解析不会回写到新曲目',async()=>{
   expect(audio.getAttribute('src')).toBeNull();
   expect(play).not.toHaveBeenCalled();
 });
+
+it('演出默认只显示韩文原文，手动切换后才出现中文译文',async()=>{
+  const koLyrics:TimedLyric[]=[
+    {id:'k1',startMs:0,text:'내가 달리는 길은'},
+    {id:'k2',startMs:4000,text:'허나 그 길엔 온통 덫'},
+  ];
+  const translations={version:1,language:'zh' as const,source:'ai' as const,lines:[
+    {id:'k1',text:'我奔跑的那条路',source:'ai' as const},
+    {id:'k2',text:'然而那条路上满是陷阱',source:'ai' as const},
+  ]};
+  seed([{kind:'VOCAL',id:'vk'}],[vocal('vk',{language:'ko',lyrics:koLyrics,translations,tracks:{accompaniment:{media:media('acck')}}})],[],['acck']);
+  render(<PerformancePage/>);
+  await waitFor(()=>expect(audioOf().getAttribute('src')).toContain('/acck'));
+  expect(screen.getByText('내가 달리는 길은')).toBeVisible();
+  expect(screen.queryByText('我奔跑的那条路')).not.toBeInTheDocument();
+  fireEvent.click(screen.getByRole('button',{name:/显示中文（韩中）/}));
+  expect(screen.getByText('我奔跑的那条路')).toBeVisible();
+  fireEvent.click(screen.getByRole('button',{name:/隐藏中文（韩中）/}));
+  expect(screen.queryByText('我奔跑的那条路')).not.toBeInTheDocument();
+});
+
+it('切到下一首时译文开关回到只显示原文，不把上一首的中文带到台上',async()=>{
+  const ko:(id:string)=>TimedLyric[]=(prefix)=>[
+    {id:`${prefix}1`,startMs:0,text:'내가 달리는 길은'},
+    {id:`${prefix}2`,startMs:4000,text:'허나 그 길엔 온통 덫'},
+  ];
+  const tr=(prefix:string)=>({version:1,language:'zh' as const,source:'ai' as const,lines:[
+    {id:`${prefix}1`,text:'我奔跑的那条路',source:'ai' as const},
+    {id:`${prefix}2`,text:'然而那条路上满是陷阱',source:'ai' as const},
+  ]});
+  seed([{kind:'VOCAL',id:'v1'},{kind:'VOCAL',id:'v2'}],[
+    vocal('v1',{language:'ko',lyrics:ko('a'),translations:tr('a'),tracks:{accompaniment:{media:media('acc1')}}}),
+    vocal('v2',{language:'ko',lyrics:ko('b'),translations:tr('b'),tracks:{accompaniment:{media:media('acc2')}}}),
+  ],[],['acc1','acc2']);
+  render(<PerformancePage/>);
+  await waitFor(()=>expect(audioOf().getAttribute('src')).toContain('/acc1'));
+
+  fireEvent.click(screen.getByRole('button',{name:/显示中文（韩中）/}));
+  expect(screen.getByText('我奔跑的那条路')).toBeVisible();
+
+  fireEvent.click(screen.getByRole('button',{name:'下一首'}));
+  await waitFor(()=>expect(screen.getByText('허나 그 길엔 온통 덫')).toBeVisible());
+  expect(screen.queryByText('我奔跑的那条路')).not.toBeInTheDocument();
+  expect(screen.queryByText('然而那条路上满是陷阱')).not.toBeInTheDocument();
+  expect(screen.getByRole('button',{name:/显示中文（韩中）/})).toBeVisible();
+});

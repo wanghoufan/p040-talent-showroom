@@ -1,0 +1,240 @@
+/* A4 学习稿（P040 §6）
+ * 作用域全部挂在 `.vocal-print-*` / `body.vocal-print-open` 下：不影响屏幕其它页面。
+ * 打印基准固定为浅色（白纸黑字），深色主题下预览也保持浅色，避免打印出来一片黑。
+ */
+
+.vocal-print-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding-top: var(--inset-top);
+  background: rgba(16, 16, 18, 0.55);
+}
+
+.vocal-print-sheet {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: min(100%, 860px);
+  max-height: 90vh;
+  max-height: 90dvh;
+  padding: 14px 14px calc(14px + var(--inset-bottom));
+  color: #141414;
+  background: #f2f2f3;
+  border-radius: 20px 20px 0 0;
+  box-shadow: 0 -8px 30px rgba(0, 0, 0, 0.25);
+}
+
+.vocal-print-sheet__head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.vocal-print-sheet__title {
+  margin: 0;
+  font-size: 20px;
+  letter-spacing: -0.4px;
+}
+
+.vocal-print-sheet__sub {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin: 4px 0 0;
+  color: #5b5b5b;
+  font-size: 12px;
+}
+
+.vocal-print-sheet__close {
+  min-width: 44px;
+  min-height: 44px;
+  padding: 0 10px;
+  color: #141414;
+  background: #fff;
+  border: 1px solid #d0d0d2;
+  border-radius: 12px;
+  font-size: 16px;
+}
+
+.vocal-print-badge {
+  padding: 2px 8px;
+  border: 1px solid #9a9a9a;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+/* 机器参考用虚线边框：黑白打印也能与人工结论区分。 */
+.vocal-print-badge--machine { border-style: dashed; background: #f7f7f7; }
+.vocal-print-badge--manual { border-style: solid; background: #fff; }
+.vocal-print-badge--none { border-style: dotted; color: #6b6b6b; }
+
+.vocal-print-hint {
+  margin: 0;
+  padding: 8px 10px;
+  color: #3f3f3f;
+  background: #fff;
+  border: 1px solid #dcdcdc;
+  border-radius: 10px;
+  font-size: 12.5px;
+  line-height: 1.45;
+}
+
+.vocal-print-hint--warn { border-color: #b07d00; background: #fff8e1; color: #6b4a00; }
+.vocal-print-hint--error { border-color: #b3261e; background: #fdecea; color: #8c1d18; }
+
+.vocal-print-scroll {
+  flex: 1 1 auto;
+  min-height: 0;
+  max-height: 58vh;
+  max-height: 58dvh;
+  padding: 6px 2px 14px;
+  overflow: auto;
+  overscroll-behavior: contain;
+  background: #dcdcdd;
+  border-radius: 12px;
+}
+
+.vocal-print-preview {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  margin: 10px auto;
+}
+
+.vocal-print-preview__caption {
+  margin: 0;
+  color: #4a4a4a;
+  font-size: 11px;
+}
+
+.vocal-print-page {
+  position: relative;
+  overflow: hidden;
+  background: #ffffff;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.18);
+}
+
+.vocal-print-page__inner {
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform-origin: top left;
+  color: #111111;
+  font-family: "Noto Sans SC", "Noto Sans KR", "PingFang SC", "Microsoft YaHei", "Malgun Gothic", sans-serif;
+  background: #ffffff;
+}
+
+.vocal-print-run {
+  position: absolute;
+  white-space: pre;
+  line-height: 1;
+}
+
+.vocal-print-run.is-muted { color: #4a4a4a; }
+.vocal-print-run--title { color: #000000; letter-spacing: -0.01em; }
+.vocal-print-run--section { color: #000000; letter-spacing: 0.01em; }
+.vocal-print-run--lyric { color: #111111; }
+.vocal-print-run--time,
+.vocal-print-run--index { color: #4a4a4a; }
+.vocal-print-run--translation { color: #3d3d3d; }
+.vocal-print-run--note-label { color: #8a8a8a; }
+
+.vocal-print-rule {
+  position: absolute;
+  display: block;
+  border-top: 1px solid #8a8a8a;
+}
+
+.vocal-print-rule--dashed {
+  border-top: 0;
+  border-left: 1px dashed #bcbcbc;
+}
+
+.vocal-print-actions {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.vocal-print-actions button {
+  min-height: 48px;
+  color: #141414;
+  background: #ffffff;
+  border: 1px solid #c9c9cb;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.vocal-print-actions button:disabled { opacity: 0.55; }
+
+/* A4 纵向 + 14mm 页边距：页内容按「内容区」排版，页边距交给 @page，避免双倍留白。 */
+@page { size: A4; margin: 14mm; }
+
+@media print {
+  html,
+  body { background: #ffffff !important; }
+
+  body.vocal-print-open #root { display: none !important; }
+
+  .vocal-print-backdrop {
+    position: static;
+    display: block;
+    padding: 0;
+    background: none;
+  }
+
+  .vocal-print-sheet {
+    display: block;
+    width: auto;
+    max-height: none;
+    padding: 0;
+    background: #ffffff;
+    border-radius: 0;
+    box-shadow: none;
+  }
+
+  .vocal-print-sheet__head,
+  .vocal-print-hint,
+  .vocal-print-actions,
+  .vocal-print-preview__caption { display: none !important; }
+
+  .vocal-print-scroll {
+    max-height: none;
+    padding: 0;
+    overflow: visible;
+    background: #ffffff;
+    border-radius: 0;
+  }
+
+  .vocal-print-preview { display: block; margin: 0; }
+
+  /* 打印时只保留内容区：外圈 39.69pt 由 @page 的 14mm 提供。 */
+  .vocal-print-page {
+    width: 515.9pt !important;
+    height: 762pt !important;
+    box-shadow: none;
+    break-after: page;
+    page-break-after: always;
+  }
+
+  .vocal-print-page:last-child {
+    break-after: auto;
+    page-break-after: auto;
+  }
+
+  .vocal-print-page__inner {
+    transform: translate(-39.69pt, -39.69pt) !important;
+    width: 595.28pt !important;
+    height: 841.89pt !important;
+  }
+}

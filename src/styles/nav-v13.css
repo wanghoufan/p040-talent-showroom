@@ -1,0 +1,106 @@
+/*
+ * V1.3-R2 §8｜上下导航互换（AC-NAV-01～07）
+ *
+ * 只在既有 index.css 之上做增量：底部四主 Tab（舞蹈/唱歌/吉他/我的）+ 顶部演出专区（今晚节目单/演出模式）。
+ * 不改动 index.css / vocal-practice.css，安全区沿用 --inset-*（内部已含 env(safe-area-inset-*)）。
+ */
+
+/* ── 顶部演出专区 ───────────────────────────────────────────────── */
+.perf-nav {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px 2px;
+  padding-left: calc(12px + var(--inset-left, 0px));
+  padding-right: calc(12px + var(--inset-right, 0px));
+}
+
+.perf-nav__label {
+  flex: 0 0 auto;
+  font-size: 12px;
+  letter-spacing: .12em;
+  color: var(--muted);
+}
+
+.perf-nav__link {
+  flex: 0 1 auto;
+  min-height: 48px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 16px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--surface);
+  color: var(--muted);
+  font-size: 14px;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.perf-nav__link--active {
+  color: var(--primary);
+  border-color: var(--primary);
+  background: var(--surface-2);
+  font-weight: 700;
+}
+
+/* ── 底部四主 Tab ──────────────────────────────────────────────── */
+.tabbar {
+  gap: 4px;
+  padding: 6px 8px calc(6px + var(--inset-bottom, env(safe-area-inset-bottom, 0px)));
+  padding-left: calc(8px + var(--inset-left, 0px));
+  padding-right: calc(8px + var(--inset-right, 0px));
+}
+
+.tabbar .tab {
+  position: relative;
+  flex-direction: column;
+  gap: 2px;
+  min-height: 52px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.tabbar .tab--active {
+  color: var(--primary);
+  background: var(--surface-2);
+}
+
+/* 选中条：不依赖单一颜色也能辨认（深色/浅色/低饱和屏同样可见）。 */
+.tabbar .tab--active::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: 4px;
+  width: 22px;
+  height: 3px;
+  border-radius: 2px;
+  background: var(--primary);
+  transform: translateX(-50%);
+}
+
+/* 顶部分类不再重复出现后，列表页右侧操作保持靠右。 */
+.library-header > :first-child {
+  margin-left: auto;
+}
+
+/* ── 沉浸练歌：隐藏全部导航，避免底栏压住歌词与播放器 ───────────── */
+body:has(.vocal-practice.is-immersive) .tabbar,
+body:has(.vocal-practice.is-immersive) .perf-nav {
+  display: none;
+}
+
+/* ── 窄屏 / 横屏：不重叠、不换行 ───────────────────────────────── */
+@media (max-width: 360px) {
+  .perf-nav { gap: 6px; padding-top: 4px; }
+  .perf-nav__label { display: none; }
+  .perf-nav__link { padding: 0 12px; font-size: 13px; }
+  .tabbar .tab { font-size: 12px; }
+}
+
+@media (orientation: landscape) and (max-height: 480px) {
+  .perf-nav { padding-top: 2px; }
+  .perf-nav__link { min-height: 44px; }
+  .tabbar .tab { min-height: 44px; }
+}

@@ -972,3 +972,27 @@ test('结构推测：前奏/主歌/副歌按歌词重复切段，无歌词不臆
   ]);
   assert.deepEqual(buildSections([], 40000), []);
 });
+
+/* 用户待修项：导入端不许把署名行当成歌词。网易云样本会把「作词 : XXX」写进带时戳的歌词行，
+   纯音乐占位行同理——两者都不进歌词库，否则会被当成一句歌词显示并送翻译。 */
+test('LRC 署名行与纯音乐占位行不进歌词', async () => {
+  const { parseLrcText } = await import('../server/vocal-import/lrc.mjs');
+  const raw = [
+    '[ti:Let Go]',
+    '[00:00.00]作词 : 石玺彤',
+    '[00:01.00]Lyrics by: Justin Blau',
+    '[00:02.00]纯音乐，请欣赏',
+    '[00:03.00]第一句歌词',
+    '[00:05.00]第二句歌词',
+  ].join('\n');
+  const parsed = parseLrcText(raw);
+  assert.deepEqual(parsed.timedLines.map(line => line.text), ['第一句歌词', '第二句歌词']);
+  assert.equal(parsed.text, '第一句歌词\n第二句歌词');
+});
+
+test('纯文本歌词里的署名行同样被丢弃', async () => {
+  const { parseLrcText } = await import('../server/vocal-import/lrc.mjs');
+  const parsed = parseLrcText('作曲 : Someone\n只有这一句\n纯音乐，请欣赏');
+  assert.equal(parsed.timedLines.length, 0);
+  assert.equal(parsed.text, '只有这一句');
+});

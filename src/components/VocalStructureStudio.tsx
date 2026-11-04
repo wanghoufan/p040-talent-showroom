@@ -4,7 +4,8 @@ import { ApiError } from '../lib/api';
 import { editLocally } from '../lib/offline-editing';
 import { sectionAtTime, sortSections, validateSections } from '../lib/vocal';
 import {
-  TYPE_ORDER, TYPE_TEXT, clearRepeat, confirmRepeat, previousSameType, relabelSections, setSectionType, splitSectionAt,
+  TYPE_ORDER, TYPE_TEXT, approveRapSection, clearRepeat, confirmRepeat, isRapConfirmed, previousSameType,
+  relabelSections, revokeRapSection, setSectionType, splitSectionAt,
 } from '../lib/vocal/structure';
 import {
   clearStructureReference, draftSectionsOf, loadCatalogReference, loadStructureReference, readStructureDraft,
@@ -17,6 +18,7 @@ import {
 } from '../lib/vocal/reference';
 import type { TalentItem, VocalSectionType } from '../lib/types';
 import '../styles/vocal-practice.css';
+import '../styles/vocal-structure-touch.css';
 
 /**
  * 结构工作室（P040 V3.4）：沉浸练歌页「地图」抽屉里的分段工作台。
@@ -54,6 +56,13 @@ interface Props {
 const MIN_SECTION_MS = 500;
 const WAVE_WIDTH = 1000;
 const WAVE_HEIGHT = 96;
+/**
+ * 分界线的触摸命中半径（屏幕像素）。旧实现按时长百分比（1.5%）判定，
+ * 195 秒的歌在 360px 宽的屏上只有 ±5px，手指一按就落空变成 seek，所以改成按像素算。
+ */
+const HIT_SLOP_PX = 24;
+/** 透明热区半宽：热区总宽 48px（视觉手柄仍是 r=9，不变粗）。 */
+const HIT_ZONE_PX = 24;
 const ACTION_ERROR: Record<string, string> = {
   SPLIT_TOO_CLOSE_TO_EDGE: '打点太靠近段落边缘（至少留 0.5 秒）',
   SECTION_NOT_FOUND: '段落不存在，请刷新后重试',
@@ -109,6 +118,13 @@ export default function VocalStructureStudio({
   const [busy, setBusy] = useState(false);
   const loaded = useRef(false);
   const drag = useRef<number | null>(null);
+  /** 正在拖动的手指/鼠标 id：只有它自己的 move/up 才作数，其他指针一律忽略。 */
+  const dragPointer = useRef<number | null>(null);
+  /** 真正拿到 pointer capture 的元素（可能是热区，也可能是 SVG 本身）。 */
+  const captureEl = useRef<Element | null>(null);
+  const svgRef = useRef<SVGSVGElement | null>(null);
+  /** 波形的实际渲染宽度：热区宽度要从「屏幕像素」换算回 viewBox 单位。 */
+  const [waveWidth, setWaveWidth] = useState(0);
   const fileInput = useRef<HTMLInputElement>(null);
   const [refBusy, setRefBusy] = useState(false);
   /** 正在循环的段：只影响体验提示，真正的循环区间仍由父组件播放器执行。 */
@@ -204,6 +220,28 @@ export default function VocalStructureStudio({
   const selected = useMemo(() => ordered.find((section) => section.id === selectedId) ?? null, [ordered, selectedId]);
   const previous = useMemo(() => (selected ? previousSameType(ordered, selected.id) : null), [ordered, selected]);
   const boundaries = useMemo(() => boundaryTimes(ordered), [ordered]);
+  const waveMounted = Boolean(selected);
+  /**
+   * 只有选中段时才画波形：挂载后量一次实际宽度，热区的 48px 才能换算回 viewBox 单位。
+   * 竖屏/横屏、抽屉宽度变化都要重新量，否则热区会跟视觉手柄错位。
+   */
+  useEffect(() => {
+    const element = svgRef.current;
+    if (!element) return undefined;
+    const measure = (): void => {
+      const next = element.getBoundingClientRect().width;
+      setWaveWidth((current) => (Math.abs(current - next) > 0.5 ? next : current));
+    };
+    measure();
+    if (typeof ResizeObserver === 'undefined') {
+      window.addEventListener('resize', measure);
+      return () => window.removeEventListener('resize', measure);
+    }
+    const observer = new ResizeObserver(measure);
+    observer.observe(element);
+    return () => observer.disconnect();
+  }, [waveMounted]);
+
   const referenceMarks = useMemo(() => ordered.filter(isReferenceSection), [ordered]);
   const disputedCount = useMemo(() => ordered.filter((section) => section.disputed).length, [ordered]);
   const hasFormal = (item.sections?.length ?? 0) > 0;
@@ -319,33 +357,84 @@ export default function VocalStructureStudio({
     run(() => confirmRepeat(ordered, selected.id, previousSection.id, relation, item.lyrics ?? []) as StudioSection[], selected.id);
   }
 
+  /** 波形的屏幕几何：命中判定一律用像素，不再用在时长里的百分比。 */
+  function waveBox(): { left: number; width: number } {
+    const rect = svgRef.current?.getBoundingClientRect();
+    // 量不到宽度（还没布局完）时按 1 单位 = 1px 兜底，至少不会把整块判定成「没点中」。
+    return { left: rect?.left ?? 0, width: rect && rect.width > 0 ? rect.width : WAVE_WIDTH };
+  }
+
   /** 波形/刻度上的拖动：只改分界点，左右两段同时更新。 */
   function timeFromPointer(event: ReactPointerEvent<SVGSVGElement>): number | null {
-    const rect = event.currentTarget.getBoundingClientRect();
-    if (!rect.width || !durationMs) return null;
-    const ratio = Math.min(1, Math.max(0, (event.clientX - rect.left) / rect.width));
+    const { left, width } = waveBox();
+    if (!durationMs) return null;
+    const ratio = Math.min(1, Math.max(0, (event.clientX - left) / width));
     return Math.round(ratio * durationMs);
+  }
+
+  /** 手指/鼠标落点附近的最近分界线；超过 HIT_SLOP_PX 就算没命中。 */
+  function boundaryNear(clientX: number): number | null {
+    const { left, width } = waveBox();
+    if (!durationMs || !boundaries.length) return null;
+    let best: { time: number; distance: number } | null = null;
+    for (const time of boundaries) {
+      const distance = Math.abs(clientX - (left + (time / durationMs) * width));
+      if (distance > HIT_SLOP_PX) continue;
+      if (!best || distance < best.distance) best = { time, distance };
+    }
+    return best?.time ?? null;
+  }
+
+  /**
+   * 开始拖动：进撤销栈 + 抢 pointer capture。
+   * capture 一定要挂在 SVG 上：分界线的 key/坐标每帧都在变，挂在手柄元素上会随 DOM 重建丢掉捕获。
+   */
+  function beginDrag(event: ReactPointerEvent<SVGElement>, time: number): void {
+    drag.current = time;
+    dragPointer.current = event.pointerId;
+    setHistory((current) => [...current.slice(-19), ordered]);
+    setError('');
+    const target = svgRef.current ?? (event.currentTarget as SVGElement);
+    captureEl.current = target;
+    target.setPointerCapture?.(event.pointerId);
+    // SVG 上已经是 touch-action:none；这里再挡一次，防止安卓 WebView 把后续 move 当滚动。
+    if (event.cancelable) event.preventDefault();
+    event.stopPropagation();
+  }
+
+  function endDrag(event?: ReactPointerEvent<SVGElement>): void {
+    const id = dragPointer.current;
+    const target = captureEl.current;
+    drag.current = null;
+    dragPointer.current = null;
+    captureEl.current = null;
+    if (!event || id === null || !target) return;
+    const capture = target as Element & { hasPointerCapture?: (id: number) => boolean; releasePointerCapture?: (id: number) => void };
+    if (capture.hasPointerCapture?.(id)) capture.releasePointerCapture?.(id);
+  }
+
+  /** 是否还握着 capture：握着就说明拖动没结束，pointerleave 不能当成抬手。 */
+  function stillCaptured(event: ReactPointerEvent<SVGElement>): boolean {
+    const id = dragPointer.current;
+    if (id === null) return false;
+    const target = (captureEl.current ?? event.currentTarget) as Element & { hasPointerCapture?: (id: number) => boolean };
+    return target.hasPointerCapture?.(id) === true;
   }
 
   function onPointerDown(event: ReactPointerEvent<SVGSVGElement>): void {
     const at = timeFromPointer(event);
     if (at === null) return;
-    const nearest = boundaries.reduce<{ value: number; distance: number } | null>((best, value) => {
-      const distance = Math.abs(value - at);
-      if (distance > (durationMs / 100) * 1.5) return best;
-      return !best || distance < best.distance ? { value, distance } : best;
-    }, null);
-    if (!nearest) { audio.seek(at); return; }
-    drag.current = nearest.value;
-    setHistory((current) => [...current.slice(-19), ordered]);
-    (event.currentTarget as SVGSVGElement & { setPointerCapture?: (id: number) => void }).setPointerCapture?.(event.pointerId);
-    event.preventDefault();
+    const boundary = boundaryNear(event.clientX);
+    if (boundary === null) { audio.seek(at); return; }
+    beginDrag(event as ReactPointerEvent<SVGElement>, boundary);
   }
 
   function onPointerMove(event: ReactPointerEvent<SVGSVGElement>): void {
     if (drag.current === null) return;
+    if (dragPointer.current !== null && event.pointerId !== dragPointer.current) return;
     const at = timeFromPointer(event);
     if (at === null) return;
+    if (event.cancelable) event.preventDefault();
     try {
       const next = moveBoundary(ordered, drag.current, at, durationMs);
       // 拖动后分界点的真实位置会被夹住：以结果里最接近指针的那条为准，继续拖才不会跳。
@@ -357,7 +446,13 @@ export default function VocalStructureStudio({
     } catch { /* 拖到边上会被夹住，忽略即可 */ }
   }
 
-  function onPointerUp(): void { drag.current = null; }
+  function onPointerUp(event: ReactPointerEvent<SVGSVGElement>): void { endDrag(event as ReactPointerEvent<SVGElement>); }
+
+  function onPointerLeave(event: ReactPointerEvent<SVGSVGElement>): void {
+    // 触摸拖动期间已经拿到 capture；此时 leave 只是手指滑出了 SVG 边界，不能提前结束拖动。
+    if (stillCaptured(event as ReactPointerEvent<SVGElement>)) return;
+    endDrag();
+  }
 
   function switchSource(next: 'reference' | 'formal'): void {
     const fromDraft = relabelSections(sortSections(draftSectionsOf(draft)));
@@ -494,6 +589,8 @@ export default function VocalStructureStudio({
 
   const widthOf = (section: StudioSection): number => (durationMs ? (section.endMs - section.startMs) / durationMs : 0);
   const xOf = (ms: number): number => (durationMs ? (ms / durationMs) * WAVE_WIDTH : 0);
+  /** 48px 热区换算成 viewBox 单位：viewBox 宽 1000，屏上只有 300 多 px，不能用固定 r。 */
+  const hitHalf = HIT_ZONE_PX * (waveWidth > 0 ? WAVE_WIDTH / waveWidth : 1);
 
   const statusText = loading
     ? '正在读取…'
@@ -559,7 +656,8 @@ export default function VocalStructureStudio({
           </div>
         ) : (
           <div className="vocal-map__empty">
-            <p>这首歌还没有段落。先播放，听到要分开的地方，点下面「播放位置打点」，就会从当前位置切成两段；分错了可以撤销。</p>
+            <p>这首歌还没有段落。先播放，听到要分开的地方，点下面「播放位置打点」，就会从当前位置切出一段；分错了可以撤销。</p>
+            <p className="vocal-map__note">也可以载入本机参考候选，或在末尾新增一段。这里只反映真实结构——服务不可用时会单独提示，不会当成「这首歌没有结构」。</p>
           </div>
         )}
         {/* 打开地图时按播放位置选段；位置不落在任何一段里就明说，而不是悄悄选前奏。 */}
@@ -614,6 +712,7 @@ export default function VocalStructureStudio({
           <div className="vocal-wave-wrap">
             <p className="vocal-map__note">拖动竖线改分界点；粉色虚线是当前播放位置。</p>
             <svg
+              ref={svgRef}
               className="vocal-wave"
               viewBox={`0 0 ${WAVE_WIDTH} ${WAVE_HEIGHT}`}
               role="img"
@@ -621,7 +720,9 @@ export default function VocalStructureStudio({
               onPointerDown={onPointerDown}
               onPointerMove={onPointerMove}
               onPointerUp={onPointerUp}
-              onPointerLeave={onPointerUp}
+              onPointerCancel={onPointerUp}
+              onPointerLeave={onPointerLeave}
+              onLostPointerCapture={() => { drag.current = null; dragPointer.current = null; captureEl.current = null; }}
             >
               {ordered.map((section) => (
                 <rect
@@ -646,10 +747,21 @@ export default function VocalStructureStudio({
                   />
                 );
               })}
-              {boundaries.map((time) => (
-                <g key={`boundary-${time}`}>
+              {boundaries.map((time, index) => (
+                <g key={`boundary-${index}`}>
                   <line className="vocal-wave__line" x1={xOf(time)} x2={xOf(time)} y1={0} y2={WAVE_HEIGHT} />
                   <circle className="vocal-wave__handle" data-testid={`boundary-${time}`} cx={xOf(time)} cy={WAVE_HEIGHT / 2} r={9} />
+                  {/* 透明热区：视觉手柄不变粗，手指有 48px 宽的可按范围 */}
+                  <rect
+                    className="vocal-wave__hit"
+                    data-testid={`boundary-hit-${time}`}
+                    data-boundary-ms={time}
+                    x={xOf(time) - hitHalf}
+                    y={0}
+                    width={hitHalf * 2}
+                    height={WAVE_HEIGHT}
+                    onPointerDown={(event) => beginDrag(event, time)}
+                  />
                 </g>
               ))}
               <line className="vocal-wave__playhead" x1={xOf(audio.timeMs)} x2={xOf(audio.timeMs)} y1={0} y2={WAVE_HEIGHT} />
@@ -664,8 +776,12 @@ export default function VocalStructureStudio({
           </div>
 
           <fieldset className="vocal-field">
-            <legend>微调分界点（0.1 秒）</legend>
+            <legend>微调分界点（0.1 / 0.5 秒）</legend>
             <div className="vocal-studio__nudge">
+              <button type="button" disabled={busy || ordered.findIndex((section) => section.id === selected.id) === 0}
+                onClick={() => run(() => nudgeEdge(ordered, selected.id, 'start', -500, durationMs) as StudioSection[], selected.id)}>
+                起点 −0.5s
+              </button>
               <button type="button" disabled={busy || ordered.findIndex((section) => section.id === selected.id) === 0}
                 onClick={() => run(() => nudgeEdge(ordered, selected.id, 'start', -100, durationMs) as StudioSection[], selected.id)}>
                 起点 −0.1s
@@ -673,6 +789,14 @@ export default function VocalStructureStudio({
               <button type="button" disabled={busy || ordered.findIndex((section) => section.id === selected.id) === 0}
                 onClick={() => run(() => nudgeEdge(ordered, selected.id, 'start', 100, durationMs) as StudioSection[], selected.id)}>
                 起点 +0.1s
+              </button>
+              <button type="button" disabled={busy || ordered.findIndex((section) => section.id === selected.id) === 0}
+                onClick={() => run(() => nudgeEdge(ordered, selected.id, 'start', 500, durationMs) as StudioSection[], selected.id)}>
+                起点 +0.5s
+              </button>
+              <button type="button" disabled={busy || ordered[ordered.length - 1]?.id === selected.id}
+                onClick={() => run(() => nudgeEdge(ordered, selected.id, 'end', -500, durationMs) as StudioSection[], selected.id)}>
+                终点 −0.5s
               </button>
               <button type="button" disabled={busy || ordered[ordered.length - 1]?.id === selected.id}
                 onClick={() => run(() => nudgeEdge(ordered, selected.id, 'end', -100, durationMs) as StudioSection[], selected.id)}>
@@ -682,12 +806,16 @@ export default function VocalStructureStudio({
                 onClick={() => run(() => nudgeEdge(ordered, selected.id, 'end', 100, durationMs) as StudioSection[], selected.id)}>
                 终点 +0.1s
               </button>
+              <button type="button" disabled={busy || ordered[ordered.length - 1]?.id === selected.id}
+                onClick={() => run(() => nudgeEdge(ordered, selected.id, 'end', 500, durationMs) as StudioSection[], selected.id)}>
+                终点 +0.5s
+              </button>
               <button type="button" disabled={busy || ordered.findIndex((section) => section.id === selected.id) === 0}
                 onClick={() => run(() => snapBoundaryToLyrics(ordered, selected.startMs, item.lyrics ?? [], 1500, durationMs) as StudioSection[], selected.id)}>
                 分界对齐歌词行
               </button>
             </div>
-            <p className="vocal-map__note">只吸附到 1.5 秒内最近的歌词行首；对不上就保持原值。</p>
+            <p className="vocal-map__note">拖不准就用按钮微调；也可以在播放位置点「播放位置打点」直接切开。只吸附到 1.5 秒内最近的歌词行首；对不上就保持原值。</p>
           </fieldset>
 
           <fieldset className="vocal-field">
@@ -703,6 +831,36 @@ export default function VocalStructureStudio({
               <p className="vocal-map__note" role="status">这段在两个来源里写法不同，先保留「待标注」；你点选类型才算确认。</p>
             )}
           </fieldset>
+
+          {/* 选 Rap 只是改类型；能不能跳过要靠这里显式确认，保存本身不等于确认。 */}
+          {selected.type === 'rap' && (
+            <fieldset className="vocal-field">
+              <legend>Rap 跳过确认</legend>
+              <p className="vocal-map__note" role="status">
+                {isRapConfirmed(selected)
+                  ? '已确认这一段是 Rap：练唱时会自动跳过；逐句/整段循环优先，不会被跳抢走。'
+                  : '还没确认：只改类型不算数，练唱暂时不会跳过这一段。'}
+              </p>
+              <div className="vocal-chips">
+                <button
+                  type="button"
+                  aria-pressed={isRapConfirmed(selected)}
+                  disabled={busy || isRapConfirmed(selected)}
+                  onClick={() => run(() => approveRapSection(ordered, selected.id) as StudioSection[], selected.id)}
+                >
+                  确认这段是 Rap（可跳过）
+                </button>
+                <button
+                  type="button"
+                  disabled={busy || !isRapConfirmed(selected)}
+                  onClick={() => run(() => revokeRapSection(ordered, selected.id) as StudioSection[], selected.id)}
+                >
+                  取消确认
+                </button>
+              </div>
+              <p className="vocal-map__note">确认标记随结构一起保存，重新打开地图仍然有效；边界改完请再听一遍。</p>
+            </fieldset>
+          )}
 
           {previous && (
             <fieldset className="vocal-field">

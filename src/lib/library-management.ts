@@ -1,3 +1,4 @@
+import { uuid } from './uuid';
 import {storedProgram,saveProgram} from './program';
 import {bulkLocally} from './offline-editing';
 import {writeMetadata} from './local-database';
@@ -9,7 +10,7 @@ import type { DanceItem,TalentItem,TalentKind } from './types';
 export type LibraryKind='DANCE'|TalentKind;
 export interface ItemRef {kind:LibraryKind;id:string}
 export interface TrashItem extends ItemRef {title:string;deletedAt:string;revision:number}
-export function bulkRequest(action:'update'|'trash'|'restore'|'purge',refs:ItemRef[],fields?:object){return {operationId:crypto.randomUUID(),action,refs,...(fields?{fields}:{})};}
+export function bulkRequest(action:'update'|'trash'|'restore'|'purge',refs:ItemRef[],fields?:object){return {operationId:uuid(),action,refs,...(fields?{fields}:{})};}
 export async function runBulk(body:ReturnType<typeof bulkRequest>){
  if(body.action!=='purge')return bulkLocally(body.action,body.refs,body.fields as Record<string,unknown>|undefined);
  const result=await api<{items:(DanceItem|TalentItem)[];catalogVersion:number}>('/api/library/bulk',{method:'POST',...jsonBody(body)});

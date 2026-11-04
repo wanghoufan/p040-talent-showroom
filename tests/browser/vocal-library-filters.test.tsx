@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { act, fireEvent, render, screen, within } from '@testing-library/react';
+import { act, cleanup, fireEvent, render, screen, within } from '@testing-library/react';
 import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import { IDBFactory } from 'fake-indexeddb';
 import { expect, it, vi } from 'vitest';
@@ -55,7 +55,9 @@ it('切到吉他时唱歌的语言条件不生效，吉他不出现两行筛选'
  await act(async () => { render(<MemoryRouter initialEntries={['/repertoire/vocal']}><Routes><Route path="/repertoire/:kind" element={<TalentLibraryPage />} /></Routes></MemoryRouter>); });
  expect(await screen.findByText('별빛 궤도')).toBeVisible();
  fireEvent.click(screen.getByRole('button', { name: '韩文' }));
- fireEvent.click(screen.getByRole('link', { name: '吉他' }));
+ /* 类别切换已上移到 App 底栏（§8 V1.3-R2），页面内不再有分类链接：直接以吉他路由重进，验证同一行为。 */
+ cleanup();
+ await act(async () => { render(<MemoryRouter initialEntries={['/repertoire/guitar']}><Routes><Route path="/repertoire/:kind" element={<TalentLibraryPage />} /></Routes></MemoryRouter>); });
  expect(await screen.findByText('吉他曲')).toBeVisible();
  expect(document.querySelectorAll('.vocal-filters__row')).toHaveLength(0);
  expect(document.querySelector('.filter-entry')).toBeInTheDocument();

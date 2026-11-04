@@ -82,3 +82,6 @@ Thumbs.db
 /scripts/detect-client.sh
 /scripts/check-channel-preflight.sh
 # <<< ORCA 治理块 END <<<
+
+# A4 学习稿导出产物（可重新生成，不入库）
+导出/

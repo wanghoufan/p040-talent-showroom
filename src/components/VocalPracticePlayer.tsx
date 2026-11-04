@@ -9,13 +9,15 @@ import {
   switchVocalTrack, VOCAL_PRACTICE_DEFAULTS,
 } from '../lib/vocal';
 import {
-  defaultShowTranslation, manualTranslationDoc, readTranslations, summarizeTranslations,
+  defaultShowTranslation, isRedundantTranslation, manualTranslationDoc, readTranslations, summarizeTranslations,
   translationIndex, translationToggleLabel,
 } from '../lib/vocal/translation';
 import { TYPE_TEXT, isRapConfirmed, relabelSections, sectionHeading, unconfirmedRapCount } from '../lib/vocal/structure';
 import { readStructureDraft, readReferenceCatalog, loadCatalogReference, type ReferenceCatalogEntry } from '../lib/vocal/structure-api';
 import { referenceCatalogFailureMessage, referencePending } from '../lib/vocal/reference';
 import VocalStructureStudio from './VocalStructureStudio';
+import VocalPrintSheet from './VocalPrintSheet';
+import VocalPaperRevisionSheet from './VocalPaperRevisionSheet';
 import { editLocally } from '../lib/offline-editing';
 import type {
   DanceItem, MediaFile, PerformanceSource, TalentItem, TimedLyric, VocalLineLoop, VocalPracticeSettings,
@@ -183,6 +185,8 @@ export default function VocalPracticePlayer({ item, onRequestImport, onExitToLib
   const [immersiveByUrl] = useState(immersiveFromUrl);
   const [immersive, setImmersive] = useState(immersiveByUrl);
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const [printOpen, setPrintOpen] = useState(false);
+  const [paperOpen, setPaperOpen] = useState(false);
   /** 本机已提供且身份五项全过的参考；没有就是 null，不显示入口。 */
   const [catalogMatch, setCatalogMatch] = useState<ReferenceCatalogEntry | null>(null);
   /** 参考目录「查不到」的原因：401/旧服务/断网都不许说成「没有参考」。 */
@@ -493,6 +497,13 @@ export default function VocalPracticePlayer({ item, onRequestImport, onExitToLib
 
   const startLineLoop = (count: number, key: string): void => {
     if (!hasTiming) { setNotice('这首歌没有逐句时间戳，无法逐句循环；请导入带时间的 LRC。'); return; }
+    /* 同键二次点击＝退出这一档循环：不 seek、不暂停、不重开播，保持在当前位置继续往后。
+       换了句数（自定义改 3→6）才算重建，避免「点了没反应」。 */
+    if (loopKey === key && loop && loop.count === count) {
+      setLoop(null); setLoopKey(null);
+      setNotice('已退出逐句循环，从当前时点继续');
+      return;
+    }
     const endIndex = Math.max(0, activeLine);
     const next = lineLoopFor(lyrics.lines, endIndex, count, { durationMs: durationMs || undefined });
     if (!next) { setNotice('当前句缺少可靠句尾时间，无法循环；可先补充校准。'); return; }
@@ -762,20 +773,20 @@ export default function VocalPracticePlayer({ item, onRequestImport, onExitToLib
             <h2 className="vocal-immersive__title" title={item.title}>{item.title}</h2>
             <p className="vocal-immersive__sub" title={item.artist || '未填写歌手'}>{item.artist || '未填写歌手'}</p>
           </div>
+          {/* 沉浸页唯一的地图入口：一击开抽屉、再击关回歌词；没有结构也能开，进去打点。 */}
           <button
             type="button"
-            className="vocal-immersive__segments"
-            aria-pressed={segmentsVisible}
-            aria-label={sections.length ? '分段' : '分段（这首歌还没有结构）'}
-            disabled={!sections.length}
-            onClick={() => setSegmentsOpen((value) => !value)}
+            className="vocal-immersive__map"
+            aria-pressed={drawerOpen}
+            aria-label={sections.length ? '地图' : '地图（暂无分段，可打点）'}
+            onClick={() => setDrawerOpen((value) => !value)}
           >
-            <span aria-hidden="true">▤</span> 分段
+            <span aria-hidden="true">▤</span> 地图
           </button>
           <button type="button" className="vocal-immersive__more" aria-label="更多" onClick={() => setMoreOpen(true)}>…</button>
         </header>
       )}
-      {/* 段落标签条：只做跳转与显示当前位置，不新增、不改动结构数据 */}
+      {/* 段落标签条只做跳转与显示当前位置，不是地图编辑入口；地图统一从顶栏「地图」抽屉进。 */}
       {immersive && segmentsVisible && (
         <div className="vocal-segments" role="group" aria-label="段落标签">
           {sections.map((section) => {
@@ -978,29 +989,42 @@ export default function VocalPracticePlayer({ item, onRequestImport, onExitToLib
                       const translation = translationByLine.get(line.id);
                       const isEditing = editingLineId === line.id;
                       const isActive = index === visibleActiveIndex;
-                      const lineNumber = (lyricIndexById.get(line.id) ?? index) + 1;
+                      const globalIndex = lyricIndexById.get(line.id) ?? index;
+                      const lineNumber = globalIndex + 1;
+                      /* 左右信息按真实 LRC：没有时标就显示破折号，绝不伪造时间。 */
+                      const hasStamp = Number.isFinite(line.startMs) && line.startMs > 0;
+                      /* 循环范围由 loop.startIndex/endIndex 算，不靠「染当前句」冒充范围。 */
+                      const inLoopRange = Boolean(loop && globalIndex >= loop.startIndex && globalIndex <= loop.endIndex);
+                      const redundantTranslation = translation ? isRedundantTranslation(line.text, translation.text) : false;
                       return (
                         <li key={line.id} className="vocal-lyric-item" ref={isActive ? activeLineRef : undefined}>
                           <button
                             type="button"
-                            className={isActive ? 'vocal-line vocal-line--active' : 'vocal-line'}
+                            className={[
+                              'vocal-line',
+                              isActive ? 'vocal-line--active' : '',
+                              inLoopRange ? 'vocal-line--loop-range' : '',
+                              inLoopRange && loop && globalIndex === loop.startIndex ? 'is-loop-first' : '',
+                              inLoopRange && loop && globalIndex === loop.endIndex ? 'is-loop-last' : '',
+                              inLoopRange && isActive ? 'vocal-line--loop-current' : '',
+                            ].filter(Boolean).join(' ')}
                             aria-current={isActive ? 'true' : undefined}
                             aria-label={`第 ${lineNumber} 句：${line.text}`}
-                            onClick={() => seekToLine(lyricIndexById.get(line.id) ?? index)}
+                            onClick={() => seekToLine(globalIndex)}
                           >
-                            {!immersive && <span className="vocal-line__time">{formatTime(line.startMs)}</span>}
+                            <span className="vocal-line__time" aria-hidden={!hasStamp ? 'true' : undefined}>{hasStamp ? formatTime(line.startMs) : '—'}</span>
                             <span className="vocal-line__body">
                               <span className="vocal-line__text">{line.text}</span>
-                              {showTranslation && translation && !isEditing && (
+                              {showTranslation && translation && !isEditing && !redundantTranslation && (
                                 <span className="vocal-line__translation-text">
                                   {translation.text}
                                   {translation.stale && <span className="vocal-line__stale">原文已改</span>}
                                 </span>
                               )}
                             </span>
-                            {!immersive && <span className="vocal-line__index" aria-label={`第 ${lineNumber} 句`}>{lineNumber}</span>}
+                            <span className="vocal-line__index" aria-label={`第 ${lineNumber} 句`}>{lineNumber}</span>
                           </button>
-                          {!immersive && showTranslation && translation && !isEditing && (
+                          {!immersive && showTranslation && translation && !isEditing && !redundantTranslation && (
                             <div className="vocal-line__translation">
                               <button
                                 type="button"
@@ -1166,15 +1190,18 @@ export default function VocalPracticePlayer({ item, onRequestImport, onExitToLib
               <button type="button" onClick={replay} aria-label="重播"><span className="vocal-immersive__icon" aria-hidden="true">↺</span> 重播</button>
               <button type="button" onClick={() => setShowSettings(true)} aria-label="循环设置"><span className="vocal-immersive__icon" aria-hidden="true">⇄</span> 循环设置</button>
               <button type="button" onClick={cycleRate} aria-label={`倍速，当前 ${settings.playbackRate} 倍`}>{settings.playbackRate}×</button>
-              <button
-                type="button"
-                aria-pressed={showTranslation}
-                disabled={!translations}
-                aria-label={translations ? '双语' : '双语（暂无译文）'}
-                onClick={toggleTranslation}
-              >
-                双语
-              </button>
+              {/* 中文原唱没有译文可切：不摆一个按不动的「双语」。 */}
+              {item.language !== 'zh' && (
+                <button
+                  type="button"
+                  aria-pressed={showTranslation}
+                  disabled={!translations}
+                  aria-label={translations ? '双语' : '双语（暂无译文）'}
+                  onClick={toggleTranslation}
+                >
+                  双语
+                </button>
+              )}
               <button type="button" onClick={cycleFont} aria-label={`字号：${FONT_LABEL[fontScale]}`}>Aa</button>
             </div>
           </>
@@ -1395,6 +1422,11 @@ export default function VocalPracticePlayer({ item, onRequestImport, onExitToLib
               <legend>结构与其他</legend>
               <div className="vocal-chips">
                 <button type="button" onClick={() => { setMoreOpen(false); setDrawerOpen(true); }}>地图与结构</button>
+                <button type="button" onClick={() => { setMoreOpen(false); setPrintOpen(true); }}>生成 A4 学习稿</button>
+                <button type="button" onClick={() => { setMoreOpen(false); setPaperOpen(true); }}>纸质修订导入</button>
+                <button type="button" aria-pressed={segmentsOpen} disabled={!sections.length} onClick={() => setSegmentsOpen((value) => !value)}>
+                  {segmentsOpen ? '收起段落标签' : '显示段落标签'}
+                </button>
                 {onOpenDetail && (
                   <button type="button" onClick={() => { setMoreOpen(false); openDetail(); }}>曲目详情</button>
                 )}
@@ -1445,6 +1477,20 @@ export default function VocalPracticePlayer({ item, onRequestImport, onExitToLib
             />
           </div>
         </div>
+      )}
+      {printOpen && (
+        <VocalPrintSheet item={item} sections={sections} onClose={() => setPrintOpen(false)} />
+      )}
+      {paperOpen && (
+        <VocalPaperRevisionSheet
+          item={item}
+          sections={sections}
+          onClose={() => setPaperOpen(false)}
+          onApplied={(next) => {
+            setPaperOpen(false);
+            setNotice(`已应用纸质修订：现为 ${next.length} 段；旧结构已存快照，可再打开面板撤回。`);
+          }}
+        />
       )}
     </div>
   );
