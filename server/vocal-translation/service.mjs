@@ -82,10 +82,34 @@ export function createVocalTranslationService({ db, translator, logger = null } 
       const lyrics = Array.isArray(item.lyrics) ? item.lyrics : [];
       if (!lyrics.length) throw Object.assign(new Error('NO_LYRICS'), { status: 400 });
       const sourceLanguage = item.language || 'ko';
+      const startedAt = new Date().toISOString();
+      /**
+       * 中文原唱只有一个中文层：显式跳过，绝不进翻译通道、不查缓存、不写库。
+       * 不能靠「没有缺行」顺带得到 NOTHING_TO_DO——那会让中文歌仍被送进翻译链路。
+       */
+      if (sourceLanguage === 'zh') {
+        const currentTranslations = item.translations?.lines || [];
+        return {
+          item,
+          status: 'NOTHING_TO_DO',
+          skipped: true,
+          reason: 'CHINESE_SOURCE',
+          total: 0,
+          translated: 0,
+          cached: 0,
+          lrcReused: 0,
+          manualKept: currentTranslations.filter(line => line.source === 'manual').length,
+          translatedLines: currentTranslations.length,
+          remaining: 0,
+          failed: [],
+          provider: translator ? { kind: translator.kind, provider: translator.provider, model: translator.model, description: translator.description, available: translator.available } : null,
+          startedAt,
+          finishedAt: new Date().toISOString(),
+        };
+      }
       // 只把真正的原文行算作待译：老双语 LRC 残留的中文行已经是译文，不再送去翻译。
       const sourceLines = translatableLines(lyrics, sourceLanguage);
       const chunkSize = Number.isInteger(options.chunkSize) && options.chunkSize > 0 ? Math.min(64, options.chunkSize) : DEFAULT_CHUNK;
-      const startedAt = new Date().toISOString();
       let lines = currentLines(item);
       let lrcReused = 0;
       const pairedLyricIds = new Set();
