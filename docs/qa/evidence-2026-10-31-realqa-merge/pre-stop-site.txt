@@ -1,0 +1,17 @@
+# 现场记录 2026-10-30T20:19:41Z
+## 进程
+  PID  PPID STARTED                       ELAPSED COMMAND
+27651     1 Fri Oct 30 22:26:40 2026     05:53:01 node server/index.mjs
+## 环境(仅列出运行相关键)
+HOST=0.0.0.0
+MEDIA_ROOT=/Users/zzymima0000/Developer/coding/1.Active/040-ing-才艺展示厅/var/vocal-v31-work/real-qa-20261030/media
+PORT=28794
+SQLITE_DB_PATH=/Users/zzymima0000/Developer/coding/1.Active/040-ing-才艺展示厅/var/vocal-v31-work/real-qa-20261030/db/qa.db
+VOCAL_IMPORT_WORKER=0
+## 端口
+COMMAND   PID        USER   FD   TYPE             DEVICE SIZE/OFF NODE NAME
+node    27651 zzymima0000   17u  IPv4 0x76cca6e1917c56bc      0t0  TCP *:28794 (LISTEN)
+## 库哈希(停止前)
+ae1e22614bf66f3780b1b7eca8eae22297d1860368db40598337089f14ce1c71  var/vocal-v31-work/real-qa-20261030/db/qa.db
+409b72ad8dee7186c5bb18dbc59513ea47e679fce6b5081eedb7d6e391197e4b  var/vocal-v31-work/real-qa-20261030/db/qa.db-wal
+d9e31506b1aace4d2c2be28b5a491505b5d99b6bdd6640e0f203c7f1daea9faa  var/vocal-v31-work/real-qa-20261030/db/qa.db-shm

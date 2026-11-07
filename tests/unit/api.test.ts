@@ -21,6 +21,11 @@ function okFetch(body: unknown = { ok: true }, status = 200) {
   }) as Response);
 }
 
+// 地址自动择优会先打一次 /api/health，断言业务请求时要把它筛掉。
+function apiCalls(mock: ReturnType<typeof vi.fn>): Array<[string, FetchInit]> {
+  return (mock.mock.calls as Array<[string, FetchInit]>).filter(([url]) => !String(url).includes('/api/health'));
+}
+
 function abortError(): DOMException {
   return new DOMException('Aborted', 'AbortError');
 }
@@ -47,7 +52,7 @@ describe('api 请求取消与超时', () => {
       const fetchMock = okFetch({ items: [] });
       vi.stubGlobal('fetch', fetchMock);
       await expect(api('/api/library')).resolves.toEqual({ items: [] });
-      const signal = (fetchMock.mock.calls[0][1] as RequestInit).signal as AbortSignal;
+      const signal = (apiCalls(fetchMock).at(-1)?.[1] as RequestInit).signal as AbortSignal;
       expect(signal).toBeInstanceOf(AbortSignal);
       expect(signal.aborted).toBe(false);
     } finally {
@@ -64,7 +69,7 @@ describe('api 请求取消与超时', () => {
     request.catch(settled);
     await vi.advanceTimersByTimeAsync(14999);
     expect(settled).not.toHaveBeenCalled();
-    expect((fetchMock.mock.calls[0][1] as RequestInit).signal?.aborted).toBe(false);
+    expect((apiCalls(fetchMock).at(-1)?.[1] as RequestInit).signal?.aborted).toBe(false);
     await vi.advanceTimersByTimeAsync(1);
     await expect(request).rejects.toMatchObject({ name: 'AbortError' });
     const error = await request.catch((e: unknown) => e);
@@ -89,7 +94,8 @@ describe('api 请求取消与超时', () => {
     vi.stubGlobal('fetch', fetchMock);
     const controller = new AbortController();
     const request = api('/api/library', { signal: controller.signal });
-    const signal = (fetchMock.mock.calls[0][1] as RequestInit).signal as AbortSignal;
+    await vi.advanceTimersByTimeAsync(0);
+    const signal = (apiCalls(fetchMock).at(-1)?.[1] as RequestInit).signal as AbortSignal;
     expect(signal).toBe(controller.signal);
     expect(vi.getTimerCount()).toBe(0);
     controller.abort();

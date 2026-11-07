@@ -1,0 +1,208 @@
+{
+  "startedAt": "2026-10-30T16:47:01.478Z",
+  "dbPath": "/Users/zzymima0000/Developer/coding/1.Active/040-ing-才艺展示厅/var/vocal-v31-work/translation-20261031/db/qa.db",
+  "channel": {
+    "kind": "codebuddy-cli",
+    "provider": "codebuddy",
+    "model": "deepseek-v4.1-flash",
+    "description": "CodeBuddy CLI → CodeBuddy 云端模型（deepseek-v4.1-flash），不是本地模型",
+    "available": true,
+    "script": "/Users/zzymima0000/Developer/coding/1.Active/040-ing-才艺展示厅/scripts/codebuddy-auto.sh"
+  },
+  "songs": [
+    {
+      "id": "4528bfad-2e59-5425-96a9-3581dd2a810c",
+      "title": "덤더럼 (Dumhdurum)",
+      "artist": "Apink",
+      "language": "ko",
+      "startedAt": "2026-10-30T16:47:01.480Z",
+      "finishedAt": "2026-10-30T16:47:36.798Z",
+      "status": "COMPLETE",
+      "total": 44,
+      "translated": 44,
+      "cached": 0,
+      "lrcReused": 0,
+      "translatedLines": 44,
+      "remaining": 0,
+      "failed": [],
+      "lyricsUnchanged": true,
+      "translationSources": {
+        "ai": 44
+      },
+      "samples": [
+        {
+          "id": "line-1",
+          "text": "Hey 这感觉实在太奇怪了，真是",
+          "source": "ai"
+        },
+        {
+          "id": "line-2",
+          "text": "那句说为了我而送走的话",
+          "source": "ai"
+        },
+        {
+          "id": "line-3",
+          "text": "直觉令人害怕，因为它实在太准了",
+          "source": "ai"
+        }
+      ]
+    },
+    {
+      "id": "f259781d-4da0-5a88-a230-cace8f8c57b3",
+      "title": "사뿐사뿐",
+      "artist": "AOA",
+      "language": "ko",
+      "startedAt": "2026-10-30T16:47:36.799Z",
+      "finishedAt": "2026-10-30T16:48:14.369Z",
+      "status": "COMPLETE",
+      "total": 91,
+      "translated": 91,
+      "cached": 0,
+      "lrcReused": 0,
+      "translatedLines": 91,
+      "remaining": 0,
+      "failed": [],
+      "lyricsUnchanged": true,
+      "translationSources": {
+        "ai": 91
+      },
+      "samples": [
+        {
+          "id": "line-1",
+          "text": "Hey",
+          "source": "ai"
+        },
+        {
+          "id": "line-2",
+          "text": "no matter where you go",
+          "source": "ai"
+        },
+        {
+          "id": "line-3",
+          "text": "无论看向哪里",
+          "source": "ai"
+        }
+      ]
+    },
+    {
+      "id": "01c2a4cd-528c-5316-b864-5ce24f86e280",
+      "title": "보여줄게",
+      "artist": "Ailee",
+      "language": "ko",
+      "startedAt": "2026-10-30T16:48:14.370Z",
+      "finishedAt": "2026-10-30T16:48:33.913Z",
+      "status": "COMPLETE",
+      "total": 47,
+      "translated": 47,
+      "cached": 0,
+      "lrcReused": 0,
+      "translatedLines": 47,
+      "remaining": 0,
+      "failed": [],
+      "lyricsUnchanged": true,
+      "translationSources": {
+        "ai": 47
+      },
+      "samples": [
+        {
+          "id": "line-1",
+          "text": "穿上我买给你的衣服",
+          "source": "ai"
+        },
+        {
+          "id": "line-2",
+          "text": "喷上我买给你的香水",
+          "source": "ai"
+        },
+        {
+          "id": "line-3",
+          "text": "现在你大概在见她吧",
+          "source": "ai"
+        }
+      ]
+    },
+    {
+      "id": "c84eb5d2-3865-5943-8abb-7ee6bfbee1fc",
+      "title": "베베 (BABE)",
+      "artist": "泫雅",
+      "language": "ko",
+      "startedAt": "2026-10-30T16:48:33.914Z",
+      "finishedAt": "2026-10-30T16:48:57.741Z",
+      "status": "COMPLETE",
+      "total": 70,
+      "translated": 70,
+      "cached": 0,
+      "lrcReused": 0,
+      "translatedLines": 70,
+      "remaining": 0,
+      "failed": [],
+      "lyricsUnchanged": true,
+      "translationSources": {
+        "ai": 70
+      },
+      "samples": [
+        {
+          "id": "line-1",
+          "text": "副歌：김보아",
+          "source": "ai"
+        },
+        {
+          "id": "line-2",
+          "text": "全部编程：新沙洞老虎",
+          "source": "ai"
+        },
+        {
+          "id": "line-3",
+          "text": "录音工程师：전부연",
+          "source": "ai"
+        }
+      ]
+    },
+    {
+      "id": "93e8499b-b99b-5307-82a5-7cff189073dd",
+      "title": "Insomnia (불면증)",
+      "artist": "辉星",
+      "language": "ko",
+      "startedAt": "2026-10-30T16:48:57.741Z",
+      "finishedAt": "2026-10-30T16:49:14.118Z",
+      "status": "COMPLETE",
+      "total": 40,
+      "translated": 40,
+      "cached": 0,
+      "lrcReused": 0,
+      "translatedLines": 40,
+      "remaining": 0,
+      "failed": [],
+      "lyricsUnchanged": true,
+      "translationSources": {
+        "ai": 40
+      },
+      "samples": [
+        {
+          "id": "line-1",
+          "text": "我奔跑的路是 Love, Love, Love, Love",
+          "source": "ai"
+        },
+        {
+          "id": "line-2",
+          "text": "但那条路上全是陷阱，陷阱，陷阱，陷阱",
+          "source": "ai"
+        },
+        {
+          "id": "line-3",
+          "text": "无法避开的陷阱是心中的恐惧，恐惧，恐惧，恐惧",
+          "source": "ai"
+        }
+      ]
+    }
+  ],
+  "finishedAt": "2026-10-30T16:49:14.119Z",
+  "summary": {
+    "requested": 5,
+    "complete": 5,
+    "partial": 0,
+    "unavailable": 0,
+    "error": 0,
+    "allLyricsUnchanged": true
+  }
+}

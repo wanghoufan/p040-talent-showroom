@@ -1,0 +1,338 @@
+/* 唱歌详情练唱播放器（V2.1）：结构地图 + 同步歌词 + 固定在四 Tab 上方的练唱 dock。
+   只服务唱歌详情；吉他详情沿用原音频控件，不受本文件影响。 */
+
+.vocal-practice { display: block; }
+.vocal-block { margin: 18px 0; padding-bottom: 18px; border-bottom: 1px solid var(--line); }
+.vocal-block h2 { margin: 0 0 10px; font-size: 23px; letter-spacing: -.5px; }
+
+/* 歌曲地图：一屏看全段落，当前播放段高亮；点一段即定位到该段时间轴 */
+.vocal-block__head { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; }
+.vocal-block__head h2 { margin: 0; }
+.vocal-map__meta { flex: 0 0 auto; font-size: 14px; color: var(--muted); font-variant-numeric: tabular-nums; }
+.vocal-map { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 6px; margin-top: 10px; }
+.vocal-map__chip { position: relative; display: flex; flex-direction: column; align-items: flex-start; gap: 1px; min-width: 0; min-height: 58px; padding: 6px 8px; border-radius: 10px; text-align: left; background: var(--surface); border: 1px solid var(--line); }
+.vocal-map__code { font-size: 19px; font-weight: 700; line-height: 1.2; }
+.vocal-map__type { font-size: 15px; color: var(--muted); }
+.vocal-map__time { font-size: 14px; color: var(--muted); font-variant-numeric: tabular-nums; }
+.vocal-map__flag { margin-top: 2px; padding: 0 6px; font-size: 14px; color: var(--muted); background: var(--surface-2); border-radius: 8px; }
+.vocal-map__flag--loop { color: var(--primary); font-weight: 700; }
+.vocal-map__chip.is-focused { background: var(--surface-2); border-color: var(--primary); }
+.vocal-map__chip.is-playing { border-width: 2px; border-color: var(--primary); }
+.vocal-map__chip.is-playing .vocal-map__code { color: var(--primary); }
+.vocal-map__chip.is-looping::after { content: '↻'; position: absolute; top: 4px; right: 6px; font-size: 15px; color: var(--primary); }
+.vocal-map__chip--intro, .vocal-map__chip--outro { background: #9aa4b21a; }
+.vocal-map__chip--verse { box-shadow: inset 3px 0 0 #3f7cff88; }
+.vocal-map__chip--pre { box-shadow: inset 3px 0 0 #7a5cff88; }
+.vocal-map__chip--chorus { box-shadow: inset 3px 0 0 #e2569488; }
+.vocal-map__chip--bridge { box-shadow: inset 3px 0 0 #16a39488; }
+.vocal-map__chip--rap { box-shadow: inset 3px 0 0 #f08c0088; }
+.vocal-map__chip--unknown { border-style: dashed; }
+.vocal-map__actions { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin-top: 8px; }
+.vocal-map__actions button { min-height: 40px; padding: 0 12px; border-radius: 20px; font-size: 15px; }
+.vocal-map__hint { flex: 1 1 100%; font-size: 14px; color: var(--muted); font-variant-numeric: tabular-nums; }
+
+@media (max-width: 360px) {
+  .vocal-map { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+
+/* 歌词：标题下方单行循环条，点句定位 */
+.vocal-lyrics__head { display: flex; flex-direction: column; gap: 8px; }
+.vocal-lyrics__head h2 { margin-bottom: 0; }
+.vocal-loopbar { display: flex; align-items: center; gap: 6px; flex-wrap: nowrap; overflow-x: auto; overscroll-behavior-x: contain; scrollbar-width: none; }
+.vocal-loopbar::-webkit-scrollbar { display: none; }
+.vocal-loopbar__label { flex: 0 0 auto; font-size: 15px; color: var(--muted); }
+.vocal-loopbar button { flex: 0 0 auto; min-height: 36px; padding: 0 10px; border-radius: 18px; font-size: 15px; }
+
+/* 歌词滚动区同样先给 vh 兜底：真机 WebView 丢弃 dvh 声明时，max-height 会退成 none，
+   歌词列表涨到全文高度、把练唱 dock 和下方内容顶开，且离开可视区的句子无法滚到。 */
+.vocal-lyrics {
+  list-style: none; margin: 10px 0 0; padding: 0; max-height: 42vh; max-height: 42dvh;
+  overflow-y: auto; overscroll-behavior-y: contain;
+  /* 字号三档只改歌词排版（类名加在滚动容器上），不改时间轴、不改原文。 */
+  --vocal-lyric-size: 19px; --vocal-translation-size: 19px;
+}
+.vocal-lyrics--large { --vocal-lyric-size: 22px; }
+.vocal-lyrics--xlarge { --vocal-lyric-size: 25px; --vocal-translation-size: 21px; }
+.vocal-lyric-group__list { list-style: none; margin: 0; padding: 0; }
+/* 段标题：结构与歌词之间的分界，用「标签 + 横线」表示，不做二级页面标题。 */
+.vocal-lyric-group__title { display: flex; align-items: center; gap: 10px; margin: 16px 8px 4px; font-size: 15px; font-weight: 700; letter-spacing: .04em; color: var(--muted); }
+.vocal-lyric-group__title:first-child { margin-top: 4px; }
+.vocal-lyric-group__rule { flex: 1 1 auto; height: 1px; background: var(--line); }
+.vocal-line { display: flex; align-items: flex-start; gap: 10px; width: 100%; min-height: 44px; padding: 8px; text-align: left; background: transparent; border: 0; border-radius: 10px; }
+.vocal-line__body { display: flex; flex-direction: column; gap: 3px; flex: 1 1 auto; min-width: 0; }
+.vocal-line__time { flex: 0 0 auto; min-width: 40px; padding-top: 3px; font-size: 14px; color: var(--muted); font-variant-numeric: tabular-nums; }
+.vocal-line__text { flex: 1 1 auto; font-size: var(--vocal-lyric-size); font-weight: 600; line-height: 1.4; overflow-wrap: anywhere; }
+/* 句序号靠右，时间靠左：练唱时能直接报「第几句」。 */
+.vocal-line__index { flex: 0 0 auto; min-width: 22px; padding-top: 3px; font-size: 14px; text-align: right; color: var(--muted); font-variant-numeric: tabular-nums; }
+.vocal-line--active { background: var(--surface-2); }
+.vocal-line--active .vocal-line__text { color: var(--primary); font-weight: 700; }
+.vocal-line--plain { align-items: flex-start; }
+
+.vocal-empty { margin: 0; padding: 10px 12px; font-size: 15px; color: var(--muted); background: var(--surface); border-radius: 10px; }
+.vocal-hint { margin: 8px 0 0; font-size: 14px; color: var(--muted); }
+/* 查不到 ≠ 没有：参考目录失败的原因用警示色标出，避免被读成「本机没有参考」。 */
+.vocal-hint--warn { color: #b26a00; }
+.vocal-missing { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 12px 0; padding: 10px 12px; font-size: 15px; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; }
+.vocal-missing button { min-height: 40px; padding: 0 12px; font-size: 15px; }
+
+/* 练唱 dock：分三层——音轨/时钟（元信息）→ 进度 → 主控 5 列 → 练习 4 列。
+   每层都用 grid 定宽，按钮不再靠 flex 挤压出省略号；窄屏只缩间距，不截断文字。 */
+.vocal-dock { position: fixed; left: 50%; transform: translateX(-50%); width: min(100%, 800px); bottom: var(--tabbar-height, 72px); z-index: 25; display: flex; flex-direction: column; gap: 6px; padding: 8px 10px 10px; background: var(--surface); border-top: 1px solid var(--line); box-shadow: 0 -6px 20px #0004; }
+.vocal-dock button { min-height: 44px; padding: 4px 6px; font-size: 15px; white-space: nowrap; }
+.vocal-dock__meta { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.vocal-trackbar { display: flex; gap: 4px; min-width: 0; }
+.vocal-track { min-height: 36px !important; padding: 0 12px !important; border-radius: 18px; font-size: 15px; }
+.vocal-dock__clock { flex: 0 0 auto; font-size: 14px; color: var(--muted); font-variant-numeric: tabular-nums; }
+.vocal-dock__progress { width: 100%; min-height: 24px; margin: 0; padding: 0; border: 0; background: transparent; accent-color: var(--primary); }
+.vocal-dock__controls { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 6px; }
+.vocal-dock__controls button { min-width: 0; padding: 4px 2px; line-height: 1.2; }
+/* 主控只突出播放/暂停：实心主色，一眼找到，其余保持安静的中性按钮。 */
+.vocal-dock__play { display: inline-flex; align-items: center; justify-content: center; gap: 4px; background: var(--primary); border-color: var(--primary); color: #fff; font-weight: 700; }
+.vocal-dock__play-icon { font-size: 13px; line-height: 1; }
+.vocal-dock__extra { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)) minmax(0, auto); align-items: stretch; gap: 6px; }
+.vocal-dock__extra button { min-width: 0; padding: 4px 6px; line-height: 1.2; }
+.vocal-dock__rate { display: flex; flex-direction: row; align-items: center; gap: 4px; min-height: 44px; padding: 0 2px; font-size: 15px; color: var(--muted); white-space: nowrap; }
+.vocal-dock__rate select { width: auto; min-height: 44px; padding: 0 6px; font-size: 15px; }
+/* 状态行允许换行：模式说明与临时提示都要读全，不靠省略号掩盖。 */
+.vocal-dock__mode { margin: 0; font-size: 14px; line-height: 1.35; color: var(--muted); white-space: normal; overflow-wrap: anywhere; }
+.vocal-audio { display: none; }
+.vocal-dock-spacer { flex: 0 0 auto; }
+
+@media (max-width: 380px) {
+  .vocal-dock { padding-left: 8px; padding-right: 8px; }
+  .vocal-dock__controls, .vocal-dock__extra { gap: 4px; }
+  /* 窄屏优先保住文字：藏掉播放图标，按钮只留「播放/暂停」两字，避免挤成省略号。
+     沉浸页播放键只有图标，不能藏（藏了就是一个空按钮）。 */
+  .vocal-dock:not(.vocal-dock--immersive) .vocal-dock__play-icon { display: none; }
+  /* 工具行 5 等分在 360px 下放不下「循环设置」，去掉装饰图标、保留完整文字。 */
+  .vocal-immersive__tools .vocal-immersive__icon { display: none; }
+  .vocal-immersive__tools { gap: 4px; }
+}
+
+@media (max-width: 340px) {
+  /* 极窄屏把「倍速」二字让给按钮，下拉框仍显示 1× 并由 aria-label 说明用途。 */
+  .vocal-dock__rate > span { display: none; }
+  .vocal-dock__extra { grid-template-columns: repeat(3, minmax(0, 1fr)) 52px; }
+}
+
+/* 练习设置：单向底部弹层，只改练唱习惯 */
+/* 高度上限必须先给 vh 兜底：真机 WebView 不认 `dvh` 时会整条声明作废，
+   max-height 退回 none，弹层涨到内容高（实测 1138.8px > 视口 791px），
+   又因 backdrop 是 align-items:flex-end 而把顶部顶出视口，且 overflow-y 无从滚动，
+   顶部段落按钮点不到。两行按「先 vh 再 dvh」声明，支持 dvh 的浏览器取后者。 */
+.vocal-sheet { width: min(100%, 650px); max-height: 88vh; max-height: 88dvh; overflow-y: auto; overscroll-behavior-y: contain; background: var(--surface); border-radius: 22px 22px 0 0; padding: 20px 18px calc(20px + var(--inset-bottom)); }
+/* 结构校准要在地图与歌词之间来回看，给更宽的单列空间（仍是手机单列，不做左右分栏）。 */
+.vocal-sheet--wide { width: min(100%, 760px); }
+.vocal-sheet h3 { font-size: 19px; }
+.vocal-sheet__head { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.vocal-sheet__head h2 { margin: 0; font-size: 23px; }
+.vocal-sheet__head button { min-height: 44px; min-width: 44px; padding: 0 10px; font-size: 17px; }
+.vocal-field { margin: 16px 0 0; padding: 0; border: 0; }
+.vocal-field legend { padding: 0; font-size: 15px; color: var(--muted); }
+.vocal-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+.vocal-chips button { min-height: 44px; padding: 0 14px; border-radius: 22px; font-size: 15px; }
+.vocal-sheet__done { width: 100%; margin-top: 20px; min-height: 48px; font-size: 17px; font-weight: 700; }
+
+/* 歌词译文：与原文分行显示，不挤占原时间轴；练习默认双语，演出默认原文。 */
+.vocal-translationbar { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-top: 10px; }
+.vocal-translationbar button { min-height: 36px; font-size: 15px; }
+.vocal-translationbar__translate { border: 1px solid var(--primary); color: var(--primary); background: transparent; }
+.vocal-translationbar__meta { font-size: 14px; color: var(--muted); }
+.vocal-lyric-item { display: flex; flex-direction: column; gap: 2px; }
+/* 译文跟随原文排在同一句按钮里（原文在上、译文在下），时间轴仍只属于原文。 */
+.vocal-line__translation-text { font-size: var(--vocal-translation-size); line-height: 1.4; color: var(--muted); overflow-wrap: anywhere; }
+.vocal-line--active .vocal-line__translation-text { color: var(--text); }
+.vocal-line__translation { display: flex; align-items: baseline; flex-wrap: wrap; justify-content: flex-end; gap: 8px; padding: 0 8px 6px 58px; }
+.vocal-line__stale { margin-left: 6px; font-size: 14px; color: #b26a00; }
+.vocal-line__correct { min-height: 32px; padding: 2px 10px; font-size: 15px; color: var(--primary); background: transparent; border: 1px solid var(--primary); border-radius: 999px; }
+.vocal-line__editor { display: flex; flex-direction: column; gap: 6px; padding: 4px 8px 10px 58px; }
+.vocal-line__editor-label { display: flex; flex-direction: column; gap: 4px; font-size: 15px; color: var(--muted); }
+.vocal-line__editor textarea { width: 100%; min-height: 56px; font-size: 17px; line-height: 1.45; padding: 8px; border-radius: 8px; border: 1px solid var(--line); background: var(--surface); color: inherit; }
+.vocal-line__editor-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.vocal-line__editor-actions button { min-height: 36px; font-size: 15px; }
+
+/* 结构工作室（V3.3）：参考草稿 + 波形拖动校正 + 撤销 */
+.vocal-block__tools { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; justify-content: flex-end; }
+.vocal-map__edit { min-height: 36px; padding: 0 12px; border-radius: 18px; font-size: 15px; border: 1px solid var(--line); background: var(--surface); }
+.vocal-ref-banner { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 8px 0 0; padding: 8px 10px; font-size: 15px; color: var(--muted); background: var(--surface-2); border-radius: 10px; }
+/* 参考目录查不到（401/旧服务/断网）用警示色：与「确实没有参考」区分开。 */
+.vocal-ref-banner--warn { color: #b26a00; border: 1px solid #b26a0066; background: #b26a0012; }
+.vocal-ref-banner button { min-height: 34px; padding: 0 12px; border-radius: 17px; font-size: 15px; }
+.vocal-ref { margin-top: 10px; padding: 10px 12px; background: var(--surface-2); border-radius: 12px; }
+.vocal-ref__headline { margin: 0; font-size: 17px; font-weight: 700; }
+.vocal-studio .vocal-block { border-bottom: 0; }
+.vocal-studio__bars { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+.vocal-studio__bars button { min-height: 40px; padding: 0 12px; border-radius: 20px; font-size: 15px; }
+.vocal-studio__bars button[aria-pressed='true'] { border-color: var(--primary); color: var(--primary); }
+.vocal-studio__nudge { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px; margin-top: 8px; }
+.vocal-studio__nudge button { min-height: 40px; font-size: 15px; }
+/* 参考文件入口：外观同按钮，真实 input 藏起来仍可点击/键盘聚焦 */
+.vocal-studio__bars .vocal-file { position: relative; display: inline-flex; align-items: center; min-height: 40px; padding: 0 12px; border: 1px solid var(--line); border-radius: 20px; background: var(--surface); font-size: 15px; cursor: pointer; }
+.vocal-studio__bars .vocal-file input { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+.vocal-studio__bars .vocal-file:focus-within { outline: 2px solid var(--primary); outline-offset: 2px; }
+
+/* 波形：拖动分界点用；画不出波形时仍保留时间刻度，不伪造 */
+.vocal-wave-wrap { margin-top: 10px; }
+.vocal-wave { display: block; width: 100%; height: 96px; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; touch-action: none; }
+.vocal-wave__band { opacity: .16; }
+.vocal-wave__band.is-selected { opacity: .3; }
+.vocal-wave__band--intro, .vocal-wave__band--outro { fill: #9aa4b2; }
+.vocal-wave__band--verse { fill: #3f7cff; }
+.vocal-wave__band--pre { fill: #7a5cff; }
+.vocal-wave__band--chorus { fill: #e25694; }
+.vocal-wave__band--bridge { fill: #16a394; }
+.vocal-wave__band--rap { fill: #f08c00; }
+.vocal-wave__band--unknown { fill: #6b7280; }
+.vocal-wave__peak { fill: var(--muted); opacity: .55; }
+.vocal-wave__line { stroke: var(--primary); stroke-width: 2; }
+.vocal-wave__handle { fill: var(--primary); stroke: var(--surface); stroke-width: 2; cursor: ew-resize; }
+.vocal-wave__playhead { stroke: #e25694; stroke-width: 2; stroke-dasharray: 4 3; pointer-events: none; }
+.vocal-wave__ruler { display: flex; justify-content: space-between; margin-top: 2px; font-size: 14px; color: var(--muted); font-variant-numeric: tabular-nums; }
+.vocal-map__chip.is-reference { border-style: dashed; }
+.vocal-map__flag--pending { color: #b26a00; }
+
+/* 本机内置参考：不需要用户找文件；身份不过就只显示原因，不给载入按钮 */
+.vocal-ref-catalog { margin: 10px 0 0; padding: 10px; border: 1px solid var(--line); border-radius: 12px; background: var(--surface-2); }
+.vocal-ref-catalog__title { margin: 0 0 6px; font-size: 17px; font-weight: 700; }
+.vocal-ref-catalog__item { display: grid; gap: 4px; padding: 8px 0; border-top: 1px dashed var(--line); }
+.vocal-ref-catalog__item:first-of-type { border-top: 0; }
+.vocal-ref-catalog__name { font-size: 17px; font-weight: 600; }
+.vocal-ref-catalog__item button { min-height: 40px; justify-self: start; padding: 0 14px; border-radius: 20px; font-size: 15px; }
+
+/* 沉浸练歌：同一播放器与同一 audio 元素，只切换呈现；不改其他页面与底部 Tab */
+/* 安全区用项目统一的 --inset-*（Android edge-to-edge 下 env() 恒为 0，靠原生注入兜底） */
+/* 四行结构：顶栏 / 段落标签条 / 歌词区（1fr，自己滚）/ 播放器（auto，流内最后一项）。
+   以前 dock 用 sticky + 占位块压在歌词上，真机实测遮挡第 4 句且两处都能滚；
+   这里改成 flex 划分，歌词与播放器各自独占一条视觉通道，互不覆盖。 */
+.vocal-practice.is-immersive { position: fixed; inset: 0; z-index: 60; display: flex; flex-direction: column; gap: 0; padding: 0; background: var(--bg); overflow: hidden; overscroll-behavior: none; }
+.vocal-practice.is-immersive > .vocal-block { flex: 1 1 auto; min-height: 0; display: flex; flex-direction: column; margin: 0; padding: 0; border-bottom: 0; }
+.vocal-practice.is-immersive .vocal-block--map { display: none; }
+/* 歌词区里只有列表滚动：状态提示固定在列表上方，避免滚动时丢失提示。 */
+.vocal-practice.is-immersive .vocal-lyrics-block > .vocal-hint,
+.vocal-practice.is-immersive .vocal-block > .vocal-empty { flex: 0 0 auto; margin: 4px 14px 0; }
+.vocal-practice.is-immersive .vocal-lyrics { flex: 1 1 auto; min-height: 0; max-height: none; margin: 0; padding: 2px 8px 10px; overflow-y: auto; overscroll-behavior-y: contain; -webkit-overflow-scrolling: touch; }
+.vocal-practice.is-immersive .vocal-dock { position: static; left: auto; transform: none; width: 100%; bottom: auto; z-index: 2; flex: 0 0 auto; }
+
+/* 顶栏：后退 / 歌名 + 歌手 / 分段 / 更多。歌名与歌手都单行省略，长标题不换行挤掉按钮。 */
+.vocal-immersive__bar { flex: 0 0 auto; display: grid; grid-template-columns: 44px minmax(0, 1fr) auto 44px; align-items: center; gap: 6px; padding: calc(6px + var(--inset-top)) 8px 4px; background: var(--bg); }
+.vocal-immersive__back { width: 44px; min-width: 44px; height: 44px; min-height: 44px; padding: 0; display: grid; place-items: center; font-size: 30px; line-height: 1; color: var(--text); background: transparent; border: 0; }
+.vocal-immersive__heading { min-width: 0; text-align: center; }
+.vocal-immersive__title { margin: 0; font-size: 23px; line-height: 1.2; font-weight: 750; letter-spacing: -.3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.vocal-immersive__sub { margin: 2px 0 0; font-size: 15px; line-height: 1.3; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.vocal-immersive__segments { min-height: 44px; padding: 0 10px; border-radius: 14px; font-size: 15px; white-space: nowrap; }
+.vocal-immersive__segments[aria-pressed='true'] { color: var(--primary); border-color: var(--primary); background: var(--surface-2); }
+.vocal-immersive__more { width: 44px; min-width: 44px; height: 44px; min-height: 44px; padding: 0; font-size: 22px; line-height: 1; color: var(--text); background: transparent; border: 0; }
+
+/* 段落标签条：横向滚动，当前播放段高亮；点击只跳转，不改结构 */
+.vocal-segments { flex: 0 0 auto; display: flex; gap: 8px; padding: 4px 12px 8px; overflow-x: auto; overscroll-behavior-x: contain; scrollbar-width: none; }
+.vocal-segments::-webkit-scrollbar { display: none; }
+.vocal-segments__chip { flex: 0 0 auto; display: inline-flex; align-items: baseline; gap: 6px; min-height: 44px; padding: 0 14px; border-radius: 14px; font-size: 15px; white-space: nowrap; background: var(--surface); border: 1px solid var(--line); }
+.vocal-segments__code { font-size: 17px; font-weight: 700; }
+.vocal-segments__type { font-size: 15px; color: var(--muted); }
+.vocal-segments__chip.is-playing { border-color: var(--primary); background: var(--surface-2); }
+.vocal-segments__chip.is-playing .vocal-segments__code,
+.vocal-segments__chip.is-playing .vocal-segments__type { color: var(--primary); }
+
+/* 沉浸播放器：时间行（时间—进度—时长）→ 5 主控 → 6 个逐句按钮 → 5 个工具按钮 */
+.vocal-dock--immersive { gap: 6px; padding: 8px 10px calc(8px + var(--inset-bottom)); background: var(--surface); border: 1px solid var(--line); border-bottom: 0; border-radius: 18px 18px 0 0; box-shadow: 0 -2px 12px #0002; }
+.vocal-immersive__timeline { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: 8px; }
+.vocal-immersive__clock { font-size: 15px; color: var(--muted); font-variant-numeric: tabular-nums; }
+.vocal-dock--immersive .vocal-dock__progress { min-height: 28px; }
+.vocal-immersive__transport { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); align-items: stretch; gap: 6px; }
+.vocal-immersive__transport button { min-width: 0; min-height: 52px; padding: 4px 2px; font-size: 15px; line-height: 1.15; }
+/* 播放键只留图标：原型里它是整条控制带里唯一的实心块，这里用尺寸与主色保持同样分量。 */
+.vocal-immersive__transport .vocal-dock__play { min-height: 56px; }
+.vocal-dock--immersive .vocal-dock__play-icon { font-size: 20px; }
+.vocal-immersive__practice { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 6px; }
+.vocal-immersive__practice button { min-width: 0; min-height: 44px; padding: 4px 0; font-size: 15px; line-height: 1.15; white-space: nowrap; }
+.vocal-immersive__custom { display: flex; flex-wrap: wrap; gap: 6px; }
+.vocal-immersive__custom button { min-height: 44px; padding: 0 12px; font-size: 15px; border-radius: 22px; }
+.vocal-immersive__tools { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 6px; }
+.vocal-immersive__tools button { min-width: 0; min-height: 44px; padding: 4px 0; font-size: 15px; line-height: 1.15; white-space: nowrap; }
+.vocal-dock--immersive .vocal-dock__mode { font-size: 14px; }
+
+/* 窄屏：按钮文字不缩小，改成换行排布，避免 15px 文字被压成省略号 */
+@media (max-width: 352px) {
+  .vocal-immersive__practice, .vocal-immersive__tools { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .vocal-immersive__transport button { min-height: 48px; }
+}
+
+/* 横屏：竖向只剩三百多像素，上下堆叠会让歌词区被挤没。
+   改成左右两栏——左栏顶栏/标签/歌词，右栏播放器，功能一个不少。 */
+@media (orientation: landscape) and (max-height: 560px) {
+  .vocal-practice.is-immersive {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(300px, 44%);
+    grid-template-rows: auto auto minmax(0, 1fr) auto;
+    column-gap: 12px;
+  }
+  .vocal-practice.is-immersive .vocal-immersive__bar { grid-column: 1 / -1; grid-row: 1; padding: calc(4px + var(--inset-top)) 8px 2px; }
+  .vocal-practice.is-immersive .vocal-segments { grid-column: 1; grid-row: 2; padding: 2px 12px 4px; }
+  .vocal-practice.is-immersive > .vocal-block { grid-column: 1; grid-row: 3; }
+  .vocal-practice.is-immersive > .vocal-missing { grid-column: 1 / -1; grid-row: 4; margin: 4px 0 0; }
+  .vocal-practice.is-immersive .vocal-dock { grid-column: 2; grid-row: 2 / 5; align-self: start; max-height: 100%; overflow-y: auto; gap: 4px; padding: 6px 8px; border-radius: 14px; border-bottom: 1px solid var(--line); }
+  /* 右栏只有三百多像素：工具行改 3 列并去掉装饰图标，「循环设置」才不会被裁掉。 */
+  .vocal-practice.is-immersive .vocal-immersive__tools { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 4px; }
+  .vocal-practice.is-immersive .vocal-immersive__icon { display: none; }
+  .vocal-practice.is-immersive .vocal-dock__mode { display: none; }
+}
+
+/* 地图抽屉：容纳结构工作室（presentation="drawer"），不复制播放器 */
+/* 高度上限必须先给 vh 兜底：真机 WebView 不认 `dvh` 时整条声明作废，max-height 退成 none，
+   抽屉涨到内容高（实测 1637px > 视口 791px），backdrop 又是 align-items:flex-end，
+   顶部被顶出视口且 clientHeight＝scrollHeight 无处可滚，「载入这份参考」和波形都点不到。
+   两行按「先 vh 再 dvh」声明，支持 dvh 的浏览器取后者；上限留在九成视口内，底部预留下拉关闭区。 */
+.vocal-drawer-backdrop { position: fixed; inset: 0; z-index: 70; background: #000a; display: flex; align-items: flex-end; justify-content: center; }
+.vocal-drawer { width: min(100%, 800px); max-height: 90vh; max-height: 90dvh; overflow-y: auto; overscroll-behavior-y: contain; -webkit-overflow-scrolling: touch; background: var(--surface); border-radius: 22px 22px 0 0; padding: 6px 10px 0; }
+/* 抽屉里只有一套标题与一个关闭键（都由分段工作台提供），这里不再另画一行。
+   注意：滚动交给外层 .vocal-drawer，工作台本身不能再变成第二个滚动容器，
+   否则真机会出现「抽屉能滚、里面那层也能滚」的双滚动，首屏按钮被藏进第二层。 */
+.vocal-sheet.vocal-studio--drawer { width: 100%; max-height: none; overflow: visible; border-radius: 0; padding: 0 2px 0; background: transparent; }
+
+/* ── 歌曲分段（V3.4 信息层次重排）────────────────────────────────
+   目标：一眼看出这首歌被分成哪几段 → 点一段就能试听/循环 → 再改边界或类型 → 最后显式保存。
+   技术说明（参考导入、身份核验）收进 details，不占首屏。 */
+.vocal-studio { padding-bottom: 0; }
+.vocal-map__head { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; padding: 6px 2px 0; }
+.vocal-map__headtext { min-width: 0; }
+.vocal-map__head h2 { margin: 0; font-size: 23px; letter-spacing: -.4px; }
+.vocal-map__sub { margin: 2px 0 0; font-size: 15px; color: var(--muted); }
+.vocal-map__close { flex: 0 0 auto; min-width: 44px; min-height: 44px; padding: 0 10px; font-size: 19px; line-height: 1; border-radius: 22px; background: var(--surface-2); }
+.vocal-map__srcbar { margin-top: 8px; }
+.vocal-map__step { margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--line); }
+/* 段卡横排：原型也是「一眼一排段」，长歌只占一行高度，不把首屏顶下去。 */
+.vocal-studio .vocal-map { display: flex; gap: 8px; margin-top: 8px; padding-bottom: 4px; overflow-x: auto; overscroll-behavior-x: contain; scrollbar-width: none; }
+.vocal-studio .vocal-map::-webkit-scrollbar { display: none; }
+.vocal-studio .vocal-map__chip { flex: 0 0 auto; min-width: 104px; flex-direction: row; flex-wrap: wrap; align-items: baseline; gap: 2px 6px; min-height: 62px; padding: 8px 10px; }
+.vocal-studio .vocal-map__time, .vocal-studio .vocal-map__flag { flex: 1 1 100%; }
+.vocal-map__steplabel { display: flex; align-items: center; gap: 8px; margin: 0; font-size: 17px; font-weight: 700; }
+.vocal-map__steplabel > span { display: grid; place-items: center; width: 24px; height: 24px; border-radius: 12px; font-size: 15px; font-weight: 700; color: #fff; background: var(--primary); }
+.vocal-map__note { margin: 6px 0 0; font-size: 15px; line-height: 1.45; color: var(--muted); }
+.vocal-map__empty { margin-top: 8px; padding: 12px; background: var(--surface-2); border-radius: 12px; }
+.vocal-map__empty p { margin: 0; font-size: 17px; line-height: 1.6; }
+.vocal-map__now { margin-top: 8px; padding: 12px; background: var(--surface-2); border-radius: 14px; }
+.vocal-map__nowtitle { margin: 0; font-size: 23px; font-weight: 750; letter-spacing: -.3px; }
+.vocal-map__nowmeta { margin: 4px 0 0; font-size: 15px; line-height: 1.45; color: var(--muted); font-variant-numeric: tabular-nums; }
+.vocal-map__playbar { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; margin-top: 10px; }
+.vocal-map__playbar button { min-width: 0; min-height: 48px; padding: 0 8px; border-radius: 24px; font-size: 17px; white-space: nowrap; }
+.vocal-map__play { background: var(--primary); border-color: var(--primary); color: #fff; font-weight: 700; }
+.vocal-map__playbar button[aria-pressed='true'] { color: var(--primary); border-color: var(--primary); background: #3f7cff1a; }
+.vocal-map__dangerbtn { color: #c0392b; border-color: #c0392b55; }
+.vocal-map__more { margin-top: 18px; border-top: 1px solid var(--line); padding-top: 6px; }
+.vocal-map__more > summary { min-height: 44px; display: flex; align-items: center; font-size: 17px; font-weight: 700; color: var(--muted); cursor: pointer; }
+.vocal-map__more[open] > summary { color: var(--text); }
+.vocal-map__detailrow { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; margin-top: 10px; }
+.vocal-map__detaillink { min-height: 44px; padding: 0 14px; font-size: 15px; color: var(--primary); background: transparent; border: 1px solid var(--line); border-radius: 22px; }
+.vocal-map__detailrow .vocal-map__note { margin: 0; }
+.vocal-studio__save { position: sticky; bottom: 0; z-index: 3; margin-top: 14px; padding: 8px 0 calc(6px + var(--inset-bottom)); background: var(--surface); border-top: 1px solid var(--line); box-shadow: 0 -10px 18px -12px #0005; }
+.vocal-studio__savebtn { width: 100%; min-height: 48px; font-size: 19px; font-weight: 700; color: #fff; background: var(--primary); border-color: var(--primary); border-radius: 14px; }
+.vocal-map__savetip { margin: 6px 0 0; font-size: 15px; line-height: 1.4; color: var(--muted); }
+/* 小屏/横屏竖向空间紧张时先让位给内容：保存键本身仍在，说明文字收起。 */
+@media (max-height: 700px) {
+  .vocal-map__savetip { display: none; }
+}
+.vocal-map__alert { margin: 0 0 8px; padding: 8px 10px; font-size: 15px; line-height: 1.45; color: #c0392b; background: #c0392b12; border: 1px solid #c0392b44; border-radius: 10px; }
+.vocal-map__notice { margin: 0 0 8px; padding: 8px 10px; font-size: 15px; line-height: 1.45; color: var(--text); background: var(--surface-2); border-radius: 10px; }
+/* 抽屉里的正文不再用 14px：提示、来源说明都是要读的正文。 */
+.vocal-studio .vocal-hint, .vocal-drawer .vocal-hint { font-size: 15px; line-height: 1.45; }
+

@@ -1,0 +1,694 @@
+[
+  {
+    "view": "393x791",
+    "name": "immersive",
+    "vw": 393,
+    "vh": 791,
+    "docScrollWidth": 393,
+    "bar": {
+      "left": 0,
+      "right": 393,
+      "top": 0,
+      "bottom": 79.1,
+      "width": 393,
+      "height": 79.1
+    },
+    "back": {
+      "left": 10,
+      "right": 54,
+      "top": 30.5,
+      "bottom": 74.5,
+      "width": 44,
+      "height": 44
+    },
+    "title": {
+      "left": 60,
+      "right": 258,
+      "top": 28,
+      "bottom": 55.6,
+      "width": 198,
+      "height": 27.6,
+      "fontSize": "23px",
+      "weight": "750",
+      "textAlign": "left"
+    },
+    "sub": {
+      "left": 60,
+      "right": 258,
+      "top": 57.6,
+      "bottom": 77.1,
+      "width": 198,
+      "height": 19.5
+    },
+    "seg": {
+      "left": 264,
+      "right": 333,
+      "top": 30.5,
+      "bottom": 74.5,
+      "width": 69,
+      "height": 44
+    },
+    "more": {
+      "left": 339,
+      "right": 383,
+      "top": 30.5,
+      "bottom": 74.5,
+      "width": 44,
+      "height": 44
+    },
+    "titleOverlapsSeg": false,
+    "subOverlapsSeg": false,
+    "chips": [
+      {
+        "text": "前奏",
+        "left": 12,
+        "right": 76,
+        "top": 83.1,
+        "bottom": 127.1,
+        "width": 64,
+        "height": 44
+      },
+      {
+        "text": "A1主歌",
+        "left": 84,
+        "right": 169.5,
+        "top": 83.1,
+        "bottom": 127.1,
+        "width": 85.5,
+        "height": 44
+      }
+    ],
+    "lyric": {
+      "fontSize": "19px",
+      "fontWeight": "700",
+      "lineHeight": "27.55px",
+      "color": "rgb(22, 119, 255)",
+      "box": {
+        "left": 8,
+        "right": 385,
+        "top": 172.6,
+        "bottom": 251.7,
+        "width": 377,
+        "height": 79.1
+      }
+    },
+    "translation": {
+      "fontSize": "19px",
+      "fontWeight": "400",
+      "lineHeight": "27.55px",
+      "color": "rgb(16, 24, 40)"
+    },
+    "lyricItemHeights": [
+      79.1,
+      79.1,
+      79.1
+    ],
+    "dock": {
+      "left": 0,
+      "right": 393,
+      "top": 542.8,
+      "bottom": 791,
+      "width": 393,
+      "height": 248.3,
+      "border": "0px",
+      "radius": "18px 18px 0px 0px"
+    },
+    "buttonTextOutOfBox": [],
+    "buttonBeyondViewport": [],
+    "lyricsClientHeight": 408,
+    "lyricsScrollHeight": 874
+  },
+  {
+    "view": "393x791",
+    "name": "drawer",
+    "vw": 393,
+    "vh": 791,
+    "closeCount": 1,
+    "drawer": {
+      "left": 0,
+      "right": 393,
+      "top": 79.1,
+      "bottom": 791,
+      "width": 393,
+      "height": 711.9
+    },
+    "scrollTop": 600,
+    "scrollHeight": 1312,
+    "clientHeight": 712,
+    "closeBefore": {
+      "left": 337,
+      "right": 381,
+      "top": 93.1,
+      "bottom": 137.1,
+      "width": 44,
+      "height": 44
+    },
+    "closeAfter": {
+      "left": 337,
+      "right": 381,
+      "top": 93.1,
+      "bottom": 137.1,
+      "width": 44,
+      "height": 44
+    },
+    "closeVisibleAfterScroll": true,
+    "hitIsClose": true,
+    "hitTag": "BUTTON.vocal-map__close",
+    "headPosition": "sticky",
+    "headRect": {
+      "left": 0,
+      "right": 393,
+      "top": 85.1,
+      "bottom": 161.1,
+      "width": 393,
+      "height": 76
+    },
+    "saveBar": {
+      "left": 12,
+      "right": 381,
+      "top": 684.9,
+      "bottom": 790.9,
+      "width": 369,
+      "height": 106
+    }
+  },
+  {
+    "view": "360x800",
+    "name": "immersive",
+    "vw": 360,
+    "vh": 800,
+    "docScrollWidth": 360,
+    "bar": {
+      "left": 0,
+      "right": 360,
+      "top": 0,
+      "bottom": 79.1,
+      "width": 360,
+      "height": 79.1
+    },
+    "back": {
+      "left": 10,
+      "right": 54,
+      "top": 30.5,
+      "bottom": 74.5,
+      "width": 44,
+      "height": 44
+    },
+    "title": {
+      "left": 60,
+      "right": 225,
+      "top": 28,
+      "bottom": 55.6,
+      "width": 165,
+      "height": 27.6,
+      "fontSize": "23px",
+      "weight": "750",
+      "textAlign": "left"
+    },
+    "sub": {
+      "left": 60,
+      "right": 225,
+      "top": 57.6,
+      "bottom": 77.1,
+      "width": 165,
+      "height": 19.5
+    },
+    "seg": {
+      "left": 231,
+      "right": 300,
+      "top": 30.5,
+      "bottom": 74.5,
+      "width": 69,
+      "height": 44
+    },
+    "more": {
+      "left": 306,
+      "right": 350,
+      "top": 30.5,
+      "bottom": 74.5,
+      "width": 44,
+      "height": 44
+    },
+    "titleOverlapsSeg": false,
+    "subOverlapsSeg": false,
+    "chips": [
+      {
+        "text": "前奏",
+        "left": 12,
+        "right": 76,
+        "top": 83.1,
+        "bottom": 127.1,
+        "width": 64,
+        "height": 44
+      },
+      {
+        "text": "A1主歌",
+        "left": 84,
+        "right": 169.5,
+        "top": 83.1,
+        "bottom": 127.1,
+        "width": 85.5,
+        "height": 44
+      }
+    ],
+    "lyric": {
+      "fontSize": "19px",
+      "fontWeight": "700",
+      "lineHeight": "27.55px",
+      "color": "rgb(22, 119, 255)",
+      "box": {
+        "left": 8,
+        "right": 352,
+        "top": 172.6,
+        "bottom": 251.7,
+        "width": 344,
+        "height": 79.1
+      }
+    },
+    "translation": {
+      "fontSize": "19px",
+      "fontWeight": "400",
+      "lineHeight": "27.55px",
+      "color": "rgb(16, 24, 40)"
+    },
+    "lyricItemHeights": [
+      79.1,
+      79.1,
+      79.1
+    ],
+    "dock": {
+      "left": 0,
+      "right": 360,
+      "top": 551.8,
+      "bottom": 800,
+      "width": 360,
+      "height": 248.3,
+      "border": "0px",
+      "radius": "18px 18px 0px 0px"
+    },
+    "buttonTextOutOfBox": [],
+    "buttonBeyondViewport": [],
+    "lyricsClientHeight": 417,
+    "lyricsScrollHeight": 874
+  },
+  {
+    "view": "360x800",
+    "name": "drawer",
+    "vw": 360,
+    "vh": 800,
+    "closeCount": 1,
+    "drawer": {
+      "left": 0,
+      "right": 360,
+      "top": 80,
+      "bottom": 800,
+      "width": 360,
+      "height": 720
+    },
+    "scrollTop": 592,
+    "scrollHeight": 1312,
+    "clientHeight": 720,
+    "closeBefore": {
+      "left": 304,
+      "right": 348,
+      "top": 94,
+      "bottom": 138,
+      "width": 44,
+      "height": 44
+    },
+    "closeAfter": {
+      "left": 304,
+      "right": 348,
+      "top": 94,
+      "bottom": 138,
+      "width": 44,
+      "height": 44
+    },
+    "closeVisibleAfterScroll": true,
+    "hitIsClose": true,
+    "hitTag": "BUTTON.vocal-map__close",
+    "headPosition": "sticky",
+    "headRect": {
+      "left": 0,
+      "right": 360,
+      "top": 86,
+      "bottom": 162,
+      "width": 360,
+      "height": 76
+    },
+    "saveBar": {
+      "left": 12,
+      "right": 348,
+      "top": 693.8,
+      "bottom": 799.8,
+      "width": 336,
+      "height": 106
+    }
+  },
+  {
+    "view": "340x700",
+    "name": "immersive",
+    "vw": 340,
+    "vh": 700,
+    "docScrollWidth": 340,
+    "bar": {
+      "left": 0,
+      "right": 340,
+      "top": 0,
+      "bottom": 79.1,
+      "width": 340,
+      "height": 79.1
+    },
+    "back": {
+      "left": 10,
+      "right": 54,
+      "top": 30.5,
+      "bottom": 74.5,
+      "width": 44,
+      "height": 44
+    },
+    "title": {
+      "left": 60,
+      "right": 205,
+      "top": 28,
+      "bottom": 55.6,
+      "width": 145,
+      "height": 27.6,
+      "fontSize": "23px",
+      "weight": "750",
+      "textAlign": "left"
+    },
+    "sub": {
+      "left": 60,
+      "right": 205,
+      "top": 57.6,
+      "bottom": 77.1,
+      "width": 145,
+      "height": 19.5
+    },
+    "seg": {
+      "left": 211,
+      "right": 280,
+      "top": 30.5,
+      "bottom": 74.5,
+      "width": 69,
+      "height": 44
+    },
+    "more": {
+      "left": 286,
+      "right": 330,
+      "top": 30.5,
+      "bottom": 74.5,
+      "width": 44,
+      "height": 44
+    },
+    "titleOverlapsSeg": false,
+    "subOverlapsSeg": false,
+    "chips": [
+      {
+        "text": "前奏",
+        "left": 12,
+        "right": 76,
+        "top": 83.1,
+        "bottom": 127.1,
+        "width": 64,
+        "height": 44
+      },
+      {
+        "text": "A1主歌",
+        "left": 84,
+        "right": 169.5,
+        "top": 83.1,
+        "bottom": 127.1,
+        "width": 85.5,
+        "height": 44
+      }
+    ],
+    "lyric": {
+      "fontSize": "19px",
+      "fontWeight": "700",
+      "lineHeight": "27.55px",
+      "color": "rgb(22, 119, 255)",
+      "box": {
+        "left": 8,
+        "right": 332,
+        "top": 172.6,
+        "bottom": 251.7,
+        "width": 324,
+        "height": 79.1
+      }
+    },
+    "translation": {
+      "fontSize": "19px",
+      "fontWeight": "400",
+      "lineHeight": "27.55px",
+      "color": "rgb(16, 24, 40)"
+    },
+    "lyricItemHeights": [
+      79.1,
+      79.1,
+      79.1
+    ],
+    "dock": {
+      "left": 0,
+      "right": 340,
+      "top": 351.8,
+      "bottom": 700,
+      "width": 340,
+      "height": 348.3,
+      "border": "0px",
+      "radius": "18px 18px 0px 0px"
+    },
+    "buttonTextOutOfBox": [],
+    "buttonBeyondViewport": [],
+    "lyricsClientHeight": 217,
+    "lyricsScrollHeight": 874
+  },
+  {
+    "view": "340x700",
+    "name": "drawer",
+    "vw": 340,
+    "vh": 700,
+    "closeCount": 1,
+    "drawer": {
+      "left": 0,
+      "right": 340,
+      "top": 70,
+      "bottom": 700,
+      "width": 340,
+      "height": 630
+    },
+    "scrollTop": 655,
+    "scrollHeight": 1285,
+    "clientHeight": 630,
+    "closeBefore": {
+      "left": 284,
+      "right": 328,
+      "top": 84,
+      "bottom": 128,
+      "width": 44,
+      "height": 44
+    },
+    "closeAfter": {
+      "left": 284,
+      "right": 328,
+      "top": 84,
+      "bottom": 128,
+      "width": 44,
+      "height": 44
+    },
+    "closeVisibleAfterScroll": true,
+    "hitIsClose": true,
+    "hitTag": "BUTTON.vocal-map__close",
+    "headPosition": "sticky",
+    "headRect": {
+      "left": 0,
+      "right": 340,
+      "top": 76,
+      "bottom": 152,
+      "width": 340,
+      "height": 76
+    },
+    "saveBar": {
+      "left": 12,
+      "right": 328,
+      "top": 620.8,
+      "bottom": 699.8,
+      "width": 316,
+      "height": 79
+    }
+  },
+  {
+    "view": "428x926",
+    "name": "immersive",
+    "vw": 428,
+    "vh": 926,
+    "docScrollWidth": 428,
+    "bar": {
+      "left": 0,
+      "right": 428,
+      "top": 0,
+      "bottom": 79.1,
+      "width": 428,
+      "height": 79.1
+    },
+    "back": {
+      "left": 10,
+      "right": 54,
+      "top": 30.5,
+      "bottom": 74.5,
+      "width": 44,
+      "height": 44
+    },
+    "title": {
+      "left": 60,
+      "right": 293,
+      "top": 28,
+      "bottom": 55.6,
+      "width": 233,
+      "height": 27.6,
+      "fontSize": "23px",
+      "weight": "750",
+      "textAlign": "left"
+    },
+    "sub": {
+      "left": 60,
+      "right": 293,
+      "top": 57.6,
+      "bottom": 77.1,
+      "width": 233,
+      "height": 19.5
+    },
+    "seg": {
+      "left": 299,
+      "right": 368,
+      "top": 30.5,
+      "bottom": 74.5,
+      "width": 69,
+      "height": 44
+    },
+    "more": {
+      "left": 374,
+      "right": 418,
+      "top": 30.5,
+      "bottom": 74.5,
+      "width": 44,
+      "height": 44
+    },
+    "titleOverlapsSeg": false,
+    "subOverlapsSeg": false,
+    "chips": [
+      {
+        "text": "前奏",
+        "left": 12,
+        "right": 76,
+        "top": 83.1,
+        "bottom": 127.1,
+        "width": 64,
+        "height": 44
+      },
+      {
+        "text": "A1主歌",
+        "left": 84,
+        "right": 169.5,
+        "top": 83.1,
+        "bottom": 127.1,
+        "width": 85.5,
+        "height": 44
+      }
+    ],
+    "lyric": {
+      "fontSize": "19px",
+      "fontWeight": "700",
+      "lineHeight": "27.55px",
+      "color": "rgb(22, 119, 255)",
+      "box": {
+        "left": 8,
+        "right": 420,
+        "top": 172.6,
+        "bottom": 251.7,
+        "width": 412,
+        "height": 79.1
+      }
+    },
+    "translation": {
+      "fontSize": "19px",
+      "fontWeight": "400",
+      "lineHeight": "27.55px",
+      "color": "rgb(16, 24, 40)"
+    },
+    "lyricItemHeights": [
+      79.1,
+      79.1,
+      79.1
+    ],
+    "dock": {
+      "left": 0,
+      "right": 428,
+      "top": 677.8,
+      "bottom": 926,
+      "width": 428,
+      "height": 248.3,
+      "border": "0px",
+      "radius": "18px 18px 0px 0px"
+    },
+    "buttonTextOutOfBox": [],
+    "buttonBeyondViewport": [],
+    "lyricsClientHeight": 543,
+    "lyricsScrollHeight": 874
+  },
+  {
+    "view": "428x926",
+    "name": "drawer",
+    "vw": 428,
+    "vh": 926,
+    "closeCount": 1,
+    "drawer": {
+      "left": 0,
+      "right": 428,
+      "top": 92.6,
+      "bottom": 926,
+      "width": 428,
+      "height": 833.4
+    },
+    "scrollTop": 457,
+    "scrollHeight": 1290,
+    "clientHeight": 833,
+    "closeBefore": {
+      "left": 372,
+      "right": 416,
+      "top": 106.6,
+      "bottom": 150.6,
+      "width": 44,
+      "height": 44
+    },
+    "closeAfter": {
+      "left": 372,
+      "right": 416,
+      "top": 106.6,
+      "bottom": 150.6,
+      "width": 44,
+      "height": 44
+    },
+    "closeVisibleAfterScroll": true,
+    "hitIsClose": true,
+    "hitTag": "BUTTON.vocal-map__close",
+    "headPosition": "sticky",
+    "headRect": {
+      "left": 0,
+      "right": 428,
+      "top": 98.6,
+      "bottom": 174.6,
+      "width": 428,
+      "height": 76
+    },
+    "saveBar": {
+      "left": 12,
+      "right": 416,
+      "top": 819.6,
+      "bottom": 925.6,
+      "width": 404,
+      "height": 106
+    }
+  }
+]

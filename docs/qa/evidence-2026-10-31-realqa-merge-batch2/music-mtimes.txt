@@ -1,0 +1,6 @@
+2026-10-30 11:20  var/vocal-v31-work/real-qa-20261030/music/3LAU, Carly Paige - Touch.mp3
+2026-10-30 11:20  var/vocal-v31-work/real-qa-20261030/music/Apink - 덤더럼(Dumhdurum).mp3
+2026-10-30 11:20  var/vocal-v31-work/real-qa-20261030/music/宝石Gem,俞天时,王洋EVIS - 爱的恰恰.mp3
+2026-10-30 11:20  var/vocal-v31-work/real-qa-20261030/music/3LAU,Carly Paige - Touch.lrc
+2026-10-30 11:20  var/vocal-v31-work/real-qa-20261030/music/Apink - 덤더럼(Dumhdurum).lrc
+2026-10-30 11:20  var/vocal-v31-work/real-qa-20261030/music/宝石Gem,俞天时,王洋EVIS - 爱的恰恰.lrc

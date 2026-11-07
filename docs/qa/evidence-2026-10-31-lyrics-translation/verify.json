@@ -1,0 +1,90 @@
+{
+  "songs": [
+    {
+      "id": "4528bfad-2e59-5425-96a9-3581dd2a810c",
+      "title": "덤더럼 (Dumhdurum)",
+      "language": "ko",
+      "lyrics": 44,
+      "translations": 44,
+      "checks": {
+        "lyricsIdenticalToSource": true,
+        "lyricsOrdered": true,
+        "noDuplicateTranslationIds": true,
+        "allTranslationIdsExist": true,
+        "translationCountMatches": true,
+        "allTextsNonEmpty": true,
+        "allSourcesAi": true
+      },
+      "pass": true
+    },
+    {
+      "id": "f259781d-4da0-5a88-a230-cace8f8c57b3",
+      "title": "사뿐사뿐",
+      "language": "ko",
+      "lyrics": 91,
+      "translations": 91,
+      "checks": {
+        "lyricsIdenticalToSource": true,
+        "lyricsOrdered": true,
+        "noDuplicateTranslationIds": true,
+        "allTranslationIdsExist": true,
+        "translationCountMatches": true,
+        "allTextsNonEmpty": true,
+        "allSourcesAi": true
+      },
+      "pass": true
+    },
+    {
+      "id": "01c2a4cd-528c-5316-b864-5ce24f86e280",
+      "title": "보여줄게",
+      "language": "ko",
+      "lyrics": 47,
+      "translations": 47,
+      "checks": {
+        "lyricsIdenticalToSource": true,
+        "lyricsOrdered": true,
+        "noDuplicateTranslationIds": true,
+        "allTranslationIdsExist": true,
+        "translationCountMatches": true,
+        "allTextsNonEmpty": true,
+        "allSourcesAi": true
+      },
+      "pass": true
+    },
+    {
+      "id": "c84eb5d2-3865-5943-8abb-7ee6bfbee1fc",
+      "title": "베베 (BABE)",
+      "language": "ko",
+      "lyrics": 70,
+      "translations": 70,
+      "checks": {
+        "lyricsIdenticalToSource": true,
+        "lyricsOrdered": true,
+        "noDuplicateTranslationIds": true,
+        "allTranslationIdsExist": true,
+        "translationCountMatches": true,
+        "allTextsNonEmpty": true,
+        "allSourcesAi": true
+      },
+      "pass": true
+    },
+    {
+      "id": "93e8499b-b99b-5307-82a5-7cff189073dd",
+      "title": "Insomnia (불면증)",
+      "language": "ko",
+      "lyrics": 40,
+      "translations": 40,
+      "checks": {
+        "lyricsIdenticalToSource": true,
+        "lyricsOrdered": true,
+        "noDuplicateTranslationIds": true,
+        "allTranslationIdsExist": true,
+        "translationCountMatches": true,
+        "allTextsNonEmpty": true,
+        "allSourcesAi": true
+      },
+      "pass": true
+    }
+  ],
+  "allPass": true
+}

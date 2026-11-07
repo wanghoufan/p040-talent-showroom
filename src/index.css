@@ -182,7 +182,10 @@ legend { margin-bottom:10px; font-size:15px; }
 .library-header .page-header__actions { gap:4px; }
 .library-header .batch-entry { min-height:48px; font-size:12px; padding:6px; }
 .library-header .icon-link,.library-header [aria-label="收录舞蹈"] { padding:6px; min-width:48px; }
-.library-search { display:flex; align-items:stretch; gap:8px; margin-bottom:10px; }
+.library-search { display:flex; align-items:stretch; gap:8px; margin-bottom:10px; flex-wrap:nowrap; }
+/* 批量管理与 ＋ 跟搜索框同一排：不再单独占一行、右侧留白 */
+.library-search .batch-entry { flex:0 0 auto; min-height:48px; padding:0 10px; font-size:13px; white-space:nowrap; }
+.library-search .library-add { flex:0 0 auto; min-width:48px; min-height:48px; font-size:18px; line-height:1; }
 .library-search .search { min-width:0; flex:1; margin:0; }
 .filter-entry { flex:0 0 auto; min-width:56px; max-width:130px; padding:4px 8px; }
 .filter-entry small { display:block; font-size:10px; }

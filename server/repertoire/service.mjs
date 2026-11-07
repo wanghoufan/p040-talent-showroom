@@ -18,8 +18,13 @@ const REPETITIONS=['exact-lyrics','same-melody-new-lyrics','unverified'];
 const SOURCES=['manual','algorithm'];
 const LANGUAGES=['zh','en','ko'];
 const STEPS=[5,10,15,30];
-const PRACTICE_DEFAULTS={skipRap:false,wholeTrackLoop:false,backwardSeconds:5,forwardSeconds:10,customRepeatLines:2,playbackRate:1};
+const PRACTICE_DEFAULTS={skipRap:false,wholeTrackLoop:false,backwardSeconds:5,forwardSeconds:10,rapRange:null,playbackRate:1};
 const PRACTICE_FIELDS=Object.keys(PRACTICE_DEFAULTS);
+/** 旧记录可能存着已下线的 customRepeatLines；读档与合并时只取现行字段，避免旧键把保存挡成 INVALID_PRACTICE。 */
+const pickPractice=raw=>{
+ const value=raw&&typeof raw==='object'&&!Array.isArray(raw)?raw:{};
+ return PRACTICE_FIELDS.reduce((acc,key)=>{if(value[key]!==undefined)acc[key]=value[key];return acc},{});
+};
 const MAX_SECTIONS=200,MAX_LYRICS=1000,MAX_OFFSET_MS=60000;
 
 const isId=value=>typeof value==='string'&&value.length>0&&value.length<=64;
@@ -96,7 +101,9 @@ function normalizePractice(input){
  const value={...PRACTICE_DEFAULTS,...input};
  if(typeof value.skipRap!=='boolean'||typeof value.wholeTrackLoop!=='boolean')throw Error('INVALID_PRACTICE');
  if(!STEPS.includes(value.backwardSeconds)||!STEPS.includes(value.forwardSeconds))throw Error('INVALID_PRACTICE');
- if(!Number.isInteger(value.customRepeatLines)||value.customRepeatLines<1||value.customRepeatLines>100)throw Error('INVALID_PRACTICE');
+ if(value.rapRange!==null&&(typeof value.rapRange!=='object'||Array.isArray(value.rapRange)
+  ||!Number.isInteger(value.rapRange.startMs)||!Number.isInteger(value.rapRange.endMs)
+  ||value.rapRange.startMs<0||value.rapRange.endMs<=value.rapRange.startMs))throw Error('INVALID_PRACTICE');
  if(typeof value.playbackRate!=='number'||!Number.isFinite(value.playbackRate)||value.playbackRate<0.5||value.playbackRate>2)throw Error('INVALID_PRACTICE');
  return value;
 }
@@ -156,7 +163,7 @@ export function getRepertoire(db,id,includeDeleted=false){
   item.language=r.vocal_language||undefined;
   item.lyrics=parseJson(r.lyrics_json,[]);
   item.sections=parseJson(r.sections_json,[]);
-  item.practice={...PRACTICE_DEFAULTS,...parseJson(r.practice_json,{})};
+  item.practice={...PRACTICE_DEFAULTS,...pickPractice(parseJson(r.practice_json,{}))};
   item.tracks=Object.keys(tracks).length?tracks:undefined;
   const translations=readTranslations(r,item.lyrics);
   if(translations)item.translations=translations;
@@ -185,7 +192,7 @@ export function saveRepertoire(db,id,body,options={}){
   const {sections,alias}=body.sections===undefined?{sections:prior?.sections||[],alias:new Map()}:normalizeSections(body.sections);
   const sectionIds=new Set(sections.map(section=>section.id));
   const lyrics=body.lyrics===undefined?reconcileLyrics(prior?.lyrics||[],alias,sectionIds):normalizeLyrics(body.lyrics,sectionIds);
-  const practice=normalizePractice({...(prior?.practice||{}),...(body.practice||{})});
+  const practice=normalizePractice({...pickPractice(prior?.practice||{}),...(body.practice||{})});
   if(body.language!==undefined&&body.language!==null&&!LANGUAGES.includes(body.language))throw Error('INVALID_LANGUAGE');
   const duration=maxDuration(prior);
   /**

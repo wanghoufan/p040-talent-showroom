@@ -1,0 +1,319 @@
+{
+  "comparedAt": "2026-10-30T20:31:08.961Z",
+  "before": "docs/qa/evidence-2026-10-31-realqa-merge-batch2/db-before.json",
+  "after": "docs/qa/evidence-2026-10-31-realqa-merge-batch2/db-after.json",
+  "migrations": {
+    "before": 10,
+    "after": 10,
+    "added": []
+  },
+  "translatedSongs": [
+    {
+      "id": "01c2a4cd-528c-5316-b864-5ce24f86e280",
+      "title": "보여줄게",
+      "lines": 47,
+      "manual": 13,
+      "ai": 34,
+      "lrc": 0
+    },
+    {
+      "id": "0b31b171-f522-55aa-b1c3-57c7293e6a58",
+      "title": "Papillon",
+      "lines": 73,
+      "manual": 0,
+      "ai": 73,
+      "lrc": 0
+    },
+    {
+      "id": "121fce84-c058-5023-9655-72359f18fb79",
+      "title": "Let Go",
+      "lines": 54,
+      "manual": 0,
+      "ai": 54,
+      "lrc": 0
+    },
+    {
+      "id": "1b2991ef-ca1e-55b4-a170-e69baee5e4f1",
+      "title": "Jar Of Love",
+      "lines": 39,
+      "manual": 0,
+      "ai": 39,
+      "lrc": 0
+    },
+    {
+      "id": "1b4c0212-73ca-5c68-b13b-b494a93f1323",
+      "title": "흉터 (Feat. 치타)",
+      "lines": 58,
+      "manual": 0,
+      "ai": 58,
+      "lrc": 0
+    },
+    {
+      "id": "3c29d47b-0f08-54e3-8fad-5716a4dc2a39",
+      "title": "여름 안에서 (Live)",
+      "lines": 12,
+      "manual": 0,
+      "ai": 12,
+      "lrc": 0
+    },
+    {
+      "id": "4528bfad-2e59-5425-96a9-3581dd2a810c",
+      "title": "덤더럼 (Dumhdurum)",
+      "lines": 44,
+      "manual": 14,
+      "ai": 30,
+      "lrc": 0
+    },
+    {
+      "id": "532a2725-833f-547c-95bc-68145c52213c",
+      "title": "Trespassing",
+      "lines": 62,
+      "manual": 0,
+      "ai": 62,
+      "lrc": 0
+    },
+    {
+      "id": "63bd4643-17c0-5204-9b78-cf824139baf4",
+      "title": "Teeth",
+      "lines": 52,
+      "manual": 0,
+      "ai": 52,
+      "lrc": 0
+    },
+    {
+      "id": "78fcc0fd-ee50-508e-a170-3e09e6fedc1f",
+      "title": "Touch",
+      "lines": 50,
+      "manual": 0,
+      "ai": 50,
+      "lrc": 0
+    },
+    {
+      "id": "79aa79c7-7688-5b09-b945-d6a8248a7d78",
+      "title": "Bubble Pop!",
+      "lines": 48,
+      "manual": 0,
+      "ai": 48,
+      "lrc": 0
+    },
+    {
+      "id": "8345d110-55ca-5048-bea6-b7edf34f14f4",
+      "title": "Faded",
+      "lines": 54,
+      "manual": 0,
+      "ai": 54,
+      "lrc": 0
+    },
+    {
+      "id": "8dddcedd-e828-57d6-9e80-01fbaff00dbf",
+      "title": "Cure For Me",
+      "lines": 48,
+      "manual": 0,
+      "ai": 48,
+      "lrc": 0
+    },
+    {
+      "id": "91cf203e-8cdd-5dbf-8b3f-f21a48f9f01a",
+      "title": "Welcome to New York (Big Apple Version)",
+      "lines": 71,
+      "manual": 0,
+      "ai": 71,
+      "lrc": 0
+    },
+    {
+      "id": "93e8499b-b99b-5307-82a5-7cff189073dd",
+      "title": "Insomnia (불면증)",
+      "lines": 40,
+      "manual": 7,
+      "ai": 33,
+      "lrc": 0
+    },
+    {
+      "id": "bec19110-60b3-58b6-917e-5d043893655b",
+      "title": "Clean Bandit Rather Be Without Me",
+      "lines": 83,
+      "manual": 0,
+      "ai": 83,
+      "lrc": 0
+    },
+    {
+      "id": "c3c9896b-1021-5779-9984-7d5633c10b74",
+      "title": "Dynamic female voice",
+      "lines": 56,
+      "manual": 0,
+      "ai": 56,
+      "lrc": 0
+    },
+    {
+      "id": "c84eb5d2-3865-5943-8abb-7ee6bfbee1fc",
+      "title": "베베 (BABE)",
+      "lines": 65,
+      "manual": 20,
+      "ai": 45,
+      "lrc": 0
+    },
+    {
+      "id": "cadadde6-1215-5a2d-8105-e32c775fc5be",
+      "title": "Alan Walker-All Falls Down (刘至佳  lambert remix)",
+      "lines": 21,
+      "manual": 0,
+      "ai": 14,
+      "lrc": 7
+    },
+    {
+      "id": "d0c0904f-2a92-570d-ab3e-9d89c48429d2",
+      "title": "소나기 (Feat. 10cm)",
+      "lines": 49,
+      "manual": 0,
+      "ai": 49,
+      "lrc": 0
+    },
+    {
+      "id": "efaab368-8c6c-585a-be2b-d4a679121a10",
+      "title": "senorita (翻自 Shawn Mendes)",
+      "lines": 65,
+      "manual": 0,
+      "ai": 15,
+      "lrc": 50
+    },
+    {
+      "id": "f259781d-4da0-5a88-a230-cace8f8c57b3",
+      "title": "사뿐사뿐",
+      "lines": 91,
+      "manual": 14,
+      "ai": 77,
+      "lrc": 0
+    }
+  ],
+  "revisions": [
+    {
+      "id": "0b31b171-f522-55aa-b1c3-57c7293e6a58",
+      "title": "Papillon",
+      "before": 2,
+      "after": 3,
+      "delta": 1
+    },
+    {
+      "id": "121fce84-c058-5023-9655-72359f18fb79",
+      "title": "Let Go",
+      "before": 3,
+      "after": 4,
+      "delta": 1
+    },
+    {
+      "id": "1b2991ef-ca1e-55b4-a170-e69baee5e4f1",
+      "title": "Jar Of Love",
+      "before": 2,
+      "after": 3,
+      "delta": 1
+    },
+    {
+      "id": "1b4c0212-73ca-5c68-b13b-b494a93f1323",
+      "title": "흉터 (Feat. 치타)",
+      "before": 1,
+      "after": 2,
+      "delta": 1
+    },
+    {
+      "id": "3c29d47b-0f08-54e3-8fad-5716a4dc2a39",
+      "title": "여름 안에서 (Live)",
+      "before": 2,
+      "after": 3,
+      "delta": 1
+    },
+    {
+      "id": "532a2725-833f-547c-95bc-68145c52213c",
+      "title": "Trespassing",
+      "before": 2,
+      "after": 3,
+      "delta": 1
+    },
+    {
+      "id": "63bd4643-17c0-5204-9b78-cf824139baf4",
+      "title": "Teeth",
+      "before": 2,
+      "after": 3,
+      "delta": 1
+    },
+    {
+      "id": "78fcc0fd-ee50-508e-a170-3e09e6fedc1f",
+      "title": "Touch",
+      "before": 3,
+      "after": 4,
+      "delta": 1
+    },
+    {
+      "id": "79aa79c7-7688-5b09-b945-d6a8248a7d78",
+      "title": "Bubble Pop!",
+      "before": 1,
+      "after": 2,
+      "delta": 1
+    },
+    {
+      "id": "8345d110-55ca-5048-bea6-b7edf34f14f4",
+      "title": "Faded",
+      "before": 2,
+      "after": 3,
+      "delta": 1
+    },
+    {
+      "id": "8dddcedd-e828-57d6-9e80-01fbaff00dbf",
+      "title": "Cure For Me",
+      "before": 2,
+      "after": 3,
+      "delta": 1
+    },
+    {
+      "id": "91cf203e-8cdd-5dbf-8b3f-f21a48f9f01a",
+      "title": "Welcome to New York (Big Apple Version)",
+      "before": 2,
+      "after": 3,
+      "delta": 1
+    },
+    {
+      "id": "bec19110-60b3-58b6-917e-5d043893655b",
+      "title": "Clean Bandit Rather Be Without Me",
+      "before": 1,
+      "after": 2,
+      "delta": 1
+    },
+    {
+      "id": "c3c9896b-1021-5779-9984-7d5633c10b74",
+      "title": "Dynamic female voice",
+      "before": 2,
+      "after": 3,
+      "delta": 1
+    },
+    {
+      "id": "cadadde6-1215-5a2d-8105-e32c775fc5be",
+      "title": "Alan Walker-All Falls Down (刘至佳  lambert remix)",
+      "before": 3,
+      "after": 4,
+      "delta": 1
+    },
+    {
+      "id": "d0c0904f-2a92-570d-ab3e-9d89c48429d2",
+      "title": "소나기 (Feat. 10cm)",
+      "before": 2,
+      "after": 3,
+      "delta": 1
+    },
+    {
+      "id": "efaab368-8c6c-585a-be2b-d4a679121a10",
+      "title": "senorita (翻自 Shawn Mendes)",
+      "before": 2,
+      "after": 3,
+      "delta": 1
+    }
+  ],
+  "notes": [
+    {
+      "table": "vocal_translation_cache",
+      "before": 183,
+      "after": 677,
+      "note": "按设计可增"
+    }
+  ],
+  "problems": [],
+  "ok": true
+}

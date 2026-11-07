@@ -28,6 +28,8 @@ const CONTENT_BOTTOM = PAGE_H - MARGIN;
 
 const SIZE_LADDER = [20, 19, 18, 17, 16, 15, 14.5, 14, 13.5, 13, 12.5, 12, 11.5, 11, 10.5, 10, 9.5, 9, 8.5, 8, 7.5, 7, 6.5, 6] as const;
 const MIN_SIZE = 6;
+/** 单页稿低于这个字号就改两页（用户 2026-11-05 口径：7pt 太小）。 */
+const MIN_SINGLE_PAGE_SIZE = 10;
 const HEADING_SIZE = 7.5;
 const HEADING_GAP = 1.5;
 const ROW_GAP = 1;
@@ -276,6 +278,25 @@ interface PagedLayout {
   repeatCount: number;
 }
 
+/** 单个段落比整页还高（长歌+译文）时，按行切成多段，保证「一页装不下就分页」而不是整段消失。 */
+function splitBlockToFit(block: CompactBlock, size: number): CompactBlock[] {
+  const usable = CONTENT_BOTTOM - CONTENT_TOP - (HEADING_SIZE + HEADING_GAP + 2);
+  const parts: CompactBlock[] = [];
+  let current: CompactLine[] = [];
+  const heightOf = (lines: CompactLine[]): number => blockHeight({ ...block, lines }, size, LEFT_W);
+  for (const line of block.lines) {
+    const next = [...current, line];
+    if (current.length && heightOf(next) > usable) {
+      parts.push({ ...block, key: `${block.key}#${parts.length + 1}`, lines: current, repeatOf: undefined });
+      current = [line];
+    } else {
+      current = next;
+    }
+  }
+  if (current.length) parts.push({ ...block, key: `${block.key}#${parts.length + 1}`, lines: current, repeatOf: undefined });
+  return parts.map((part, index) => (index === 0 ? { ...part, key: block.key } : { ...part, heading: `${part.heading}（续）` }));
+}
+
 /** 按页重复排版：上一页放不下的段落顺延到下一页，重复关系只在同页内对齐。 */
 function layoutPages(blocks: CompactBlock[], size: number, maxPages: number): PagedLayout {
   const pages: Array<PageLayout & { index: number }> = [];
@@ -283,6 +304,13 @@ function layoutPages(blocks: CompactBlock[], size: number, maxPages: number): Pa
   let repeatCount = 0;
   while (pending.length && pages.length < maxPages) {
     const page = layoutOnePage(pending, size);
+    if (!page.placed.size) {
+      // 整段比一页还高：按行切段后重排，避免整首变成空白页。
+      const parts = splitBlockToFit(pending[0], size);
+      if (parts.length <= 1) break;
+      pending = [...parts, ...pending.slice(1)];
+      continue;
+    }
     pages.push({ ...page, index: pages.length + 1 });
     repeatCount += page.repeatCount;
     const next = pending.filter((block) => !page.placed.has(block.key));
@@ -337,16 +365,26 @@ export function buildCompactSheet(
   /* 带中文译文的外语歌行数翻倍：允许 2 页，否则字号会被压到 7pt 看不清。 */
   const bilingual = blocks.some((block) => block.lines.some((line) => Boolean(line.translation)));
   const maxPages = bilingual ? (options.maxPages ?? 2) : 1;
-  let size = options.size ?? MIN_SIZE;
-  let layout = layoutPages(blocks, size, maxPages);
-  if (!options.size) {
+  const pick = (limit: number): { size: number; layout: PagedLayout } | null => {
     for (const candidate of SIZE_LADDER) {
-      const attempt = layoutPages(blocks, candidate, maxPages);
-      if (attempt.complete && attempt.pages.every((page) => page.bottom <= CONTENT_BOTTOM)) {
-        size = candidate;
-        layout = attempt;
-        break;
-      }
+      const attempt = layoutPages(blocks, candidate, limit);
+      if (attempt.complete && attempt.pages.every((page) => page.bottom <= CONTENT_BOTTOM)) return { size: candidate, layout: attempt };
+    }
+    return null;
+  };
+  let size = options.size ?? MIN_SIZE;
+  // 显式字号也要遵守「低于 10pt 就允许两页」，否则导出端按字号逐档试时会得到半页内容。
+  const pageLimitFor = (candidate: number): number => (bilingual || candidate < MIN_SINGLE_PAGE_SIZE)
+    ? (options.maxPages ?? 2)
+    : 1;
+  let layout = layoutPages(blocks, size, pageLimitFor(size));
+  if (!options.size) {
+    const single = pick(maxPages);
+    if (single) { size = single.size; layout = single.layout; }
+    // 大字优先：一页要压到 10pt 以下才装得下，就改出两页，别让人贴着纸看。
+    if (!bilingual && size < MIN_SINGLE_PAGE_SIZE) {
+      const two = pick(2);
+      if (two && two.size > size) { size = two.size; layout = two.layout; }
     }
   }
 

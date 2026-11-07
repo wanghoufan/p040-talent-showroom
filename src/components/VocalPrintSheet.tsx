@@ -5,6 +5,13 @@ import { exportSheetPdf } from '../lib/vocal/pdf-export';
 import { sectionRevision } from '../lib/vocal/structure-revision';
 import { paperCheckCode } from '../lib/vocal/paper-revision';
 import type { TalentItem, VocalSection } from '../lib/types';
+import {
+  isNativePdfSaveSupported,
+  openSavedPdf,
+  savePdfToDownloads,
+  shareSavedPdf,
+  type SavedPdf,
+} from '../native/pdf-save';
 import '../styles/vocal-print.css';
 
 /**
@@ -79,6 +86,8 @@ export default function VocalPrintSheet({ item, sections, onClose }: Props) {
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [notice, setNotice] = useState<string | null>(null);
+  const [saved, setSaved] = useState<SavedPdf | null>(null);
+  const nativeSave = isNativePdfSaveSupported();
 
   const empty = sheet.meta.lineCount === 0;
   const noSections = sheet.meta.noSections;
@@ -100,27 +109,57 @@ export default function VocalPrintSheet({ item, sections, onClose }: Props) {
     setBusy(true);
     setError(null);
     setNotice(null);
+    setSaved(null);
+    const fileName = safeFileName(sheet.meta.title);
     try {
       const bytes = await exportSheetPdf(sheet.pages);
+      if (nativeSave) {
+        const result = await savePdfToDownloads(bytes, fileName);
+        setSaved(result);
+        const sizeText = result.size > 0 ? `（${Math.max(1, Math.round(result.size / 1024))} KB）` : '';
+        setNotice(`已保存到 ${result.path}${sizeText}，可在系统文件管理器中找到。`);
+        return;
+      }
       const buffer = new ArrayBuffer(bytes.byteLength);
       new Uint8Array(buffer).set(bytes);
       const blob = new Blob([buffer], { type: 'application/pdf' });
       const url = URL.createObjectURL(blob);
       const link = document.createElement('a');
       link.href = url;
-      link.download = safeFileName(sheet.meta.title);
+      link.download = fileName;
       document.body.appendChild(link);
       link.click();
       link.remove();
       window.setTimeout(() => URL.revokeObjectURL(url), 10_000);
-      setNotice(`已生成 ${sheet.meta.pageCount} 页 PDF：${safeFileName(sheet.meta.title)}`);
+      setNotice(`已发起下载：${fileName}（保存位置由浏览器决定）`);
     } catch (cause) {
       const code = cause instanceof Error ? cause.message : '';
       if (code === 'CANVAS_UNAVAILABLE') setError('当前环境不支持 Canvas，无法生成 PDF。可以改用「打印」保存为 PDF。');
       else if (code === 'JPEG_ENCODE_FAILED') setError('页面转成图片失败，未能生成 PDF。请改用「打印」保存为 PDF。');
+      else if (nativeSave) setError(`保存失败：${code || '未知错误'}。文件未保存，请确认存储空间或权限后重试。`);
       else setError(`生成 PDF 失败：${code || '未知错误'}。请改用「打印」或稍后重试。`);
     } finally {
       setBusy(false);
+    }
+  };
+
+  const share = async (): Promise<void> => {
+    if (!saved) return;
+    setError(null);
+    try {
+      await shareSavedPdf(saved, `分享 ${saved.name || 'A4 学习稿'}`);
+    } catch (cause) {
+      setError(`调起分享失败：${cause instanceof Error ? cause.message : '未知错误'}`);
+    }
+  };
+
+  const open = async (): Promise<void> => {
+    if (!saved) return;
+    setError(null);
+    try {
+      await openSavedPdf(saved);
+    } catch {
+      setError('手机里没有可打开 PDF 的应用，请改用「分享」发送到电脑或其他设备查看。');
     }
   };
 
@@ -172,7 +211,13 @@ export default function VocalPrintSheet({ item, sections, onClose }: Props) {
         </div>
 
         <div className="vocal-print-actions">
-          <button type="button" onClick={download} disabled={busy || empty}>{busy ? '正在生成…' : '下载 PDF'}</button>
+          <button type="button" onClick={download} disabled={busy || empty}>{busy ? '正在生成…' : nativeSave ? '保存 PDF' : '下载 PDF'}</button>
+          {nativeSave && saved && (
+            <>
+              <button type="button" onClick={share} disabled={busy}>分享</button>
+              <button type="button" onClick={open} disabled={busy}>打开</button>
+            </>
+          )}
           <button type="button" onClick={print} disabled={busy || empty}>打印</button>
           <button type="button" onClick={onClose} disabled={busy}>关闭</button>
         </div>

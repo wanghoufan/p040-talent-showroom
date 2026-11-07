@@ -1,0 +1,535 @@
+{
+  "record": {
+    "id": "4528bfad-2e59-5425-96a9-3581dd2a810c",
+    "title": "덤더럼 (Dumhdurum)",
+    "artist": "Apink",
+    "language": "ko",
+    "startedAt": "2026-10-30T16:47:01.480Z",
+    "finishedAt": "2026-10-30T16:47:36.798Z",
+    "status": "COMPLETE",
+    "total": 44,
+    "translated": 44,
+    "cached": 0,
+    "lrcReused": 0,
+    "translatedLines": 44,
+    "remaining": 0,
+    "failed": [],
+    "lyricsUnchanged": true,
+    "translationSources": {
+      "ai": 44
+    },
+    "samples": [
+      {
+        "id": "line-1",
+        "text": "Hey 这感觉实在太奇怪了，真是",
+        "source": "ai"
+      },
+      {
+        "id": "line-2",
+        "text": "那句说为了我而送走的话",
+        "source": "ai"
+      },
+      {
+        "id": "line-3",
+        "text": "直觉令人害怕，因为它实在太准了",
+        "source": "ai"
+      }
+    ]
+  },
+  "lyrics": [
+    {
+      "id": "line-1",
+      "startMs": 17048,
+      "text": "Hey 느낌이 너무 이상한 걸 좀"
+    },
+    {
+      "id": "line-2",
+      "startMs": 20998,
+      "text": "나를 위해 보내준다는 말이"
+    },
+    {
+      "id": "line-3",
+      "startMs": 25565,
+      "text": "직감은 두려워 너무 참 잘 맞아서"
+    },
+    {
+      "id": "line-4",
+      "startMs": 29615,
+      "text": "하루하루 밀어냈던 느낌 그대로"
+    },
+    {
+      "id": "line-5",
+      "startMs": 33736,
+      "text": "화려해 감춰진 모습"
+    },
+    {
+      "id": "line-6",
+      "startMs": 37569,
+      "text": "다 들킬까 봐 겁나 너는 내 맘 몰라"
+    },
+    {
+      "id": "line-7",
+      "startMs": 41984,
+      "text": "걱정 마 Baby I’m so fine"
+    },
+    {
+      "id": "line-8",
+      "startMs": 45742,
+      "text": "아냐 아무렇지 않아 괜찮아"
+    },
+    {
+      "id": "line-9",
+      "startMs": 48619,
+      "text": "내 맘은 덤더러 럼더러럼"
+    },
+    {
+      "id": "line-10",
+      "startMs": 51125,
+      "text": "누구보다 차갑던 네가 떠난 거야 잘 된 거야 …"
+    },
+    {
+      "id": "line-11",
+      "startMs": 56682,
+      "text": "Bye bye baby덤더러 럼더러럼"
+    },
+    {
+      "id": "line-12",
+      "startMs": 59516,
+      "text": "별로 슬프지 않아 눈물 흘리지 않아"
+    },
+    {
+      "id": "line-13",
+      "startMs": 63272,
+      "text": "벌써 다 끝나버린 내 맘은 덤더럼 덤덤"
+    },
+    {
+      "id": "line-14",
+      "startMs": 71336,
+      "text": "봐봐봐봐 yeah"
+    },
+    {
+      "id": "line-15",
+      "startMs": 73675,
+      "text": "내 맘은 덤더럼 덤덤"
+    },
+    {
+      "id": "line-16",
+      "startMs": 79582,
+      "text": "거짓말 같다고 말하지 마"
+    },
+    {
+      "id": "line-17",
+      "startMs": 81933,
+      "text": "내 맘은 덤더럼 덤덤"
+    },
+    {
+      "id": "line-18",
+      "startMs": 84644,
+      "text": "Yeah nananana It’s like nananana"
+    },
+    {
+      "id": "line-19",
+      "startMs": 89462,
+      "text": "어딜 가도 슬픈 노래들뿐"
+    },
+    {
+      "id": "line-20",
+      "startMs": 92678,
+      "text": "You know this feeling"
+    },
+    {
+      "id": "line-21",
+      "startMs": 94142,
+      "text": "Nananana Yeah nananana"
+    },
+    {
+      "id": "line-22",
+      "startMs": 97819,
+      "text": "사랑 못 할 거라 생각해 가끔"
+    },
+    {
+      "id": "line-23",
+      "startMs": 102114,
+      "text": "화려해 감춰진 모습"
+    },
+    {
+      "id": "line-24",
+      "startMs": 106448,
+      "text": "더 예뻐진 거 같아 속으론 더 아파"
+    },
+    {
+      "id": "line-25",
+      "startMs": 110848,
+      "text": "걱정 마 Baby I’m so fine"
+    },
+    {
+      "id": "line-26",
+      "startMs": 114705,
+      "text": "아냐 아무렇지 않아 괜찮아"
+    },
+    {
+      "id": "line-27",
+      "startMs": 117611,
+      "text": "내 맘은 덤더러 럼더러럼"
+    },
+    {
+      "id": "line-28",
+      "startMs": 120023,
+      "text": "누구보다 차갑던 네가 떠난 거야 잘 된 거야 …"
+    },
+    {
+      "id": "line-29",
+      "startMs": 125527,
+      "text": "Bye bye baby덤더러 럼더러럼"
+    },
+    {
+      "id": "line-30",
+      "startMs": 128291,
+      "text": "별로 슬프지 않아 눈물 흘리지 않아"
+    },
+    {
+      "id": "line-31",
+      "startMs": 132276,
+      "text": "벌써 다 끝나버린 내 맘은 덤더럼 덤덤"
+    },
+    {
+      "id": "line-32",
+      "startMs": 140226,
+      "text": "봐봐봐봐 yeah"
+    },
+    {
+      "id": "line-33",
+      "startMs": 142568,
+      "text": "내 맘은 덤더럼 덤덤"
+    },
+    {
+      "id": "line-34",
+      "startMs": 148586,
+      "text": "거짓말 같다고 말하지 마"
+    },
+    {
+      "id": "line-35",
+      "startMs": 150435,
+      "text": "no no no no"
+    },
+    {
+      "id": "line-36",
+      "startMs": 152974,
+      "text": "그리워 매번 잠들기 전에 yeah yeah"
+    },
+    {
+      "id": "line-37",
+      "startMs": 157059,
+      "text": "목소릴 들어야 스르르 눈 감았지"
+    },
+    {
+      "id": "line-38",
+      "startMs": 161191,
+      "text": "시간이 정말 모든 걸 지워준다 해도"
+    },
+    {
+      "id": "line-39",
+      "startMs": 165453,
+      "text": "Someday 다 그렇게 된대도"
+    },
+    {
+      "id": "line-40",
+      "startMs": 183889,
+      "text": "내 맘은 덤더럼 덤덤"
+    },
+    {
+      "id": "line-41",
+      "startMs": 190297,
+      "text": "봐봐봐봐 yeah"
+    },
+    {
+      "id": "line-42",
+      "startMs": 192654,
+      "text": "내 맘은 덤더럼 덤덤"
+    },
+    {
+      "id": "line-43",
+      "startMs": 198687,
+      "text": "거짓말 같다고 말하지 마"
+    },
+    {
+      "id": "line-44",
+      "startMs": 200670,
+      "text": "내 맘은 덤더럼 덤덤"
+    }
+  ],
+  "translations": {
+    "version": 1,
+    "language": "zh",
+    "source": "ai",
+    "lines": [
+      {
+        "id": "line-1",
+        "text": "Hey 这感觉实在太奇怪了，真是",
+        "source": "ai",
+        "sourceHash": "2986bdc4eb23f0357b63b645083f35c4"
+      },
+      {
+        "id": "line-2",
+        "text": "那句说为了我而送走的话",
+        "source": "ai",
+        "sourceHash": "f688a9f222d13748853645515e61f9ea"
+      },
+      {
+        "id": "line-3",
+        "text": "直觉令人害怕，因为它实在太准了",
+        "source": "ai",
+        "sourceHash": "6c7ea1e2241779053f4550309bf35b8b"
+      },
+      {
+        "id": "line-4",
+        "text": "一天天推开的那种感觉，就那样",
+        "source": "ai",
+        "sourceHash": "8d00cbe68a82ed1d757d2988f693ed9f"
+      },
+      {
+        "id": "line-5",
+        "text": "华丽地掩藏起来的模样",
+        "source": "ai",
+        "sourceHash": "fa8371945f035317310cf99cecec19b2"
+      },
+      {
+        "id": "line-6",
+        "text": "生怕全被看穿，好害怕，你不懂我的心",
+        "source": "ai",
+        "sourceHash": "89ad914e4460e0c3f18a310b59bc4e9e"
+      },
+      {
+        "id": "line-7",
+        "text": "别担心 Baby I’m so fine",
+        "source": "ai",
+        "sourceHash": "4282f09c6b65e149584c951cb19fb295"
+      },
+      {
+        "id": "line-8",
+        "text": "不是的，我没事，我很好",
+        "source": "ai",
+        "sourceHash": "4489e5b9adc06f605d69b47f35b5a509"
+      },
+      {
+        "id": "line-9",
+        "text": "我的心 덤더러 럼더러럼",
+        "source": "ai",
+        "sourceHash": "0aace4ca3f0ae5df8f6edc18c949a537"
+      },
+      {
+        "id": "line-10",
+        "text": "曾比谁都冷漠的你离开了，这样也好 …",
+        "source": "ai",
+        "sourceHash": "99a9ec331089a247613e6fc31a090d1c"
+      },
+      {
+        "id": "line-11",
+        "text": "Bye bye baby 덤더러 럼더러럼",
+        "source": "ai",
+        "sourceHash": "1413391fe5c27286a057271ef97ca04a"
+      },
+      {
+        "id": "line-12",
+        "text": "并不怎么悲伤，也没有流泪",
+        "source": "ai",
+        "sourceHash": "ec82428ed491919296af259ee0aed719"
+      },
+      {
+        "id": "line-13",
+        "text": "早已全部结束的我的心 덤더럼 덤덤",
+        "source": "ai",
+        "sourceHash": "5710e3be43b916ad0635d9aa48ecc19b"
+      },
+      {
+        "id": "line-14",
+        "text": "看看看看 yeah",
+        "source": "ai",
+        "sourceHash": "a64689d7a1594927d22da2075a9ab16d"
+      },
+      {
+        "id": "line-15",
+        "text": "我的心 덤더럼 덤덤",
+        "source": "ai",
+        "sourceHash": "6282d9d18af4015c0ee7454a12ab0ac7"
+      },
+      {
+        "id": "line-16",
+        "text": "别说这像谎言",
+        "source": "ai",
+        "sourceHash": "23bdf8b781bffbd8d1a24ea5e11d7d64"
+      },
+      {
+        "id": "line-17",
+        "text": "我的心 덤더럼 덤덤",
+        "source": "ai",
+        "sourceHash": "6282d9d18af4015c0ee7454a12ab0ac7"
+      },
+      {
+        "id": "line-18",
+        "text": "Yeah nananana It’s like nananana",
+        "source": "ai",
+        "sourceHash": "48c868b2c136f003c09f363082fcdb80"
+      },
+      {
+        "id": "line-19",
+        "text": "无论去哪里都只有悲伤的歌",
+        "source": "ai",
+        "sourceHash": "6e317be7f9a3ff6162f0aefc74de4569"
+      },
+      {
+        "id": "line-20",
+        "text": "You know this feeling",
+        "source": "ai",
+        "sourceHash": "a50daeedae3e65045249048fc4d7a92f"
+      },
+      {
+        "id": "line-21",
+        "text": "Nananana Yeah nananana",
+        "source": "ai",
+        "sourceHash": "a5111cc845ab1e0a67c63524acb05d96"
+      },
+      {
+        "id": "line-22",
+        "text": "偶尔会想，我大概无法再爱了",
+        "source": "ai",
+        "sourceHash": "405b055d59e28ca41115875ca2b74129"
+      },
+      {
+        "id": "line-23",
+        "text": "华丽地掩藏起来的模样",
+        "source": "ai",
+        "sourceHash": "fa8371945f035317310cf99cecec19b2"
+      },
+      {
+        "id": "line-24",
+        "text": "似乎变得更漂亮了，心里却更痛",
+        "source": "ai",
+        "sourceHash": "63daca64979720d5eca290c2df5f3472"
+      },
+      {
+        "id": "line-25",
+        "text": "别担心 Baby I'm so fine",
+        "source": "ai",
+        "sourceHash": "4282f09c6b65e149584c951cb19fb295"
+      },
+      {
+        "id": "line-26",
+        "text": "不是的 没什么 我没事",
+        "source": "ai",
+        "sourceHash": "4489e5b9adc06f605d69b47f35b5a509"
+      },
+      {
+        "id": "line-27",
+        "text": "我的心 덤더러 럼더러럼",
+        "source": "ai",
+        "sourceHash": "0aace4ca3f0ae5df8f6edc18c949a537"
+      },
+      {
+        "id": "line-28",
+        "text": "比谁都冷漠的你离开了 这是好事 …",
+        "source": "ai",
+        "sourceHash": "99a9ec331089a247613e6fc31a090d1c"
+      },
+      {
+        "id": "line-29",
+        "text": "Bye bye baby 덤더러 럼더러럼",
+        "source": "ai",
+        "sourceHash": "1413391fe5c27286a057271ef97ca04a"
+      },
+      {
+        "id": "line-30",
+        "text": "并没有多难过 我没有流泪",
+        "source": "ai",
+        "sourceHash": "ec82428ed491919296af259ee0aed719"
+      },
+      {
+        "id": "line-31",
+        "text": "已经全都结束的 我的心 덤더럼 덤덤",
+        "source": "ai",
+        "sourceHash": "5710e3be43b916ad0635d9aa48ecc19b"
+      },
+      {
+        "id": "line-32",
+        "text": "看看看看 yeah",
+        "source": "ai",
+        "sourceHash": "a64689d7a1594927d22da2075a9ab16d"
+      },
+      {
+        "id": "line-33",
+        "text": "我的心 덤더럼 덤덤",
+        "source": "ai",
+        "sourceHash": "6282d9d18af4015c0ee7454a12ab0ac7"
+      },
+      {
+        "id": "line-34",
+        "text": "别说像谎话一样",
+        "source": "ai",
+        "sourceHash": "23bdf8b781bffbd8d1a24ea5e11d7d64"
+      },
+      {
+        "id": "line-35",
+        "text": "no no no no",
+        "source": "ai",
+        "sourceHash": "04e848b4ea322cf8c7ec5d1d1bbfd777"
+      },
+      {
+        "id": "line-36",
+        "text": "想你 每次入睡之前 yeah yeah",
+        "source": "ai",
+        "sourceHash": "8f3ec075c7b31bd1a98b72ecd12cdaee"
+      },
+      {
+        "id": "line-37",
+        "text": "要听到你的声音 才慢慢地闭上眼",
+        "source": "ai",
+        "sourceHash": "1941f3a86821249633c5a3e7a32c7b23"
+      },
+      {
+        "id": "line-38",
+        "text": "就算时间真的会抹去一切",
+        "source": "ai",
+        "sourceHash": "7d45b0e40f7fa40df134f53c75bfe48e"
+      },
+      {
+        "id": "line-39",
+        "text": "Someday 就算全都变成那样",
+        "source": "ai",
+        "sourceHash": "d19fdc6fc59e554b78814d5ac049517e"
+      },
+      {
+        "id": "line-40",
+        "text": "我的心 덤더럼 덤덤",
+        "source": "ai",
+        "sourceHash": "6282d9d18af4015c0ee7454a12ab0ac7"
+      },
+      {
+        "id": "line-41",
+        "text": "看看看看 yeah",
+        "source": "ai",
+        "sourceHash": "a64689d7a1594927d22da2075a9ab16d"
+      },
+      {
+        "id": "line-42",
+        "text": "我的心 덤더럼 덤덤",
+        "source": "ai",
+        "sourceHash": "6282d9d18af4015c0ee7454a12ab0ac7"
+      },
+      {
+        "id": "line-43",
+        "text": "别说像谎话一样",
+        "source": "ai",
+        "sourceHash": "23bdf8b781bffbd8d1a24ea5e11d7d64"
+      },
+      {
+        "id": "line-44",
+        "text": "我的心 덤더럼 덤덤",
+        "source": "ai",
+        "sourceHash": "6282d9d18af4015c0ee7454a12ab0ac7"
+      }
+    ],
+    "updatedAt": "2026-10-30T16:47:36.797Z",
+    "provider": "codebuddy",
+    "model": "deepseek-v4.1-flash"
+  }
+}

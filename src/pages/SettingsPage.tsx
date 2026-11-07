@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { applyTheme, resolveTheme, systemPrefersDark } from '../app/theme';
 import { readDeviceSettings, saveDeviceSettings, validateEndpoint } from '../lib/device-settings';
+import { invalidateEndpoint } from '../lib/endpoint';
 import { syncLibrary, inspectOfflineLibrary, readSyncReport, clearSyncReport, syncReferences, readReferenceReport, clearReferenceReport, referencePlan, planDownload, type SyncProgress, type ReferenceSyncProgress, type ReferenceSyncResult } from '../lib/sync';
 import { wantToLearnIds, tonightProgramIds } from '../lib/download-presets';
 import { offlineBytes, clearOfflineMedia, isOfflineSupported } from '../native/filesystem';
@@ -25,6 +26,7 @@ export default function SettingsPage() {
   const [pairCode,setPairCode]=useState('');const [includeScores,setIncludeScores]=useState(true);
   const [settings, setSettings] = useState(readDeviceSettings);
   const [endpoint, setEndpoint] = useState(() => readDeviceSettings().apiEndpoint);
+  const [fallback, setFallback] = useState(() => readDeviceSettings().apiFallback ?? '');
   const [message, setMessage] = useState('');
   const [busy, setBusy] = useState(false);
   const [checking, setChecking] = useState(true);
@@ -68,18 +70,28 @@ export default function SettingsPage() {
   }), [presets, includeScores]);
   const presetLabel = (name: string, ids: string[], plan: { ready: boolean; bytes: number }) => ids.length === 0 ? `暂无${name}` : plan.ready ? `${name}已离线（${ids.length} 首）` : `下载${name}（${ids.length} 首 · 约 ${humanBytes(plan.bytes)}）`;
   const theme = (themeMode: DeviceSettings['themeMode']) => { const next = { ...settings, themeMode }; saveDeviceSettings(next); setSettings(next); const resolved = resolveTheme(themeMode, systemPrefersDark()); applyTheme(resolved, document.documentElement); void applySystemBars(resolved === 'dark'); };
+  /** 逐个探测候选地址，返回第一个健康的；两个都不健康就报错，不半保存。 */
+  const probeHealth = async (address: string): Promise<boolean> => {
+    const timed = createTimedSignal(5000);
+    try {
+      const response = await fetch(address + '/api/health', { signal: timed.signal });
+      const data = await response.json() as { ok?: boolean };
+      return response.ok && data.ok === true;
+    } catch { return false; } finally { timed.release(); }
+  };
   const connect = async () => {
     setBusy(true); setMessage('');
     try {
-      const address = validateEndpoint(endpoint, import.meta.env.DEV);
-      const timed = createTimedSignal(5000);
-      let response: Response; let data: { ok?: boolean };
-      try { response = await fetch(address + '/api/health', { signal: timed.signal }); data = await response.json(); }
-      finally { timed.release(); }
-      if (!response.ok || data.ok !== true) throw new Error();
-      const next = { ...settings, apiEndpoint: address }; saveDeviceSettings(next); setSettings(next);
-      setMessage('连接成功，服务器地址已保存');
-    } catch { setMessage('连接失败，请检查本地地址、网络和服务器状态'); } finally { setBusy(false); }
+      const primary = validateEndpoint(endpoint, import.meta.env.DEV);
+      const backup = fallback.trim() ? validateEndpoint(fallback, import.meta.env.DEV) : undefined;
+      const primaryOk = await probeHealth(primary);
+      const backupOk = backup ? await probeHealth(backup) : false;
+      if (!primaryOk && !backupOk) throw new Error();
+      const next = { ...settings, apiEndpoint: primary, apiFallback: backup }; saveDeviceSettings(next); setSettings(next);
+      invalidateEndpoint();
+      const parts = [primaryOk ? `主地址可用（${primary}）` : `主地址不通（${primary}）`, backup ? (backupOk ? `备用可用（${backup}）` : `备用不通（${backup}）`) : '未设备用地址'];
+      setMessage(`连接成功，已保存：${parts.join(' · ')}；使用时自动选可用的那个`);
+    } catch { setMessage('连接失败：主地址与备用地址都不通，请检查网络与服务器状态'); } finally { setBusy(false); }
   };
   // onlyIds 用于「想学歌单 / 今晚节目单」：只下这几首，其余曲目的缓存不动。
   const sync = async (onlyIds?: string[]) => {
@@ -118,7 +130,8 @@ export default function SettingsPage() {
       <div className="settings-block"><h2>主题</h2><div className="button-row">{([{ id: 'system', label: '跟随系统' }, { id: 'light', label: '浅色' }, { id: 'dark', label: '深色' }] as const).map((o) => <button key={o.id} aria-pressed={settings.themeMode === o.id} onClick={() => theme(o.id)}>{o.label}</button>)}</div></div>
       <div className="settings-block">
         <h2>Mac Mini 连接</h2>
-        <label>本地服务地址<input value={endpoint} onChange={(e) => setEndpoint(e.target.value)} placeholder="http://192.168.31.10:8791" inputMode="url" /></label>
+        <label>主地址（在家 Wi-Fi 用局域网地址）<input value={endpoint} onChange={(e) => setEndpoint(e.target.value)} placeholder="http://192.168.31.61:28794" inputMode="url" /></label>
+        <label>备用地址（出门用 Tailscale 地址，可留空）<input value={fallback} onChange={(e) => setFallback(e.target.value)} placeholder="http://100.x.y.z:28794" inputMode="url" /></label>
         <button className="primary" disabled={busy || !endpoint.trim()} onClick={() => void connect()}>{busy ? '正在检测…' : '连接测试并保存'}</button>
         {message && <p role="status">{message}</p>}
         <label>设备配对码<input type="password" value={pairCode} onChange={e=>setPairCode(e.target.value)} autoComplete="off"/></label><button disabled={!pairCode||busy} onClick={()=>void api<{token:string}>('/api/pair',{method:'POST',...jsonBody({code:pairCode})}).then(r=>{localStorage.setItem('dance.owner-token',r.token);setPairCode('');setMessage('设备配对成功');}).catch(()=>setMessage('配对失败，请检查配对码'))}>配对这台设备</button><p className="muted">最近同步：{settings.lastSyncAt ? new Date(settings.lastSyncAt).toLocaleString() : '尚未同步'}</p>

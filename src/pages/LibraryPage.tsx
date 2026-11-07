@@ -64,10 +64,11 @@ export default function LibraryPage() {
     void a.play().then(() => setPaused(false)).catch(() => setPlayError('音乐无法播放，请检查连接或离线缓存'));
   };
   return <section>
-    <header className="library-header"><div className="page-header__actions"><button className="batch-entry" disabled={!items.length} onClick={toggleBatch}>{batchMode ? '退出批量' : '批量管理'}</button><button aria-label="收录舞蹈" disabled={batchMode} onClick={() => setImporting(true)}>＋</button></div></header>
     <PendingShares />
     <PendingImports />
+    {/* 2026-11-05：批量管理/＋ 不再单独占一行，与搜索框同排。 */}
     <div className="library-search"><input className="search" type="search" aria-label="搜索舞蹈" placeholder="搜索歌名或歌手" value={query} onChange={event => { setQuery(event.target.value); clearSelection(); }} />
+    <button className="batch-entry" disabled={!items.length} onClick={toggleBatch}>{batchMode ? '退出批量' : '批量管理'}</button><button className="library-add" aria-label="收录舞蹈" disabled={batchMode} onClick={() => setImporting(true)}>＋</button>
     <LibraryFilters kind="DANCE" value={{status,scenes,demoOnly,cachedOnly}} onChange={v=>{setStatus(v.status);setScenes(v.scenes);setDemoOnly(v.demoOnly);setCachedOnly(v.cachedOnly);clearSelection();}} /></div>
     {error && <p className="notice">{error}</p>}
     {message && <p className="notice" role="status">{message}</p>}

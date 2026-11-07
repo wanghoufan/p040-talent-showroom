@@ -1,0 +1,127 @@
+{
+  "capturedAt": "2026-10-30T20:15:51.613Z",
+  "endpoint": "http://127.0.0.1:28795（临时前台，仅环回地址，已停止；未启动常驻服务）",
+  "auth": {
+    "note": "API 副本内 owner_credentials 清空后仅作只读冒烟；未读取、未复制、未展示任何 token、配对码或凭据内容",
+    "credentialsRows": 0
+  },
+  "cloud": {
+    "note": "P040_TRANSLATE_DISABLED=1；未调用 /translations/translate，未调用任何云端翻译",
+    "calls": 0
+  },
+  "totals": {
+    "items": 31,
+    "withTranslations": 5,
+    "withoutTranslations": 26
+  },
+  "translated": [
+    {
+      "id": "93e8499b-b99b-5307-82a5-7cff189073dd",
+      "title": "Insomnia (불면증)",
+      "language": "ko",
+      "revision": 2,
+      "lines": 40,
+      "source": "mixed",
+      "updatedAt": "2026-10-30T18:16:55.715Z",
+      "provider": "manual",
+      "model": "user",
+      "staleLines": 0,
+      "translationsMatchLyrics": true
+    },
+    {
+      "id": "c84eb5d2-3865-5943-8abb-7ee6bfbee1fc",
+      "title": "베베 (BABE)",
+      "language": "ko",
+      "revision": 2,
+      "lines": 65,
+      "source": "mixed",
+      "updatedAt": "2026-10-30T18:16:55.714Z",
+      "provider": "manual",
+      "model": "user",
+      "staleLines": 0,
+      "translationsMatchLyrics": true
+    },
+    {
+      "id": "01c2a4cd-528c-5316-b864-5ce24f86e280",
+      "title": "보여줄게",
+      "language": "ko",
+      "revision": 3,
+      "lines": 47,
+      "source": "mixed",
+      "updatedAt": "2026-10-30T18:16:55.711Z",
+      "provider": "manual",
+      "model": "user",
+      "staleLines": 0,
+      "translationsMatchLyrics": true
+    },
+    {
+      "id": "f259781d-4da0-5a88-a230-cace8f8c57b3",
+      "title": "사뿐사뿐",
+      "language": "ko",
+      "revision": 3,
+      "lines": 91,
+      "source": "mixed",
+      "updatedAt": "2026-10-30T18:16:55.709Z",
+      "provider": "manual",
+      "model": "user",
+      "staleLines": 0,
+      "translationsMatchLyrics": true
+    },
+    {
+      "id": "4528bfad-2e59-5425-96a9-3581dd2a810c",
+      "title": "덤더럼 (Dumhdurum)",
+      "language": "ko",
+      "revision": 6,
+      "lines": 44,
+      "source": "mixed",
+      "updatedAt": "2026-10-30T18:16:55.706Z",
+      "provider": "manual",
+      "model": "user",
+      "staleLines": 0,
+      "translationsMatchLyrics": true
+    }
+  ],
+  "korean": {
+    "total": 9,
+    "translated": 5,
+    "untranslated": [
+      {
+        "id": "3c29d47b-0f08-54e3-8fad-5716a4dc2a39",
+        "title": "여름 안에서 (Live)",
+        "lines": 12
+      },
+      {
+        "id": "d0c0904f-2a92-570d-ab3e-9d89c48429d2",
+        "title": "소나기 (Feat. 10cm)",
+        "lines": 49
+      },
+      {
+        "id": "1b4c0212-73ca-5c68-b13b-b494a93f1323",
+        "title": "흉터 (Feat. 치타)",
+        "lines": 58
+      },
+      {
+        "id": "79aa79c7-7688-5b09-b945-d6a8248a7d78",
+        "title": "Bubble Pop!",
+        "lines": 48
+      }
+    ]
+  },
+  "screenshot12": {
+    "id": "3c29d47b-0f08-54e3-8fad-5716a4dc2a39",
+    "title": "여름 안에서 (Live)",
+    "language": "ko",
+    "lyricsLines": 12,
+    "hasTranslations": false,
+    "missingLines": 12,
+    "inMergedFive": false,
+    "note": "用户截图「翻译缺失 12 句」对应的曲目；12 句全部无译文，属未覆盖歌曲，不在本次合并的 5 首内"
+  },
+  "twelveLineSongs": [
+    {
+      "id": "3c29d47b-0f08-54e3-8fad-5716a4dc2a39",
+      "title": "여름 안에서 (Live)",
+      "lines": 12
+    }
+  ]
+}

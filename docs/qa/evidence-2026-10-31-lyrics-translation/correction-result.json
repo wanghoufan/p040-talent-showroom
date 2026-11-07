@@ -1,0 +1,651 @@
+{
+  "dbPath": "/Users/zzymima0000/Developer/coding/1.Active/040-ing-才艺展示厅/var/vocal-v31-work/translation-20261031/db/qa.db",
+  "correctionsPath": "/Users/zzymima0000/Developer/coding/1.Active/040-ing-才艺展示厅/docs/qa/evidence-2026-10-31-lyrics-translation/corrections-2026-10-31.json",
+  "appliedAt": "2026-10-30T18:16:55.702Z",
+  "songs": [
+    {
+      "id": "4528bfad-2e59-5425-96a9-3581dd2a810c",
+      "title": "덤더럼 (Dumhdurum)",
+      "status": "APPLIED",
+      "lyricsUnchanged": true,
+      "lyricsCount": 44,
+      "translatedLines": 44,
+      "applied": [
+        {
+          "id": "line-1",
+          "before": "Hey 这感觉实在太奇怪了，真是",
+          "after": "Hey 这感觉有点太奇怪了",
+          "reason": "M14：句尾 좀 是缓和语气，不是追加判断「真是」",
+          "storedSource": "manual",
+          "storedText": "Hey 这感觉有点太奇怪了"
+        },
+        {
+          "id": "line-2",
+          "before": "那句说为了我而送走的话",
+          "after": "说要为了我放我走的那句话",
+          "reason": "M13：나를 위해 보내준다 是「为了我（好）送我走」，原译易读成「替我去送人」",
+          "storedSource": "manual",
+          "storedText": "说要为了我放我走的那句话"
+        },
+        {
+          "id": "line-5",
+          "before": "华丽地掩藏起来的模样",
+          "after": "华丽却藏起来的模样",
+          "reason": "H1：화려해 与 감춰진 并列修饰 모습，不是「华丽地掩藏」",
+          "storedSource": "manual",
+          "storedText": "华丽却藏起来的模样"
+        },
+        {
+          "id": "line-23",
+          "before": "华丽地掩藏起来的模样",
+          "after": "华丽却藏起来的模样",
+          "reason": "H1 同源行，与 line-5 统一",
+          "storedSource": "manual",
+          "storedText": "华丽却藏起来的模样"
+        },
+        {
+          "id": "line-7",
+          "before": "别担心 Baby I’m so fine",
+          "after": "别担心 Baby I'm so fine",
+          "reason": "同源统一：与 line-25 仅撇号不同，统一 ASCII 撇号",
+          "storedSource": "manual",
+          "storedText": "别担心 Baby I'm so fine"
+        },
+        {
+          "id": "line-26",
+          "before": "不是的 没什么 我没事",
+          "after": "不是的，我没事，我很好",
+          "reason": "同源统一",
+          "storedSource": "manual",
+          "storedText": "不是的，我没事，我很好"
+        },
+        {
+          "id": "line-10",
+          "before": "曾比谁都冷漠的你离开了，这样也好 …",
+          "after": "比谁都冷漠的你离开了 这样也好…",
+          "reason": "同源统一：line-10/28 两种写法选一",
+          "storedSource": "manual",
+          "storedText": "比谁都冷漠的你离开了 这样也好…"
+        },
+        {
+          "id": "line-28",
+          "before": "比谁都冷漠的你离开了 这是好事 …",
+          "after": "比谁都冷漠的你离开了 这样也好…",
+          "reason": "同源统一",
+          "storedSource": "manual",
+          "storedText": "比谁都冷漠的你离开了 这样也好…"
+        },
+        {
+          "id": "line-12",
+          "before": "并不怎么悲伤，也没有流泪",
+          "after": "并不怎么难过 也没有流泪",
+          "reason": "同源统一：line-12/30 两种写法选一",
+          "storedSource": "manual",
+          "storedText": "并不怎么难过 也没有流泪"
+        },
+        {
+          "id": "line-30",
+          "before": "并没有多难过 我没有流泪",
+          "after": "并不怎么难过 也没有流泪",
+          "reason": "同源统一",
+          "storedSource": "manual",
+          "storedText": "并不怎么难过 也没有流泪"
+        },
+        {
+          "id": "line-31",
+          "before": "已经全都结束的 我的心 덤더럼 덤덤",
+          "after": "早已全部结束的我的心 덤더럼 덤덤",
+          "reason": "同源统一",
+          "storedSource": "manual",
+          "storedText": "早已全部结束的我的心 덤더럼 덤덤"
+        },
+        {
+          "id": "line-16",
+          "before": "别说这像谎言",
+          "after": "别说这像是谎言",
+          "reason": "同源统一：line-16/34/43 出现两种写法，取其一",
+          "storedSource": "manual",
+          "storedText": "别说这像是谎言"
+        },
+        {
+          "id": "line-34",
+          "before": "别说像谎话一样",
+          "after": "别说这像是谎言",
+          "reason": "同源统一",
+          "storedSource": "manual",
+          "storedText": "别说这像是谎言"
+        },
+        {
+          "id": "line-43",
+          "before": "别说像谎话一样",
+          "after": "别说这像是谎言",
+          "reason": "同源统一",
+          "storedSource": "manual",
+          "storedText": "别说这像是谎言"
+        }
+      ],
+      "skipped": []
+    },
+    {
+      "id": "f259781d-4da0-5a88-a230-cace8f8c57b3",
+      "title": "사뿐사뿐",
+      "status": "APPLIED",
+      "lyricsUnchanged": true,
+      "lyricsCount": 91,
+      "translatedLines": 91,
+      "applied": [
+        {
+          "id": "line-16",
+          "before": "跟着我转动的目光",
+          "after": "跟着我转过来的头",
+          "reason": "H2：고개＝头/脖颈，不是「目光」",
+          "storedSource": "manual",
+          "storedText": "跟着我转过来的头"
+        },
+        {
+          "id": "line-20",
+          "before": "阳光照耀着我",
+          "after": "阳光照在我身上",
+          "reason": "M11：去掉悬空「的」，与 line-51 统一",
+          "storedSource": "manual",
+          "storedText": "阳光照在我身上"
+        },
+        {
+          "id": "line-51",
+          "before": "阳光照在我身上的",
+          "after": "阳光照在我身上",
+          "reason": "M11 同源行统一",
+          "storedSource": "manual",
+          "storedText": "阳光照在我身上"
+        },
+        {
+          "id": "line-24",
+          "before": "就算做梦也会看见我",
+          "after": "就算做梦 你也会看到我",
+          "reason": "同源统一：line-24/55「也会看见/你也会看见」选一",
+          "storedSource": "manual",
+          "storedText": "就算做梦 你也会看到我"
+        },
+        {
+          "id": "line-55",
+          "before": "就算做梦你也会看见我",
+          "after": "就算做梦 你也会看到我",
+          "reason": "同源统一",
+          "storedSource": "manual",
+          "storedText": "就算做梦 你也会看到我"
+        },
+        {
+          "id": "line-56",
+          "before": "烦恼就 Stop it",
+          "after": "烦恼 Stop it",
+          "reason": "同源统一",
+          "storedSource": "manual",
+          "storedText": "烦恼 Stop it"
+        },
+        {
+          "id": "line-57",
+          "before": "靠近我吧 Baby come on",
+          "after": "靠近我 Baby come on",
+          "reason": "同源统一",
+          "storedSource": "manual",
+          "storedText": "靠近我 Baby come on"
+        },
+        {
+          "id": "line-58",
+          "before": "轻飘飘地走向你",
+          "after": "向你轻轻地走去",
+          "reason": "M12 同源行统一",
+          "storedSource": "manual",
+          "storedText": "向你轻轻地走去"
+        },
+        {
+          "id": "line-61",
+          "before": "会吓你一跳给你惊喜",
+          "after": "会吓你一跳",
+          "reason": "同源统一",
+          "storedSource": "manual",
+          "storedText": "会吓你一跳"
+        },
+        {
+          "id": "line-65",
+          "before": "会吓你一跳给你惊喜",
+          "after": "会吓你一跳",
+          "reason": "同源统一",
+          "storedSource": "manual",
+          "storedText": "会吓你一跳"
+        },
+        {
+          "id": "line-62",
+          "before": "轻飘飘地走过去",
+          "after": "轻轻地走去",
+          "reason": "同源统一",
+          "storedSource": "manual",
+          "storedText": "轻轻地走去"
+        },
+        {
+          "id": "line-64",
+          "before": "会悄悄抱住你",
+          "after": "会轻轻抱住你",
+          "reason": "同源统一",
+          "storedSource": "manual",
+          "storedText": "会轻轻抱住你"
+        },
+        {
+          "id": "line-76",
+          "before": "请带我飞得更高",
+          "after": "请飞得更高些",
+          "reason": "M17：删去原文没有的「带我」",
+          "storedSource": "manual",
+          "storedText": "请飞得更高些"
+        },
+        {
+          "id": "line-79",
+          "before": "轻轻飞来的颤抖的",
+          "after": "轻轻飞来、颤抖着的",
+          "reason": "M10：保留承接「的」以衔接下一行 내 맘을，但改为并列定语不再悬空",
+          "storedSource": "manual",
+          "storedText": "轻轻飞来、颤抖着的"
+        }
+      ],
+      "skipped": []
+    },
+    {
+      "id": "01c2a4cd-528c-5316-b864-5ce24f86e280",
+      "title": "보여줄게",
+      "status": "APPLIED",
+      "lyricsUnchanged": true,
+      "lyricsCount": 47,
+      "translatedLines": 47,
+      "applied": [
+        {
+          "id": "line-4",
+          "before": "又在那里笑着吧",
+          "after": "又在笑着吧",
+          "reason": "M15：删去原文没有的「在那里」",
+          "storedSource": "manual",
+          "storedText": "又在笑着吧"
+        },
+        {
+          "id": "line-10",
+          "before": "一起走过的日子有多少",
+          "after": "一起走过的日子那么多",
+          "reason": "M16：얼마인데 是反问，原译可读成疑问句",
+          "storedSource": "manual",
+          "storedText": "一起走过的日子那么多"
+        },
+        {
+          "id": "line-11",
+          "before": "过去的时间太委屈",
+          "after": "过去的时光让我太委屈",
+          "reason": "原译「过去的时间太委屈」中文主谓搭配不通，补出隐含的感受主体",
+          "storedSource": "manual",
+          "storedText": "过去的时光让我太委屈"
+        },
+        {
+          "id": "line-13",
+          "before": "我会让你看到 完全不同的我",
+          "after": "会让你看到 完全改变的我",
+          "reason": "同源统一：line-13/28/40 两种写法选一",
+          "storedSource": "manual",
+          "storedText": "会让你看到 完全改变的我"
+        },
+        {
+          "id": "line-28",
+          "before": "会让你看到完全改变的我",
+          "after": "会让你看到 完全改变的我",
+          "reason": "同源统一",
+          "storedSource": "manual",
+          "storedText": "会让你看到 完全改变的我"
+        },
+        {
+          "id": "line-40",
+          "before": "会让你看到完全改变的我",
+          "after": "会让你看到 完全改变的我",
+          "reason": "同源统一",
+          "storedSource": "manual",
+          "storedText": "会让你看到 完全改变的我"
+        },
+        {
+          "id": "line-14",
+          "before": "我会让你看到 变得更美的我",
+          "after": "会让你看到 更加漂亮的我",
+          "reason": "同源统一：line-14/29/41 两种写法选一",
+          "storedSource": "manual",
+          "storedText": "会让你看到 更加漂亮的我"
+        },
+        {
+          "id": "line-29",
+          "before": "会让你看到更加漂亮的我",
+          "after": "会让你看到 更加漂亮的我",
+          "reason": "同源统一",
+          "storedSource": "manual",
+          "storedText": "会让你看到 更加漂亮的我"
+        },
+        {
+          "id": "line-41",
+          "before": "会让你看到更加漂亮的我",
+          "after": "会让你看到 更加漂亮的我",
+          "reason": "同源统一",
+          "storedSource": "manual",
+          "storedText": "会让你看到 更加漂亮的我"
+        },
+        {
+          "id": "line-15",
+          "before": "像傻瓜一样 因为爱而离开的",
+          "after": "像傻瓜一样 因为爱情而离开的",
+          "reason": "同源统一：line-15/42 选一；句尾「的」承接下一行 너 때문에，保留",
+          "storedSource": "manual",
+          "storedText": "像傻瓜一样 因为爱情而离开的"
+        },
+        {
+          "id": "line-16",
+          "before": "我不会因为你而哭",
+          "after": "不会因为你而哭泣",
+          "reason": "同源统一：line-16/31/43 两种写法选一",
+          "storedSource": "manual",
+          "storedText": "不会因为你而哭泣"
+        },
+        {
+          "id": "line-17",
+          "before": "我会遇到更帅的男人 一定让你看到",
+          "after": "会遇见更帅气的男人 一定让你看到",
+          "reason": "同源统一：line-17/32/44「遇到/遇见」选一",
+          "storedSource": "manual",
+          "storedText": "会遇见更帅气的男人 一定让你看到"
+        },
+        {
+          "id": "line-19",
+          "before": "没有你我也不难过 也不会崩溃",
+          "after": "没有你也不悲伤 不会崩溃",
+          "reason": "同源统一：line-19/34/46 两种写法选一",
+          "storedSource": "manual",
+          "storedText": "没有你也不悲伤 不会崩溃"
+        }
+      ],
+      "skipped": []
+    },
+    {
+      "id": "c84eb5d2-3865-5943-8abb-7ee6bfbee1fc",
+      "title": "베베 (BABE)",
+      "status": "APPLIED",
+      "lyricsUnchanged": true,
+      "lyricsCount": 70,
+      "translatedLines": 65,
+      "applied": [
+        {
+          "id": "line-1",
+          "before": "副歌：김보아",
+          "after": "",
+          "reason": "H5：制作署名「副歌演唱：김보아」，不是歌词，整行不译",
+          "storedSource": null,
+          "storedText": null
+        },
+        {
+          "id": "line-2",
+          "before": "全部编程：新沙洞老虎",
+          "after": "",
+          "reason": "M1：All Programming by 制作署名，整行不译",
+          "storedSource": null,
+          "storedText": null
+        },
+        {
+          "id": "line-3",
+          "before": "录音工程师：전부연",
+          "after": "",
+          "reason": "M2：Recording Engineer 制作署名，整行不译",
+          "storedSource": null,
+          "storedText": null
+        },
+        {
+          "id": "line-4",
+          "before": "混音工程师：고현정",
+          "after": "",
+          "reason": "M2：Mixing Engineer 制作署名，整行不译",
+          "storedSource": null,
+          "storedText": null
+        },
+        {
+          "id": "line-5",
+          "before": "母带工程师：권남우",
+          "after": "",
+          "reason": "M2：Mastering Engineer 制作署名，整行不译",
+          "storedSource": null,
+          "storedText": null
+        },
+        {
+          "id": "line-10",
+          "before": "就那样这样 呃 这样 呃",
+          "after": "就这样 呃 这样 呃",
+          "reason": "M3：막 이렇게＝就这样，原译「就那样这样」自相矛盾",
+          "storedSource": "manual",
+          "storedText": "就这样 呃 这样 呃"
+        },
+        {
+          "id": "line-12",
+          "before": "比起昨天更",
+          "after": "比昨天更",
+          "reason": "去掉多余的「起」，与下一行 내가 좀 더 이상해져 顺接",
+          "storedSource": "manual",
+          "storedText": "比昨天更"
+        },
+        {
+          "id": "line-13",
+          "before": "我变得有点更奇怪",
+          "after": "我变得更奇怪了",
+          "reason": "M4：「有点更」中文叠用不通",
+          "storedSource": "manual",
+          "storedText": "我变得更奇怪了"
+        },
+        {
+          "id": "line-15",
+          "before": "总觉得不像自己 老是",
+          "after": "老是觉得自己不像自己",
+          "reason": "原译句尾悬「老是」不合中文语序",
+          "storedSource": "manual",
+          "storedText": "老是觉得自己不像自己"
+        },
+        {
+          "id": "line-49",
+          "before": "看着你的时候，我也会不由自主地",
+          "after": "看着你的时候 不知不觉",
+          "reason": "同源统一",
+          "storedSource": "manual",
+          "storedText": "看着你的时候 不知不觉"
+        },
+        {
+          "id": "line-50",
+          "before": "我好像就想听",
+          "after": "我好像想听",
+          "reason": "同源统一",
+          "storedSource": "manual",
+          "storedText": "我好像想听"
+        },
+        {
+          "id": "line-52",
+          "before": "U make me 十九岁 十九岁 十九岁",
+          "after": "你让我 19 19 19",
+          "reason": "M7：열아홉 与 line-26 同一句型，统一阿拉伯数字",
+          "storedSource": "manual",
+          "storedText": "你让我 19 19 19"
+        },
+        {
+          "id": "line-53",
+          "before": "U make me 十七岁 十七岁 十七岁",
+          "after": "你让我 17 17 17",
+          "reason": "M7 同一句型",
+          "storedSource": "manual",
+          "storedText": "你让我 17 17 17"
+        },
+        {
+          "id": "line-54",
+          "before": "I feel like 十五岁 十五岁 十五岁",
+          "after": "我感觉像 15 15 15",
+          "reason": "M7：I feel like 열다섯 与 line-28 同一句型",
+          "storedSource": "manual",
+          "storedText": "我感觉像 15 15 15"
+        },
+        {
+          "id": "line-29",
+          "before": "看来又想听了",
+          "after": "好像又想听了",
+          "reason": "同源统一：line-29/55/65 两种写法选一",
+          "storedSource": "manual",
+          "storedText": "好像又想听了"
+        },
+        {
+          "id": "line-34",
+          "before": "是不是施了什么魔法 我求你了",
+          "after": "是不是施了什么魔法 求求你了嘛",
+          "reason": "M18：비나이다 是古语恳求，原译「我求你了」偏强硬",
+          "storedSource": "manual",
+          "storedText": "是不是施了什么魔法 求求你了嘛"
+        },
+        {
+          "id": "line-37",
+          "before": "怎么身体这么别扭 babe",
+          "after": "身子怎么这么不听使唤 babe",
+          "reason": "M5：몸이 꼬이다 指身体扭/缠，不是情绪上的「别扭」",
+          "storedSource": "manual",
+          "storedText": "身子怎么这么不听使唤 babe"
+        },
+        {
+          "id": "line-38",
+          "before": "这就是撒娇没错 疼疼我吧",
+          "after": "这就是撒娇没错 多疼疼我嘛",
+          "reason": "M6：统一「多疼疼我嘛」",
+          "storedSource": "manual",
+          "storedText": "这就是撒娇没错 多疼疼我嘛"
+        },
+        {
+          "id": "line-39",
+          "before": "疼疼我吧",
+          "after": "多疼疼我嘛",
+          "reason": "M6：七行重复统一（line-39~45）",
+          "storedSource": "manual",
+          "storedText": "多疼疼我嘛"
+        },
+        {
+          "id": "line-40",
+          "before": "疼疼我吧",
+          "after": "多疼疼我嘛",
+          "reason": "M6 同源统一",
+          "storedSource": "manual",
+          "storedText": "多疼疼我嘛"
+        },
+        {
+          "id": "line-41",
+          "before": "疼疼我吧",
+          "after": "多疼疼我嘛",
+          "reason": "M6 同源统一",
+          "storedSource": "manual",
+          "storedText": "多疼疼我嘛"
+        },
+        {
+          "id": "line-42",
+          "before": "疼疼我吧",
+          "after": "多疼疼我嘛",
+          "reason": "M6 同源统一",
+          "storedSource": "manual",
+          "storedText": "多疼疼我嘛"
+        },
+        {
+          "id": "line-43",
+          "before": "疼疼我吧",
+          "after": "多疼疼我嘛",
+          "reason": "M6 同源统一",
+          "storedSource": "manual",
+          "storedText": "多疼疼我嘛"
+        },
+        {
+          "id": "line-44",
+          "before": "疼疼我吧",
+          "after": "多疼疼我嘛",
+          "reason": "M6 同源统一",
+          "storedSource": "manual",
+          "storedText": "多疼疼我嘛"
+        },
+        {
+          "id": "line-45",
+          "before": "疼疼我吧",
+          "after": "多疼疼我嘛",
+          "reason": "M6 同源统一",
+          "storedSource": "manual",
+          "storedText": "多疼疼我嘛"
+        }
+      ],
+      "skipped": []
+    },
+    {
+      "id": "93e8499b-b99b-5307-82a5-7cff189073dd",
+      "title": "Insomnia (불면증)",
+      "status": "APPLIED",
+      "lyricsUnchanged": true,
+      "lyricsCount": 40,
+      "translatedLines": 40,
+      "applied": [
+        {
+          "id": "line-2",
+          "before": "但那条路上全是陷阱，陷阱，陷阱，陷阱",
+          "after": "但那条路上全是圈套，圈套，圈套，圈套",
+          "reason": "M8：덫＝圈套，与 line-3 함정＝陷阱 区分，不再塌成同一个词",
+          "storedSource": "manual",
+          "storedText": "但那条路上全是圈套，圈套，圈套，圈套"
+        },
+        {
+          "id": "line-8",
+          "before": "因为对你的思念比梦更清晰，最终熬了一整夜",
+          "after": "因为对你的思念比梦还要鲜活 最终还是熬了一整夜",
+          "reason": "同源统一：line-8/23/32 两种写法选一",
+          "storedSource": "manual",
+          "storedText": "因为对你的思念比梦还要鲜活 最终还是熬了一整夜"
+        },
+        {
+          "id": "line-23",
+          "before": "因为对你的思念比梦更清晰，最终熬了一整夜",
+          "after": "因为对你的思念比梦还要鲜活 最终还是熬了一整夜",
+          "reason": "同源统一",
+          "storedSource": "manual",
+          "storedText": "因为对你的思念比梦还要鲜活 最终还是熬了一整夜"
+        },
+        {
+          "id": "line-32",
+          "before": "因为比梦更鲜活的你的念头 终究彻夜未眠",
+          "after": "因为对你的思念比梦还要鲜活 最终还是熬了一整夜",
+          "reason": "同源统一",
+          "storedSource": "manual",
+          "storedText": "因为对你的思念比梦还要鲜活 最终还是熬了一整夜"
+        },
+        {
+          "id": "line-17",
+          "before": "为了连觉都睡不着，一直看着你而染上的",
+          "after": "看着你，看到连觉都睡不着的",
+          "reason": "H3：-도록 表程度不表目的；保留「的」与下一行「病」合成一句",
+          "storedSource": "manual",
+          "storedText": "看着你，看到连觉都睡不着的"
+        },
+        {
+          "id": "line-20",
+          "before": "永远地、死一般地只等待你的允许",
+          "after": "永远地、拼命地只等你的允许",
+          "reason": "H4：죽도록＝拼死/拼命，不是「死一般」",
+          "storedSource": "manual",
+          "storedText": "永远地、拼命地只等你的允许"
+        },
+        {
+          "id": "line-29",
+          "before": "思念中疲惫落下",
+          "after": "因思念而疲惫落下的",
+          "reason": "M9：保留承接「的」衔接下一行 비 같은 눈물，但改成可读定语",
+          "storedSource": "manual",
+          "storedText": "因思念而疲惫落下的"
+        }
+      ],
+      "skipped": []
+    }
+  ],
+  "totals": {
+    "applied": 68,
+    "removed": 5,
+    "protectedLines": []
+  }
+}

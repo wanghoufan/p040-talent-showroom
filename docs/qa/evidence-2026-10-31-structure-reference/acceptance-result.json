@@ -1,0 +1,182 @@
+{
+  "schema": "p040.reference-acceptance.v1",
+  "startedAt": "2026-10-30T21:19:13.875Z",
+  "finishedAt": "2026-10-30T21:19:14.816Z",
+  "isolatedCopy": "./var/vocal-v31-work/accept-20261031",
+  "sourceDb": "./var/vocal-v31-work/real-qa-20261030/db/qa.db",
+  "total": 34,
+  "pass": 34,
+  "fail": 0,
+  "checks": [
+    {
+      "id": "三首样本都在隔离快照来源库中",
+      "ok": true,
+      "detail": "Let Go / 베베 (BABE) / Papillon"
+    },
+    {
+      "id": "三首原曲 SHA 与库内记录一致",
+      "ok": true,
+      "detail": "Papillon:057306bf81c0 베베 (BABE):28b18003c63f Let Go:a4cae4824ab7"
+    },
+    {
+      "id": "Papillon 参考文件 SHA 与真实原曲一致（057306bf…）",
+      "ok": true,
+      "detail": "057306bf81c0c2e1"
+    },
+    {
+      "id": "隔离副本音频可用：Papillon",
+      "ok": true,
+      "detail": "./var/vocal-v31-work/accept-20261031/media/vocal-import/0b31b171-f522-55aa-b1c3-57c7293e6a58/original.mp3"
+    },
+    {
+      "id": "隔离副本音频可用：베베 (BABE)",
+      "ok": true,
+      "detail": "./var/vocal-v31-work/accept-20261031/media/vocal-import/c84eb5d2-3865-5943-8abb-7ee6bfbee1fc/original.mp3"
+    },
+    {
+      "id": "隔离副本音频可用：Let Go",
+      "ok": true,
+      "detail": "./var/vocal-v31-work/accept-20261031/media/vocal-import/121fce84-c058-5023-9655-72359f18fb79/original.mp3"
+    },
+    {
+      "id": "隔离副本与原库曲目数据一致（Papillon 段落数）",
+      "ok": true,
+      "detail": "快照打开校验"
+    },
+    {
+      "id": "隔离服务健康检查可用",
+      "ok": true,
+      "detail": "{\"ok\":true,\"recognition\":\"disabled\"}"
+    },
+    {
+      "id": "隔离服务取得本机 owner 凭据",
+      "ok": true,
+      "detail": "token 不打印"
+    },
+    {
+      "id": "三首唱歌曲目都能从接口读出",
+      "ok": true,
+      "detail": "Papillon / 베베 (BABE) / Let Go"
+    },
+    {
+      "id": "Papillon 参考载入返回 200",
+      "ok": true,
+      "detail": "status=200"
+    },
+    {
+      "id": "身份核验五项全过",
+      "ok": true,
+      "detail": "title:true artist:true version:true duration:true audioSha256:true"
+    },
+    {
+      "id": "候选 10 段",
+      "ok": true,
+      "detail": "candidateCount=10"
+    },
+    {
+      "id": "争议 2 段保持待标注",
+      "ok": true,
+      "detail": "U1@57150 U2@125290"
+    },
+    {
+      "id": "10 段起点与用户 LRC 锚定结果一致",
+      "ok": true,
+      "detail": "0,12180,34650,57150,68560,79870,103260,125290,136400,147450"
+    },
+    {
+      "id": "多数边界锚在现有 LRC 行上",
+      "ok": true,
+      "detail": "9/10 段锚到 LRC 行"
+    },
+    {
+      "id": "载入参考不改正式结构",
+      "ok": true,
+      "detail": "sections 未变"
+    },
+    {
+      "id": "未逐段确认时拒绝应用（409 REFERENCE_CONFIRMATION_REQUIRED）",
+      "ok": true,
+      "detail": "status=409 code=REFERENCE_CONFIRMATION_REQUIRED"
+    },
+    {
+      "id": "显式确认后应用成功",
+      "ok": true,
+      "detail": "status=200 applied=10"
+    },
+    {
+      "id": "保存后 10 段全部 source=manual",
+      "ok": true,
+      "detail": "manual,manual,manual,manual,manual,manual,manual,manual,manual,manual"
+    },
+    {
+      "id": "保存后争议段仍是 unknown（未静默定型）",
+      "ok": true,
+      "detail": "U1@57150 U2@125290"
+    },
+    {
+      "id": "保存不改歌词",
+      "ok": true,
+      "detail": "73/73 行"
+    },
+    {
+      "id": "BABE 手动打点写入成功",
+      "ok": true,
+      "detail": "status=200/applied"
+    },
+    {
+      "id": "BABE 段数 +1 且新段为 manual unknown",
+      "ok": true,
+      "detail": "15 → 16"
+    },
+    {
+      "id": "BABE 没有被塞入任何参考候选",
+      "ok": true,
+      "detail": "无 ref-* 段"
+    },
+    {
+      "id": "Let Go 拒绝 BTS 同名参考（409 IDENTITY_MISMATCH）",
+      "ok": true,
+      "detail": "status=409 code=IDENTITY_MISMATCH"
+    },
+    {
+      "id": "拒绝信息指出歌手不一致",
+      "ok": true,
+      "detail": "IDENTITY_ARTIST_MISMATCH"
+    },
+    {
+      "id": "拒绝后没有留下任何参考草稿",
+      "ok": true,
+      "detail": "draft=null"
+    },
+    {
+      "id": "Let Go 正式结构未变",
+      "ok": true,
+      "detail": "sections 未变"
+    },
+    {
+      "id": "源目录三首 MP3 字节与 mtime 均未变",
+      "ok": true,
+      "detail": "Papillon / 베베 (BABE) / Let Go"
+    },
+    {
+      "id": "三首 LRC 文件仍在源目录且未被改写",
+      "ok": true,
+      "detail": "王嘉尔 - Papillon.lrc:3290B 泫雅 - 베베 (BABE).lrc:3367B 石玺彤 - Let Go.lrc:3069B"
+    },
+    {
+      "id": "全库歌词内容零改动",
+      "ok": true,
+      "detail": "31 条曲目 lyrics_json 逐字相同"
+    },
+    {
+      "id": "算法结果写入被拒（MANUAL_OVERRIDE，不改段）",
+      "ok": true,
+      "detail": "{\"applied\":false,\"reason\":\"MANUAL_OVERRIDE\"}"
+    },
+    {
+      "id": "人工 10 段结构在算法写入后逐字不变",
+      "ok": true,
+      "detail": "10 段"
+    }
+  ]
+}

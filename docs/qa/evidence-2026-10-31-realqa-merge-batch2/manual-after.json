@@ -1,0 +1,47 @@
+{
+  "checkedAt": "2026-10-30T20:31:16.761Z",
+  "db": "var/vocal-v31-work/real-qa-20261030/db/qa.db",
+  "before": "docs/qa/evidence-2026-10-31-realqa-merge-batch2/manual-before.json",
+  "beforeTotals": {
+    "songs": 5,
+    "manual": 68,
+    "ai": 219,
+    "lrc": 0
+  },
+  "afterTotals": {
+    "songs": 5,
+    "manual": 68,
+    "ai": 219,
+    "lrc": 0
+  },
+  "checkedManualLines": 68,
+  "perSong": [
+    {
+      "title": "보여줄게",
+      "beforeManual": 13,
+      "afterManual": 13
+    },
+    {
+      "title": "덤더럼 (Dumhdurum)",
+      "beforeManual": 14,
+      "afterManual": 14
+    },
+    {
+      "title": "Insomnia (불면증)",
+      "beforeManual": 7,
+      "afterManual": 7
+    },
+    {
+      "title": "베베 (BABE)",
+      "beforeManual": 20,
+      "afterManual": 20
+    },
+    {
+      "title": "사뿐사뿐",
+      "beforeManual": 14,
+      "afterManual": 14
+    }
+  ],
+  "problems": [],
+  "ok": true
+}

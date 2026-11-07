@@ -4,7 +4,7 @@ import { playbackSource } from '../native/filesystem';
 import { apiWithTimeout, jsonBody } from '../lib/api';
 import { rememberRepertoire } from '../lib/repertoire-store';
 import {
-  availableVocalSources, defaultVocalSource, hasVocalTrack, lineAtTime, lineLoopFor, parseLrc,
+  availableVocalSources, defaultVocalSource, hasVocalTrack, lineAtTime, lineLoopFor, mergeRapRanges, parseLrc,
   rapRangesFromSections, resolveLineTimings, resolveTracks, sectionAtTime, skipRapTarget, sortSections,
   switchVocalTrack, VOCAL_PRACTICE_DEFAULTS,
 } from '../lib/vocal';
@@ -40,8 +40,9 @@ const FONT_STORAGE_KEY = 'dance.vocal-practice.font-size';
 const TIMESTAMP_HINT = /\[\d{1,4}:\d{1,2}/;
 const SECONDS_CHOICES: VocalPracticeSettings['backwardSeconds'][] = [5, 10, 15, 30];
 const RATE_CHOICES = [0.75, 1, 1.25, 1.5];
-const LINE_CHOICES = [2, 3, 4, 5, 6];
-const DEFAULT_SETTINGS: VocalPracticeSettings = { ...VOCAL_PRACTICE_DEFAULTS, customRepeatLines: 4 };
+/** 逐句循环只留 3 句 / 5 句；2 句与 4 句已按用户要求下线。 */
+const LOOP_LINE_CHOICES = [3, 5];
+const DEFAULT_SETTINGS: VocalPracticeSettings = { ...VOCAL_PRACTICE_DEFAULTS };
 /** 段落类型文案与结构编辑共用一份，避免两处标签不一致。 */
 const SECTION_TYPE_LABEL = TYPE_TEXT;
 function isSeconds(value: unknown): value is VocalPracticeSettings['backwardSeconds'] {
@@ -67,16 +68,19 @@ function saveFontScale(value: LyricFont): void {
 /** 沉浸页歌词按结构分段：同一段连续成组，不在任何段落里的句子单独成组且不显示段标题。 */
 interface LyricGroup { key: string; section: VocalSection | null; lines: { line: TimedLyric; index: number }[] }
 
-/** 只记住练习习惯（秒数/句数/倍速）；循环与合练状态每次进入重新开始。 */
+/** 只记住练习习惯（秒数/倍速/Rap 范围）；循环与合练状态每次进入重新开始。 */
 function sanitizeSettings(raw: Partial<VocalPracticeSettings> | undefined): VocalPracticeSettings {
   const value = raw || {};
+  const range = value.rapRange;
+  const rapRange = range && Number.isFinite(range.startMs) && Number.isFinite(range.endMs) && range.endMs > range.startMs
+    ? { startMs: Math.max(0, Math.trunc(range.startMs)), endMs: Math.trunc(range.endMs) }
+    : null;
   return {
     skipRap: value.skipRap === true,
     wholeTrackLoop: value.wholeTrackLoop === true,
     backwardSeconds: isSeconds(value.backwardSeconds) ? value.backwardSeconds : DEFAULT_SETTINGS.backwardSeconds,
     forwardSeconds: isSeconds(value.forwardSeconds) ? value.forwardSeconds : DEFAULT_SETTINGS.forwardSeconds,
-    customRepeatLines: typeof value.customRepeatLines === 'number' && Number.isFinite(value.customRepeatLines)
-      ? Math.min(8, Math.max(1, Math.trunc(value.customRepeatLines))) : DEFAULT_SETTINGS.customRepeatLines,
+    rapRange,
     playbackRate: typeof value.playbackRate === 'number' && RATE_CHOICES.includes(value.playbackRate) ? value.playbackRate : DEFAULT_SETTINGS.playbackRate,
   };
 }
@@ -96,7 +100,7 @@ function saveSettings(songId: string, settings: VocalPracticeSettings): void {
   try {
     localStorage.setItem(settingsKey(songId), JSON.stringify({
       backwardSeconds: settings.backwardSeconds, forwardSeconds: settings.forwardSeconds,
-      customRepeatLines: settings.customRepeatLines, playbackRate: settings.playbackRate,
+      rapRange: settings.rapRange, playbackRate: settings.playbackRate,
       skipRap: settings.skipRap, wholeTrackLoop: settings.wholeTrackLoop,
     }));
   } catch { /* 存储不可用时仅本会话生效，不影响播放 */ }
@@ -107,7 +111,7 @@ function practicePatch(settings: VocalPracticeSettings): VocalPracticeSettings {
   return {
     skipRap: settings.skipRap, wholeTrackLoop: settings.wholeTrackLoop,
     backwardSeconds: settings.backwardSeconds, forwardSeconds: settings.forwardSeconds,
-    customRepeatLines: settings.customRepeatLines, playbackRate: settings.playbackRate,
+    rapRange: settings.rapRange, playbackRate: settings.playbackRate,
   };
 }
 
@@ -173,8 +177,21 @@ export default function VocalPracticePlayer({ item, onRequestImport, onExitToLib
   const [mediaDurationMs, setMediaDurationMs] = useState(0);
   const [loop, setLoop] = useState<VocalLineLoop | null>(null);
   const [loopKey, setLoopKey] = useState<string | null>(null);
-  /** 整段循环：与逐句循环互斥，同一时刻只有一个循环范围。 */
+  /** 段落循环：与逐句循环互斥，同一时刻只有一个循环范围。 */
   const [sectionLoop, setSectionLoop] = useState<{ id: string; startMs: number; endMs: number } | null>(null);
+  /**
+   * 自定义区间循环：先点「循环开始」记起点，再点「循环结束」记终点后开始循环。
+   * loopRangeOn=false 表示起终点已选但已结束循环（继续往后播），再点一次「循环结束」才清空范围。
+   */
+  const [loopAnchor, setLoopAnchor] = useState<{ index: number; startMs: number } | null>(null);
+  const [loopRange, setLoopRange] = useState<{ startIndex: number; endIndex: number; startMs: number; endMs: number } | null>(null);
+  const [loopRangeOn, setLoopRangeOn] = useState(false);
+  /** Rap 框选：第一次点句定起点、第二次定终点，按这两句的时间范围跳过。 */
+  const [rapPickOpen, setRapPickOpen] = useState(false);
+  const [rapPickStart, setRapPickStart] = useState<number | null>(null);
+  const [rapPickEnd, setRapPickEnd] = useState<number | null>(null);
+  /** 打开面板时按已存范围回填句子只用于显示；用户没再点句就直接沿用存下来的精确范围。 */
+  const [rapPickDirty, setRapPickDirty] = useState(false);
   const [focusedSectionId, setFocusedSectionId] = useState<string | null>(null);
   const [onlySectionLines, setOnlySectionLines] = useState(false);
   const [studioOpen, setStudioOpen] = useState(false);
@@ -204,8 +221,6 @@ export default function VocalPracticePlayer({ item, onRequestImport, onExitToLib
   const [moreOpen, setMoreOpen] = useState(false);
   /** 「分段」只控制顶部段落标签条显隐；没有结构时按钮禁用，不假装可分。 */
   const [segmentsOpen, setSegmentsOpen] = useState(true);
-  /** 「自定义」展开句数选择，选完立即按该句数循环。 */
-  const [customLoopOpen, setCustomLoopOpen] = useState(false);
   const [fontScale, setFontScale] = useState<LyricFont>(readFontScale);
   const [dockHeight, setDockHeight] = useState(0);
   /** 每次显式定位 +1：让「把当前句带进可视区」在暂停时也能触发，且同一句重复定位也生效。 */
@@ -231,7 +246,10 @@ export default function VocalPracticePlayer({ item, onRequestImport, onExitToLib
    */
   const sections = useMemo(() => relabelSections(sortSections(item.sections || [])), [item.sections]);
   const sectionById = useMemo(() => new Map(sections.map((section) => [section.id, section])), [sections]);
-  const rapRanges = useMemo(() => rapRangesFromSections(sections, declaredDurationMs || undefined), [sections, declaredDurationMs]);
+  /** 跳过 Rap 的范围：用户框选的优先；没有框选才用已逐段确认的 Rap 段。 */
+  const rapRanges = useMemo(() => (settings.rapRange
+    ? mergeRapRanges([settings.rapRange], declaredDurationMs || undefined)
+    : rapRangesFromSections(sections, declaredDurationMs || undefined)), [settings.rapRange, sections, declaredDurationMs]);
   const unconfirmedRap = useMemo(() => unconfirmedRapCount(sections), [sections]);
   const unknownSections = useMemo(() => sections.filter((section) => section.type === 'unknown').length, [sections]);
 
@@ -459,37 +477,38 @@ export default function VocalPracticePlayer({ item, onRequestImport, onExitToLib
 
   const replay = (): void => {
     setLoop(null); setLoopKey(null); setJoint(false); setSectionLoop(null);
+    setLoopAnchor(null); setLoopRange(null); setLoopRangeOn(false);
     seekTo(0, true);
   };
 
   const toggleWholeLoop = (): void => {
     setJoint(false);
     setLoop(null); setLoopKey(null); setSectionLoop(null);
+    setLoopAnchor(null); setLoopRange(null); setLoopRangeOn(false);
     setSettings((current) => ({ ...current, wholeTrackLoop: !current.wholeTrackLoop }));
   };
 
-  const toggleSkipRap = (): void => {
-    /* 没有已确认的 Rap 段时不再把按钮做成禁用：一点就把「地图与结构」打开，
-       告诉用户去哪儿把段类型改成 Rap 并确认，用户自己决定跳哪几段。 */
-    if (!rapRanges.length) {
-      setNotice(unconfirmedRap > 0
-        ? `有 ${unconfirmedRap} 段 Rap 还未确认：在「地图与结构」里选中该段，点「确认这段是 Rap（可跳过）」。`
-        : '这首歌还没有标成 Rap 的段：在「地图与结构」里把要跳过的段类型改成 Rap 并确认，这里就能一键跳过。');
-      setDrawerOpen(true);
-      return;
+  /** 点「跳过 Rap」直接开框选面板：按歌词句选起点/终点，不逼用户去整首分段。 */
+  const openRapPicker = (): void => {
+    if (!hasTiming) { setNotice('这首歌没有逐句时间戳，无法按句框选 Rap；请导入带时间的 LRC。'); return; }
+    const saved = settings.rapRange;
+    if (saved) {
+      const start = Math.max(0, lineAtTime(lyrics.lines, saved.startMs));
+      const end = Math.max(start, lineAtTime(lyrics.lines, Math.max(saved.startMs + 1, saved.endMs - 1)));
+      setRapPickStart(start);
+      setRapPickEnd(end);
+    } else {
+      setRapPickStart(null);
+      setRapPickEnd(null);
     }
-    setSettings((current) => ({ ...current, skipRap: !current.skipRap }));
-    const element = audioRef.current;
-    if (!settings.skipRap && element && !loop) {
-      const current = Math.round(element.currentTime * 1000) - offsetMs;
-      const target = skipRapTarget(current, rapRanges, { enabled: true, durationMs: durationMs || undefined });
-      if (target > current) seekTo(target);
-    }
+    setRapPickDirty(false);
+    setRapPickOpen(true);
   };
 
   const startJoint = (): void => {
     if (!src) { setNotice('没有可播放的音轨，无法合练。'); return; }
     setLoop(null); setLoopKey(null); setSectionLoop(null); setJoint(true);
+    setLoopAnchor(null); setLoopRange(null); setLoopRangeOn(false);
     setSettings((current) => ({ ...current, skipRap: true, wholeTrackLoop: false }));
     seekTo(0, true);
     setNotice('合练一遍：从头播放 · 自动跳过 Rap · 到结尾停止');
@@ -498,8 +517,8 @@ export default function VocalPracticePlayer({ item, onRequestImport, onExitToLib
   const startLineLoop = (count: number, key: string): void => {
     if (!hasTiming) { setNotice('这首歌没有逐句时间戳，无法逐句循环；请导入带时间的 LRC。'); return; }
     /* 同键二次点击＝退出这一档循环：不 seek、不暂停、不重开播，保持在当前位置继续往后。
-       换了句数（自定义改 3→6）才算重建，避免「点了没反应」。 */
-    if (loopKey === key && loop && loop.count === count) {
+       换档（3 句 ↔ 5 句）只保留一档，避免「点了没反应」。 */
+    if (loopKey === key && loop) {
       setLoop(null); setLoopKey(null);
       setNotice('已退出逐句循环，从当前时点继续');
       return;
@@ -508,6 +527,7 @@ export default function VocalPracticePlayer({ item, onRequestImport, onExitToLib
     const next = lineLoopFor(lyrics.lines, endIndex, count, { durationMs: durationMs || undefined });
     if (!next) { setNotice('当前句缺少可靠句尾时间，无法循环；可先补充校准。'); return; }
     setLoop(next); setLoopKey(key); setJoint(false); setSectionLoop(null);
+    setLoopAnchor(null); setLoopRange(null); setLoopRangeOn(false);
     setSettings((current) => ({ ...current, wholeTrackLoop: false }));
     /* 只进入循环、不替用户按下播放：暂停时设置循环就停在句首（真机曾出现「点循环即开播」）。 */
     seekTo(next.startMs, playing);
@@ -516,7 +536,7 @@ export default function VocalPracticePlayer({ item, onRequestImport, onExitToLib
       : `循环第 ${next.startIndex + 1}～${next.endIndex + 1} 句，共 ${next.count} 句（已暂停，点播放开始）`);
   };
 
-  /** 点句/上下句都走同一条定位路径：先清掉循环与合练状态，再按句首定位，不伪造时间。 */
+  /** 点句/上下句都走同一条定位路径：清掉逐句/整段/合练状态，但保留已选的区间起终点。 */
   const seekToLine = (index: number): void => {
     const line = lyrics.lines[index];
     if (!line) return;
@@ -532,6 +552,105 @@ export default function VocalPracticePlayer({ item, onRequestImport, onExitToLib
   const goNextLine = (): void => {
     if (!hasTiming) { setNotice('这首歌没有逐句时间戳，无法按句定位；请导入带时间的 LRC。'); return; }
     seekToLine(activeLine < 0 ? 0 : Math.min(lyrics.lines.length - 1, activeLine + 1));
+  };
+
+  /**
+   * 区间循环第一步：把当前句（播放中的高亮句，暂停时取最近句）设为起点。
+   * 再点一次视为放弃：起终点一并清空，按钮熄灭。
+   */
+  const markLoopStart = (): void => {
+    if (!hasTiming) { setNotice('这首歌没有逐句时间戳，无法按句循环；请导入带时间的 LRC。'); return; }
+    if (loopAnchor || loopRange) {
+      setLoopAnchor(null); setLoopRange(null); setLoopRangeOn(false);
+      setNotice('已取消循环范围');
+      return;
+    }
+    const index = activeLine >= 0 ? activeLine : 0;
+    const line = lyrics.lines[index];
+    if (!line) return;
+    setLoop(null); setLoopKey(null); setSectionLoop(null); setJoint(false);
+    setSettings((current) => ({ ...current, wholeTrackLoop: false }));
+    setLoopAnchor({ index, startMs: line.startMs });
+    setNotice(`循环开始：第 ${index + 1} 句「${line.text}」；再点「循环结束」选终点`);
+  };
+
+  /**
+   * 区间循环第二步：以当前句为终点并开始循环。
+   * 已在循环中按一次＝只结束循环、继续往后播，起点终点保留；再按一次＝清空范围、按钮熄灭。
+   */
+  const markLoopEnd = (): void => {
+    if (loopRange && loopRangeOn) {
+      setLoopRangeOn(false);
+      setNotice('已结束循环，从当前时点继续往后播放（起点与终点仍保留）');
+      return;
+    }
+    if (loopRange) {
+      setLoopRange(null); setLoopAnchor(null); setLoopRangeOn(false);
+      setNotice('已清除循环范围');
+      return;
+    }
+    if (!loopAnchor) {
+      setNotice('先点「循环开始」选起点，播放到想要的收尾处再点「循环结束」');
+      return;
+    }
+    const endIndex = activeLine >= 0 ? activeLine : loopAnchor.index;
+    const startIndex = Math.min(loopAnchor.index, endIndex);
+    const lastIndex = Math.max(loopAnchor.index, endIndex);
+    const startMs = lyrics.lines[startIndex]?.startMs;
+    const endMs = lyrics.lines[lastIndex]?.endMs ?? lyrics.lines[lastIndex + 1]?.startMs ?? (durationMs || undefined);
+    if (!Number.isFinite(startMs) || !Number.isFinite(endMs) || (endMs as number) <= (startMs as number)) {
+      setNotice('终点还没落到起点之后；先播放到后面的句子再点「循环结束」。');
+      return;
+    }
+    setLoop(null); setLoopKey(null); setSectionLoop(null); setJoint(false);
+    setSettings((current) => ({ ...current, wholeTrackLoop: false }));
+    setLoopAnchor(null);
+    setLoopRange({ startIndex, endIndex: lastIndex, startMs: startMs as number, endMs: endMs as number });
+    setLoopRangeOn(true);
+    seekTo(startMs as number, playing);
+    setNotice(`循环第 ${startIndex + 1}～${lastIndex + 1} 句（${formatTime(startMs as number)}–${formatTime(endMs as number)}）${playing ? '' : '，已暂停，点播放开始'}`);
+  };
+
+  /** Rap 框选：第一次点句＝起点，第二次点句＝终点；再次点句重新开始一轮。 */
+  const pickRapLine = (index: number): void => {
+    setRapPickDirty(true);
+    if (rapPickStart === null || rapPickEnd !== null) {
+      setRapPickStart(index); setRapPickEnd(null);
+      return;
+    }
+    setRapPickStart(Math.min(rapPickStart, index));
+    setRapPickEnd(Math.max(rapPickStart, index));
+  };
+
+  const rapPickTimeRange = (): { startMs: number; endMs: number } | null => {
+    if (rapPickStart === null || rapPickEnd === null) return null;
+    const startMs = lyrics.lines[rapPickStart]?.startMs;
+    const endMs = lyrics.lines[rapPickEnd]?.endMs ?? lyrics.lines[rapPickEnd + 1]?.startMs ?? (durationMs || undefined);
+    if (!Number.isFinite(startMs) || !Number.isFinite(endMs) || (endMs as number) <= (startMs as number)) return null;
+    return { startMs: startMs as number, endMs: endMs as number };
+  };
+
+  /** 保存框选范围并启用跳过；当前位置落在范围内时直接跳到范围之后。 */
+  const applyRapRange = (enabled: boolean): void => {
+    const range = (rapPickDirty ? rapPickTimeRange() : null) ?? settings.rapRange ?? rapPickTimeRange();
+    if (!range) { setNotice('先按句选出 Rap 的起点和终点再启用。'); return; }
+    setSettings((current) => ({ ...current, rapRange: range, skipRap: enabled }));
+    setRapPickOpen(false);
+    if (enabled) {
+      const element = audioRef.current;
+      const current = element ? Math.round(element.currentTime * 1000) - offsetMs : timeMs;
+      const target = skipRapTarget(current, [range], { enabled: true, durationMs: durationMs || undefined });
+      if (target > current) seekTo(target);
+      setNotice(`已跳过 ${formatTime(range.startMs)}–${formatTime(range.endMs)} 的 Rap`);
+    } else {
+      setNotice('已关闭跳过 Rap，范围仍保留，可再打开');
+    }
+  };
+
+  const clearRapRange = (): void => {
+    setSettings((current) => ({ ...current, rapRange: null, skipRap: false }));
+    setRapPickStart(null); setRapPickEnd(null);
+    setNotice('已清除 Rap 范围');
   };
 
   /** 倍速按钮按 0.75 → 1 → 1.25 → 1.5 循环，和前后的 select 共用同一份设置。 */
@@ -552,6 +671,7 @@ export default function VocalPracticePlayer({ item, onRequestImport, onExitToLib
 
   const clearLoops = (): void => {
     setLoop(null); setLoopKey(null); setSectionLoop(null); setJoint(false);
+    setLoopAnchor(null); setLoopRange(null); setLoopRangeOn(false);
     setSettings((current) => ({ ...current, wholeTrackLoop: false }));
     setNotice('已关闭循环');
   };
@@ -598,6 +718,11 @@ export default function VocalPracticePlayer({ item, onRequestImport, onExitToLib
     if (!element) return;
     // 文件时钟 → 规范化时间：减去当前音轨 offsetMs，歌词与结构才与切轨后的位置一致。
     const current = Math.round(element.currentTime * 1000) - offsetMs;
+    if (loopRangeOn && loopRange) {
+      if (current >= loopRange.endMs) { seekTo(loopRange.startMs); return; }
+      setTimeMs(current);
+      return;
+    }
     if (sectionLoop) {
       if (current >= sectionLoop.endMs) { seekTo(sectionLoop.startMs); return; }
       setTimeMs(current);
@@ -618,6 +743,7 @@ export default function VocalPracticePlayer({ item, onRequestImport, onExitToLib
   const handleEnded = (): void => {
     setPlaying(false);
     if (joint) { setJoint(false); setNotice('合练一遍完成'); return; }
+    if (loopRangeOn && loopRange) { seekTo(loopRange.startMs, true); return; }
     if (sectionLoop) { seekTo(sectionLoop.startMs, true); return; }
     if (loop) { seekTo(loop.startMs, true); return; }
     setTimeMs(durationMs);
@@ -625,6 +751,7 @@ export default function VocalPracticePlayer({ item, onRequestImport, onExitToLib
 
   const jumpToSection = (section: VocalSection): void => {
     setLoop(null); setLoopKey(null); setJoint(false); setSectionLoop(null);
+    setLoopAnchor(null); setLoopRange(null); setLoopRangeOn(false);
     setFocusedSectionId(section.id);
     seekTo(section.startMs);
   };
@@ -638,6 +765,7 @@ export default function VocalPracticePlayer({ item, onRequestImport, onExitToLib
       return;
     }
     setLoop(null); setLoopKey(null); setJoint(false);
+    setLoopAnchor(null); setLoopRange(null); setLoopRangeOn(false);
     setSettings((current) => ({ ...current, wholeTrackLoop: false }));
     setSectionLoop({ id: section.id, startMs: section.startMs, endMs: section.endMs });
     seekTo(section.startMs, playing);
@@ -716,9 +844,11 @@ export default function VocalPracticePlayer({ item, onRequestImport, onExitToLib
     }
   };
 
-  const modeText = joint ? '合练中 · 自动跳过 Rap'    : sectionLoop ? `整段循环 · ${sectionById.get(sectionLoop.id)?.label ?? `${formatTime(sectionLoop.startMs)}–${formatTime(sectionLoop.endMs)}`}`
+  const modeText = joint ? '合练中 · 自动跳过 Rap'
+      : loopRangeOn && loopRange ? `循环 · 第 ${loopRange.startIndex + 1}～${loopRange.endIndex + 1} 句`
+      : sectionLoop ? `整段循环 · ${sectionById.get(sectionLoop.id)?.label ?? `${formatTime(sectionLoop.startMs)}–${formatTime(sectionLoop.endMs)}`}`
       : loop ? `逐句循环 · 第 ${loop.startIndex + 1}～${loop.endIndex + 1} 句` : '自由练习';
-  const skipRapBlocked = Boolean(loop || sectionLoop) && settings.skipRap;
+  const skipRapBlocked = Boolean(loop || sectionLoop || (loopRangeOn && loopRange)) && settings.skipRap;
 
   /**
    * 一键载入本机参考：服务端身份五项已核对通过才会出现在这里。
@@ -923,17 +1053,11 @@ export default function VocalPracticePlayer({ item, onRequestImport, onExitToLib
           <h2 id="vocal-lyrics-title">同步歌词</h2>
           <div className="vocal-loopbar" role="group" aria-label="按句循环">
             <span className="vocal-loopbar__label">循环</span>
-            {[2, 4].map((count) => (
+            {LOOP_LINE_CHOICES.map((count) => (
               <button key={count} type="button" aria-pressed={loopKey === String(count)} disabled={!hasTiming} onClick={() => startLineLoop(count, String(count))}>{count} 句</button>
             ))}
-            <button
-              type="button"
-              aria-pressed={loopKey === 'custom'}
-              disabled={!hasTiming}
-              onClick={() => startLineLoop(settings.customRepeatLines, 'custom')}
-            >
-              自定义 {settings.customRepeatLines} 句
-            </button>
+            <button type="button" aria-pressed={Boolean(loopAnchor || loopRange)} disabled={!hasTiming} onClick={markLoopStart}>循环开始</button>
+            <button type="button" aria-pressed={loopRangeOn} disabled={!hasTiming} onClick={markLoopEnd}>循环结束</button>
             {loop && <button type="button" onClick={() => { setLoop(null); setLoopKey(null); setNotice('已退出逐句循环'); }}>退出</button>}
           </div>
         </div>
@@ -993,8 +1117,17 @@ export default function VocalPracticePlayer({ item, onRequestImport, onExitToLib
                       const lineNumber = globalIndex + 1;
                       /* 左右信息按真实 LRC：没有时标就显示破折号，绝不伪造时间。 */
                       const hasStamp = Number.isFinite(line.startMs) && line.startMs > 0;
-                      /* 循环范围由 loop.startIndex/endIndex 算，不靠「染当前句」冒充范围。 */
-                      const inLoopRange = Boolean(loop && globalIndex >= loop.startIndex && globalIndex <= loop.endIndex);
+                      /* 循环范围由 loop/loopRange 的起止句下标算，不靠「染当前句」冒充范围。 */
+                      const inLoopRange = Boolean(
+                        (loop && globalIndex >= loop.startIndex && globalIndex <= loop.endIndex)
+                        || (loopRange && globalIndex >= loopRange.startIndex && globalIndex <= loopRange.endIndex),
+                      );
+                      const isLoopFirst = Boolean(
+                        (loop && globalIndex === loop.startIndex) || (loopRange && globalIndex === loopRange.startIndex),
+                      );
+                      const isLoopLast = Boolean(
+                        (loop && globalIndex === loop.endIndex) || (loopRange && globalIndex === loopRange.endIndex),
+                      );
                       const redundantTranslation = translation ? isRedundantTranslation(line.text, translation.text) : false;
                       return (
                         <li key={line.id} className="vocal-lyric-item" ref={isActive ? activeLineRef : undefined}>
@@ -1004,8 +1137,8 @@ export default function VocalPracticePlayer({ item, onRequestImport, onExitToLib
                               'vocal-line',
                               isActive ? 'vocal-line--active' : '',
                               inLoopRange ? 'vocal-line--loop-range' : '',
-                              inLoopRange && loop && globalIndex === loop.startIndex ? 'is-loop-first' : '',
-                              inLoopRange && loop && globalIndex === loop.endIndex ? 'is-loop-last' : '',
+                              inLoopRange && isLoopFirst ? 'is-loop-first' : '',
+                              inLoopRange && isLoopLast ? 'is-loop-last' : '',
                               inLoopRange && isActive ? 'vocal-line--loop-current' : '',
                             ].filter(Boolean).join(' ')}
                             aria-current={isActive ? 'true' : undefined}
@@ -1140,52 +1273,43 @@ export default function VocalPracticePlayer({ item, onRequestImport, onExitToLib
               <button
                 type="button"
                 aria-pressed={settings.skipRap}
-                aria-label={rapRanges.length ? '跳过 Rap' : '设置要跳过的 Rap 段'}
-                onClick={toggleSkipRap}
+                aria-label="跳过 Rap"
+                onClick={openRapPicker}
               >
                 跳Rap
               </button>
-              <button type="button" aria-pressed={loopKey === '2'} disabled={!hasTiming} aria-label="循环 2 句" onClick={() => startLineLoop(2, '2')}>2句</button>
-              <button type="button" aria-pressed={loopKey === '4'} disabled={!hasTiming} aria-label="循环 4 句" onClick={() => startLineLoop(4, '4')}>4句</button>
+              {LOOP_LINE_CHOICES.map((count) => (
+                <button
+                  key={count}
+                  type="button"
+                  aria-pressed={loopKey === String(count)}
+                  disabled={!hasTiming}
+                  aria-label={`循环 ${count} 句`}
+                  onClick={() => startLineLoop(count, String(count))}
+                >
+                  {count}句
+                </button>
+              ))}
               <button
                 type="button"
-                aria-pressed={loopKey === 'custom'}
-                aria-expanded={customLoopOpen}
+                aria-pressed={Boolean(loopAnchor || loopRange)}
                 disabled={!hasTiming}
-                aria-label={`自定义循环句数，当前 ${settings.customRepeatLines} 句`}
-                onClick={() => setCustomLoopOpen((value) => !value)}
+                aria-label="循环开始"
+                onClick={markLoopStart}
               >
-                自定义
+                循环开始
               </button>
               <button
                 type="button"
-                aria-pressed={Boolean(currentSection && sectionLoop?.id === currentSection.id)}
-                disabled={!currentSection}
-                aria-label="本段循环"
-                onClick={() => { if (currentSection) toggleSectionLoop(currentSection); }}
+                aria-pressed={loopRangeOn}
+                disabled={!hasTiming}
+                aria-label="循环结束"
+                onClick={markLoopEnd}
               >
-                本段
+                循环结束
               </button>
               <button type="button" aria-pressed={joint} disabled={!src} aria-label="合练一遍" onClick={startJoint}>合练</button>
             </div>
-            {customLoopOpen && (
-              <div className="vocal-immersive__custom" role="group" aria-label="自定义循环句数">
-                {LINE_CHOICES.map((count) => (
-                  <button
-                    key={count}
-                    type="button"
-                    aria-pressed={settings.customRepeatLines === count}
-                    onClick={() => {
-                      setSettings((current) => ({ ...current, customRepeatLines: count }));
-                      setCustomLoopOpen(false);
-                      startLineLoop(count, 'custom');
-                    }}
-                  >
-                    {count} 句
-                  </button>
-                ))}
-              </div>
-            )}
             <div className="vocal-immersive__tools" role="group" aria-label="练习工具">
               <button type="button" onClick={replay} aria-label="重播"><span className="vocal-immersive__icon" aria-hidden="true">↺</span> 重播</button>
               <button type="button" onClick={() => setShowSettings(true)} aria-label="循环设置"><span className="vocal-immersive__icon" aria-hidden="true">⇄</span> 循环设置</button>
@@ -1249,7 +1373,7 @@ export default function VocalPracticePlayer({ item, onRequestImport, onExitToLib
           <button type="button" aria-pressed={settings.wholeTrackLoop} onClick={toggleWholeLoop} aria-label="单曲循环">循环</button>
         </div>
         <div className="vocal-dock__extra" role="group" aria-label="练习控制">
-          <button type="button" aria-pressed={settings.skipRap} onClick={toggleSkipRap}>跳过 Rap</button>
+          <button type="button" aria-pressed={settings.skipRap} onClick={openRapPicker}>跳过 Rap</button>
           <button type="button" aria-pressed={joint} disabled={!src} onClick={startJoint}>合练一遍</button>
           <button type="button" onClick={() => setShowSettings(true)} aria-label="练习设置">⚙ 设置</button>
           <label className="vocal-dock__rate"><span>倍速</span>
@@ -1264,18 +1388,86 @@ export default function VocalPracticePlayer({ item, onRequestImport, onExitToLib
         </div>
           </>
         )}
-        {/* 沉浸页空闲态不再常驻「自由练习」四个字：把那行空间让给歌词。
-            但合练 / 逐句循环 / 整段循环这些**有信息量**的状态仍要显示，否则用户不知道在循环。 */}
-        {(() => {
-          const idle = modeText === '自由练习';
-          const line = immersive
-            ? [idle ? '' : modeText, skipRapBlocked ? '逐句练习不自动跳 Rap' : '', notice].filter(Boolean).join(' · ')
-            : `${modeText}${skipRapBlocked ? '（逐句练习不自动跳 Rap）' : ''}${notice ? ` · ${notice}` : ''}`;
-          return line ? <p className="vocal-dock__mode" role="status">{line}</p> : null;
-        })()}
+        {/* 状态槽固定高度常驻：内容可换、行数不变，避免提示出现时把上下布局顶动。 */}
+        <p className="vocal-dock__mode" role="status">
+          {modeText}
+          {skipRapBlocked ? ' · 逐句练习不自动跳 Rap' : ''}
+        </p>
+        {/* 瞬时反馈走浮层：绝对定位在播放器上方，自动消失，不参与布局。 */}
+        {notice && <p className="vocal-toast" role="status">{notice}</p>}
       </div>
       {/* 详情页用占位块顶开 fixed 播放器；沉浸页播放器本身在流内，无需占位。 */}
       {!immersive && <div className="vocal-dock-spacer" style={{ height: dockHeight }} aria-hidden="true" />}
+
+      {rapPickOpen && (
+        <div className="modal-backdrop" onClick={(event) => { if (event.target === event.currentTarget) setRapPickOpen(false); }}>
+          <div className="vocal-sheet" role="dialog" aria-modal="true" aria-label="选择跳过 Rap 范围">
+            <div className="vocal-sheet__head">
+              <h2>跳过 Rap：框选范围</h2>
+              <button type="button" aria-label="关闭 Rap 范围选择" onClick={() => setRapPickOpen(false)}>✕</button>
+            </div>
+            <p className="vocal-hint">先点 Rap 的第一句，再点最后一句；按这两句的起止时间跳过，不改整首结构。</p>
+            {(rapPickStart !== null && rapPickEnd !== null) || settings.rapRange ? (
+              <p className="vocal-hint" role="status">
+                {(() => {
+                  const range = rapPickDirty ? rapPickTimeRange() : (settings.rapRange ?? rapPickTimeRange());
+                  return range ? `将跳过 ${formatTime(range.startMs)}–${formatTime(range.endMs)}` : '';
+                })()}
+              </p>
+            ) : (
+              <p className="vocal-hint" role="status">还没有选范围：点一句标起点，再点一句标终点。</p>
+            )}
+            {/* 待确认 Rap 只做提示：这里直接框选即可，不逼用户去整首分段。 */}
+            {unconfirmedRap > 0 && (
+              <p className="vocal-hint">{unconfirmedRap} 段 Rap 未在结构里确认；不影响在这里按句框选。</p>
+            )}
+            <div className="vocal-lyrics" role="group" aria-label="Rap 起止句">
+              {lyrics.lines.map((line, index) => {
+                const picked = rapPickStart !== null && rapPickEnd !== null && index >= rapPickStart && index <= rapPickEnd;
+                const isStart = rapPickStart === index || (rapPickEnd !== null && rapPickStart !== null && index === Math.min(rapPickStart, rapPickEnd));
+                const isEnd = rapPickEnd !== null && index === Math.max(rapPickStart ?? index, rapPickEnd);
+                return (
+                  <button
+                    key={line.id}
+                    type="button"
+                    className={[
+                      'vocal-line',
+                      picked ? 'vocal-line--loop-range' : '',
+                      picked && isStart ? 'is-loop-first' : '',
+                      picked && isEnd ? 'is-loop-last' : '',
+                    ].filter(Boolean).join(' ')}
+                    aria-pressed={picked}
+                    aria-label={`第 ${index + 1} 句：${line.text}`}
+                    onClick={() => pickRapLine(index)}
+                  >
+                    <span className="vocal-line__time">{formatTime(line.startMs)}</span>
+                    <span className="vocal-line__text">{line.text}</span>
+                    <span className="vocal-line__index">
+                      {index === rapPickStart ? '始' : index === rapPickEnd ? '终' : index + 1}
+                    </span>
+                  </button>
+                );
+              })}
+            </div>
+            <div className="vocal-chips">
+              <button
+                type="button"
+                disabled={!(rapPickStart !== null && rapPickEnd !== null) && !settings.rapRange}
+                onClick={() => applyRapRange(true)}
+              >
+                {settings.skipRap ? '重新开始跳过' : '开始跳过'}
+              </button>
+              {settings.skipRap && (
+                <button type="button" onClick={() => applyRapRange(false)}>关闭跳过</button>
+              )}
+              {settings.rapRange && (
+                <button type="button" onClick={clearRapRange}>清除范围</button>
+              )}
+              <button type="button" onClick={() => setRapPickOpen(false)}>取消</button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {showSettings && (
         <div className="modal-backdrop" onClick={(event) => { if (event.target === event.currentTarget) setShowSettings(false); }}>
@@ -1288,21 +1480,13 @@ export default function VocalPracticePlayer({ item, onRequestImport, onExitToLib
             <fieldset className="vocal-field">
               <legend>循环</legend>
               <div className="vocal-chips">
-                <button type="button" aria-pressed={loopKey === '2'} disabled={!hasTiming} onClick={() => startLineLoop(2, '2')}>2 句</button>
-                <button type="button" aria-pressed={loopKey === '4'} disabled={!hasTiming} onClick={() => startLineLoop(4, '4')}>4 句</button>
-                <button type="button" aria-pressed={loopKey === 'custom'} disabled={!hasTiming} onClick={() => startLineLoop(settings.customRepeatLines, 'custom')}>
-                  自定义 {settings.customRepeatLines} 句
-                </button>
-                <button
-                  type="button"
-                  aria-pressed={Boolean(currentSection && sectionLoop?.id === currentSection.id)}
-                  disabled={!currentSection}
-                  onClick={() => { if (currentSection) toggleSectionLoop(currentSection); }}
-                >
-                  本段循环
-                </button>
+                {LOOP_LINE_CHOICES.map((count) => (
+                  <button key={count} type="button" aria-pressed={loopKey === String(count)} disabled={!hasTiming} onClick={() => startLineLoop(count, String(count))}>{count} 句</button>
+                ))}
+                <button type="button" aria-pressed={Boolean(loopAnchor || loopRange)} disabled={!hasTiming} onClick={markLoopStart}>循环开始</button>
+                <button type="button" aria-pressed={loopRangeOn} disabled={!hasTiming} onClick={markLoopEnd}>循环结束</button>
                 <button type="button" aria-pressed={settings.wholeTrackLoop} onClick={toggleWholeLoop}>整首循环</button>
-                <button type="button" disabled={!loopKey && !sectionLoop && !settings.wholeTrackLoop} onClick={clearLoops}>关闭循环</button>
+                <button type="button" disabled={!loopKey && !sectionLoop && !loopRange && !settings.wholeTrackLoop} onClick={clearLoops}>关闭循环</button>
               </div>
               <p className="vocal-hint">{modeText}{currentSection ? ` · 当前段 ${currentSection.label}` : ''}</p>
             </fieldset>
@@ -1319,14 +1503,6 @@ export default function VocalPracticePlayer({ item, onRequestImport, onExitToLib
               <div className="vocal-chips">
                 {SECONDS_CHOICES.map((seconds) => (
                   <button key={seconds} type="button" aria-pressed={settings.forwardSeconds === seconds} onClick={() => setSettings((current) => ({ ...current, forwardSeconds: seconds }))}>{seconds} 秒</button>
-                ))}
-              </div>
-            </fieldset>
-            <fieldset className="vocal-field">
-              <legend>自定义回退句数</legend>
-              <div className="vocal-chips">
-                {LINE_CHOICES.map((count) => (
-                  <button key={count} type="button" aria-pressed={settings.customRepeatLines === count} onClick={() => setSettings((current) => ({ ...current, customRepeatLines: count }))}>{count} 句</button>
                 ))}
               </div>
             </fieldset>

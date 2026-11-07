@@ -4,7 +4,7 @@ import { flushOperations, editLocally, bulkLocally, type LocalOperation } from '
 import { initializeLocalDatabase, localOperations, readMetadata, writeMetadata } from '../../src/lib/local-database';
 
 const id = '00000000-0000-4000-8000-0000000000a1';
-const practice = { skipRap: false, wholeTrackLoop: false, backwardSeconds: 5, forwardSeconds: 10, customRepeatLines: 2, playbackRate: 1 };
+const practice = { skipRap: false, wholeTrackLoop: false, backwardSeconds: 5, forwardSeconds: 10, rapRange: null, playbackRate: 1 };
 
 beforeEach(async () => {
   await flushOperations();

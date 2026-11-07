@@ -10,7 +10,7 @@ import {getManifest} from '../server/catalog.mjs';
 import {syncOperation} from '../server/sync-operations.mjs';
 import {createApiServer} from '../server/index.mjs';
 
-const PRACTICE_DEFAULTS={skipRap:false,wholeTrackLoop:false,backwardSeconds:5,forwardSeconds:10,customRepeatLines:2,playbackRate:1};
+const PRACTICE_DEFAULTS={skipRap:false,wholeTrackLoop:false,backwardSeconds:5,forwardSeconds:10,rapRange:null,playbackRate:1};
 
 function withDb(run){const root=mkdtempSync(join(tmpdir(),'p040-vocal-'));const db=openDatabase(join(root,'db.sqlite'));try{return run(db,root)}finally{db.close();rmSync(root,{recursive:true,force:true})}}
 /** 直接造一条可绑定音轨的 READY 导入任务，避免测试依赖 ffmpeg 与真实媒体文件。 */
@@ -81,12 +81,12 @@ test('语言、逐句歌词、人工结构与练习设置增量保存，局部�
   language:'zh',
   lyrics:[{startMs:0,text:'第一句'},{startMs:2000,text:'第二句',endMs:3500}],
   sections:[{id:'s1',type:'verse',label:'主歌 A1',startMs:0,endMs:8000}],
-  practice:{skipRap:true,wholeTrackLoop:false,backwardSeconds:10,forwardSeconds:15,customRepeatLines:4,playbackRate:0.8},
+  practice:{skipRap:true,wholeTrackLoop:false,backwardSeconds:10,forwardSeconds:15,rapRange:{startMs:1000,endMs:5000},playbackRate:0.8},
  });
  assert.equal(saved.language,'zh');assert.equal(saved.lyrics.length,2);assert.equal(saved.lyrics[0].id,'line-1');assert.equal(saved.lyrics[1].endMs,3500);
  assert.equal(saved.sections[0].source,'manual');assert.equal(saved.practice.forwardSeconds,15);
- const practiceOnly=saveRepertoire(db,item.id,{practice:{customRepeatLines:2}});
- assert.equal(practiceOnly.practice.customRepeatLines,2);assert.equal(practiceOnly.practice.skipRap,true);assert.equal(practiceOnly.practice.backwardSeconds,10);
+ const practiceOnly=saveRepertoire(db,item.id,{practice:{rapRange:{startMs:2000,endMs:6000}}});
+ assert.deepEqual(practiceOnly.practice.rapRange,{startMs:2000,endMs:6000});assert.equal(practiceOnly.practice.skipRap,true);assert.equal(practiceOnly.practice.backwardSeconds,10);
  assert.equal(practiceOnly.language,'zh');assert.equal(practiceOnly.lyrics.length,2);assert.equal(practiceOnly.sections.length,1);
  const languageOnly=saveRepertoire(db,item.id,{language:'en'});
  assert.equal(languageOnly.language,'en');assert.equal(languageOnly.lyrics[1].text,'第二句');
@@ -111,7 +111,7 @@ test('结构校验：半开区间、Rap 相邻合并、重叠与越界拒绝，�
  assert.throws(()=>save({lyrics:[{startMs:0,text:'句',sectionId:'nope'}]}),/INVALID_LYRICS/);
  assert.throws(()=>save({language:'fr'}),/INVALID_LANGUAGE/);
  assert.throws(()=>save({practice:{backwardSeconds:7}}),/INVALID_PRACTICE/);
- assert.throws(()=>save({practice:{customRepeatLines:0}}),/INVALID_PRACTICE/);
+ assert.throws(()=>save({practice:{rapRange:{startMs:5000,endMs:1000}}}),/INVALID_PRACTICE/);
  const guitar=saveRepertoire(db,null,{kind:'GUITAR',title:'不许唱'});
  assert.throws(()=>saveRepertoire(db,guitar.id,{language:'zh'}),/BAD_REQUEST/);
  assert.throws(()=>saveRepertoire(db,guitar.id,{lyrics:[]}),/BAD_REQUEST/);

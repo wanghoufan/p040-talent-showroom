@@ -1,0 +1,422 @@
+[
+  {
+    "variant": "before-nodvh",
+    "stripDvh": true,
+    "vw": 393,
+    "vh": 791,
+    "drawer": {
+      "top": -626.3,
+      "bottom": 791,
+      "height": 1417.3,
+      "left": 0
+    },
+    "maxHeight": "none",
+    "overflowY": "auto",
+    "clientHeight": 1417,
+    "scrollHeight": 1417,
+    "scrollable": false,
+    "atTop": {
+      "first": {
+        "rect": {
+          "top": -345.3,
+          "bottom": -305.3,
+          "height": 40,
+          "left": 29
+        },
+        "insideViewport": false,
+        "hitIsSelfOrChild": false
+      },
+      "last": {
+        "rect": {
+          "top": 711,
+          "bottom": 755,
+          "height": 44,
+          "left": 18
+        },
+        "insideViewport": true,
+        "hitIsSelfOrChild": true
+      },
+      "wave": {
+        "rect": {
+          "top": -159.3,
+          "bottom": -63.3,
+          "height": 96,
+          "left": 18
+        },
+        "insideViewport": false,
+        "hitIsSelfOrChild": false
+      }
+    },
+    "atBottom": {
+      "scrollTop": 0,
+      "first": {
+        "rect": {
+          "top": -345.3,
+          "bottom": -305.3,
+          "height": 40,
+          "left": 29
+        },
+        "insideViewport": false,
+        "hitIsSelfOrChild": false
+      },
+      "last": {
+        "rect": {
+          "top": 711,
+          "bottom": 755,
+          "height": 44,
+          "left": 18
+        },
+        "insideViewport": true,
+        "hitIsSelfOrChild": true
+      },
+      "wave": {
+        "rect": {
+          "top": -159.3,
+          "bottom": -63.3,
+          "height": 96,
+          "left": 18
+        },
+        "insideViewport": false,
+        "hitIsSelfOrChild": false
+      }
+    },
+    "afterLastScrollIntoView": {
+      "rect": {
+        "top": 711,
+        "bottom": 755,
+        "height": 44,
+        "left": 18
+      },
+      "insideViewport": true,
+      "hitIsSelfOrChild": true
+    },
+    "afterFirstScrollIntoView": {
+      "rect": {
+        "top": -345.3,
+        "bottom": -305.3,
+        "height": 40,
+        "left": 29
+      },
+      "insideViewport": false,
+      "hitIsSelfOrChild": false
+    },
+    "buttonsOutsideViewport": 3,
+    "buttonCount": 27,
+    "touchScrollTop": 0
+  },
+  {
+    "variant": "before-dvh",
+    "stripDvh": false,
+    "vw": 393,
+    "vh": 791,
+    "drawer": {
+      "top": 63.3,
+      "bottom": 791,
+      "height": 727.7,
+      "left": 0
+    },
+    "maxHeight": "727.72px",
+    "overflowY": "auto",
+    "clientHeight": 728,
+    "scrollHeight": 1417,
+    "scrollable": true,
+    "atTop": {
+      "first": {
+        "rect": {
+          "top": 344.3,
+          "bottom": 384.3,
+          "height": 40,
+          "left": 29
+        },
+        "insideViewport": true,
+        "hitIsSelfOrChild": true
+      },
+      "last": {
+        "rect": {
+          "top": 1400.6,
+          "bottom": 1444.6,
+          "height": 44,
+          "left": 18
+        },
+        "insideViewport": false,
+        "hitIsSelfOrChild": false
+      },
+      "wave": {
+        "rect": {
+          "top": 530.3,
+          "bottom": 626.3,
+          "height": 96,
+          "left": 18
+        },
+        "insideViewport": true,
+        "hitIsSelfOrChild": true
+      }
+    },
+    "atBottom": {
+      "scrollTop": 689,
+      "first": {
+        "rect": {
+          "top": -344.7,
+          "bottom": -304.7,
+          "height": 40,
+          "left": 29
+        },
+        "insideViewport": false,
+        "hitIsSelfOrChild": false
+      },
+      "last": {
+        "rect": {
+          "top": 711.6,
+          "bottom": 755.6,
+          "height": 44,
+          "left": 18
+        },
+        "insideViewport": true,
+        "hitIsSelfOrChild": true
+      },
+      "wave": {
+        "rect": {
+          "top": -158.7,
+          "bottom": -62.7,
+          "height": 96,
+          "left": 18
+        },
+        "insideViewport": false,
+        "hitIsSelfOrChild": false
+      }
+    },
+    "afterLastScrollIntoView": {
+      "rect": {
+        "top": 711.6,
+        "bottom": 755.6,
+        "height": 44,
+        "left": 18
+      },
+      "insideViewport": true,
+      "hitIsSelfOrChild": true
+    },
+    "afterFirstScrollIntoView": {
+      "rect": {
+        "top": 344.3,
+        "bottom": 384.3,
+        "height": 40,
+        "left": 29
+      },
+      "insideViewport": true,
+      "hitIsSelfOrChild": true
+    },
+    "buttonsOutsideViewport": 18,
+    "buttonCount": 27,
+    "touchScrollTop": 480
+  },
+  {
+    "variant": "after-nodvh",
+    "stripDvh": true,
+    "vw": 393,
+    "vh": 791,
+    "drawer": {
+      "top": 79.1,
+      "bottom": 791,
+      "height": 711.9,
+      "left": 0
+    },
+    "maxHeight": "711.9px",
+    "overflowY": "auto",
+    "clientHeight": 712,
+    "scrollHeight": 1417,
+    "scrollable": true,
+    "atTop": {
+      "first": {
+        "rect": {
+          "top": 360.1,
+          "bottom": 400.1,
+          "height": 40,
+          "left": 29
+        },
+        "insideViewport": true,
+        "hitIsSelfOrChild": true
+      },
+      "last": {
+        "rect": {
+          "top": 1416.4,
+          "bottom": 1460.4,
+          "height": 44,
+          "left": 18
+        },
+        "insideViewport": false,
+        "hitIsSelfOrChild": false
+      },
+      "wave": {
+        "rect": {
+          "top": 546.1,
+          "bottom": 642.1,
+          "height": 96,
+          "left": 18
+        },
+        "insideViewport": true,
+        "hitIsSelfOrChild": true
+      }
+    },
+    "atBottom": {
+      "scrollTop": 705,
+      "first": {
+        "rect": {
+          "top": -344.9,
+          "bottom": -304.9,
+          "height": 40,
+          "left": 29
+        },
+        "insideViewport": false,
+        "hitIsSelfOrChild": false
+      },
+      "last": {
+        "rect": {
+          "top": 711.4,
+          "bottom": 755.4,
+          "height": 44,
+          "left": 18
+        },
+        "insideViewport": true,
+        "hitIsSelfOrChild": true
+      },
+      "wave": {
+        "rect": {
+          "top": -158.9,
+          "bottom": -62.9,
+          "height": 96,
+          "left": 18
+        },
+        "insideViewport": false,
+        "hitIsSelfOrChild": false
+      }
+    },
+    "afterLastScrollIntoView": {
+      "rect": {
+        "top": 711.4,
+        "bottom": 755.4,
+        "height": 44,
+        "left": 18
+      },
+      "insideViewport": true,
+      "hitIsSelfOrChild": true
+    },
+    "afterFirstScrollIntoView": {
+      "rect": {
+        "top": 360.1,
+        "bottom": 400.1,
+        "height": 40,
+        "left": 29
+      },
+      "insideViewport": true,
+      "hitIsSelfOrChild": true
+    },
+    "buttonsOutsideViewport": 18,
+    "buttonCount": 27,
+    "touchScrollTop": 480
+  },
+  {
+    "variant": "after-dvh",
+    "stripDvh": false,
+    "vw": 393,
+    "vh": 791,
+    "drawer": {
+      "top": 79.1,
+      "bottom": 791,
+      "height": 711.9,
+      "left": 0
+    },
+    "maxHeight": "711.9px",
+    "overflowY": "auto",
+    "clientHeight": 712,
+    "scrollHeight": 1417,
+    "scrollable": true,
+    "atTop": {
+      "first": {
+        "rect": {
+          "top": 360.1,
+          "bottom": 400.1,
+          "height": 40,
+          "left": 29
+        },
+        "insideViewport": true,
+        "hitIsSelfOrChild": true
+      },
+      "last": {
+        "rect": {
+          "top": 1416.4,
+          "bottom": 1460.4,
+          "height": 44,
+          "left": 18
+        },
+        "insideViewport": false,
+        "hitIsSelfOrChild": false
+      },
+      "wave": {
+        "rect": {
+          "top": 546.1,
+          "bottom": 642.1,
+          "height": 96,
+          "left": 18
+        },
+        "insideViewport": true,
+        "hitIsSelfOrChild": true
+      }
+    },
+    "atBottom": {
+      "scrollTop": 705,
+      "first": {
+        "rect": {
+          "top": -344.9,
+          "bottom": -304.9,
+          "height": 40,
+          "left": 29
+        },
+        "insideViewport": false,
+        "hitIsSelfOrChild": false
+      },
+      "last": {
+        "rect": {
+          "top": 711.4,
+          "bottom": 755.4,
+          "height": 44,
+          "left": 18
+        },
+        "insideViewport": true,
+        "hitIsSelfOrChild": true
+      },
+      "wave": {
+        "rect": {
+          "top": -158.9,
+          "bottom": -62.9,
+          "height": 96,
+          "left": 18
+        },
+        "insideViewport": false,
+        "hitIsSelfOrChild": false
+      }
+    },
+    "afterLastScrollIntoView": {
+      "rect": {
+        "top": 711.4,
+        "bottom": 755.4,
+        "height": 44,
+        "left": 18
+      },
+      "insideViewport": true,
+      "hitIsSelfOrChild": true
+    },
+    "afterFirstScrollIntoView": {
+      "rect": {
+        "top": 360.1,
+        "bottom": 400.1,
+        "height": 40,
+        "left": 29
+      },
+      "insideViewport": true,
+      "hitIsSelfOrChild": true
+    },
+    "buttonsOutsideViewport": 18,
+    "buttonCount": 27,
+    "touchScrollTop": 480
+  }
+]

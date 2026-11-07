@@ -1,0 +1,8 @@
+{
+  "kind": "codebuddy-cli",
+  "provider": "codebuddy",
+  "model": "deepseek-v4.1-flash",
+  "description": "CodeBuddy CLI → CodeBuddy 云端模型（deepseek-v4.1-flash），不是本地模型",
+  "available": true,
+  "script": "/Users/zzymima0000/Developer/coding/1.Active/040-ing-才艺展示厅/scripts/codebuddy-auto.sh"
+}

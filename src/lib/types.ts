@@ -13,7 +13,7 @@ export interface ImportJob { duplicateRefs?:{kind:'DANCE'|TalentKind;id:string}[
 export interface PendingShare { id:string; token?:string; sharedText?:string; streamUri?:string; mime?:string; normalizedUrl?:string; receivedAt:string; submitState:'PENDING'|'SUBMITTED'|'NEEDS_INPUT'|'OFFLINE_SAVED'; serverJobId?:string; lastError?:string }
 export interface Playlist { items:string[] }
 export interface OfflineManifest { program?:{revision:number;items:{kind:'DANCE'|TalentKind;id:string}[]}; catalogVersion:number; items:DanceItem[]; playlist:string[]; repertoire?:TalentItem[] }
-export interface DeviceSettings { themeMode:'system'|'light'|'dark'; apiEndpoint:string; lastSyncAt?:string; cachePolicyVersion:number }
+export interface DeviceSettings { themeMode:'system'|'light'|'dark'; apiEndpoint:string; /** 备用地址：主地址探测不通时自动回退（如在家用局域网、出门用 Tailscale）。 */ apiFallback?:string; lastSyncAt?:string; cachePolicyVersion:number }
 
 export type VocalSectionType = 'intro' | 'verse' | 'pre' | 'chorus' | 'bridge' | 'rap' | 'outro' | 'unknown';
 export type VocalRepetition = 'exact-lyrics' | 'same-melody-new-lyrics' | 'unverified';
@@ -31,7 +31,8 @@ export interface VocalLineLoop { startMs: number; endMs: number; startIndex: num
 export interface VocalPracticeSettings {
   skipRap: boolean; wholeTrackLoop: boolean;
   backwardSeconds: 5 | 10 | 15 | 30; forwardSeconds: 5 | 10 | 15 | 30;
-  customRepeatLines: number; playbackRate: number;
+  /** 用户按歌词句框选的 Rap 范围；为 null 时退回「已确认 Rap 段」。 */
+  rapRange: VocalTimeRange | null; playbackRate: number;
 }
 export type VocalTrackRole = 'original' | 'accompaniment';
 export interface VocalTrack { media: MediaFile; offsetMs?: number }

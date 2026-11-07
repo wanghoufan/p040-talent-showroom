@@ -1,0 +1,32 @@
+# P040 译文合并｜哈希与文件清单（2026-10-31）
+
+会话时区 Asia/Shanghai；Z 为 UTC。生成时间: 2026-10-31T04:17:17+0800
+
+## 一、原 real-qa 隔离库（本轮前 = 本轮后，未写入）
+ae1e22614bf66f3780b1b7eca8eae22297d1860368db40598337089f14ce1c71  var/vocal-v31-work/real-qa-20261030/db/qa.db
+409b72ad8dee7186c5bb18dbc59513ea47e679fce6b5081eedb7d6e391197e4b  var/vocal-v31-work/real-qa-20261030/db/qa.db-wal
+d9e31506b1aace4d2c2be28b5a491505b5d99b6bdd6640e0f203c7f1daea9faa  var/vocal-v31-work/real-qa-20261030/db/qa.db-shm
+
+对照：1.1.8 轮记录 wal=6c5440ee… shm=07457ced…，与本轮不同；本轮开工前后一致（开工时为 409b72ad… / d9e31506…），差异来自此间手机连服务的正常业务写入，不是本轮动作。
+结构复核：translations_json 列 0 条、schema_migrations 8 条（仍停在 0008）。
+
+## 二、译文源库（只读打开）
+cb107b0c11242489535140f1f7e245b9fe8668d2cb589d85672500b823a54f24  var/vocal-v31-work/translation-20261031/db/qa.db
+e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855  var/vocal-v31-work/translation-20261031/db/qa.db-wal
+
+## 三、原媒体目录（未写入）
+root=var/vocal-v31-work/real-qa-20261030/media  files=48  bytes=581910101
+manifest=3be080e942a3d63d27226a408d585af2c286fb5bf65094b8a785e4220938f615
+newest-mtime=2026-10-30T11:18:45.252Z (vocal-import/d0c0904f.../original.mp3)
+
+## 四、克隆与副本
+a129ba24828b4a1309b05caf83af0a54049b0d82d169ff10506c2ed7185445b5  var/vocal-v31-work/merge-20261031/db/qa.db
+9549a1506d87552659b90abcbe8052ebdb302f97a2915b64318ac7101870be78  var/vocal-v31-work/merge-20261031/api/qa.db
+（clone 起始为 real-qa 的 .backup 快照，迁移+合并后如上；api 副本在此基础上清空 owner_credentials 供无凭据冒烟）
+
+## 五、备份
+19a9d2a8e82fef338e30221b1666ab2c02991cf7cb886988bbe4309be7033444  var/backups/merge-clone-2026-10-30T20-14-40-958Z.db
+91e2ff9891ef4392402bc50904328fe47b53e5a798f633be87f262262f523589  var/backups/merge-clone-2026-10-30T20-15-10-639Z.db
+
+说明：merge-clone-2026-10-30T20-14-40-958Z.db 来自第一次重建前的克隆（已废弃，仅留档）；
+      20-15-10-639Z.db 是最终克隆执行 apply 前的正式备份。

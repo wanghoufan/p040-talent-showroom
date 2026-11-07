@@ -95,9 +95,12 @@
 .vocal-dock__extra button { min-width: 0; padding: 4px 6px; line-height: 1.2; }
 .vocal-dock__rate { display: flex; flex-direction: row; align-items: center; gap: 4px; min-height: 44px; padding: 0 2px; font-size: 15px; color: var(--muted); white-space: nowrap; }
 .vocal-dock__rate select { width: auto; min-height: 44px; padding: 0 6px; font-size: 15px; }
-/* 状态行允许换行：模式说明与临时提示都要读全，不靠省略号掩盖。
+/* 状态槽：固定一行高度（空闲也占位），内容超长省略，避免提示出现/消失时上下布局抖动。
    字号按「其他正文类文本 ≥15px」执行——「合练中/逐句循环」是当前模式，不是可省略的元信息。 */
-.vocal-dock__mode { margin: 0; font-size: 15px; line-height: 1.35; color: var(--muted); white-space: normal; overflow-wrap: anywhere; }
+.vocal-dock__mode { margin: 0; height: 20px; font-size: 15px; line-height: 20px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+/* 瞬时提示浮层：浮在播放器上方，不占文档流，自动消失。 */
+.vocal-toast { position: absolute; left: 50%; bottom: calc(100% + 8px); transform: translateX(-50%); max-width: min(92%, 520px); margin: 0; padding: 8px 12px; border: 1px solid var(--line); border-radius: 999px; background: var(--surface-2); color: var(--text); font-size: 15px; line-height: 1.35; text-align: center; box-shadow: 0 8px 20px #0003; pointer-events: none; z-index: 30; animation: vocal-toast-in .16s ease-out; }
+@keyframes vocal-toast-in { from { opacity: 0; transform: translate(-50%, 6px); } to { opacity: 1; transform: translate(-50%, 0); } }
 .vocal-audio { display: none; }
 .vocal-dock-spacer { flex: 0 0 auto; }
 
@@ -215,7 +218,8 @@
 .vocal-practice.is-immersive .vocal-lyrics-block > .vocal-hint,
 .vocal-practice.is-immersive .vocal-block > .vocal-empty { flex: 0 0 auto; margin: 4px 14px 0; }
 .vocal-practice.is-immersive .vocal-lyrics { flex: 1 1 auto; min-height: 0; max-height: none; margin: 0; padding: 0 8px 4px; overflow-y: auto; overscroll-behavior-y: contain; -webkit-overflow-scrolling: touch; }
-.vocal-practice.is-immersive .vocal-dock { position: static; left: auto; transform: none; width: 100%; bottom: auto; z-index: 2; flex: 0 0 auto; }
+/* 沉浸页播放器回到正常流式排布；保留 relative 作为提示浮层的定位参照（浮层据此贴在本区域上方）。 */
+.vocal-practice.is-immersive .vocal-dock { position: relative; left: auto; transform: none; width: 100%; bottom: auto; z-index: 2; flex: 0 0 auto; }
 
 /* 顶栏：后退 / 歌名 + 歌手 / 分段 / 更多。歌名与歌手都单行省略，长标题不换行挤掉按钮。
    按原型左对齐排：标题紧接后退键，右侧留给「分段 / …」；居中排版会让长歌名两头都被挤压。 */
@@ -240,7 +244,7 @@
 
 /* 沉浸播放器：时间行（时间—进度—时长）→ 5 主控 → 6 个逐句按钮 → 5 个工具按钮 */
 /* 原型里这块是一张没有描边的浮层：只靠圆角和向上的淡阴影和歌词分开，不再画一整圈边框。 */
-.vocal-dock--immersive { gap: 4px; padding: 6px 10px calc(6px + var(--inset-bottom)); background: var(--surface); border: 0; border-radius: 18px 18px 0 0; box-shadow: 0 -4px 16px #00000014; }
+.vocal-dock--immersive { position: relative; gap: 4px; padding: 6px 10px calc(6px + var(--inset-bottom)); background: var(--surface); border: 0; border-radius: 18px 18px 0 0; box-shadow: 0 -4px 16px #00000014; }
 .vocal-immersive__timeline { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: 8px; }
 .vocal-immersive__clock { font-size: 15px; color: var(--muted); font-variant-numeric: tabular-nums; }
 .vocal-dock--immersive .vocal-dock__progress { min-height: 28px; }
@@ -249,10 +253,8 @@
 /* 播放键只留图标：原型里它是整条控制带里唯一的实心块，这里用尺寸与主色保持同样分量。 */
 .vocal-immersive__transport .vocal-dock__play { min-height: 44px; }
 .vocal-dock--immersive .vocal-dock__play-icon { font-size: 20px; }
-.vocal-immersive__practice { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 6px; }
+.vocal-immersive__practice { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; }
 .vocal-immersive__practice button { min-width: 0; min-height: 44px; padding: 4px 0; font-size: 15px; line-height: 1.15; white-space: nowrap; }
-.vocal-immersive__custom { display: flex; flex-wrap: wrap; gap: 6px; }
-.vocal-immersive__custom button { min-height: 44px; padding: 0 12px; font-size: 15px; border-radius: 22px; }
 /* 工具行 5 列：不能等分。实测 390/384 宽时每列 68.8/67.6px，「⇄ 循环设置」需要约 79px，
    等分会让文字越出按钮盒 10px、压到右边「1×」上（字号不能缩、文字不能截断）。
    minmax(auto, 1fr) + 按钮保留自动最小宽度：宽标签拿到自己的内容宽度，其余四列分剩余空间。 */

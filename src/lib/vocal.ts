@@ -337,7 +337,7 @@ export function defaultVocalSource(tracks: VocalTracks, scene: 'practice' | 'per
 
 /** 与后端 PRACTICE_DEFAULTS 一致；缺失的项按服务端默认补齐，避免离线首帧读到 undefined。 */
 export const VOCAL_PRACTICE_DEFAULTS: Readonly<VocalPracticeSettings> = {
-  skipRap: false, wholeTrackLoop: false, backwardSeconds: 5, forwardSeconds: 10, customRepeatLines: 2, playbackRate: 1,
+  skipRap: false, wholeTrackLoop: false, backwardSeconds: 5, forwardSeconds: 10, rapRange: null, playbackRate: 1,
 };
 
 export function resolvePractice(item: Pick<TalentItem, 'practice'>): VocalPracticeSettings {

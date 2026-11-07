@@ -1,0 +1,61 @@
+{
+  "capturedAt": "2026-10-31T04:21:14Z",
+  "stop": {
+    "pid": 27651,
+    "method": "SIGTERM",
+    "exitWaitMs": 1000,
+    "portReleasedAfterStop": true,
+    "walCheckpointedOnClose": true,
+    "dbAfterStop": {
+      "path": "var/vocal-v31-work/real-qa-20261030/db/qa.db",
+      "bytes": 749568,
+      "sha256": "f1bd242e1a2a8e2e2b56322c481436bc4edbd63b7155cb167d02920724b86659"
+    },
+    "walAndShmRemovedByClose": true
+  },
+  "restart": {
+    "pid": 74097,
+    "ppid": 1,
+    "elapsed": "00:41",
+    "command": "node server/index.mjs",
+    "cwd": "040-ing-才艺展示厅",
+    "env": {
+      "HOST": "0.0.0.0",
+      "PORT": "28794",
+      "SQLITE_DB_PATH": "<项目>/var/vocal-v31-work/real-qa-20261030/db/qa.db",
+      "MEDIA_ROOT": "<项目>/var/vocal-v31-work/real-qa-20261030/media",
+      "VOCAL_IMPORT_WORKER": "0"
+    },
+    "envIdenticalToOriginal": true,
+    "autostartInstalled": false,
+    "launchAgentCreated": false,
+    "logFile": "var/vocal-v31-work/logs/lan-server.log",
+    "logLinesAfterRestart": ["Dance API http://0.0.0.0:28794"],
+    "health": { "url": "http://127.0.0.1:28794/api/health", "status": 200, "body": { "ok": true, "recognition": "disabled" } },
+    "unauthenticatedRepertoire": { "url": "http://127.0.0.1:28794/api/repertoire?kind=VOCAL", "status": 401 },
+    "listeningPorts": [
+      { "port": 28794, "pid": 74097 }
+    ]
+  },
+  "tempApiCheck": {
+    "purpose": "接口层译文可见性验证，使用无凭据副本，不读取真实 token",
+    "copyPath": "var/vocal-v31-work/merge-20261031/api-check/qa.db",
+    "credentialsInCopy": 0,
+    "port": 28797,
+    "httpStatus": 200,
+    "bytes": 241409,
+    "stoppedAfterCapture": true,
+    "portReleased": true,
+    "result": {
+      "songs": 31,
+      "withTranslations": 5,
+      "withoutTranslationsField": 26,
+      "orphanLineIds": 0,
+      "staleLines": 0
+    }
+  },
+  "backups": [
+    { "path": "var/backups/real-qa-20261031-premerge/qa.db", "bytes": 749568, "sha256": "f1bd242e1a2a8e2e2b56322c481436bc4edbd63b7155cb167d02920724b86659", "source": "服务优雅停止后整份拷贝，哈希与源一致" },
+    { "path": "var/backups/merge-clone-2026-10-30T20-20-33-954Z.db", "bytes": 774144, "sha256": "707f2da937ce0fa3cea8a4934f90f0d05bfe4a2df99c49bbffe115e083189ec3", "source": "合并脚本 apply 前自动备份" }
+  ]
+}

@@ -3,8 +3,9 @@
  * A4 学习稿导出（电脑端，2026-11-04 起）
  *
  * 用法：
- *   node scripts/export-a4-sheets.mjs --api http://127.0.0.1:28794/api/repertoire \
- *     --out 导出/A4学习稿 --song <曲目id>:<文件名> [--song ...] [--all]
+ *   node scripts/export-a4-sheets.mjs --out 导出/A4学习稿 --all
+ *   node scripts/export-a4-sheets.mjs --out 导出/A4学习稿 --song <曲目id>:<文件名>
+ *   （--db 可选，默认 var/vocal-v31-work/real-qa-20261030/db/qa.db，只读打开）
  *
  * 版式：`src/lib/vocal/a4-compact.ts`（双栏；重复段进右栏并与首次出现处顶部对齐；
  *       中文一页，带中文译文的外语歌两页；无时间轴、无序号）。
@@ -23,7 +24,7 @@ const FONT = '"PingFang SC","Hiragino Sans GB","Noto Sans CJK SC","Songti SC",sy
 const SIZE_LADDER = [20, 19, 18, 17, 16, 15, 14.5, 14, 13.5, 13, 12.5, 12, 11.5, 11, 10.5, 10, 9.5, 9, 8.5, 8, 7.5, 7, 6.5, 6];
 
 function parseArgs(argv) {
-  const args = { api: '', out: '', songs: [], all: false, chrome: CHROME_DEFAULT, projectRoot: process.cwd() };
+  const args = { api: '', db: '', out: '', songs: [], all: false, chrome: CHROME_DEFAULT, projectRoot: process.cwd() };
   for (let i = 0; i < argv.length; i += 1) {
     const key = argv[i];
     const next = argv[i + 1];
@@ -32,9 +33,10 @@ function parseArgs(argv) {
     else if (key === '--song') { args.songs.push(next); i += 1; }
     else if (key === '--chrome') { args.chrome = next; i += 1; }
     else if (key === '--project-root') { args.projectRoot = next; i += 1; }
+    else if (key === '--db') { args.db = next; i += 1; }
     else if (key === '--all') args.all = true;
   }
-  if (!args.api || !args.out) throw new Error('必须给 --api 与 --out');
+  if (!args.out) throw new Error('必须给 --out');
   if (!args.all && !args.songs.length) throw new Error('必须给 --song <id>:<文件名> 或 --all');
   return args;
 }
@@ -87,9 +89,26 @@ mkdirSync(htmlDir, { recursive: true });
 const { outfile, cleanup } = bundleLayout(args.projectRoot);
 const { buildCompactSheet } = await import(`file://${outfile}`);
 
-const items = (await (await fetch(args.api)).json()).items;
+// 直读曲库（默认生产库），避免为了排版去拿 owner 令牌：
+// --db 指向 sqlite 文件；只读打开，不写库。
+const DB_PATH = args.db || 'var/vocal-v31-work/real-qa-20261030/db/qa.db';
+const { DatabaseSync } = await import('node:sqlite');
+const db = new DatabaseSync(DB_PATH, { readOnly: true });
+const rows = db.prepare(`
+  select id, title, artist, vocal_language, lyrics_json, sections_json, translations_json
+  from repertoire_items where kind='VOCAL' and deleted_at is null order by title
+`).all();
+const items = rows.map((row) => ({
+  id: row.id,
+  title: row.title,
+  artist: row.artist,
+  language: row.vocal_language,
+  lyrics: JSON.parse(row.lyrics_json || '[]'),
+  sections: JSON.parse(row.sections_json || '[]'),
+  translations: JSON.parse(row.translations_json || 'null'),
+}));
 const targets = args.all
-  ? items.filter((item) => item.kind === 'VOCAL').map((item) => ({ id: item.id, file: item.title }))
+  ? items.map((item) => ({ id: item.id, file: item.title }))
   : args.songs.map((entry) => {
       const [id, file] = entry.includes(':') ? entry.split(':') : [entry, entry];
       return { id, file };
@@ -99,22 +118,16 @@ const made = [];
 for (const target of targets) {
   const item = items.find((candidate) => candidate.id === target.id);
   if (!item) { console.error(`跳过 ${target.id}：清单里没有这首`); continue; }
-  const auto = buildCompactSheet(item, item.sections || [], {});
-  const ladder = SIZE_LADDER.filter((size) => size <= auto.meta.layout.fontSizePt);
-  let chosen = null;
-  for (const size of ladder) {
-    const sheet = buildCompactSheet(item, item.sections || [], { size });
-    if (sheet.meta.pageCount >= 99) break;
-    const pdfPath = join(pdfDir, `${target.file}.pdf`);
-    const pages = printPdf(args.chrome, htmlFor(sheet), pdfPath);
-    if (pages === sheet.meta.pageCount) { chosen = { sheet, size, pages }; break; }
+  // 字号与页数由排版模块自己决定（含「低于 10pt 就改两页」），导出端不再逐档试字号，
+  // 否则显式字号会绕过该规则，产出「一页半」的半成品。
+  const sheet = buildCompactSheet(item, item.sections || [], { revision: target.revision });
+  const pdfPath = join(pdfDir, `${target.file}.pdf`);
+  const pages = printPdf(args.chrome, htmlFor(sheet), pdfPath);
+  if (pages !== sheet.meta.pageCount) {
+    throw new Error(`${target.file}：渲染 ${pages} 页，排版预期 ${sheet.meta.pageCount} 页，已停止（避免产出半页稿）`);
   }
-  if (!chosen) {
-    const sheet = buildCompactSheet(item, item.sections || [], { size: 6 });
-    chosen = { sheet, size: 6, pages: printPdf(args.chrome, htmlFor(sheet), join(pdfDir, `${target.file}.pdf`)) };
-  }
-  writeFileSync(join(htmlDir, `${target.file}.html`), htmlFor(chosen.sheet));
-  made.push({ file: target.file, pages: chosen.pages, lines: chosen.sheet.meta.lineCount, fontPt: chosen.size });
+  writeFileSync(join(htmlDir, `${target.file}.html`), htmlFor(sheet));
+  made.push({ file: target.file, pages, lines: sheet.meta.lineCount, fontPt: sheet.meta.layout.fontSizePt });
 }
 cleanup();
 console.log(JSON.stringify(made, null, 2));

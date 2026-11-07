@@ -20,7 +20,8 @@
     "db:backup": "node scripts/backup.mjs",
     "db:restore": "node scripts/restore.mjs",
     "test:integration": "node --test tests/*.test.mjs",
-    "prebuild": "node scripts/bundle-pdf-assets.mjs"
+    "prebuild": "node scripts/bundle-pdf-assets.mjs",
+    "android:bump": "node scripts/bump-android-version.mjs"
   },
   "dependencies": {
     "@capacitor/android": "^8.5.2",

@@ -1,0 +1,35 @@
+{
+  "capturedAt": "2026-10-30T20:17:55.947Z",
+  "what": "用最新版 server/index.mjs 直接启动（端口28796，127.0.0.1，已停止）验证启动即应用 0009/0010",
+  "migrationsBefore": 8,
+  "migrationsAfter": 10,
+  "migrations": [
+    "0001_init.sql",
+    "0002_source_container.sql",
+    "0003_repertoire.sql",
+    "0004_library.sql",
+    "0005_scores.sql",
+    "0006_requests.sql",
+    "0007_vocal_tracks.sql",
+    "0008_vocal_import.sql",
+    "0009_vocal_structure.sql",
+    "0010_vocal_translation.sql"
+  ],
+  "counts": {
+    "items": 31,
+    "clips": 46,
+    "creds": 4,
+    "drafts": 0,
+    "emptyTranslations": 31
+  },
+  "health": "200 {ok:true,recognition:disabled}",
+  "repertoireResponse": {
+    "status": 401,
+    "body": "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"请先在“我的”配对这台设备\"}}",
+    "note": "该副本保留 4 条凭据，未带 token 故 401，属预期；未读取凭据"
+  },
+  "cloud": {
+    "translateCalls": 0,
+    "disabled": true
+  }
+}

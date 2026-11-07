@@ -1,0 +1,4007 @@
+{
+  "mode": "plan",
+  "ranAt": "2026-10-30T20:15:07.304Z",
+  "source": {
+    "path": "/Users/zzymima0000/Developer/coding/1.Active/040-ing-才艺展示厅/var/vocal-v31-work/translation-20261031/db/qa.db",
+    "sha256": "cb107b0c11242489535140f1f7e245b9fe8668d2cb589d85672500b823a54f24"
+  },
+  "target": {
+    "path": "/Users/zzymima0000/Developer/coding/1.Active/040-ing-才艺展示厅/var/vocal-v31-work/merge-20261031/db/qa.db",
+    "sha256": "abd6a3f27cd062b255562f2f148492d988078a431982550f3fb0808c9c2c6084"
+  },
+  "migrations": {
+    "before": [
+      "0001_init.sql",
+      "0002_source_container.sql",
+      "0003_repertoire.sql",
+      "0004_library.sql",
+      "0005_scores.sql",
+      "0006_requests.sql",
+      "0007_vocal_tracks.sql",
+      "0008_vocal_import.sql"
+    ],
+    "after": [
+      "0001_init.sql",
+      "0002_source_container.sql",
+      "0003_repertoire.sql",
+      "0004_library.sql",
+      "0005_scores.sql",
+      "0006_requests.sql",
+      "0007_vocal_tracks.sql",
+      "0008_vocal_import.sql",
+      "0009_vocal_structure.sql",
+      "0010_vocal_translation.sql"
+    ],
+    "appliedNow": [
+      "0009_vocal_structure.sql",
+      "0010_vocal_translation.sql"
+    ],
+    "dataPreserved": {
+      "ok": true,
+      "problems": [],
+      "skipped": [
+        {
+          "table": "schema_migrations",
+          "note": "迁移账本按定义新增行，不参与数据比对",
+          "before": 8,
+          "after": 10
+        }
+      ],
+      "songs": [
+        {
+          "id": "01c2a4cd-528c-5316-b864-5ce24f86e280",
+          "title": "보여줄게",
+          "changedFields": [],
+          "lyricsUnchanged": true,
+          "revisionBefore": 2,
+          "revisionAfter": 2
+        },
+        {
+          "id": "0b31b171-f522-55aa-b1c3-57c7293e6a58",
+          "title": "Papillon",
+          "changedFields": [],
+          "lyricsUnchanged": true,
+          "revisionBefore": 2,
+          "revisionAfter": 2
+        },
+        {
+          "id": "121fce84-c058-5023-9655-72359f18fb79",
+          "title": "Let Go",
+          "changedFields": [],
+          "lyricsUnchanged": true,
+          "revisionBefore": 3,
+          "revisionAfter": 3
+        },
+        {
+          "id": "1b2991ef-ca1e-55b4-a170-e69baee5e4f1",
+          "title": "Jar Of Love",
+          "changedFields": [],
+          "lyricsUnchanged": true,
+          "revisionBefore": 2,
+          "revisionAfter": 2
+        },
+        {
+          "id": "1b4c0212-73ca-5c68-b13b-b494a93f1323",
+          "title": "흉터 (Feat. 치타)",
+          "changedFields": [],
+          "lyricsUnchanged": true,
+          "revisionBefore": 1,
+          "revisionAfter": 1
+        },
+        {
+          "id": "28c92b90-5cec-59e5-8619-514f30a6a481",
+          "title": "歌舞:过年迪斯科",
+          "changedFields": [],
+          "lyricsUnchanged": true,
+          "revisionBefore": 1,
+          "revisionAfter": 1
+        },
+        {
+          "id": "2afb52b4-1321-5aea-b688-be11859cd19d",
+          "title": "初爱",
+          "changedFields": [],
+          "lyricsUnchanged": true,
+          "revisionBefore": 1,
+          "revisionAfter": 1
+        },
+        {
+          "id": "3c29d47b-0f08-54e3-8fad-5716a4dc2a39",
+          "title": "여름 안에서 (Live)",
+          "changedFields": [],
+          "lyricsUnchanged": true,
+          "revisionBefore": 2,
+          "revisionAfter": 2
+        },
+        {
+          "id": "3f20871b-5076-5c4b-b210-6bd7d7f5a4ff",
+          "title": "BIRTHDAY",
+          "changedFields": [],
+          "lyricsUnchanged": true,
+          "revisionBefore": 1,
+          "revisionAfter": 1
+        },
+        {
+          "id": "4128e23f-7736-582d-afb6-6916801d7886",
+          "title": "DjYaha-起風了 (DjYaha remix)",
+          "changedFields": [],
+          "lyricsUnchanged": true,
+          "revisionBefore": 1,
+          "revisionAfter": 1
+        },
+        {
+          "id": "44192e01-bb35-5079-a89f-766263389bbb",
+          "title": "一生中最爱",
+          "changedFields": [],
+          "lyricsUnchanged": true,
+          "revisionBefore": 1,
+          "revisionAfter": 1
+        },
+        {
+          "id": "4528bfad-2e59-5425-96a9-3581dd2a810c",
+          "title": "덤더럼 (Dumhdurum)",
+          "changedFields": [],
+          "lyricsUnchanged": true,
+          "revisionBefore": 5,
+          "revisionAfter": 5
+        },
+        {
+          "id": "532a2725-833f-547c-95bc-68145c52213c",
+          "title": "Trespassing",
+          "changedFields": [],
+          "lyricsUnchanged": true,
+          "revisionBefore": 2,
+          "revisionAfter": 2
+        },
+        {
+          "id": "54b8e11a-40ca-52e9-aa72-bcc17d52f09d",
+          "title": "隆里电丝x危险派对 (1FAN Remix)",
+          "changedFields": [],
+          "lyricsUnchanged": true,
+          "revisionBefore": 1,
+          "revisionAfter": 1
+        },
+        {
+          "id": "63bd4643-17c0-5204-9b78-cf824139baf4",
+          "title": "Teeth",
+          "changedFields": [],
+          "lyricsUnchanged": true,
+          "revisionBefore": 2,
+          "revisionAfter": 2
+        },
+        {
+          "id": "78fcc0fd-ee50-508e-a170-3e09e6fedc1f",
+          "title": "Touch",
+          "changedFields": [],
+          "lyricsUnchanged": true,
+          "revisionBefore": 3,
+          "revisionAfter": 3
+        },
+        {
+          "id": "79aa79c7-7688-5b09-b945-d6a8248a7d78",
+          "title": "Bubble Pop!",
+          "changedFields": [],
+          "lyricsUnchanged": true,
+          "revisionBefore": 1,
+          "revisionAfter": 1
+        },
+        {
+          "id": "8345d110-55ca-5048-bea6-b7edf34f14f4",
+          "title": "Faded",
+          "changedFields": [],
+          "lyricsUnchanged": true,
+          "revisionBefore": 2,
+          "revisionAfter": 2
+        },
+        {
+          "id": "8dddcedd-e828-57d6-9e80-01fbaff00dbf",
+          "title": "Cure For Me",
+          "changedFields": [],
+          "lyricsUnchanged": true,
+          "revisionBefore": 2,
+          "revisionAfter": 2
+        },
+        {
+          "id": "91cf203e-8cdd-5dbf-8b3f-f21a48f9f01a",
+          "title": "Welcome to New York (Big Apple Version)",
+          "changedFields": [],
+          "lyricsUnchanged": true,
+          "revisionBefore": 2,
+          "revisionAfter": 2
+        },
+        {
+          "id": "93e8499b-b99b-5307-82a5-7cff189073dd",
+          "title": "Insomnia (불면증)",
+          "changedFields": [],
+          "lyricsUnchanged": true,
+          "revisionBefore": 1,
+          "revisionAfter": 1
+        },
+        {
+          "id": "bec19110-60b3-58b6-917e-5d043893655b",
+          "title": "Clean Bandit Rather Be Without Me",
+          "changedFields": [],
+          "lyricsUnchanged": true,
+          "revisionBefore": 1,
+          "revisionAfter": 1
+        },
+        {
+          "id": "c3c9896b-1021-5779-9984-7d5633c10b74",
+          "title": "Dynamic female voice",
+          "changedFields": [],
+          "lyricsUnchanged": true,
+          "revisionBefore": 2,
+          "revisionAfter": 2
+        },
+        {
+          "id": "c55853cc-3a1f-5191-b501-751a2577c7b8",
+          "title": "Lonely Christmas",
+          "changedFields": [],
+          "lyricsUnchanged": true,
+          "revisionBefore": 1,
+          "revisionAfter": 1
+        },
+        {
+          "id": "c84eb5d2-3865-5943-8abb-7ee6bfbee1fc",
+          "title": "베베 (BABE)",
+          "changedFields": [],
+          "lyricsUnchanged": true,
+          "revisionBefore": 1,
+          "revisionAfter": 1
+        },
+        {
+          "id": "c9f62381-8c0d-5e57-9243-4830653beb2c",
+          "title": "Hourglass",
+          "changedFields": [],
+          "lyricsUnchanged": true,
+          "revisionBefore": 2,
+          "revisionAfter": 2
+        },
+        {
+          "id": "cadadde6-1215-5a2d-8105-e32c775fc5be",
+          "title": "Alan Walker-All Falls Down (刘至佳  lambert remix)",
+          "changedFields": [],
+          "lyricsUnchanged": true,
+          "revisionBefore": 3,
+          "revisionAfter": 3
+        },
+        {
+          "id": "d0c0904f-2a92-570d-ab3e-9d89c48429d2",
+          "title": "소나기 (Feat. 10cm)",
+          "changedFields": [],
+          "lyricsUnchanged": true,
+          "revisionBefore": 2,
+          "revisionAfter": 2
+        },
+        {
+          "id": "d5090dd2-ff4c-5763-b6b5-f7a86b310637",
+          "title": "22秒",
+          "changedFields": [],
+          "lyricsUnchanged": true,
+          "revisionBefore": 2,
+          "revisionAfter": 2
+        },
+        {
+          "id": "efaab368-8c6c-585a-be2b-d4a679121a10",
+          "title": "senorita (翻自 Shawn Mendes)",
+          "changedFields": [],
+          "lyricsUnchanged": true,
+          "revisionBefore": 2,
+          "revisionAfter": 2
+        },
+        {
+          "id": "f259781d-4da0-5a88-a230-cace8f8c57b3",
+          "title": "사뿐사뿐",
+          "changedFields": [],
+          "lyricsUnchanged": true,
+          "revisionBefore": 2,
+          "revisionAfter": 2
+        }
+      ]
+    }
+  },
+  "snapshotBefore": {
+    "capturedAt": "2026-10-30T20:15:07.332Z",
+    "tables": {
+      "assets": {
+        "rows": 0,
+        "digest": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "columns": [
+          "id",
+          "kind",
+          "internal_path",
+          "sha256",
+          "size_bytes",
+          "created_at"
+        ]
+      },
+      "catalog_meta": {
+        "rows": 1,
+        "digest": "8d2748cb6677c72e75d2ebdf268c8fb8afa854b067c84c815427e5301d4298b3",
+        "columns": [
+          "singleton",
+          "catalog_version",
+          "updated_at"
+        ]
+      },
+      "dance_items": {
+        "rows": 0,
+        "digest": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "columns": [
+          "id",
+          "song_identity_id",
+          "source_media_id",
+          "performance_clip_id",
+          "title_override",
+          "learning_status",
+          "scene_mask",
+          "cover_asset_id",
+          "created_at",
+          "updated_at",
+          "deleted_at",
+          "revision"
+        ]
+      },
+      "demo_records": {
+        "rows": 0,
+        "digest": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "columns": [
+          "kind",
+          "item_id",
+          "slot",
+          "media_json"
+        ]
+      },
+      "guest_requests": {
+        "rows": 0,
+        "digest": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "columns": [
+          "id",
+          "session_id",
+          "visitor",
+          "kind",
+          "item_id",
+          "nickname",
+          "note",
+          "state",
+          "created_at"
+        ]
+      },
+      "import_jobs": {
+        "rows": 0,
+        "digest": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "columns": [
+          "id",
+          "source_kind",
+          "status",
+          "stage",
+          "error_code",
+          "draft_json",
+          "created_at",
+          "updated_at"
+        ]
+      },
+      "operation_results": {
+        "rows": 4,
+        "digest": "4fd637f4f260fb3587f4a175a8ae03fe81b92fd91131577cd197c56c7737775b",
+        "columns": [
+          "id",
+          "fingerprint",
+          "result_json",
+          "created_at"
+        ]
+      },
+      "owner_credentials": {
+        "rows": 4,
+        "digest": null,
+        "columns": [],
+        "note": "凭据表只记录行数，不读取内容"
+      },
+      "performance_clips": {
+        "rows": 46,
+        "digest": "85e62a640822d122ddc0cfe5ea6f9707ff03742846e232be67500d6fac0c02f1",
+        "columns": [
+          "id",
+          "source_media_id",
+          "start_ms",
+          "end_ms",
+          "internal_audio_path",
+          "codec",
+          "source_preserving",
+          "sha256",
+          "size_bytes",
+          "duration_ms",
+          "version"
+        ]
+      },
+      "program_items": {
+        "rows": 0,
+        "digest": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "columns": [
+          "kind",
+          "item_id",
+          "position"
+        ]
+      },
+      "program_meta": {
+        "rows": 1,
+        "digest": "06429423f6ba9c57bee589df41b5e88e68968067d072bcf525bd6d322aacb956",
+        "columns": [
+          "singleton",
+          "revision"
+        ]
+      },
+      "repertoire_items": {
+        "rows": 31,
+        "digest": "e8d3c25f772e8044e7a9a1d2eb0d085950d21343c9c45901344a4d8f916717ab",
+        "columns": [
+          "id",
+          "kind",
+          "title",
+          "artist",
+          "learning_status",
+          "original_key",
+          "performance_key",
+          "capo",
+          "score_text",
+          "notes",
+          "audio_role",
+          "source_media_id",
+          "performance_clip_id",
+          "cover_asset_id",
+          "created_at",
+          "updated_at",
+          "deleted_at",
+          "vocal_language",
+          "lyrics_json",
+          "sections_json",
+          "practice_json",
+          "original_clip_id",
+          "accompaniment_clip_id",
+          "original_offset_ms",
+          "accompaniment_offset_ms"
+        ]
+      },
+      "request_sessions": {
+        "rows": 0,
+        "digest": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "columns": [
+          "id",
+          "token",
+          "expires_at",
+          "closed",
+          "subset_json"
+        ]
+      },
+      "schema_migrations": {
+        "rows": 10,
+        "digest": "593a42500537286c3f63e82ba1f35f74ae335eb8aca1b9275c4b7bb5d416b826",
+        "columns": [
+          "version",
+          "applied_at"
+        ]
+      },
+      "score_assets": {
+        "rows": 0,
+        "digest": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "columns": [
+          "id",
+          "kind",
+          "mime",
+          "internal_path",
+          "sha256",
+          "size_bytes",
+          "pages"
+        ]
+      },
+      "score_links": {
+        "rows": 0,
+        "digest": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "columns": [
+          "kind",
+          "item_id",
+          "asset_id",
+          "position"
+        ]
+      },
+      "song_identities": {
+        "rows": 0,
+        "digest": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "columns": [
+          "id",
+          "title",
+          "artist",
+          "recognition_status",
+          "provider",
+          "provider_ref",
+          "confidence",
+          "cover_asset_id"
+        ]
+      },
+      "source_media": {
+        "rows": 31,
+        "digest": "25b4a2599f0dd97cdccf32f79a856ab802df469bbf5134ba9fa23830f46846c7",
+        "columns": [
+          "id",
+          "source_kind",
+          "source_locator",
+          "internal_path",
+          "sha256",
+          "duration_ms",
+          "audio_codec",
+          "video_codec",
+          "status",
+          "container"
+        ]
+      },
+      "tonight_playlist_items": {
+        "rows": 0,
+        "digest": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "columns": [
+          "dance_item_id",
+          "position",
+          "updated_at"
+        ]
+      },
+      "vocal_import_artifacts": {
+        "rows": 16,
+        "digest": "aafd41afcb27d4d52ed9d5cf3b10fa373cebdccbb15bd47efc7ddf88f418b4f4",
+        "columns": [
+          "id",
+          "job_id",
+          "kind",
+          "rel_path",
+          "sha256",
+          "size_bytes",
+          "duration_ms",
+          "version",
+          "state",
+          "quality_state",
+          "created_at",
+          "updated_at"
+        ]
+      },
+      "vocal_import_events": {
+        "rows": 175,
+        "digest": "2f1da452851dab247926a24f63992588d0fb0cf07b9c810752dc788ad059668e",
+        "columns": [
+          "id",
+          "job_id",
+          "seq",
+          "event",
+          "stage",
+          "status",
+          "detail_json",
+          "created_at"
+        ]
+      },
+      "vocal_import_jobs": {
+        "rows": 35,
+        "digest": "efeb68297e3c6527dc32163120a316389782e3a025f906082e5953711713611c",
+        "columns": [
+          "id",
+          "song_id",
+          "root_id",
+          "source_rel_path",
+          "source_sha256",
+          "source_size_bytes",
+          "source_duration_ms",
+          "lyrics_rel_path",
+          "lyrics_sha256",
+          "lyrics_timed_lines",
+          "supplied_accompaniment_rel_path",
+          "title",
+          "artist",
+          "language",
+          "status",
+          "import_mode",
+          "stage",
+          "issues_json",
+          "scan_json",
+          "artifacts_json",
+          "attempts",
+          "max_attempts",
+          "cancel_requested",
+          "idempotency_key",
+          "conflict_json",
+          "manual_review_json",
+          "lease_owner",
+          "lease_expires_at",
+          "last_error_code",
+          "last_error_message",
+          "created_at",
+          "updated_at",
+          "started_at",
+          "finished_at"
+        ]
+      },
+      "vocal_structure_drafts": {
+        "rows": 0,
+        "digest": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "columns": [
+          "song_id",
+          "source_sha256",
+          "model_name",
+          "model_version",
+          "generated_at",
+          "updated_at",
+          "state",
+          "base_revision",
+          "map_json",
+          "analysis_json",
+          "legacy_sections_json",
+          "applied_revision",
+          "applied_at",
+          "last_error_code",
+          "last_error_message"
+        ]
+      },
+      "vocal_translation_cache": {
+        "rows": 0,
+        "digest": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "columns": [
+          "cache_key",
+          "source_lang",
+          "target_lang",
+          "source_text",
+          "target_text",
+          "provider",
+          "model",
+          "created_at",
+          "last_used_at"
+        ]
+      }
+    },
+    "songs": {
+      "01c2a4cd-528c-5316-b864-5ce24f86e280": {
+        "title": "보여줄게",
+        "revision": 2,
+        "fields": {
+          "id": "41df2da370bacbc30473e5ceb160438f288782c0d9aa4dc84e68e0195fd1f5a3",
+          "kind": "d0c2835b55c2307247dffad480c72f3d3ed63a82a854a1031552f7c0f118c529",
+          "title": "cbcc0c70ad954e746c8b50bcd20cef6cd00bf3ebf3f8aa72b027366d191f8ade",
+          "artist": "4405a547dfaaf41211ae2e5a017d5efcd6302bd8713c491c1f0385e00713fbc4",
+          "learning_status": "6b690e85acec73c18d20882be6857cd39609deeee7333754cedf26aae00bc1e5",
+          "original_key": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "performance_key": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "capo": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+          "score_text": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "notes": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "audio_role": "66b400f480f893bcbdce374cce9549e3fb607e2ba9b2938ab039b10bb2e6612f",
+          "source_media_id": "49cca95d547cd37f2d7b05d2ad715f61762da9942457e2c134a680b53c25fd35",
+          "performance_clip_id": "6814741192ec6c70c6208ffc0411ef5604372bfb64a6f8ade26d7127ec08e5c6",
+          "cover_asset_id": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "created_at": "2f49d089c3afb26357b1517ff01b324198c28863056221ec9ec39cb7b938cf2a",
+          "updated_at": "4a9d36d9d130e7792b7e9e331459af14aa9c7a21eec0e74bf16e1b1979b9b7bf",
+          "deleted_at": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "vocal_language": "1fdbc74ccfd68d0714ae539c0d93f2f3a1805387632eca33d3bd6a5013afb13e",
+          "lyrics_json": "7a32ac6e97b3f2b50e880231c68f27819dec311c50d8fe83856c7dad27df4150",
+          "sections_json": "0b81ce375ed3bf5a082c2c4447b6b26804fa4e32f7926873f53635dd9b98134a",
+          "practice_json": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+          "original_clip_id": "6c0b8bdbf218cc42042c44b5bb38243810a830378daece285d4a0442c97d90b3",
+          "accompaniment_clip_id": "6814741192ec6c70c6208ffc0411ef5604372bfb64a6f8ade26d7127ec08e5c6",
+          "original_offset_ms": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+          "accompaniment_offset_ms": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"
+        },
+        "lyricsDigest": "7a32ac6e97b3f2b50e880231c68f27819dec311c50d8fe83856c7dad27df4150"
+      },
+      "0b31b171-f522-55aa-b1c3-57c7293e6a58": {
+        "title": "Papillon",
+        "revision": 2,
+        "fields": {
+          "id": "81c95875cd3207fb43f1ef0ddc17f65c23bfb39794f1c99e9de42993639d2cd3",
+          "kind": "d0c2835b55c2307247dffad480c72f3d3ed63a82a854a1031552f7c0f118c529",
+          "title": "45975b86a04cf09dc26ca85a388c8cc6404d297d7f6f6c8ff8d9dfc36db775a3",
+          "artist": "5c421e0d7044cdbe36a7cf518e52c4842628c9af95e0f822b395840daa056824",
+          "learning_status": "6b690e85acec73c18d20882be6857cd39609deeee7333754cedf26aae00bc1e5",
+          "original_key": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "performance_key": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "capo": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+          "score_text": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "notes": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "audio_role": "66b400f480f893bcbdce374cce9549e3fb607e2ba9b2938ab039b10bb2e6612f",
+          "source_media_id": "f9fed876a058972c945fc1a88a22023468f0374bbdfb2cea3cd00abd4dc206c4",
+          "performance_clip_id": "e976fa093f31d91f9b3ae7c9c464b81d12f1cdc4a4d686a26884385617232111",
+          "cover_asset_id": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "created_at": "b3c4ad829fd0ea848b3b39db7164b62d144d690e0fbe46f16bad7b969dcb49db",
+          "updated_at": "6f5bffe85edc7a4feff3f2c0a11c05be4326c097f3a487c4ea660ef7f5903e41",
+          "deleted_at": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "vocal_language": "dbd3a49d0d906b4ed9216b73330d2fb080ef2f758c12f3885068222e5e17151c",
+          "lyrics_json": "5c65b48409fa13f94716dad5838fdfb7bb7eab3dd5b020f4fda1a18437518b26",
+          "sections_json": "c3f73ff2bda444e91c4d1e4967ea1e37b55cf34255af4673bd4e1557f2d162f5",
+          "practice_json": "5070e9e56a6d57552593b38683dff57897fb98c79b012c188f65cdac2989b8ff",
+          "original_clip_id": "8f3d6620134e39a43229a83542f04864228623be15f384d7b1e890e676226b88",
+          "accompaniment_clip_id": "e976fa093f31d91f9b3ae7c9c464b81d12f1cdc4a4d686a26884385617232111",
+          "original_offset_ms": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+          "accompaniment_offset_ms": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"
+        },
+        "lyricsDigest": "5c65b48409fa13f94716dad5838fdfb7bb7eab3dd5b020f4fda1a18437518b26"
+      },
+      "121fce84-c058-5023-9655-72359f18fb79": {
+        "title": "Let Go",
+        "revision": 3,
+        "fields": {
+          "id": "55963e04582b4d6f8f77f70ec82c4994244c1adb209be4f92b00b9eed2f0b3ca",
+          "kind": "d0c2835b55c2307247dffad480c72f3d3ed63a82a854a1031552f7c0f118c529",
+          "title": "667d0e259f10277d7b810b9b201684814dbdaa2ba718d23b9708ace770075108",
+          "artist": "3971f2b2607a8fb8ac4f36f171bb809de51d16ec8d5b3ab4759f7a7f4e1d438d",
+          "learning_status": "70b66e707ef5feee7b1cbc070f3f346099f2a9e7bd8f0b2e2de332d02fc28ba3",
+          "original_key": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "performance_key": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "capo": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+          "score_text": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "notes": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "audio_role": "ae679b833e58538ea397c5848b3336417e38777b02e837865e5dbff67c86a045",
+          "source_media_id": "7eecf7b7cb9a40a3003a166fdada446be733ddbf38eefdc629099cba1a03f026",
+          "performance_clip_id": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "cover_asset_id": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "created_at": "abe7e8d7c1b575a15110db92deedec3630a80a132207f439e067c3eeb43088d5",
+          "updated_at": "43582671adb5b543b9cb0966267861b0563660a03b2217055e889aeeb9723253",
+          "deleted_at": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "vocal_language": "dbd3a49d0d906b4ed9216b73330d2fb080ef2f758c12f3885068222e5e17151c",
+          "lyrics_json": "e8a2a5f790277f9847c66c10aec6212ff9f251be01f732f9d688b4fa9fcc2d8b",
+          "sections_json": "c81567c3a80dba753d8cc423224f786d959903e6b6558d0d847c784ee06fa4cf",
+          "practice_json": "5070e9e56a6d57552593b38683dff57897fb98c79b012c188f65cdac2989b8ff",
+          "original_clip_id": "3bbe717f62ed65065ce628e8789afa2c3adfabeaa26bf21dd4e1d4313cfe07e0",
+          "accompaniment_clip_id": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "original_offset_ms": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+          "accompaniment_offset_ms": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"
+        },
+        "lyricsDigest": "e8a2a5f790277f9847c66c10aec6212ff9f251be01f732f9d688b4fa9fcc2d8b"
+      },
+      "1b2991ef-ca1e-55b4-a170-e69baee5e4f1": {
+        "title": "Jar Of Love",
+        "revision": 2,
+        "fields": {
+          "id": "2fa599687c948bea6f3cd34aadd5577a61dae82b4ab2ca3ae017f52bfd7bf2c6",
+          "kind": "d0c2835b55c2307247dffad480c72f3d3ed63a82a854a1031552f7c0f118c529",
+          "title": "dd0fa20856594684a86df3432a36a8a2b58ddd0bedf5401b58d4b11f8050a79a",
+          "artist": "c9d1ae906aa5ce6507ec4b503ad619c760ab197a624ddfda0e992f60a859f63f",
+          "learning_status": "6b690e85acec73c18d20882be6857cd39609deeee7333754cedf26aae00bc1e5",
+          "original_key": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "performance_key": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "capo": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+          "score_text": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "notes": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "audio_role": "ae679b833e58538ea397c5848b3336417e38777b02e837865e5dbff67c86a045",
+          "source_media_id": "378cea73e6dd08e5c2ee54dbd67338f092e4a1321f50169734a9dbeb3d254e71",
+          "performance_clip_id": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "cover_asset_id": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "created_at": "b0c162f60a8ce3fb84ff14d033a25b7b37972c23a16a93a48f461cb36479992c",
+          "updated_at": "6f5bffe85edc7a4feff3f2c0a11c05be4326c097f3a487c4ea660ef7f5903e41",
+          "deleted_at": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "vocal_language": "dbd3a49d0d906b4ed9216b73330d2fb080ef2f758c12f3885068222e5e17151c",
+          "lyrics_json": "54be29a58ce11c36419cd3e012d399c6d520670033d59dadc6c98edb5af136f4",
+          "sections_json": "fe085c1700158d48669470fc3f50bd967184309e5f0ec912764e5ee99328837d",
+          "practice_json": "5070e9e56a6d57552593b38683dff57897fb98c79b012c188f65cdac2989b8ff",
+          "original_clip_id": "64672e96255dbe9df16408fcf2476f8be68cff0648ca69c44264879e5322ec68",
+          "accompaniment_clip_id": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "original_offset_ms": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+          "accompaniment_offset_ms": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"
+        },
+        "lyricsDigest": "54be29a58ce11c36419cd3e012d399c6d520670033d59dadc6c98edb5af136f4"
+      },
+      "1b4c0212-73ca-5c68-b13b-b494a93f1323": {
+        "title": "흉터 (Feat. 치타)",
+        "revision": 1,
+        "fields": {
+          "id": "8c4060b41ba69e7ecf593c084ea4bd0f10cf958f66b59dc35c81e4bd14c2acf7",
+          "kind": "d0c2835b55c2307247dffad480c72f3d3ed63a82a854a1031552f7c0f118c529",
+          "title": "64e7dd49190da0d9579c7a7e04fb0cdd53706e30fb37fe3e13131cb7773fd726",
+          "artist": "42e35595bcdd93826322e489edcd0c841a6fcb3e31afe590ab5bccdb3571ac44",
+          "learning_status": "6b690e85acec73c18d20882be6857cd39609deeee7333754cedf26aae00bc1e5",
+          "original_key": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "performance_key": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "capo": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+          "score_text": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "notes": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "audio_role": "ae679b833e58538ea397c5848b3336417e38777b02e837865e5dbff67c86a045",
+          "source_media_id": "d44d6c3f8be7d728015f3ba5dafbe5fee544f431bbce39a2e82e3a851ade73ba",
+          "performance_clip_id": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "cover_asset_id": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "created_at": "b0c162f60a8ce3fb84ff14d033a25b7b37972c23a16a93a48f461cb36479992c",
+          "updated_at": "b0c162f60a8ce3fb84ff14d033a25b7b37972c23a16a93a48f461cb36479992c",
+          "deleted_at": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "vocal_language": "1fdbc74ccfd68d0714ae539c0d93f2f3a1805387632eca33d3bd6a5013afb13e",
+          "lyrics_json": "ca09f34902247582d2600095d63fc5d7e99fa3655e3ca5d5f4274f14cb39e077",
+          "sections_json": "f3b1fcf261941962b1b63cf97bc7126406d1d2077de76ea8a57ee2dec3108b6a",
+          "practice_json": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+          "original_clip_id": "ebb75c9f119e8de1206caaf1674e911225cf8a11cb3d8695402bf3630f5a3397",
+          "accompaniment_clip_id": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "original_offset_ms": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+          "accompaniment_offset_ms": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"
+        },
+        "lyricsDigest": "ca09f34902247582d2600095d63fc5d7e99fa3655e3ca5d5f4274f14cb39e077"
+      },
+      "28c92b90-5cec-59e5-8619-514f30a6a481": {
+        "title": "歌舞:过年迪斯科",
+        "revision": 1,
+        "fields": {
+          "id": "00b51a21bb3c9684ea14f56e3d352d4803e5390cc4c18b0f1c3e6edb5be3ffb6",
+          "kind": "d0c2835b55c2307247dffad480c72f3d3ed63a82a854a1031552f7c0f118c529",
+          "title": "5680f8ea3e8a50eb4af2f25426f57d970d501bb2e0d27bec16e76747848a84d1",
+          "artist": "b4e0466e31f248b2915ee67c907934bb04a81d91453b46add3918ca90e7fbc8b",
+          "learning_status": "6b690e85acec73c18d20882be6857cd39609deeee7333754cedf26aae00bc1e5",
+          "original_key": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "performance_key": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "capo": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+          "score_text": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "notes": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "audio_role": "66b400f480f893bcbdce374cce9549e3fb607e2ba9b2938ab039b10bb2e6612f",
+          "source_media_id": "ab5838f56e40f2f42dde26d3da03b032e322a6e498b9f2f6c11e590d75db2455",
+          "performance_clip_id": "8af12f8525442b04396786f8acac2ee60173b2d485bcd50d1ad35182bd89e616",
+          "cover_asset_id": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "created_at": "e01249b12da720717a3a41014e63c403c8b1791c765512c25ec2ecd0c587d495",
+          "updated_at": "e01249b12da720717a3a41014e63c403c8b1791c765512c25ec2ecd0c587d495",
+          "deleted_at": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "vocal_language": "60cae1d01739facc4543771db2e8fbc4d1ebe5fc66284a5b8b4bd1ed585f452e",
+          "lyrics_json": "e7dbe38e06eaa8214e9a493d8f982909e46c94aec5e19603477e9035c9c60a6c",
+          "sections_json": "be0ab7c753ed4e06ef20ac99d0dbe82cc1532f7f1b4bce83d78c13d9f452e6db",
+          "practice_json": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+          "original_clip_id": "0108ec6ebad04f0e4366b60efd4d6b10bf300c76933858a19e3d8b04c48b7c42",
+          "accompaniment_clip_id": "8af12f8525442b04396786f8acac2ee60173b2d485bcd50d1ad35182bd89e616",
+          "original_offset_ms": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+          "accompaniment_offset_ms": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"
+        },
+        "lyricsDigest": "e7dbe38e06eaa8214e9a493d8f982909e46c94aec5e19603477e9035c9c60a6c"
+      },
+      "2afb52b4-1321-5aea-b688-be11859cd19d": {
+        "title": "初爱",
+        "revision": 1,
+        "fields": {
+          "id": "c232dd0109df2d41ccf9ee4810a93250c9b045b4bb2295e8bc97750087b14cec",
+          "kind": "d0c2835b55c2307247dffad480c72f3d3ed63a82a854a1031552f7c0f118c529",
+          "title": "fda55d071b60bb472292038c8532ce1ac31df25d56932b62771f3d9069322e50",
+          "artist": "b64dcf5cc033a5d4455ffe112b8efcd4d320f374ae81b27d32284c291651adcf",
+          "learning_status": "6b690e85acec73c18d20882be6857cd39609deeee7333754cedf26aae00bc1e5",
+          "original_key": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "performance_key": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "capo": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+          "score_text": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "notes": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "audio_role": "ae679b833e58538ea397c5848b3336417e38777b02e837865e5dbff67c86a045",
+          "source_media_id": "5de887c36cba57aa7d1b39edd0aa61c4936be46988452880a5223e75d589ab01",
+          "performance_clip_id": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "cover_asset_id": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "created_at": "b0c162f60a8ce3fb84ff14d033a25b7b37972c23a16a93a48f461cb36479992c",
+          "updated_at": "b0c162f60a8ce3fb84ff14d033a25b7b37972c23a16a93a48f461cb36479992c",
+          "deleted_at": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "vocal_language": "60cae1d01739facc4543771db2e8fbc4d1ebe5fc66284a5b8b4bd1ed585f452e",
+          "lyrics_json": "000a480c1fb7c656c8be2f222d669af62c8495e65090f9a16395bda203c343e3",
+          "sections_json": "338bba75d1ad50ff2e4df40baa8bf972dd0e6446c1f8a36e60ca9ef5179ccfd3",
+          "practice_json": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+          "original_clip_id": "ac56161032ce51ffb4a9e068f55b38799e2e7ada1aec5a27742377626e7212d8",
+          "accompaniment_clip_id": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "original_offset_ms": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+          "accompaniment_offset_ms": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"
+        },
+        "lyricsDigest": "000a480c1fb7c656c8be2f222d669af62c8495e65090f9a16395bda203c343e3"
+      },
+      "3c29d47b-0f08-54e3-8fad-5716a4dc2a39": {
+        "title": "여름 안에서 (Live)",
+        "revision": 2,
+        "fields": {
+          "id": "825e47dc83e15b89ac547a3e40c99341c079978a232d5bea82065ff26cb1a5e3",
+          "kind": "d0c2835b55c2307247dffad480c72f3d3ed63a82a854a1031552f7c0f118c529",
+          "title": "3043933755c5494ebedce6e8324a22e8be80ea4a1fa664f8185d5184ac4c34fc",
+          "artist": "ba8a05653b3d3b8213562065eafac81b019092eea7befb37c68b73d6cfe78bf6",
+          "learning_status": "70b66e707ef5feee7b1cbc070f3f346099f2a9e7bd8f0b2e2de332d02fc28ba3",
+          "original_key": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "performance_key": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "capo": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+          "score_text": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "notes": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "audio_role": "ae679b833e58538ea397c5848b3336417e38777b02e837865e5dbff67c86a045",
+          "source_media_id": "8ac17f83ccb4de6d4dc0fb584a0d586b8111767ceefd727d35a811d0d3a976e2",
+          "performance_clip_id": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "cover_asset_id": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "created_at": "45e642c05ff5eda771c0628923f49dd20461b27e8e69ec45c3c2f83098f1ea28",
+          "updated_at": "43582671adb5b543b9cb0966267861b0563660a03b2217055e889aeeb9723253",
+          "deleted_at": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "vocal_language": "1fdbc74ccfd68d0714ae539c0d93f2f3a1805387632eca33d3bd6a5013afb13e",
+          "lyrics_json": "52d2936f3d774d580d6bb34099989b0231433546328fee671fbb7cc5d78aa7bb",
+          "sections_json": "55732a3aec6e479fdf2dd55c9da547129acbc8fc634e348135c67e34c0e46794",
+          "practice_json": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+          "original_clip_id": "0603ab75975b4a6ea26ed8136c5f11ac98ca411f3cb0b315e0c63d860cc346ba",
+          "accompaniment_clip_id": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "original_offset_ms": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+          "accompaniment_offset_ms": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"
+        },
+        "lyricsDigest": "52d2936f3d774d580d6bb34099989b0231433546328fee671fbb7cc5d78aa7bb"
+      },
+      "3f20871b-5076-5c4b-b210-6bd7d7f5a4ff": {
+        "title": "BIRTHDAY",
+        "revision": 1,
+        "fields": {
+          "id": "6c21553da0d95e0421a67396c5628438394adaa8176533641cedca03f877517a",
+          "kind": "d0c2835b55c2307247dffad480c72f3d3ed63a82a854a1031552f7c0f118c529",
+          "title": "9cd6eb902d926d367d931b1781df36d343b84557b190ee852e1f7fc70ff69b55",
+          "artist": "b23c85fc79016de4e26b2c255e0618c46530d19640cafb7b178d0745aac76696",
+          "learning_status": "6b690e85acec73c18d20882be6857cd39609deeee7333754cedf26aae00bc1e5",
+          "original_key": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "performance_key": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "capo": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+          "score_text": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "notes": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "audio_role": "ae679b833e58538ea397c5848b3336417e38777b02e837865e5dbff67c86a045",
+          "source_media_id": "2387d1a93f30609d67d76f35ad4d6199994b2fa7dbd7a6212871afb52ea8330e",
+          "performance_clip_id": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "cover_asset_id": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "created_at": "b0c162f60a8ce3fb84ff14d033a25b7b37972c23a16a93a48f461cb36479992c",
+          "updated_at": "b0c162f60a8ce3fb84ff14d033a25b7b37972c23a16a93a48f461cb36479992c",
+          "deleted_at": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "vocal_language": "60cae1d01739facc4543771db2e8fbc4d1ebe5fc66284a5b8b4bd1ed585f452e",
+          "lyrics_json": "9aa2e3357a4f96b3ab6410edecce92f50e8d3d94c29bdb4e9d50e42d5331b179",
+          "sections_json": "3deef92a3ecc1cd1093ce517f252c0dc199a8c6b30042ca8a94e4b5c29ab579e",
+          "practice_json": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+          "original_clip_id": "5c10fd041daaea72ccfaabae339df9e55927c67e4747b6e44dcb545ed633f8e2",
+          "accompaniment_clip_id": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "original_offset_ms": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+          "accompaniment_offset_ms": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"
+        },
+        "lyricsDigest": "9aa2e3357a4f96b3ab6410edecce92f50e8d3d94c29bdb4e9d50e42d5331b179"
+      },
+      "4128e23f-7736-582d-afb6-6916801d7886": {
+        "title": "DjYaha-起風了 (DjYaha remix)",
+        "revision": 1,
+        "fields": {
+          "id": "e3c91ffe734e1a7716bf2c2842de27251467cebaccb0905b45bd4262d6e8dcf3",
+          "kind": "d0c2835b55c2307247dffad480c72f3d3ed63a82a854a1031552f7c0f118c529",
+          "title": "1c06ffc44194e630ad56cdc5632216f0375c3c005a349d7b0d8b1552f99d1cf4",
+          "artist": "fdc25f1eccbceeb79c1cbfb07139bafde5f0a56ea2519ddf1c1a28661ee73b7f",
+          "learning_status": "6b690e85acec73c18d20882be6857cd39609deeee7333754cedf26aae00bc1e5",
+          "original_key": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "performance_key": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "capo": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+          "score_text": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "notes": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "audio_role": "ae679b833e58538ea397c5848b3336417e38777b02e837865e5dbff67c86a045",
+          "source_media_id": "57e6a61e94121cba6f00fd75e1a82a9ed1f263228a6322f159af03ca9a3d2042",
+          "performance_clip_id": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "cover_asset_id": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "created_at": "b0c162f60a8ce3fb84ff14d033a25b7b37972c23a16a93a48f461cb36479992c",
+          "updated_at": "b0c162f60a8ce3fb84ff14d033a25b7b37972c23a16a93a48f461cb36479992c",
+          "deleted_at": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "vocal_language": "60cae1d01739facc4543771db2e8fbc4d1ebe5fc66284a5b8b4bd1ed585f452e",
+          "lyrics_json": "2dfa1991ed01555e97491648717a1800dc90170371ddbabbdcbbc4a5f628975f",
+          "sections_json": "2f34bc7966c95981c5caff2749b04ce20865d6f14ca32949cd7b1d3d8cb7fee1",
+          "practice_json": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+          "original_clip_id": "77a48bd14e061401ff5f4f62eda4b83dfcfc7c42d1d34a7ab1759bfe43cab085",
+          "accompaniment_clip_id": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "original_offset_ms": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+          "accompaniment_offset_ms": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"
+        },
+        "lyricsDigest": "2dfa1991ed01555e97491648717a1800dc90170371ddbabbdcbbc4a5f628975f"
+      },
+      "44192e01-bb35-5079-a89f-766263389bbb": {
+        "title": "一生中最爱",
+        "revision": 1,
+        "fields": {
+          "id": "d95ef89305c1272be880e0ff7789d0ee8339828b5fa1ca7da0e5f6596256cd6f",
+          "kind": "d0c2835b55c2307247dffad480c72f3d3ed63a82a854a1031552f7c0f118c529",
+          "title": "60f930abd5e8ad29edd04642ff950d1597cd341b2e41997e4d02922996dd99ad",
+          "artist": "dd86d84aaf17061f50a40ffcf4d81d3a0e886e39abc519f66e22723e99da87d8",
+          "learning_status": "6b690e85acec73c18d20882be6857cd39609deeee7333754cedf26aae00bc1e5",
+          "original_key": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "performance_key": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "capo": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+          "score_text": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "notes": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "audio_role": "ae679b833e58538ea397c5848b3336417e38777b02e837865e5dbff67c86a045",
+          "source_media_id": "693ffe658ae706a6e68c149b42307775057748985d6a203741e4f7baecd31856",
+          "performance_clip_id": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "cover_asset_id": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "created_at": "b0c162f60a8ce3fb84ff14d033a25b7b37972c23a16a93a48f461cb36479992c",
+          "updated_at": "b0c162f60a8ce3fb84ff14d033a25b7b37972c23a16a93a48f461cb36479992c",
+          "deleted_at": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "vocal_language": "60cae1d01739facc4543771db2e8fbc4d1ebe5fc66284a5b8b4bd1ed585f452e",
+          "lyrics_json": "914e06643d801c7bb91cdc7f23a5e5d57ffa79b4526127aad41508ef703baa03",
+          "sections_json": "0e7789623d860fc81fa8f8ba6efa0db8c63b252c738b26f0edd31ef70f793598",
+          "practice_json": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+          "original_clip_id": "5594afc3fa0f97e7840a739f41fae728324ee5f6b8afbe88a96c9d82b40032ac",
+          "accompaniment_clip_id": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "original_offset_ms": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+          "accompaniment_offset_ms": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"
+        },
+        "lyricsDigest": "914e06643d801c7bb91cdc7f23a5e5d57ffa79b4526127aad41508ef703baa03"
+      },
+      "4528bfad-2e59-5425-96a9-3581dd2a810c": {
+        "title": "덤더럼 (Dumhdurum)",
+        "revision": 5,
+        "fields": {
+          "id": "317b179efad3d275011fc3e3e651d931d2b637623c69bfbfa27ca5733c6d184a",
+          "kind": "d0c2835b55c2307247dffad480c72f3d3ed63a82a854a1031552f7c0f118c529",
+          "title": "ee1ea84c39b2928188f789ef13c0f890ab6d7e8bd9796e8153fc94a74e9216e2",
+          "artist": "dd868996668244cf0cab2655b1b851b53d76f62aaf8dd90bed1f62759fd02b30",
+          "learning_status": "6b690e85acec73c18d20882be6857cd39609deeee7333754cedf26aae00bc1e5",
+          "original_key": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "performance_key": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "capo": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+          "score_text": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "notes": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "audio_role": "66b400f480f893bcbdce374cce9549e3fb607e2ba9b2938ab039b10bb2e6612f",
+          "source_media_id": "5d9ddc8fdc41bd86bc905c286b121ee4e842b188ecf54d16f7ff912a791b91bb",
+          "performance_clip_id": "715436c3415ac49132e9bfa85e04a1cf0cf77da63bd9b5438b80d20db5101ca5",
+          "cover_asset_id": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "created_at": "44f4a640577f0e2001cf674fdb75ce8e8e5b10b8a82aae3317344ae4c5498dee",
+          "updated_at": "4a9d36d9d130e7792b7e9e331459af14aa9c7a21eec0e74bf16e1b1979b9b7bf",
+          "deleted_at": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "vocal_language": "1fdbc74ccfd68d0714ae539c0d93f2f3a1805387632eca33d3bd6a5013afb13e",
+          "lyrics_json": "37bcc4145f528d017237bef94bc842f3e57fa14e949d37247c9cda2b0ec72cae",
+          "sections_json": "d0f996d4b1b45a66c3441de81d69d77081fc924245b2975eb56f508082545f5b",
+          "practice_json": "329e955733a531c116f28b7a0cd19067ff3d638ee59b1edb7e06e47c6d68d91c",
+          "original_clip_id": "a2c1244a51f82bd8accd1c9adf7a402bead636f6ca774f0c8e7cf740ef9c38c7",
+          "accompaniment_clip_id": "715436c3415ac49132e9bfa85e04a1cf0cf77da63bd9b5438b80d20db5101ca5",
+          "original_offset_ms": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+          "accompaniment_offset_ms": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"
+        },
+        "lyricsDigest": "37bcc4145f528d017237bef94bc842f3e57fa14e949d37247c9cda2b0ec72cae"
+      },
+      "532a2725-833f-547c-95bc-68145c52213c": {
+        "title": "Trespassing",
+        "revision": 2,
+        "fields": {
+          "id": "ea7de78d53101d9a2587b062561bd4d8fbe984945895e02926e4e9d826ba861f",
+          "kind": "d0c2835b55c2307247dffad480c72f3d3ed63a82a854a1031552f7c0f118c529",
+          "title": "69c12ca0ee32b14212d529366cc15e8c18e8b69e125f5d2a2b5fcf348dd0ed13",
+          "artist": "225bdf16948e3cd8be7cb02db793737aad92ce245b606c848586b7e4e10ee01b",
+          "learning_status": "6b690e85acec73c18d20882be6857cd39609deeee7333754cedf26aae00bc1e5",
+          "original_key": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "performance_key": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "capo": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+          "score_text": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "notes": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "audio_role": "66b400f480f893bcbdce374cce9549e3fb607e2ba9b2938ab039b10bb2e6612f",
+          "source_media_id": "29ea5fb4bd53c3e36a43dfd8a207785685466975580719c3ac2631cd1cb2361a",
+          "performance_clip_id": "fa2b237ce3d76fccc6776832bc7027d5c80d8b2e13439b2f89ca1793fc6acbac",
+          "cover_asset_id": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "created_at": "b07581bdd9b6f750417d8ae5c79abb84ff745e768a9233d834760a6d64853b7d",
+          "updated_at": "4a9d36d9d130e7792b7e9e331459af14aa9c7a21eec0e74bf16e1b1979b9b7bf",
+          "deleted_at": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "vocal_language": "dbd3a49d0d906b4ed9216b73330d2fb080ef2f758c12f3885068222e5e17151c",
+          "lyrics_json": "029a76aa912af6f4eac09c16ef81fc24afb9a2aa7ad82d702782bb0ae46e7b0a",
+          "sections_json": "5e3b2a19fa5b55800d791185e6ef27fa72d9a8249474f1f5945226366d563c73",
+          "practice_json": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+          "original_clip_id": "8f8b0ab036279ad98cdb75511f10261e62c7a709f5d6e62a02b0c77d89b78cb7",
+          "accompaniment_clip_id": "fa2b237ce3d76fccc6776832bc7027d5c80d8b2e13439b2f89ca1793fc6acbac",
+          "original_offset_ms": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+          "accompaniment_offset_ms": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"
+        },
+        "lyricsDigest": "029a76aa912af6f4eac09c16ef81fc24afb9a2aa7ad82d702782bb0ae46e7b0a"
+      },
+      "54b8e11a-40ca-52e9-aa72-bcc17d52f09d": {
+        "title": "隆里电丝x危险派对 (1FAN Remix)",
+        "revision": 1,
+        "fields": {
+          "id": "3596fbcff19a257d70c09f469dee43d8248af136d5b809a4ae6e573d80c1c60e",
+          "kind": "d0c2835b55c2307247dffad480c72f3d3ed63a82a854a1031552f7c0f118c529",
+          "title": "f070fa281f9e13a61c39d0ad6639386599fe0d2078eb1b5abfa04ed50d44eb24",
+          "artist": "b1f3391b15365ada6dd7bd0f65ff27995dbfb01779bbbb7f85d7bbb0e74b56df",
+          "learning_status": "6b690e85acec73c18d20882be6857cd39609deeee7333754cedf26aae00bc1e5",
+          "original_key": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "performance_key": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "capo": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+          "score_text": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "notes": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "audio_role": "ae679b833e58538ea397c5848b3336417e38777b02e837865e5dbff67c86a045",
+          "source_media_id": "70295636c1c656608ae636b1021ef71e7744a0731c1e0f33661d4d8f4c1acf81",
+          "performance_clip_id": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "cover_asset_id": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "created_at": "b0c162f60a8ce3fb84ff14d033a25b7b37972c23a16a93a48f461cb36479992c",
+          "updated_at": "b0c162f60a8ce3fb84ff14d033a25b7b37972c23a16a93a48f461cb36479992c",
+          "deleted_at": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "vocal_language": "60cae1d01739facc4543771db2e8fbc4d1ebe5fc66284a5b8b4bd1ed585f452e",
+          "lyrics_json": "41fec6932a43174894c9462eb119468f693f3de6f0a54a3df938d351b278d139",
+          "sections_json": "7caff572097a9e94d76b31979845f7c4c2a79ea9fee1662ffd865a138213371c",
+          "practice_json": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+          "original_clip_id": "52f8e4dcd4f0ef832095497ff0ae628f68760c8bfa4caa523d58c61ada7a75c9",
+          "accompaniment_clip_id": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "original_offset_ms": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+          "accompaniment_offset_ms": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"
+        },
+        "lyricsDigest": "41fec6932a43174894c9462eb119468f693f3de6f0a54a3df938d351b278d139"
+      },
+      "63bd4643-17c0-5204-9b78-cf824139baf4": {
+        "title": "Teeth",
+        "revision": 2,
+        "fields": {
+          "id": "2fed40ac70c4c9ae7940d43a73caddce54c61f2a770478336a874c62f4a6c97a",
+          "kind": "d0c2835b55c2307247dffad480c72f3d3ed63a82a854a1031552f7c0f118c529",
+          "title": "12eed1fcb47cea6e23659a2f7ad4db6397e0ed0fa7bb6ca3eea550f4299c1694",
+          "artist": "4f692ed115821c0f7183f4d59d4f9b359345939558a8d45f2bc38c8399f98655",
+          "learning_status": "6b690e85acec73c18d20882be6857cd39609deeee7333754cedf26aae00bc1e5",
+          "original_key": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "performance_key": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "capo": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+          "score_text": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "notes": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "audio_role": "66b400f480f893bcbdce374cce9549e3fb607e2ba9b2938ab039b10bb2e6612f",
+          "source_media_id": "9806e9ceeebb68c178a2b969a1ece11109a35b3cf374681195f7e213f8fcb07b",
+          "performance_clip_id": "80bb23034c37baea5332eb437a2f450846f4eb7dc6d2b14df852c739d814113f",
+          "cover_asset_id": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "created_at": "17c4f7912b47e9778d237c3adf67d6d73486b5c880c177c5952a3c6d51fffeed",
+          "updated_at": "4a9d36d9d130e7792b7e9e331459af14aa9c7a21eec0e74bf16e1b1979b9b7bf",
+          "deleted_at": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "vocal_language": "dbd3a49d0d906b4ed9216b73330d2fb080ef2f758c12f3885068222e5e17151c",
+          "lyrics_json": "5c3d4da56210bce63f1a3bbb9a227e46edf36c40ef696373ccd1b43b5e0e6ae3",
+          "sections_json": "7ff424b14decb3ecd71c5664cdd5c8747be1e4672d6cb21de4364cd0bcbe0278",
+          "practice_json": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+          "original_clip_id": "2d53c38f0b5acb842248a38d5975ab327d448909f8a3e49048eba80b2b5789b6",
+          "accompaniment_clip_id": "80bb23034c37baea5332eb437a2f450846f4eb7dc6d2b14df852c739d814113f",
+          "original_offset_ms": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+          "accompaniment_offset_ms": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"
+        },
+        "lyricsDigest": "5c3d4da56210bce63f1a3bbb9a227e46edf36c40ef696373ccd1b43b5e0e6ae3"
+      },
+      "78fcc0fd-ee50-508e-a170-3e09e6fedc1f": {
+        "title": "Touch",
+        "revision": 3,
+        "fields": {
+          "id": "f6f5847a3bd358f7ac4727ce5b1b12ac4bc673a8d6be3c3c5b9506a96968e14a",
+          "kind": "d0c2835b55c2307247dffad480c72f3d3ed63a82a854a1031552f7c0f118c529",
+          "title": "69f6895099870541e49cf26b2c1561c9a476e92ec1dd1cff21a0db9d76953917",
+          "artist": "cab8b25f4efc6dc99dfb93e664dfe2fdc6546262d4398c20a9bd0c25c2d95169",
+          "learning_status": "6b690e85acec73c18d20882be6857cd39609deeee7333754cedf26aae00bc1e5",
+          "original_key": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "performance_key": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "capo": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+          "score_text": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "notes": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "audio_role": "66b400f480f893bcbdce374cce9549e3fb607e2ba9b2938ab039b10bb2e6612f",
+          "source_media_id": "531c2b39e8ae0497921d9fa718c03f998a04e33706e97a20077e744cc8e99742",
+          "performance_clip_id": "ac50a4fb7873d364f6c21252bc352d219e959a1678d581d961240c33e13215cd",
+          "cover_asset_id": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "created_at": "6453c9a37242732e13b7e130dae50baad4e454d887e9f9d2c903890913225cc9",
+          "updated_at": "6f5bffe85edc7a4feff3f2c0a11c05be4326c097f3a487c4ea660ef7f5903e41",
+          "deleted_at": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "vocal_language": "dbd3a49d0d906b4ed9216b73330d2fb080ef2f758c12f3885068222e5e17151c",
+          "lyrics_json": "f12c1af69b65201b083aaa70d30e6df0262037eecf32293b124b39d1879b576c",
+          "sections_json": "194a22a480a81d2e3285047b62c4ccfa02adcfc412e09bc6f546903874004c08",
+          "practice_json": "5070e9e56a6d57552593b38683dff57897fb98c79b012c188f65cdac2989b8ff",
+          "original_clip_id": "946a9d28c8d78fef8a4de84ec85a995a21b7882c5cfdb392ded2b177e14b2dbe",
+          "accompaniment_clip_id": "ac50a4fb7873d364f6c21252bc352d219e959a1678d581d961240c33e13215cd",
+          "original_offset_ms": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+          "accompaniment_offset_ms": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"
+        },
+        "lyricsDigest": "f12c1af69b65201b083aaa70d30e6df0262037eecf32293b124b39d1879b576c"
+      },
+      "79aa79c7-7688-5b09-b945-d6a8248a7d78": {
+        "title": "Bubble Pop!",
+        "revision": 1,
+        "fields": {
+          "id": "126bf44daba168645fe9d93d21738e1e6b50e373c79a1b4508ce137bdfb52508",
+          "kind": "d0c2835b55c2307247dffad480c72f3d3ed63a82a854a1031552f7c0f118c529",
+          "title": "bd0e01f50161517ca3d99ac5edfc9938f47c396414ae1a2eb1f471ac7c907208",
+          "artist": "169b175433937e7d94b71a1426b3463d02528514edb4f1f1dad51afb0d7be472",
+          "learning_status": "6b690e85acec73c18d20882be6857cd39609deeee7333754cedf26aae00bc1e5",
+          "original_key": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "performance_key": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "capo": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+          "score_text": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "notes": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "audio_role": "ae679b833e58538ea397c5848b3336417e38777b02e837865e5dbff67c86a045",
+          "source_media_id": "6dad54d38e79d98c27d9a0e12608853d35d78c844566d00539df58ebfbe67477",
+          "performance_clip_id": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "cover_asset_id": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "created_at": "b0c162f60a8ce3fb84ff14d033a25b7b37972c23a16a93a48f461cb36479992c",
+          "updated_at": "b0c162f60a8ce3fb84ff14d033a25b7b37972c23a16a93a48f461cb36479992c",
+          "deleted_at": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "vocal_language": "1fdbc74ccfd68d0714ae539c0d93f2f3a1805387632eca33d3bd6a5013afb13e",
+          "lyrics_json": "e5bc59f252499cfbae46bd95dd542b01df02e72f293a21906c85e27cd2b2dad6",
+          "sections_json": "ec33488ebd3ef8a357d37351b00e93b3c60497471b0e65132e59481c4a4b3ed1",
+          "practice_json": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+          "original_clip_id": "ddea4e92f92af27c0d270b8b371317e685878a6b3e861b6e62029ce766e8faed",
+          "accompaniment_clip_id": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "original_offset_ms": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+          "accompaniment_offset_ms": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"
+        },
+        "lyricsDigest": "e5bc59f252499cfbae46bd95dd542b01df02e72f293a21906c85e27cd2b2dad6"
+      },
+      "8345d110-55ca-5048-bea6-b7edf34f14f4": {
+        "title": "Faded",
+        "revision": 2,
+        "fields": {
+          "id": "7ec4ccf15ba312a6530401cbac53d011c8b53697d1f476a6735d518743e4b8f4",
+          "kind": "d0c2835b55c2307247dffad480c72f3d3ed63a82a854a1031552f7c0f118c529",
+          "title": "5ed24b77298a2fdc221685f072c1bbb368fcf0fe5adb0b118b9cfd5900caf41f",
+          "artist": "1ba60711356b4aea6f9d2c812821e90c21974f7667f22ffa7af34b8ec945fbde",
+          "learning_status": "6b690e85acec73c18d20882be6857cd39609deeee7333754cedf26aae00bc1e5",
+          "original_key": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "performance_key": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "capo": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+          "score_text": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "notes": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "audio_role": "66b400f480f893bcbdce374cce9549e3fb607e2ba9b2938ab039b10bb2e6612f",
+          "source_media_id": "8503b767b6f455919c444ca39f73cbc018b0ae75e0f0dd87e6e8e0616a884d86",
+          "performance_clip_id": "51d6e33ced9788321723bbf57c8dd1b740e5b23c6349785457ef7b1a6e55677b",
+          "cover_asset_id": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "created_at": "31b50ecc25bafa700b65979ef6fa84ea75810092c44d472c50a6284b6c6d918a",
+          "updated_at": "4a9d36d9d130e7792b7e9e331459af14aa9c7a21eec0e74bf16e1b1979b9b7bf",
+          "deleted_at": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "vocal_language": "dbd3a49d0d906b4ed9216b73330d2fb080ef2f758c12f3885068222e5e17151c",
+          "lyrics_json": "70860f49f9c27c49d1a516a380b381c10adc9fa1ddaf0cf168a92cc466afe0f2",
+          "sections_json": "561a43c8b4d90ac573f3d9aae777d0ac2289ba0437150691f3087d47b2fb6e6c",
+          "practice_json": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+          "original_clip_id": "01fd901d503b22ced3fa3d68cbf3f7c583f9b226c04b0ed99be13d71925a659a",
+          "accompaniment_clip_id": "51d6e33ced9788321723bbf57c8dd1b740e5b23c6349785457ef7b1a6e55677b",
+          "original_offset_ms": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+          "accompaniment_offset_ms": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"
+        },
+        "lyricsDigest": "70860f49f9c27c49d1a516a380b381c10adc9fa1ddaf0cf168a92cc466afe0f2"
+      },
+      "8dddcedd-e828-57d6-9e80-01fbaff00dbf": {
+        "title": "Cure For Me",
+        "revision": 2,
+        "fields": {
+          "id": "c4a2d62283382d295b9fbd42f7df2c736dbca704921ecf3b32a7016a81626bb5",
+          "kind": "d0c2835b55c2307247dffad480c72f3d3ed63a82a854a1031552f7c0f118c529",
+          "title": "36b7836013f014a3644422b606656f58b04f64b070765c6309c5f2e5229ffdf9",
+          "artist": "1e28b2651a6d1b2486987925a85576dce1f8713e46acab058d9b200e409e4887",
+          "learning_status": "6b690e85acec73c18d20882be6857cd39609deeee7333754cedf26aae00bc1e5",
+          "original_key": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "performance_key": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "capo": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+          "score_text": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "notes": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "audio_role": "66b400f480f893bcbdce374cce9549e3fb607e2ba9b2938ab039b10bb2e6612f",
+          "source_media_id": "7b1b4468f3fcdf1e9edba3d0c4ed578585092d296492167002b4461e86df1249",
+          "performance_clip_id": "ec9d803388863764d1b7a47d415e4d815520f198ee8825d1edeaedd382742d37",
+          "cover_asset_id": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "created_at": "6032d5d9813cb5374ab8dc41cdded94f0d59a3724d07ab3a8a1ead52d4d72ad6",
+          "updated_at": "4a9d36d9d130e7792b7e9e331459af14aa9c7a21eec0e74bf16e1b1979b9b7bf",
+          "deleted_at": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "vocal_language": "dbd3a49d0d906b4ed9216b73330d2fb080ef2f758c12f3885068222e5e17151c",
+          "lyrics_json": "c4b5477e98005155d2a109f9e167d20f2ecd53c964fd114d4e60dd9fd510aa79",
+          "sections_json": "138b8fa7f7c2a7fc523fa6b1d976cc8a37469a51393b17fc660b31098f4f5741",
+          "practice_json": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+          "original_clip_id": "de5ce8de5479bc8b236726d71dbaa51706ac926bed327b89f3b18aca001d8df0",
+          "accompaniment_clip_id": "ec9d803388863764d1b7a47d415e4d815520f198ee8825d1edeaedd382742d37",
+          "original_offset_ms": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+          "accompaniment_offset_ms": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"
+        },
+        "lyricsDigest": "c4b5477e98005155d2a109f9e167d20f2ecd53c964fd114d4e60dd9fd510aa79"
+      },
+      "91cf203e-8cdd-5dbf-8b3f-f21a48f9f01a": {
+        "title": "Welcome to New York (Big Apple Version)",
+        "revision": 2,
+        "fields": {
+          "id": "c031d8c8b7a4843304be42e3d0364469f98865fe10c8adfd2a89467ebc16243d",
+          "kind": "d0c2835b55c2307247dffad480c72f3d3ed63a82a854a1031552f7c0f118c529",
+          "title": "01680b6cf7678f8f9bd1685b31eb2cad673ba087687ce11542e488915c334e31",
+          "artist": "3ba836036da319b5fc14f88608643211757f00913e69b7b86466ebc727de1fe6",
+          "learning_status": "6b690e85acec73c18d20882be6857cd39609deeee7333754cedf26aae00bc1e5",
+          "original_key": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "performance_key": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "capo": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+          "score_text": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "notes": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "audio_role": "66b400f480f893bcbdce374cce9549e3fb607e2ba9b2938ab039b10bb2e6612f",
+          "source_media_id": "61956bc3b5197b710af09d3581c7ea22c3bb482f8b1caaf0773455f0d49f2bd2",
+          "performance_clip_id": "9dee39ec64a9711f5fea086f1ce0e50e2e937481f981af868f840aca2c538354",
+          "cover_asset_id": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "created_at": "deb126c203e72c9dc5735c6cd6b0e45caabc8f59a545323451c9745b146d1016",
+          "updated_at": "4a9d36d9d130e7792b7e9e331459af14aa9c7a21eec0e74bf16e1b1979b9b7bf",
+          "deleted_at": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "vocal_language": "dbd3a49d0d906b4ed9216b73330d2fb080ef2f758c12f3885068222e5e17151c",
+          "lyrics_json": "3fd0aece40a504344132c1dd4e16eae1591638cad26d3e26df445d0352a2bb13",
+          "sections_json": "d8a9bea5c6da67f422dd9587a224b4aa59eab40b34dffcea5f960312b51ff969",
+          "practice_json": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+          "original_clip_id": "069ec72c5d4e35c3b4e42cd36473c2956ac9bd5888ab3d3d93a1d8185ac0b332",
+          "accompaniment_clip_id": "9dee39ec64a9711f5fea086f1ce0e50e2e937481f981af868f840aca2c538354",
+          "original_offset_ms": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+          "accompaniment_offset_ms": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"
+        },
+        "lyricsDigest": "3fd0aece40a504344132c1dd4e16eae1591638cad26d3e26df445d0352a2bb13"
+      },
+      "93e8499b-b99b-5307-82a5-7cff189073dd": {
+        "title": "Insomnia (불면증)",
+        "revision": 1,
+        "fields": {
+          "id": "2e179182300ccfcfaa81df1504b070543feb03eff4dfb4079d89f3fe606774d2",
+          "kind": "d0c2835b55c2307247dffad480c72f3d3ed63a82a854a1031552f7c0f118c529",
+          "title": "e02b944852b9ba2d18de31b91ffe8b68dcd9fcfdc3e6e92bb59ff524401a26bc",
+          "artist": "bb7412118bede2db1b85e8df764ce79a1546510b01ab7db212f10a18c67febe2",
+          "learning_status": "6b690e85acec73c18d20882be6857cd39609deeee7333754cedf26aae00bc1e5",
+          "original_key": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "performance_key": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "capo": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+          "score_text": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "notes": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "audio_role": "ae679b833e58538ea397c5848b3336417e38777b02e837865e5dbff67c86a045",
+          "source_media_id": "02b3b20c07cdcc4d802cfd14ca618bd46e0deef14ee1b38c6ccdbd7f5d371ad5",
+          "performance_clip_id": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "cover_asset_id": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "created_at": "b0c162f60a8ce3fb84ff14d033a25b7b37972c23a16a93a48f461cb36479992c",
+          "updated_at": "b0c162f60a8ce3fb84ff14d033a25b7b37972c23a16a93a48f461cb36479992c",
+          "deleted_at": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "vocal_language": "1fdbc74ccfd68d0714ae539c0d93f2f3a1805387632eca33d3bd6a5013afb13e",
+          "lyrics_json": "7c553da24f100d34da0d34955c2bded59b169913724ca2b2b63caf8da6220f61",
+          "sections_json": "40a29650c6f88faab0d012fcbfef9d2507be8b5ed0424c97af4d1fe92fa1a1ff",
+          "practice_json": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+          "original_clip_id": "609178f07391d9a97a56491ceb60000a9b29d5204d4f407d270cda694935196b",
+          "accompaniment_clip_id": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "original_offset_ms": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+          "accompaniment_offset_ms": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"
+        },
+        "lyricsDigest": "7c553da24f100d34da0d34955c2bded59b169913724ca2b2b63caf8da6220f61"
+      },
+      "bec19110-60b3-58b6-917e-5d043893655b": {
+        "title": "Clean Bandit Rather Be Without Me",
+        "revision": 1,
+        "fields": {
+          "id": "2b6505f18d44cf922c85884c01011405b788e23484cb01bbeb1f5749d6d861fc",
+          "kind": "d0c2835b55c2307247dffad480c72f3d3ed63a82a854a1031552f7c0f118c529",
+          "title": "7eca73e6141955749829494cb24753fb1fcb31e6b235ce8b40fb9ee00d837bd6",
+          "artist": "c50f596ba0d601681683a78f888e270727b54fbc588657d27e9c9645f374b32f",
+          "learning_status": "6b690e85acec73c18d20882be6857cd39609deeee7333754cedf26aae00bc1e5",
+          "original_key": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "performance_key": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "capo": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+          "score_text": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "notes": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "audio_role": "ae679b833e58538ea397c5848b3336417e38777b02e837865e5dbff67c86a045",
+          "source_media_id": "77e9803e7263316bd1a5c97852928bad396b7e3e5448fd8c4ad1c8f0a69ff871",
+          "performance_clip_id": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "cover_asset_id": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "created_at": "b0c162f60a8ce3fb84ff14d033a25b7b37972c23a16a93a48f461cb36479992c",
+          "updated_at": "b0c162f60a8ce3fb84ff14d033a25b7b37972c23a16a93a48f461cb36479992c",
+          "deleted_at": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "vocal_language": "dbd3a49d0d906b4ed9216b73330d2fb080ef2f758c12f3885068222e5e17151c",
+          "lyrics_json": "75e8b69fceebf19c7d916c772a1923377647f0d4bc9a9c0ba4394dc8b9f8e7ff",
+          "sections_json": "7b981400488ed1b690b00c313a0dd2dc07707a5dcde9885462beb285c72195c9",
+          "practice_json": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+          "original_clip_id": "3320b9410eb40849b56015e0c10341757216a2830f09badf7653b6e9d8fab083",
+          "accompaniment_clip_id": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "original_offset_ms": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+          "accompaniment_offset_ms": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"
+        },
+        "lyricsDigest": "75e8b69fceebf19c7d916c772a1923377647f0d4bc9a9c0ba4394dc8b9f8e7ff"
+      },
+      "c3c9896b-1021-5779-9984-7d5633c10b74": {
+        "title": "Dynamic female voice",
+        "revision": 2,
+        "fields": {
+          "id": "cb86f241b5c1e77b10be1fdaee058f46a0549500e22fbe6e007d29f9c8022c98",
+          "kind": "d0c2835b55c2307247dffad480c72f3d3ed63a82a854a1031552f7c0f118c529",
+          "title": "a108792c61d36bcdb24b5087800692d53f8eab15cb55ccfae73cb111dd009464",
+          "artist": "b3a04dea798234136a6bc53ef3f089a76473d7575c76ed630868cfcda6630da6",
+          "learning_status": "6b690e85acec73c18d20882be6857cd39609deeee7333754cedf26aae00bc1e5",
+          "original_key": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "performance_key": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "capo": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+          "score_text": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "notes": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "audio_role": "ae679b833e58538ea397c5848b3336417e38777b02e837865e5dbff67c86a045",
+          "source_media_id": "dcd118df763d14cb6bdcc7ed8d85d77bca0ceaca7ef1ea42e2b0bfaac3b1c61d",
+          "performance_clip_id": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "cover_asset_id": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "created_at": "b0c162f60a8ce3fb84ff14d033a25b7b37972c23a16a93a48f461cb36479992c",
+          "updated_at": "6f5bffe85edc7a4feff3f2c0a11c05be4326c097f3a487c4ea660ef7f5903e41",
+          "deleted_at": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "vocal_language": "dbd3a49d0d906b4ed9216b73330d2fb080ef2f758c12f3885068222e5e17151c",
+          "lyrics_json": "04cda096870d70d0123134e6921256550b8a39519107e4b707dd2398be3a7dff",
+          "sections_json": "a347c465c824dad77e0cf7c0e6d3612a26f8ea386ce8e05fa53fc3de26349d42",
+          "practice_json": "5070e9e56a6d57552593b38683dff57897fb98c79b012c188f65cdac2989b8ff",
+          "original_clip_id": "68f60c6dd47499cce72c5b0f1a029ddd3490d5cae8eb9d85229e013661c8cd0d",
+          "accompaniment_clip_id": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "original_offset_ms": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+          "accompaniment_offset_ms": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"
+        },
+        "lyricsDigest": "04cda096870d70d0123134e6921256550b8a39519107e4b707dd2398be3a7dff"
+      },
+      "c55853cc-3a1f-5191-b501-751a2577c7b8": {
+        "title": "Lonely Christmas",
+        "revision": 1,
+        "fields": {
+          "id": "12996486bd2bddd4167f3ae94442ccf15a84de6864e518e9eed322e6495c774a",
+          "kind": "d0c2835b55c2307247dffad480c72f3d3ed63a82a854a1031552f7c0f118c529",
+          "title": "60eb7b44f966dee120a9fcefabce436013dbb361bd7d7807d69325742523c911",
+          "artist": "e485fe4307e8454e569ea35f43e2b22bfbde1b01c435a21170a27a62acd86b61",
+          "learning_status": "6b690e85acec73c18d20882be6857cd39609deeee7333754cedf26aae00bc1e5",
+          "original_key": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "performance_key": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "capo": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+          "score_text": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "notes": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "audio_role": "ae679b833e58538ea397c5848b3336417e38777b02e837865e5dbff67c86a045",
+          "source_media_id": "a6c0c30310913b35924ef8f6849fdec733b29ffd887c7ed495570915f9a9bc30",
+          "performance_clip_id": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "cover_asset_id": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "created_at": "b0c162f60a8ce3fb84ff14d033a25b7b37972c23a16a93a48f461cb36479992c",
+          "updated_at": "b0c162f60a8ce3fb84ff14d033a25b7b37972c23a16a93a48f461cb36479992c",
+          "deleted_at": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "vocal_language": "60cae1d01739facc4543771db2e8fbc4d1ebe5fc66284a5b8b4bd1ed585f452e",
+          "lyrics_json": "51cbeff2a96240c6f8b295d411e25bbfde2ecf887d104d6bd2b14de1d2354eab",
+          "sections_json": "7a735e187668d4902e027cf2c6c7ad5b19e3395a46bf4a2297e229efa136c143",
+          "practice_json": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+          "original_clip_id": "a533115583342e23256d03f599d02f605dffdc82bb646e421de87138070ebb4a",
+          "accompaniment_clip_id": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "original_offset_ms": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+          "accompaniment_offset_ms": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"
+        },
+        "lyricsDigest": "51cbeff2a96240c6f8b295d411e25bbfde2ecf887d104d6bd2b14de1d2354eab"
+      },
+      "c84eb5d2-3865-5943-8abb-7ee6bfbee1fc": {
+        "title": "베베 (BABE)",
+        "revision": 1,
+        "fields": {
+          "id": "50b3b8fd0b35c5214c41a44257b8b36da8a9d6c8130ea3b5e2986c675f3d2805",
+          "kind": "d0c2835b55c2307247dffad480c72f3d3ed63a82a854a1031552f7c0f118c529",
+          "title": "e0b8d544c23d1fe082b2de069f6f51aad5205165375e0ca771d4d7b825369a01",
+          "artist": "169b175433937e7d94b71a1426b3463d02528514edb4f1f1dad51afb0d7be472",
+          "learning_status": "6b690e85acec73c18d20882be6857cd39609deeee7333754cedf26aae00bc1e5",
+          "original_key": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "performance_key": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "capo": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+          "score_text": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "notes": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "audio_role": "66b400f480f893bcbdce374cce9549e3fb607e2ba9b2938ab039b10bb2e6612f",
+          "source_media_id": "f9f75a75b824292423f763b0414514fcc8f864ba296fc7f205c6c4359af8a652",
+          "performance_clip_id": "d1da1dcba5652b97de8c3eb7c8c7a8388c01595c172a324443b53ce7b4eabacb",
+          "cover_asset_id": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "created_at": "dbb75bdc2443a7713bb92eb442cfd0482f458cfd99edbf24024cfa85d17b4a30",
+          "updated_at": "dbb75bdc2443a7713bb92eb442cfd0482f458cfd99edbf24024cfa85d17b4a30",
+          "deleted_at": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "vocal_language": "1fdbc74ccfd68d0714ae539c0d93f2f3a1805387632eca33d3bd6a5013afb13e",
+          "lyrics_json": "acdbaa2c98a1a7e93f8058eb949b4ea1c68a04e9403d4203e9931f87e34825ed",
+          "sections_json": "82f89523ced90f2599205f12f27f7cea5f4110b856c51c41824a09a74ffaeff8",
+          "practice_json": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+          "original_clip_id": "08ebd172c2208c586e98f5213f1d51efe26ec14a2741d928c679ab25ecd343b3",
+          "accompaniment_clip_id": "d1da1dcba5652b97de8c3eb7c8c7a8388c01595c172a324443b53ce7b4eabacb",
+          "original_offset_ms": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+          "accompaniment_offset_ms": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"
+        },
+        "lyricsDigest": "acdbaa2c98a1a7e93f8058eb949b4ea1c68a04e9403d4203e9931f87e34825ed"
+      },
+      "c9f62381-8c0d-5e57-9243-4830653beb2c": {
+        "title": "Hourglass",
+        "revision": 2,
+        "fields": {
+          "id": "6b48542c7691a608282e50a52e6f03c111233256dc721d27ab0347becb18e107",
+          "kind": "d0c2835b55c2307247dffad480c72f3d3ed63a82a854a1031552f7c0f118c529",
+          "title": "46594469a67f550056dfae58c1e2132452ea93e24bb37ccce99c8dc0cf1bb35a",
+          "artist": "c3f8049a1d349a3f9b45cf6b24714123f25fff88b0109a2ab925f107e8c49843",
+          "learning_status": "6b690e85acec73c18d20882be6857cd39609deeee7333754cedf26aae00bc1e5",
+          "original_key": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "performance_key": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "capo": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+          "score_text": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "notes": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "audio_role": "66b400f480f893bcbdce374cce9549e3fb607e2ba9b2938ab039b10bb2e6612f",
+          "source_media_id": "ad3a97dbfa12c6ab100a00437595ce66212e8aeabe54d44c70ece374f84a5711",
+          "performance_clip_id": "dafb553564a2361700c4e0062805694342180b2b8e1520fdbc259497131b2795",
+          "cover_asset_id": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "created_at": "3129ebdc0ea5387535227c8c385d1c6edc7d18038e5d0c06e90b591711a628f9",
+          "updated_at": "4a9d36d9d130e7792b7e9e331459af14aa9c7a21eec0e74bf16e1b1979b9b7bf",
+          "deleted_at": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "vocal_language": "60cae1d01739facc4543771db2e8fbc4d1ebe5fc66284a5b8b4bd1ed585f452e",
+          "lyrics_json": "a66b39d6b3b9d2563051f19df636eaf76b3dfdf65787d96c13830c4523e85b5c",
+          "sections_json": "f34de68fc1f8fee8c9f06cf2b25e55485e30ba646a467ee5e6245b94b1f29597",
+          "practice_json": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+          "original_clip_id": "40340e30bd948440f3b6e88ca5ecbbc0bd7ab80b23abdae3683186f60192b0de",
+          "accompaniment_clip_id": "dafb553564a2361700c4e0062805694342180b2b8e1520fdbc259497131b2795",
+          "original_offset_ms": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+          "accompaniment_offset_ms": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"
+        },
+        "lyricsDigest": "a66b39d6b3b9d2563051f19df636eaf76b3dfdf65787d96c13830c4523e85b5c"
+      },
+      "cadadde6-1215-5a2d-8105-e32c775fc5be": {
+        "title": "Alan Walker-All Falls Down (刘至佳  lambert remix)",
+        "revision": 3,
+        "fields": {
+          "id": "90ba8f6c9ac010b4bff72d2bc296bc4fa674851f7e299fbb209172f4d7685a20",
+          "kind": "d0c2835b55c2307247dffad480c72f3d3ed63a82a854a1031552f7c0f118c529",
+          "title": "2562227139150e1faff50e98eefc94dd072d72496342292e9c7655fd26e3d2ae",
+          "artist": "d6b8fa24e80ad756e66836e940bc591aa89dc716f6bc43f324fe57d6e0889078",
+          "learning_status": "70b66e707ef5feee7b1cbc070f3f346099f2a9e7bd8f0b2e2de332d02fc28ba3",
+          "original_key": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "performance_key": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "capo": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+          "score_text": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "notes": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "audio_role": "ae679b833e58538ea397c5848b3336417e38777b02e837865e5dbff67c86a045",
+          "source_media_id": "7185629378b98f45c3e443beb36f28e5d71156dcedbb713c6f9edd2b63dfa750",
+          "performance_clip_id": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "cover_asset_id": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "created_at": "abe7e8d7c1b575a15110db92deedec3630a80a132207f439e067c3eeb43088d5",
+          "updated_at": "43582671adb5b543b9cb0966267861b0563660a03b2217055e889aeeb9723253",
+          "deleted_at": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "vocal_language": "dbd3a49d0d906b4ed9216b73330d2fb080ef2f758c12f3885068222e5e17151c",
+          "lyrics_json": "a244a5131daf72eb2b2d59d5d6eba4bb8ce763152f1bd7874a29828a049a731f",
+          "sections_json": "1a163729aa89f3ea99bd1bf9ba16c29ae1e9447430687750acf54473f3cbb02a",
+          "practice_json": "5070e9e56a6d57552593b38683dff57897fb98c79b012c188f65cdac2989b8ff",
+          "original_clip_id": "ad737ab812e4aa5f65a93ffcb9d5c926e6947178b364b8d290198d5a6aa3818b",
+          "accompaniment_clip_id": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "original_offset_ms": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+          "accompaniment_offset_ms": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"
+        },
+        "lyricsDigest": "a244a5131daf72eb2b2d59d5d6eba4bb8ce763152f1bd7874a29828a049a731f"
+      },
+      "d0c0904f-2a92-570d-ab3e-9d89c48429d2": {
+        "title": "소나기 (Feat. 10cm)",
+        "revision": 2,
+        "fields": {
+          "id": "7fff41f3b9f9c8e116a77f603a4413878c566090233a1a02d89200555d60801c",
+          "kind": "d0c2835b55c2307247dffad480c72f3d3ed63a82a854a1031552f7c0f118c529",
+          "title": "7c21a16c7c11633d4be170ba661fd2a163f49f0ebeeec63ea5840cfd04a97ee2",
+          "artist": "888f6ff6ec98d43e889081e6c7aa1d63d2faf200c0d2c62098616e7c11887eda",
+          "learning_status": "70b66e707ef5feee7b1cbc070f3f346099f2a9e7bd8f0b2e2de332d02fc28ba3",
+          "original_key": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "performance_key": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "capo": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+          "score_text": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "notes": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "audio_role": "ae679b833e58538ea397c5848b3336417e38777b02e837865e5dbff67c86a045",
+          "source_media_id": "d6a13d8debd5aaf4effbe8b0b846dea9cbf3ea2714a9b65ab1e959f8e26c191f",
+          "performance_clip_id": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "cover_asset_id": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "created_at": "45e642c05ff5eda771c0628923f49dd20461b27e8e69ec45c3c2f83098f1ea28",
+          "updated_at": "43582671adb5b543b9cb0966267861b0563660a03b2217055e889aeeb9723253",
+          "deleted_at": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "vocal_language": "1fdbc74ccfd68d0714ae539c0d93f2f3a1805387632eca33d3bd6a5013afb13e",
+          "lyrics_json": "13ccd36eb4798763df76403398270b9c852f8b1ab498f57c804e8b455faaa544",
+          "sections_json": "bfc81e64a63ebaa66d3c74a1711f728c9e297e5d8f442b38dd7518f16062fb44",
+          "practice_json": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+          "original_clip_id": "e6b67e3c3f3a538e26241f01d42aeeaf93fa3e240da17532d494d98ad1fcf8e8",
+          "accompaniment_clip_id": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "original_offset_ms": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+          "accompaniment_offset_ms": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"
+        },
+        "lyricsDigest": "13ccd36eb4798763df76403398270b9c852f8b1ab498f57c804e8b455faaa544"
+      },
+      "d5090dd2-ff4c-5763-b6b5-f7a86b310637": {
+        "title": "22秒",
+        "revision": 2,
+        "fields": {
+          "id": "397b614504a4356f1be0c683666013b03ee902e574bc8daf5ba4dbc22bc8aeef",
+          "kind": "d0c2835b55c2307247dffad480c72f3d3ed63a82a854a1031552f7c0f118c529",
+          "title": "6330e8dddf6ecc3837507d3572dd7d28b95fae7c0a77a37f33da6437a049685e",
+          "artist": "bce3c4dc320bd42ab6cd01c59f2c03932f2af0e45dca2dca63ec91a6704a4965",
+          "learning_status": "6b690e85acec73c18d20882be6857cd39609deeee7333754cedf26aae00bc1e5",
+          "original_key": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "performance_key": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "capo": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+          "score_text": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "notes": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "audio_role": "66b400f480f893bcbdce374cce9549e3fb607e2ba9b2938ab039b10bb2e6612f",
+          "source_media_id": "222c078a7ddc02581a09ca4105450715c7561c2ff477eb56cfd175f2b8633f84",
+          "performance_clip_id": "01b8ee0c0a1b14532350bc31bed80303d12fc33b8537015b53832c774685ff67",
+          "cover_asset_id": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "created_at": "9a8b7655ef8848679af68cc1f2b5112b0120f07014f6c2c1334c7eddbbe3ff22",
+          "updated_at": "4a9d36d9d130e7792b7e9e331459af14aa9c7a21eec0e74bf16e1b1979b9b7bf",
+          "deleted_at": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "vocal_language": "60cae1d01739facc4543771db2e8fbc4d1ebe5fc66284a5b8b4bd1ed585f452e",
+          "lyrics_json": "af6a1b38c7674617d0c3a2e5e3bf28aa94cb731f56af15a76ba4f4e84cb2d7c9",
+          "sections_json": "2a7ba794d5b8297bb60ea81268b175c648ad22efd6737cc2d5f87166e5555168",
+          "practice_json": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+          "original_clip_id": "21688f7f17eb9ce986fa3b183a68581a14ca2b6f65296f987f968440236eaf73",
+          "accompaniment_clip_id": "01b8ee0c0a1b14532350bc31bed80303d12fc33b8537015b53832c774685ff67",
+          "original_offset_ms": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+          "accompaniment_offset_ms": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"
+        },
+        "lyricsDigest": "af6a1b38c7674617d0c3a2e5e3bf28aa94cb731f56af15a76ba4f4e84cb2d7c9"
+      },
+      "efaab368-8c6c-585a-be2b-d4a679121a10": {
+        "title": "senorita (翻自 Shawn Mendes)",
+        "revision": 2,
+        "fields": {
+          "id": "9a3df0143ee6b0290847dd7862418c60377738524d67adb025d8ad933113022e",
+          "kind": "d0c2835b55c2307247dffad480c72f3d3ed63a82a854a1031552f7c0f118c529",
+          "title": "1f9d5748673235c06d651aa5900356cb9e27e345247189f06d141cae93b03268",
+          "artist": "6adab185887dceb54d626cf2ca5f5b8ee2c3d87a49b71ef03b9b06a82e88d978",
+          "learning_status": "6b690e85acec73c18d20882be6857cd39609deeee7333754cedf26aae00bc1e5",
+          "original_key": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "performance_key": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "capo": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+          "score_text": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "notes": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "audio_role": "66b400f480f893bcbdce374cce9549e3fb607e2ba9b2938ab039b10bb2e6612f",
+          "source_media_id": "adbb468130488faef1ac9c9e762fb99f5a0c18ea78d2777bd675a5e2f0ab3cbb",
+          "performance_clip_id": "03834fae3d86613378d9793f88e39bfb071903c9e6fb4ac940bbec8068025bc6",
+          "cover_asset_id": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "created_at": "023290977b01d272b11bf9c4ce8ca992d63150f632253141cfb236323ff3202e",
+          "updated_at": "6f5bffe85edc7a4feff3f2c0a11c05be4326c097f3a487c4ea660ef7f5903e41",
+          "deleted_at": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "vocal_language": "dbd3a49d0d906b4ed9216b73330d2fb080ef2f758c12f3885068222e5e17151c",
+          "lyrics_json": "8fa029d38a9996e8269e8081a3765c0ae6795f454cc8099d8297ce42b2ac0a85",
+          "sections_json": "d6981407f95182026564122415e38507a7947983f7a5ef3dfff9dc7468dbc085",
+          "practice_json": "5070e9e56a6d57552593b38683dff57897fb98c79b012c188f65cdac2989b8ff",
+          "original_clip_id": "bbd0da823ac94d5ea758eaef444ddc6cbd8d62f00d2f5f49187a9bccda8cd6d0",
+          "accompaniment_clip_id": "03834fae3d86613378d9793f88e39bfb071903c9e6fb4ac940bbec8068025bc6",
+          "original_offset_ms": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+          "accompaniment_offset_ms": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"
+        },
+        "lyricsDigest": "8fa029d38a9996e8269e8081a3765c0ae6795f454cc8099d8297ce42b2ac0a85"
+      },
+      "f259781d-4da0-5a88-a230-cace8f8c57b3": {
+        "title": "사뿐사뿐",
+        "revision": 2,
+        "fields": {
+          "id": "16d40bfdb9525728a5b9c7a813c780a530474828b2d91f1746d61376416d35d6",
+          "kind": "d0c2835b55c2307247dffad480c72f3d3ed63a82a854a1031552f7c0f118c529",
+          "title": "3e0c951a655703d42f3fc212ef1db47c7dc0cebcca57353ce14cab3c98324edb",
+          "artist": "700dd098529534f1af4c24057e3cf7263093ae8d1f2678a1806baf9a0c6e09d0",
+          "learning_status": "6b690e85acec73c18d20882be6857cd39609deeee7333754cedf26aae00bc1e5",
+          "original_key": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "performance_key": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "capo": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+          "score_text": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "notes": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "audio_role": "66b400f480f893bcbdce374cce9549e3fb607e2ba9b2938ab039b10bb2e6612f",
+          "source_media_id": "f5e85ac52e1b17b3de10f5f704cc04c45cb028883e6b1e332c9b5eafbef2af67",
+          "performance_clip_id": "aa279b58b84cb326817d0d378ddc93b6c970e5e0ae34b11e9a78bb96a6b8df75",
+          "cover_asset_id": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "created_at": "02fa7de79d4b43ece5fc7f67acb287ee0ca4c53738ef2c2d7a4025ce6ffd16b2",
+          "updated_at": "4a9d36d9d130e7792b7e9e331459af14aa9c7a21eec0e74bf16e1b1979b9b7bf",
+          "deleted_at": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "vocal_language": "1fdbc74ccfd68d0714ae539c0d93f2f3a1805387632eca33d3bd6a5013afb13e",
+          "lyrics_json": "3c943b8b8332a8c3e8839e34ea1e8a7f9a06c83e8a8f7349272ade15065e36fe",
+          "sections_json": "7101b9d7b2636939ac03cffc86e929e8b543dae02d2177e024495900f4039a8a",
+          "practice_json": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+          "original_clip_id": "92816471c4e44f2e797f421f6a5318aef1d768bf3792061a1cb0eeb61167e701",
+          "accompaniment_clip_id": "aa279b58b84cb326817d0d378ddc93b6c970e5e0ae34b11e9a78bb96a6b8df75",
+          "original_offset_ms": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+          "accompaniment_offset_ms": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"
+        },
+        "lyricsDigest": "3c943b8b8332a8c3e8839e34ea1e8a7f9a06c83e8a8f7349272ade15065e36fe"
+      }
+    }
+  },
+  "songs": [
+    {
+      "id": "93e8499b-b99b-5307-82a5-7cff189073dd",
+      "title": "Insomnia (불면증)",
+      "language": "ko",
+      "lyricsLines": 40,
+      "sourceLyricsLines": 40,
+      "incomingLines": 40,
+      "existingLines": 0,
+      "lyricsIdentical": true,
+      "targetRevision": 1,
+      "accepted": [
+        {
+          "id": "line-1",
+          "text": "我奔跑的路是 Love, Love, Love, Love",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-2",
+          "text": "但那条路上全是圈套，圈套，圈套，圈套",
+          "source": "manual",
+          "action": "ADD"
+        },
+        {
+          "id": "line-3",
+          "text": "无法避开的陷阱是心中的恐惧，恐惧，恐惧，恐惧",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-4",
+          "text": "像沼泽一样吞掉勇气，渐渐地..",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-5",
+          "text": "我越来越渺小，脸上明朗的表情渐渐消失",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-6",
+          "text": "总害怕你面对我的告白转过身去、避而不见",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-7",
+          "text": "枕着针尖般的担忧，祈求迟迟不来的睡眠",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-8",
+          "text": "因为对你的思念比梦还要鲜活 最终还是熬了一整夜",
+          "source": "manual",
+          "action": "ADD"
+        },
+        {
+          "id": "line-9",
+          "text": "Feels like insomnia, ah ah",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-10",
+          "text": "Feels like insomnia, ah ah",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-11",
+          "text": "Feels like insomnia, ah ah",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-12",
+          "text": "Feels like insomnia, ah ah",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-13",
+          "text": "朝着名为你的地方，即使孤独也要走的路",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-14",
+          "text": "Love, Love, Love, Love",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-15",
+          "text": "无论跌倒几次，都会站起来走下去",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-16",
+          "text": "But, But, But, But",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-17",
+          "text": "看着你，看到连觉都睡不着的",
+          "source": "manual",
+          "action": "ADD"
+        },
+        {
+          "id": "line-18",
+          "text": "病，病，病，病",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-19",
+          "text": "得不到你的爱，就永远治不好..",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-20",
+          "text": "永远地、拼命地只等你的允许",
+          "source": "manual",
+          "action": "ADD"
+        },
+        {
+          "id": "line-21",
+          "text": "无论几年、几辈子，我都会为你而存在",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-22",
+          "text": "枕着针尖般的担忧，祈求迟迟不来的睡眠",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-23",
+          "text": "因为对你的思念比梦还要鲜活 最终还是熬了一整夜",
+          "source": "manual",
+          "action": "ADD"
+        },
+        {
+          "id": "line-24",
+          "text": "Feels like insomnia, ah ah",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-25",
+          "text": "Feels like insomnia, ah ah",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-26",
+          "text": "Feels like insomnia, ah ah",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-27",
+          "text": "Feels like insomnia, ah ah",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-28",
+          "text": "ah.. 这份燃烧的爱情..",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-29",
+          "text": "因思念而疲惫落下的",
+          "source": "manual",
+          "action": "ADD"
+        },
+        {
+          "id": "line-30",
+          "text": "纵使被雨一般的泪水浸湿 也不会冷却..",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-31",
+          "text": "每天咬着嘴唇 祈求那不来的睡意",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-32",
+          "text": "因为对你的思念比梦还要鲜活 最终还是熬了一整夜",
+          "source": "manual",
+          "action": "ADD"
+        },
+        {
+          "id": "line-33",
+          "text": "Feels like insomnia, ah ah",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-34",
+          "text": "Feels like insomnia, ah ah",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-35",
+          "text": "Feels like insomnia, ah ah",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-36",
+          "text": "Feels like insomnia, ah ah",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-37",
+          "text": "Feels like insomnia, ah ah",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-38",
+          "text": "Feels like insomnia, ah ah",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-39",
+          "text": "Feels like insomnia, ah ah",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-40",
+          "text": "Feels like insomnia, ah ah",
+          "source": "ai",
+          "action": "ADD"
+        }
+      ],
+      "rejected": [],
+      "kept": [],
+      "replaced": [],
+      "unchanged": [],
+      "warnings": [],
+      "metadata": {
+        "target": {},
+        "source": {
+          "updatedAt": "2026-10-30T18:16:55.715Z",
+          "provider": "manual",
+          "model": "user"
+        }
+      },
+      "result": {
+        "mergedLines": 40,
+        "source": "mixed",
+        "manualLines": 7,
+        "aiLines": 33,
+        "lrcLines": 0,
+        "staleLines": [],
+        "changes": 40,
+        "willWrite": true,
+        "predictedRevision": 2
+      },
+      "nextJson": "{\"version\":1,\"language\":\"zh\",\"lines\":[{\"id\":\"line-1\",\"text\":\"我奔跑的路是 Love, Love, Love, Love\",\"source\":\"ai\",\"sourceHash\":\"b41bbdbee33f625069d091b4d2bc612e\"},{\"id\":\"line-2\",\"text\":\"但那条路上全是圈套，圈套，圈套，圈套\",\"source\":\"manual\",\"sourceHash\":\"7ec03bb821c65c1178b4c85a1151f804\"},{\"id\":\"line-3\",\"text\":\"无法避开的陷阱是心中的恐惧，恐惧，恐惧，恐惧\",\"source\":\"ai\",\"sourceHash\":\"7d1a7a61cc6116faffcfc796857b8305\"},{\"id\":\"line-4\",\"text\":\"像沼泽一样吞掉勇气，渐渐地..\",\"source\":\"ai\",\"sourceHash\":\"f29aa948478cc9c64dd415069807c1b4\"},{\"id\":\"line-5\",\"text\":\"我越来越渺小，脸上明朗的表情渐渐消失\",\"source\":\"ai\",\"sourceHash\":\"db0f4b5fecbee06bb4011ef35f0acdd0\"},{\"id\":\"line-6\",\"text\":\"总害怕你面对我的告白转过身去、避而不见\",\"source\":\"ai\",\"sourceHash\":\"cc04a895283599539727c3fd3f62832e\"},{\"id\":\"line-7\",\"text\":\"枕着针尖般的担忧，祈求迟迟不来的睡眠\",\"source\":\"ai\",\"sourceHash\":\"0c66c87ec6747863920e7ae99b5cd125\"},{\"id\":\"line-8\",\"text\":\"因为对你的思念比梦还要鲜活 最终还是熬了一整夜\",\"source\":\"manual\",\"sourceHash\":\"2408e1eab88a96eeb1b4df48d6a67672\"},{\"id\":\"line-9\",\"text\":\"Feels like insomnia, ah ah\",\"source\":\"ai\",\"sourceHash\":\"d103461384ae4f25174562ed2c526b3a\"},{\"id\":\"line-10\",\"text\":\"Feels like insomnia, ah ah\",\"source\":\"ai\",\"sourceHash\":\"d103461384ae4f25174562ed2c526b3a\"},{\"id\":\"line-11\",\"text\":\"Feels like insomnia, ah ah\",\"source\":\"ai\",\"sourceHash\":\"d103461384ae4f25174562ed2c526b3a\"},{\"id\":\"line-12\",\"text\":\"Feels like insomnia, ah ah\",\"source\":\"ai\",\"sourceHash\":\"d103461384ae4f25174562ed2c526b3a\"},{\"id\":\"line-13\",\"text\":\"朝着名为你的地方，即使孤独也要走的路\",\"source\":\"ai\",\"sourceHash\":\"84895ac47db34d02c2f7b30bf5af12ea\"},{\"id\":\"line-14\",\"text\":\"Love, Love, Love, Love\",\"source\":\"ai\",\"sourceHash\":\"12caf24838b850848427cb144150b2e0\"},{\"id\":\"line-15\",\"text\":\"无论跌倒几次，都会站起来走下去\",\"source\":\"ai\",\"sourceHash\":\"157ee9d34035914470bd4856e634bf47\"},{\"id\":\"line-16\",\"text\":\"But, But, But, But\",\"source\":\"ai\",\"sourceHash\":\"3842dcd6f06673dbeb266712ec1c6f6e\"},{\"id\":\"line-17\",\"text\":\"看着你，看到连觉都睡不着的\",\"source\":\"manual\",\"sourceHash\":\"73b0d55d8a45542893f69c0d88f618c2\"},{\"id\":\"line-18\",\"text\":\"病，病，病，病\",\"source\":\"ai\",\"sourceHash\":\"bb043a74ef525026a027a5ff97bd8867\"},{\"id\":\"line-19\",\"text\":\"得不到你的爱，就永远治不好..\",\"source\":\"ai\",\"sourceHash\":\"179b7948aefdf9234a99b128bc4eb902\"},{\"id\":\"line-20\",\"text\":\"永远地、拼命地只等你的允许\",\"source\":\"manual\",\"sourceHash\":\"6388306c70a828cac2c1a5630f46a6ae\"},{\"id\":\"line-21\",\"text\":\"无论几年、几辈子，我都会为你而存在\",\"source\":\"ai\",\"sourceHash\":\"3740826367e05cf0dccb602ff7e32e48\"},{\"id\":\"line-22\",\"text\":\"枕着针尖般的担忧，祈求迟迟不来的睡眠\",\"source\":\"ai\",\"sourceHash\":\"0c66c87ec6747863920e7ae99b5cd125\"},{\"id\":\"line-23\",\"text\":\"因为对你的思念比梦还要鲜活 最终还是熬了一整夜\",\"source\":\"manual\",\"sourceHash\":\"2408e1eab88a96eeb1b4df48d6a67672\"},{\"id\":\"line-24\",\"text\":\"Feels like insomnia, ah ah\",\"source\":\"ai\",\"sourceHash\":\"d103461384ae4f25174562ed2c526b3a\"},{\"id\":\"line-25\",\"text\":\"Feels like insomnia, ah ah\",\"source\":\"ai\",\"sourceHash\":\"d103461384ae4f25174562ed2c526b3a\"},{\"id\":\"line-26\",\"text\":\"Feels like insomnia, ah ah\",\"source\":\"ai\",\"sourceHash\":\"d103461384ae4f25174562ed2c526b3a\"},{\"id\":\"line-27\",\"text\":\"Feels like insomnia, ah ah\",\"source\":\"ai\",\"sourceHash\":\"d103461384ae4f25174562ed2c526b3a\"},{\"id\":\"line-28\",\"text\":\"ah.. 这份燃烧的爱情..\",\"source\":\"ai\",\"sourceHash\":\"9cae08b945687ab36afe6bb8a5341b91\"},{\"id\":\"line-29\",\"text\":\"因思念而疲惫落下的\",\"source\":\"manual\",\"sourceHash\":\"84e900059b15b08b8a6edf6fe10d8b7d\"},{\"id\":\"line-30\",\"text\":\"纵使被雨一般的泪水浸湿 也不会冷却..\",\"source\":\"ai\",\"sourceHash\":\"324e4e531a73db15a5c9a4c179ca16bd\"},{\"id\":\"line-31\",\"text\":\"每天咬着嘴唇 祈求那不来的睡意\",\"source\":\"ai\",\"sourceHash\":\"4fff8d2cd256a34c6378376b60eb7bda\"},{\"id\":\"line-32\",\"text\":\"因为对你的思念比梦还要鲜活 最终还是熬了一整夜\",\"source\":\"manual\",\"sourceHash\":\"2408e1eab88a96eeb1b4df48d6a67672\"},{\"id\":\"line-33\",\"text\":\"Feels like insomnia, ah ah\",\"source\":\"ai\",\"sourceHash\":\"d103461384ae4f25174562ed2c526b3a\"},{\"id\":\"line-34\",\"text\":\"Feels like insomnia, ah ah\",\"source\":\"ai\",\"sourceHash\":\"d103461384ae4f25174562ed2c526b3a\"},{\"id\":\"line-35\",\"text\":\"Feels like insomnia, ah ah\",\"source\":\"ai\",\"sourceHash\":\"d103461384ae4f25174562ed2c526b3a\"},{\"id\":\"line-36\",\"text\":\"Feels like insomnia, ah ah\",\"source\":\"ai\",\"sourceHash\":\"d103461384ae4f25174562ed2c526b3a\"},{\"id\":\"line-37\",\"text\":\"Feels like insomnia, ah ah\",\"source\":\"ai\",\"sourceHash\":\"d103461384ae4f25174562ed2c526b3a\"},{\"id\":\"line-38\",\"text\":\"Feels like insomnia, ah ah\",\"source\":\"ai\",\"sourceHash\":\"d103461384ae4f25174562ed2c526b3a\"},{\"id\":\"line-39\",\"text\":\"Feels like insomnia, ah ah\",\"source\":\"ai\",\"sourceHash\":\"d103461384ae4f25174562ed2c526b3a\"},{\"id\":\"line-40\",\"text\":\"Feels like insomnia, ah ah\",\"source\":\"ai\",\"sourceHash\":\"d103461384ae4f25174562ed2c526b3a\"}],\"updatedAt\":\"2026-10-30T18:16:55.715Z\",\"provider\":\"manual\",\"model\":\"user\"}"
+    },
+    {
+      "id": "4528bfad-2e59-5425-96a9-3581dd2a810c",
+      "title": "덤더럼 (Dumhdurum)",
+      "language": "ko",
+      "lyricsLines": 44,
+      "sourceLyricsLines": 44,
+      "incomingLines": 44,
+      "existingLines": 0,
+      "lyricsIdentical": true,
+      "targetRevision": 5,
+      "accepted": [
+        {
+          "id": "line-1",
+          "text": "Hey 这感觉有点太奇怪了",
+          "source": "manual",
+          "action": "ADD"
+        },
+        {
+          "id": "line-2",
+          "text": "说要为了我放我走的那句话",
+          "source": "manual",
+          "action": "ADD"
+        },
+        {
+          "id": "line-3",
+          "text": "直觉令人害怕，因为它实在太准了",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-4",
+          "text": "一天天推开的那种感觉，就那样",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-5",
+          "text": "华丽却藏起来的模样",
+          "source": "manual",
+          "action": "ADD"
+        },
+        {
+          "id": "line-6",
+          "text": "生怕全被看穿，好害怕，你不懂我的心",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-7",
+          "text": "别担心 Baby I'm so fine",
+          "source": "manual",
+          "action": "ADD"
+        },
+        {
+          "id": "line-8",
+          "text": "不是的，我没事，我很好",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-9",
+          "text": "我的心 덤더러 럼더러럼",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-10",
+          "text": "比谁都冷漠的你离开了 这样也好…",
+          "source": "manual",
+          "action": "ADD"
+        },
+        {
+          "id": "line-11",
+          "text": "Bye bye baby 덤더러 럼더러럼",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-12",
+          "text": "并不怎么难过 也没有流泪",
+          "source": "manual",
+          "action": "ADD"
+        },
+        {
+          "id": "line-13",
+          "text": "早已全部结束的我的心 덤더럼 덤덤",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-14",
+          "text": "看看看看 yeah",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-15",
+          "text": "我的心 덤더럼 덤덤",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-16",
+          "text": "别说这像是谎言",
+          "source": "manual",
+          "action": "ADD"
+        },
+        {
+          "id": "line-17",
+          "text": "我的心 덤더럼 덤덤",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-18",
+          "text": "Yeah nananana It’s like nananana",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-19",
+          "text": "无论去哪里都只有悲伤的歌",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-20",
+          "text": "You know this feeling",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-21",
+          "text": "Nananana Yeah nananana",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-22",
+          "text": "偶尔会想，我大概无法再爱了",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-23",
+          "text": "华丽却藏起来的模样",
+          "source": "manual",
+          "action": "ADD"
+        },
+        {
+          "id": "line-24",
+          "text": "似乎变得更漂亮了，心里却更痛",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-25",
+          "text": "别担心 Baby I'm so fine",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-26",
+          "text": "不是的，我没事，我很好",
+          "source": "manual",
+          "action": "ADD"
+        },
+        {
+          "id": "line-27",
+          "text": "我的心 덤더러 럼더러럼",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-28",
+          "text": "比谁都冷漠的你离开了 这样也好…",
+          "source": "manual",
+          "action": "ADD"
+        },
+        {
+          "id": "line-29",
+          "text": "Bye bye baby 덤더러 럼더러럼",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-30",
+          "text": "并不怎么难过 也没有流泪",
+          "source": "manual",
+          "action": "ADD"
+        },
+        {
+          "id": "line-31",
+          "text": "早已全部结束的我的心 덤더럼 덤덤",
+          "source": "manual",
+          "action": "ADD"
+        },
+        {
+          "id": "line-32",
+          "text": "看看看看 yeah",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-33",
+          "text": "我的心 덤더럼 덤덤",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-34",
+          "text": "别说这像是谎言",
+          "source": "manual",
+          "action": "ADD"
+        },
+        {
+          "id": "line-35",
+          "text": "no no no no",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-36",
+          "text": "想你 每次入睡之前 yeah yeah",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-37",
+          "text": "要听到你的声音 才慢慢地闭上眼",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-38",
+          "text": "就算时间真的会抹去一切",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-39",
+          "text": "Someday 就算全都变成那样",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-40",
+          "text": "我的心 덤더럼 덤덤",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-41",
+          "text": "看看看看 yeah",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-42",
+          "text": "我的心 덤더럼 덤덤",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-43",
+          "text": "别说这像是谎言",
+          "source": "manual",
+          "action": "ADD"
+        },
+        {
+          "id": "line-44",
+          "text": "我的心 덤더럼 덤덤",
+          "source": "ai",
+          "action": "ADD"
+        }
+      ],
+      "rejected": [],
+      "kept": [],
+      "replaced": [],
+      "unchanged": [],
+      "warnings": [],
+      "metadata": {
+        "target": {},
+        "source": {
+          "updatedAt": "2026-10-30T18:16:55.706Z",
+          "provider": "manual",
+          "model": "user"
+        }
+      },
+      "result": {
+        "mergedLines": 44,
+        "source": "mixed",
+        "manualLines": 14,
+        "aiLines": 30,
+        "lrcLines": 0,
+        "staleLines": [],
+        "changes": 44,
+        "willWrite": true,
+        "predictedRevision": 6
+      },
+      "nextJson": "{\"version\":1,\"language\":\"zh\",\"lines\":[{\"id\":\"line-1\",\"text\":\"Hey 这感觉有点太奇怪了\",\"source\":\"manual\",\"sourceHash\":\"2986bdc4eb23f0357b63b645083f35c4\"},{\"id\":\"line-2\",\"text\":\"说要为了我放我走的那句话\",\"source\":\"manual\",\"sourceHash\":\"f688a9f222d13748853645515e61f9ea\"},{\"id\":\"line-3\",\"text\":\"直觉令人害怕，因为它实在太准了\",\"source\":\"ai\",\"sourceHash\":\"6c7ea1e2241779053f4550309bf35b8b\"},{\"id\":\"line-4\",\"text\":\"一天天推开的那种感觉，就那样\",\"source\":\"ai\",\"sourceHash\":\"8d00cbe68a82ed1d757d2988f693ed9f\"},{\"id\":\"line-5\",\"text\":\"华丽却藏起来的模样\",\"source\":\"manual\",\"sourceHash\":\"fa8371945f035317310cf99cecec19b2\"},{\"id\":\"line-6\",\"text\":\"生怕全被看穿，好害怕，你不懂我的心\",\"source\":\"ai\",\"sourceHash\":\"89ad914e4460e0c3f18a310b59bc4e9e\"},{\"id\":\"line-7\",\"text\":\"别担心 Baby I'm so fine\",\"source\":\"manual\",\"sourceHash\":\"4282f09c6b65e149584c951cb19fb295\"},{\"id\":\"line-8\",\"text\":\"不是的，我没事，我很好\",\"source\":\"ai\",\"sourceHash\":\"4489e5b9adc06f605d69b47f35b5a509\"},{\"id\":\"line-9\",\"text\":\"我的心 덤더러 럼더러럼\",\"source\":\"ai\",\"sourceHash\":\"0aace4ca3f0ae5df8f6edc18c949a537\"},{\"id\":\"line-10\",\"text\":\"比谁都冷漠的你离开了 这样也好…\",\"source\":\"manual\",\"sourceHash\":\"99a9ec331089a247613e6fc31a090d1c\"},{\"id\":\"line-11\",\"text\":\"Bye bye baby 덤더러 럼더러럼\",\"source\":\"ai\",\"sourceHash\":\"1413391fe5c27286a057271ef97ca04a\"},{\"id\":\"line-12\",\"text\":\"并不怎么难过 也没有流泪\",\"source\":\"manual\",\"sourceHash\":\"ec82428ed491919296af259ee0aed719\"},{\"id\":\"line-13\",\"text\":\"早已全部结束的我的心 덤더럼 덤덤\",\"source\":\"ai\",\"sourceHash\":\"5710e3be43b916ad0635d9aa48ecc19b\"},{\"id\":\"line-14\",\"text\":\"看看看看 yeah\",\"source\":\"ai\",\"sourceHash\":\"a64689d7a1594927d22da2075a9ab16d\"},{\"id\":\"line-15\",\"text\":\"我的心 덤더럼 덤덤\",\"source\":\"ai\",\"sourceHash\":\"6282d9d18af4015c0ee7454a12ab0ac7\"},{\"id\":\"line-16\",\"text\":\"别说这像是谎言\",\"source\":\"manual\",\"sourceHash\":\"23bdf8b781bffbd8d1a24ea5e11d7d64\"},{\"id\":\"line-17\",\"text\":\"我的心 덤더럼 덤덤\",\"source\":\"ai\",\"sourceHash\":\"6282d9d18af4015c0ee7454a12ab0ac7\"},{\"id\":\"line-18\",\"text\":\"Yeah nananana It’s like nananana\",\"source\":\"ai\",\"sourceHash\":\"48c868b2c136f003c09f363082fcdb80\"},{\"id\":\"line-19\",\"text\":\"无论去哪里都只有悲伤的歌\",\"source\":\"ai\",\"sourceHash\":\"6e317be7f9a3ff6162f0aefc74de4569\"},{\"id\":\"line-20\",\"text\":\"You know this feeling\",\"source\":\"ai\",\"sourceHash\":\"a50daeedae3e65045249048fc4d7a92f\"},{\"id\":\"line-21\",\"text\":\"Nananana Yeah nananana\",\"source\":\"ai\",\"sourceHash\":\"a5111cc845ab1e0a67c63524acb05d96\"},{\"id\":\"line-22\",\"text\":\"偶尔会想，我大概无法再爱了\",\"source\":\"ai\",\"sourceHash\":\"405b055d59e28ca41115875ca2b74129\"},{\"id\":\"line-23\",\"text\":\"华丽却藏起来的模样\",\"source\":\"manual\",\"sourceHash\":\"fa8371945f035317310cf99cecec19b2\"},{\"id\":\"line-24\",\"text\":\"似乎变得更漂亮了，心里却更痛\",\"source\":\"ai\",\"sourceHash\":\"63daca64979720d5eca290c2df5f3472\"},{\"id\":\"line-25\",\"text\":\"别担心 Baby I'm so fine\",\"source\":\"ai\",\"sourceHash\":\"4282f09c6b65e149584c951cb19fb295\"},{\"id\":\"line-26\",\"text\":\"不是的，我没事，我很好\",\"source\":\"manual\",\"sourceHash\":\"4489e5b9adc06f605d69b47f35b5a509\"},{\"id\":\"line-27\",\"text\":\"我的心 덤더러 럼더러럼\",\"source\":\"ai\",\"sourceHash\":\"0aace4ca3f0ae5df8f6edc18c949a537\"},{\"id\":\"line-28\",\"text\":\"比谁都冷漠的你离开了 这样也好…\",\"source\":\"manual\",\"sourceHash\":\"99a9ec331089a247613e6fc31a090d1c\"},{\"id\":\"line-29\",\"text\":\"Bye bye baby 덤더러 럼더러럼\",\"source\":\"ai\",\"sourceHash\":\"1413391fe5c27286a057271ef97ca04a\"},{\"id\":\"line-30\",\"text\":\"并不怎么难过 也没有流泪\",\"source\":\"manual\",\"sourceHash\":\"ec82428ed491919296af259ee0aed719\"},{\"id\":\"line-31\",\"text\":\"早已全部结束的我的心 덤더럼 덤덤\",\"source\":\"manual\",\"sourceHash\":\"5710e3be43b916ad0635d9aa48ecc19b\"},{\"id\":\"line-32\",\"text\":\"看看看看 yeah\",\"source\":\"ai\",\"sourceHash\":\"a64689d7a1594927d22da2075a9ab16d\"},{\"id\":\"line-33\",\"text\":\"我的心 덤더럼 덤덤\",\"source\":\"ai\",\"sourceHash\":\"6282d9d18af4015c0ee7454a12ab0ac7\"},{\"id\":\"line-34\",\"text\":\"别说这像是谎言\",\"source\":\"manual\",\"sourceHash\":\"23bdf8b781bffbd8d1a24ea5e11d7d64\"},{\"id\":\"line-35\",\"text\":\"no no no no\",\"source\":\"ai\",\"sourceHash\":\"04e848b4ea322cf8c7ec5d1d1bbfd777\"},{\"id\":\"line-36\",\"text\":\"想你 每次入睡之前 yeah yeah\",\"source\":\"ai\",\"sourceHash\":\"8f3ec075c7b31bd1a98b72ecd12cdaee\"},{\"id\":\"line-37\",\"text\":\"要听到你的声音 才慢慢地闭上眼\",\"source\":\"ai\",\"sourceHash\":\"1941f3a86821249633c5a3e7a32c7b23\"},{\"id\":\"line-38\",\"text\":\"就算时间真的会抹去一切\",\"source\":\"ai\",\"sourceHash\":\"7d45b0e40f7fa40df134f53c75bfe48e\"},{\"id\":\"line-39\",\"text\":\"Someday 就算全都变成那样\",\"source\":\"ai\",\"sourceHash\":\"d19fdc6fc59e554b78814d5ac049517e\"},{\"id\":\"line-40\",\"text\":\"我的心 덤더럼 덤덤\",\"source\":\"ai\",\"sourceHash\":\"6282d9d18af4015c0ee7454a12ab0ac7\"},{\"id\":\"line-41\",\"text\":\"看看看看 yeah\",\"source\":\"ai\",\"sourceHash\":\"a64689d7a1594927d22da2075a9ab16d\"},{\"id\":\"line-42\",\"text\":\"我的心 덤더럼 덤덤\",\"source\":\"ai\",\"sourceHash\":\"6282d9d18af4015c0ee7454a12ab0ac7\"},{\"id\":\"line-43\",\"text\":\"别说这像是谎言\",\"source\":\"manual\",\"sourceHash\":\"23bdf8b781bffbd8d1a24ea5e11d7d64\"},{\"id\":\"line-44\",\"text\":\"我的心 덤더럼 덤덤\",\"source\":\"ai\",\"sourceHash\":\"6282d9d18af4015c0ee7454a12ab0ac7\"}],\"updatedAt\":\"2026-10-30T18:16:55.706Z\",\"provider\":\"manual\",\"model\":\"user\"}"
+    },
+    {
+      "id": "c84eb5d2-3865-5943-8abb-7ee6bfbee1fc",
+      "title": "베베 (BABE)",
+      "language": "ko",
+      "lyricsLines": 70,
+      "sourceLyricsLines": 70,
+      "incomingLines": 65,
+      "existingLines": 0,
+      "lyricsIdentical": true,
+      "targetRevision": 1,
+      "accepted": [
+        {
+          "id": "line-6",
+          "text": "I am just 26 26 26",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-7",
+          "text": "我 I'm just 26 26 26",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-8",
+          "text": "看什么 干嘛老看 有什么好的",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-9",
+          "text": "干嘛一直傻笑",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-10",
+          "text": "就这样 呃 这样 呃",
+          "source": "manual",
+          "action": "ADD"
+        },
+        {
+          "id": "line-11",
+          "text": "干嘛老是那样",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-12",
+          "text": "比昨天更",
+          "source": "manual",
+          "action": "ADD"
+        },
+        {
+          "id": "line-13",
+          "text": "我变得更奇怪了",
+          "source": "manual",
+          "action": "ADD"
+        },
+        {
+          "id": "line-14",
+          "text": "今天一天也",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-15",
+          "text": "老是觉得自己不像自己",
+          "source": "manual",
+          "action": "ADD"
+        },
+        {
+          "id": "line-16",
+          "text": "到了明天",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-17",
+          "text": "无法想象",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-18",
+          "text": "我也不知道 你也不知道",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-19",
+          "text": "我的样子 我的样子",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-20",
+          "text": "我的样子 babe babe babe babe",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-21",
+          "text": "在你面前 babe babe babe babe",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-22",
+          "text": "我也没想到会变成这样",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-23",
+          "text": "看着你的时候 不知不觉",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-24",
+          "text": "我好像想听",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-25",
+          "text": "Tell me I'm your babe babe",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-26",
+          "text": "你让我 25 25 25",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-27",
+          "text": "你让我 24 24 24",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-28",
+          "text": "我感觉像 21 21 21",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-29",
+          "text": "好像又想听了",
+          "source": "manual",
+          "action": "ADD"
+        },
+        {
+          "id": "line-30",
+          "text": "Tell me I'm your babe babe",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-31",
+          "text": "快点带我走 再多陪我玩会儿",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-32",
+          "text": "为什么把我当小孩 小心翼翼地对待我",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-33",
+          "text": "在你面前 我的年纪都估不准了",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-34",
+          "text": "是不是施了什么魔法 求求你了嘛",
+          "source": "manual",
+          "action": "ADD"
+        },
+        {
+          "id": "line-35",
+          "text": "堂堂的我 因为你焦躁不安",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-36",
+          "text": "每天都心急如焚啊",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-37",
+          "text": "身子怎么这么不听使唤 babe",
+          "source": "manual",
+          "action": "ADD"
+        },
+        {
+          "id": "line-38",
+          "text": "这就是撒娇没错 多疼疼我嘛",
+          "source": "manual",
+          "action": "ADD"
+        },
+        {
+          "id": "line-39",
+          "text": "多疼疼我嘛",
+          "source": "manual",
+          "action": "ADD"
+        },
+        {
+          "id": "line-40",
+          "text": "多疼疼我嘛",
+          "source": "manual",
+          "action": "ADD"
+        },
+        {
+          "id": "line-41",
+          "text": "多疼疼我嘛",
+          "source": "manual",
+          "action": "ADD"
+        },
+        {
+          "id": "line-42",
+          "text": "多疼疼我嘛",
+          "source": "manual",
+          "action": "ADD"
+        },
+        {
+          "id": "line-43",
+          "text": "多疼疼我嘛",
+          "source": "manual",
+          "action": "ADD"
+        },
+        {
+          "id": "line-44",
+          "text": "多疼疼我嘛",
+          "source": "manual",
+          "action": "ADD"
+        },
+        {
+          "id": "line-45",
+          "text": "多疼疼我嘛",
+          "source": "manual",
+          "action": "ADD"
+        },
+        {
+          "id": "line-46",
+          "text": "我的样子 babe babe babe babe",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-47",
+          "text": "在你面前 babe babe babe babe",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-48",
+          "text": "我也没想到会变成这样",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-49",
+          "text": "看着你的时候 不知不觉",
+          "source": "manual",
+          "action": "ADD"
+        },
+        {
+          "id": "line-50",
+          "text": "我好像想听",
+          "source": "manual",
+          "action": "ADD"
+        },
+        {
+          "id": "line-51",
+          "text": "Tell me I'm your babe babe",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-52",
+          "text": "你让我 19 19 19",
+          "source": "manual",
+          "action": "ADD"
+        },
+        {
+          "id": "line-53",
+          "text": "你让我 17 17 17",
+          "source": "manual",
+          "action": "ADD"
+        },
+        {
+          "id": "line-54",
+          "text": "我感觉像 15 15 15",
+          "source": "manual",
+          "action": "ADD"
+        },
+        {
+          "id": "line-55",
+          "text": "好像又想听了",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-56",
+          "text": "Tell me I'm your babe babe",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-57",
+          "text": "我今天睡不着呢",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-58",
+          "text": "因为你，我睡不着呢",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-59",
+          "text": "因为想起了你的眼神",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-60",
+          "text": "因为想起了你的语气",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-61",
+          "text": "睡不着呢",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-62",
+          "text": "因为你的眼神 babe babe babe",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-63",
+          "text": "因为你的触碰 babe babe babe",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-64",
+          "text": "我的样子 babe babe babe babe",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-65",
+          "text": "好像又想听了",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-66",
+          "text": "Tell me I'm your babe babe",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-67",
+          "text": "U make me baby girl",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-68",
+          "text": "Baby girl baby girl",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-69",
+          "text": "Now I'm your baby girl",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-70",
+          "text": "Baby girl baby girl",
+          "source": "ai",
+          "action": "ADD"
+        }
+      ],
+      "rejected": [],
+      "kept": [],
+      "replaced": [],
+      "unchanged": [],
+      "warnings": [],
+      "metadata": {
+        "target": {},
+        "source": {
+          "updatedAt": "2026-10-30T18:16:55.714Z",
+          "provider": "manual",
+          "model": "user"
+        }
+      },
+      "result": {
+        "mergedLines": 65,
+        "source": "mixed",
+        "manualLines": 20,
+        "aiLines": 45,
+        "lrcLines": 0,
+        "staleLines": [],
+        "changes": 65,
+        "willWrite": true,
+        "predictedRevision": 2
+      },
+      "nextJson": "{\"version\":1,\"language\":\"zh\",\"lines\":[{\"id\":\"line-6\",\"text\":\"I am just 26 26 26\",\"source\":\"ai\",\"sourceHash\":\"e4b0a4d68e13290a363bd6e3d4ef1891\"},{\"id\":\"line-7\",\"text\":\"我 I'm just 26 26 26\",\"source\":\"ai\",\"sourceHash\":\"d1040d9172a2002c0c5fd51ef6dd2da7\"},{\"id\":\"line-8\",\"text\":\"看什么 干嘛老看 有什么好的\",\"source\":\"ai\",\"sourceHash\":\"9a329aa88cafbc34e7f75fb94aa24c19\"},{\"id\":\"line-9\",\"text\":\"干嘛一直傻笑\",\"source\":\"ai\",\"sourceHash\":\"5eb37d58438d88148e5e8029ff51ad86\"},{\"id\":\"line-10\",\"text\":\"就这样 呃 这样 呃\",\"source\":\"manual\",\"sourceHash\":\"def44c46373970aec91891a4ad9d6acd\"},{\"id\":\"line-11\",\"text\":\"干嘛老是那样\",\"source\":\"ai\",\"sourceHash\":\"e6b4fbd7d60636b20396ac285ec58236\"},{\"id\":\"line-12\",\"text\":\"比昨天更\",\"source\":\"manual\",\"sourceHash\":\"e17d012e3df90ad6112df411706f3afd\"},{\"id\":\"line-13\",\"text\":\"我变得更奇怪了\",\"source\":\"manual\",\"sourceHash\":\"9382c897b29f55b63aba5fe7b5bd24a8\"},{\"id\":\"line-14\",\"text\":\"今天一天也\",\"source\":\"ai\",\"sourceHash\":\"59a228139c1d7c3231023212e267ee70\"},{\"id\":\"line-15\",\"text\":\"老是觉得自己不像自己\",\"source\":\"manual\",\"sourceHash\":\"673683f257b319a1a4e022f63537e306\"},{\"id\":\"line-16\",\"text\":\"到了明天\",\"source\":\"ai\",\"sourceHash\":\"5fc4e49cacc7444e484aa38b2925a202\"},{\"id\":\"line-17\",\"text\":\"无法想象\",\"source\":\"ai\",\"sourceHash\":\"cb66737e8243bb15295009545e1a1143\"},{\"id\":\"line-18\",\"text\":\"我也不知道 你也不知道\",\"source\":\"ai\",\"sourceHash\":\"73431120fb880c60a8f543193fcd15a3\"},{\"id\":\"line-19\",\"text\":\"我的样子 我的样子\",\"source\":\"ai\",\"sourceHash\":\"c79ef9d3b324a7e4c887505566b157f2\"},{\"id\":\"line-20\",\"text\":\"我的样子 babe babe babe babe\",\"source\":\"ai\",\"sourceHash\":\"0dc4a7ab9140f25f151932514a542cd2\"},{\"id\":\"line-21\",\"text\":\"在你面前 babe babe babe babe\",\"source\":\"ai\",\"sourceHash\":\"56bb2c42e9a73562200a2272a6885e2c\"},{\"id\":\"line-22\",\"text\":\"我也没想到会变成这样\",\"source\":\"ai\",\"sourceHash\":\"60526c9691736d01cd4056e0c583eab3\"},{\"id\":\"line-23\",\"text\":\"看着你的时候 不知不觉\",\"source\":\"ai\",\"sourceHash\":\"c24e042d8792d3cd158b4c6960d028ed\"},{\"id\":\"line-24\",\"text\":\"我好像想听\",\"source\":\"ai\",\"sourceHash\":\"88fa1acfcde0d9c9b96f3fd859865935\"},{\"id\":\"line-25\",\"text\":\"Tell me I'm your babe babe\",\"source\":\"ai\",\"sourceHash\":\"c2cc1c02e9e17176b0e3e00f24d40a6d\"},{\"id\":\"line-26\",\"text\":\"你让我 25 25 25\",\"source\":\"ai\",\"sourceHash\":\"8ef2317b8ae65d904fca0f5c76e7824c\"},{\"id\":\"line-27\",\"text\":\"你让我 24 24 24\",\"source\":\"ai\",\"sourceHash\":\"f3e6e4f2ebaa162cb2557629e5852ef3\"},{\"id\":\"line-28\",\"text\":\"我感觉像 21 21 21\",\"source\":\"ai\",\"sourceHash\":\"1189d26b6c9f72416af1c8811547a778\"},{\"id\":\"line-29\",\"text\":\"好像又想听了\",\"source\":\"manual\",\"sourceHash\":\"02513be3881bc5bf2e36fe7d6e7166d9\"},{\"id\":\"line-30\",\"text\":\"Tell me I'm your babe babe\",\"source\":\"ai\",\"sourceHash\":\"c2cc1c02e9e17176b0e3e00f24d40a6d\"},{\"id\":\"line-31\",\"text\":\"快点带我走 再多陪我玩会儿\",\"source\":\"ai\",\"sourceHash\":\"4bbe41eb9c62ff6d3429717839293c38\"},{\"id\":\"line-32\",\"text\":\"为什么把我当小孩 小心翼翼地对待我\",\"source\":\"ai\",\"sourceHash\":\"869085968da83000acd05d41d54271a0\"},{\"id\":\"line-33\",\"text\":\"在你面前 我的年纪都估不准了\",\"source\":\"ai\",\"sourceHash\":\"def8785c9b8c108506e59806f126d030\"},{\"id\":\"line-34\",\"text\":\"是不是施了什么魔法 求求你了嘛\",\"source\":\"manual\",\"sourceHash\":\"37d7725c90de4f11b186a38539afdaf6\"},{\"id\":\"line-35\",\"text\":\"堂堂的我 因为你焦躁不安\",\"source\":\"ai\",\"sourceHash\":\"e46967eaaa0e80f2c68a9ac2afe0cdf9\"},{\"id\":\"line-36\",\"text\":\"每天都心急如焚啊\",\"source\":\"ai\",\"sourceHash\":\"8eb247e3fd6cb6c4460a784ca472eb8c\"},{\"id\":\"line-37\",\"text\":\"身子怎么这么不听使唤 babe\",\"source\":\"manual\",\"sourceHash\":\"ef7e0100bbf0f858cdf8aa573105503f\"},{\"id\":\"line-38\",\"text\":\"这就是撒娇没错 多疼疼我嘛\",\"source\":\"manual\",\"sourceHash\":\"c8796b5bb5b4a640683d52b607202148\"},{\"id\":\"line-39\",\"text\":\"多疼疼我嘛\",\"source\":\"manual\",\"sourceHash\":\"0cfbb58d418dcb1e9e9e3d29a59cf98e\"},{\"id\":\"line-40\",\"text\":\"多疼疼我嘛\",\"source\":\"manual\",\"sourceHash\":\"0cfbb58d418dcb1e9e9e3d29a59cf98e\"},{\"id\":\"line-41\",\"text\":\"多疼疼我嘛\",\"source\":\"manual\",\"sourceHash\":\"0cfbb58d418dcb1e9e9e3d29a59cf98e\"},{\"id\":\"line-42\",\"text\":\"多疼疼我嘛\",\"source\":\"manual\",\"sourceHash\":\"0cfbb58d418dcb1e9e9e3d29a59cf98e\"},{\"id\":\"line-43\",\"text\":\"多疼疼我嘛\",\"source\":\"manual\",\"sourceHash\":\"0cfbb58d418dcb1e9e9e3d29a59cf98e\"},{\"id\":\"line-44\",\"text\":\"多疼疼我嘛\",\"source\":\"manual\",\"sourceHash\":\"0cfbb58d418dcb1e9e9e3d29a59cf98e\"},{\"id\":\"line-45\",\"text\":\"多疼疼我嘛\",\"source\":\"manual\",\"sourceHash\":\"0cfbb58d418dcb1e9e9e3d29a59cf98e\"},{\"id\":\"line-46\",\"text\":\"我的样子 babe babe babe babe\",\"source\":\"ai\",\"sourceHash\":\"0dc4a7ab9140f25f151932514a542cd2\"},{\"id\":\"line-47\",\"text\":\"在你面前 babe babe babe babe\",\"source\":\"ai\",\"sourceHash\":\"56bb2c42e9a73562200a2272a6885e2c\"},{\"id\":\"line-48\",\"text\":\"我也没想到会变成这样\",\"source\":\"ai\",\"sourceHash\":\"60526c9691736d01cd4056e0c583eab3\"},{\"id\":\"line-49\",\"text\":\"看着你的时候 不知不觉\",\"source\":\"manual\",\"sourceHash\":\"c24e042d8792d3cd158b4c6960d028ed\"},{\"id\":\"line-50\",\"text\":\"我好像想听\",\"source\":\"manual\",\"sourceHash\":\"88fa1acfcde0d9c9b96f3fd859865935\"},{\"id\":\"line-51\",\"text\":\"Tell me I'm your babe babe\",\"source\":\"ai\",\"sourceHash\":\"c2cc1c02e9e17176b0e3e00f24d40a6d\"},{\"id\":\"line-52\",\"text\":\"你让我 19 19 19\",\"source\":\"manual\",\"sourceHash\":\"704befb6241834fb7159a84137f216eb\"},{\"id\":\"line-53\",\"text\":\"你让我 17 17 17\",\"source\":\"manual\",\"sourceHash\":\"ae5d0a9099a532ef1c6b2cd634ce5663\"},{\"id\":\"line-54\",\"text\":\"我感觉像 15 15 15\",\"source\":\"manual\",\"sourceHash\":\"513765919a90526ae434f44ec7245ee0\"},{\"id\":\"line-55\",\"text\":\"好像又想听了\",\"source\":\"ai\",\"sourceHash\":\"02513be3881bc5bf2e36fe7d6e7166d9\"},{\"id\":\"line-56\",\"text\":\"Tell me I'm your babe babe\",\"source\":\"ai\",\"sourceHash\":\"c2cc1c02e9e17176b0e3e00f24d40a6d\"},{\"id\":\"line-57\",\"text\":\"我今天睡不着呢\",\"source\":\"ai\",\"sourceHash\":\"5d0ef503aa869d3e2c2add78b78e9b76\"},{\"id\":\"line-58\",\"text\":\"因为你，我睡不着呢\",\"source\":\"ai\",\"sourceHash\":\"7879eb24411835e550b5387bf774cb3d\"},{\"id\":\"line-59\",\"text\":\"因为想起了你的眼神\",\"source\":\"ai\",\"sourceHash\":\"c50f9c640d9363cbfa32728f6d62feae\"},{\"id\":\"line-60\",\"text\":\"因为想起了你的语气\",\"source\":\"ai\",\"sourceHash\":\"3937d233e20ccd388535d83b0b0467b0\"},{\"id\":\"line-61\",\"text\":\"睡不着呢\",\"source\":\"ai\",\"sourceHash\":\"53fc9a765d04b86a8b3c57d8d5208370\"},{\"id\":\"line-62\",\"text\":\"因为你的眼神 babe babe babe\",\"source\":\"ai\",\"sourceHash\":\"a0fdff3c51a0838879a123227b421187\"},{\"id\":\"line-63\",\"text\":\"因为你的触碰 babe babe babe\",\"source\":\"ai\",\"sourceHash\":\"4eda9f3119f47635f9f240897a1b8b1d\"},{\"id\":\"line-64\",\"text\":\"我的样子 babe babe babe babe\",\"source\":\"ai\",\"sourceHash\":\"0dc4a7ab9140f25f151932514a542cd2\"},{\"id\":\"line-65\",\"text\":\"好像又想听了\",\"source\":\"ai\",\"sourceHash\":\"02513be3881bc5bf2e36fe7d6e7166d9\"},{\"id\":\"line-66\",\"text\":\"Tell me I'm your babe babe\",\"source\":\"ai\",\"sourceHash\":\"c2cc1c02e9e17176b0e3e00f24d40a6d\"},{\"id\":\"line-67\",\"text\":\"U make me baby girl\",\"source\":\"ai\",\"sourceHash\":\"5d7daa0313db629485f47cd031e8e731\"},{\"id\":\"line-68\",\"text\":\"Baby girl baby girl\",\"source\":\"ai\",\"sourceHash\":\"717f32767b16b68e7fcad51a48f1271a\"},{\"id\":\"line-69\",\"text\":\"Now I'm your baby girl\",\"source\":\"ai\",\"sourceHash\":\"d0b2527924caeece7a20c22025ae600e\"},{\"id\":\"line-70\",\"text\":\"Baby girl baby girl\",\"source\":\"ai\",\"sourceHash\":\"717f32767b16b68e7fcad51a48f1271a\"}],\"updatedAt\":\"2026-10-30T18:16:55.714Z\",\"provider\":\"manual\",\"model\":\"user\"}"
+    },
+    {
+      "id": "01c2a4cd-528c-5316-b864-5ce24f86e280",
+      "title": "보여줄게",
+      "language": "ko",
+      "lyricsLines": 47,
+      "sourceLyricsLines": 47,
+      "incomingLines": 47,
+      "existingLines": 0,
+      "lyricsIdentical": true,
+      "targetRevision": 2,
+      "accepted": [
+        {
+          "id": "line-1",
+          "text": "穿上我买给你的衣服",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-2",
+          "text": "喷上我买给你的香水",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-3",
+          "text": "现在你大概在见她吧",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-4",
+          "text": "又在笑着吧",
+          "source": "manual",
+          "action": "ADD"
+        },
+        {
+          "id": "line-5",
+          "text": "就有那么好吗",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-6",
+          "text": "好到能丢下我离开",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-7",
+          "text": "还要多少 要怎么做",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-8",
+          "text": "我还得做得更好吗",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-9",
+          "text": "不管怎么想把你抹去",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-10",
+          "text": "一起走过的日子那么多",
+          "source": "manual",
+          "action": "ADD"
+        },
+        {
+          "id": "line-11",
+          "text": "过去的时光让我太委屈",
+          "source": "manual",
+          "action": "ADD"
+        },
+        {
+          "id": "line-12",
+          "text": "眼泪总是止不住地流",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-13",
+          "text": "会让你看到 完全改变的我",
+          "source": "manual",
+          "action": "ADD"
+        },
+        {
+          "id": "line-14",
+          "text": "会让你看到 更加漂亮的我",
+          "source": "manual",
+          "action": "ADD"
+        },
+        {
+          "id": "line-15",
+          "text": "像傻瓜一样 因为爱情而离开的",
+          "source": "manual",
+          "action": "ADD"
+        },
+        {
+          "id": "line-16",
+          "text": "不会因为你而哭泣",
+          "source": "manual",
+          "action": "ADD"
+        },
+        {
+          "id": "line-17",
+          "text": "会遇见更帅气的男人 一定让你看到",
+          "source": "manual",
+          "action": "ADD"
+        },
+        {
+          "id": "line-18",
+          "text": "比你更幸福的我",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-19",
+          "text": "没有你也不悲伤 不会崩溃",
+          "source": "manual",
+          "action": "ADD"
+        },
+        {
+          "id": "line-20",
+          "text": "boy you gotta be aware",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-21",
+          "text": "清爽地换个发型",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-22",
+          "text": "用心地化好妆",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-23",
+          "text": "高跟鞋配短裙 所有人都回头看我",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-24",
+          "text": "哪怕是偶然遇见你",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-25",
+          "text": "用耀眼灿烂的笑容对我笑",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-26",
+          "text": "把惊讶的你留在身后",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-27",
+          "text": "想要嗒嗒嗒地向前走",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-28",
+          "text": "会让你看到 完全改变的我",
+          "source": "manual",
+          "action": "ADD"
+        },
+        {
+          "id": "line-29",
+          "text": "会让你看到 更加漂亮的我",
+          "source": "manual",
+          "action": "ADD"
+        },
+        {
+          "id": "line-30",
+          "text": "像傻瓜一样 因为爱情",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-31",
+          "text": "不会因为你而哭泣",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-32",
+          "text": "会遇见更帅气的男人 一定让你看到",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-33",
+          "text": "比你更幸福的我",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-34",
+          "text": "没有你也不悲伤 不会崩溃",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-35",
+          "text": "boy you gotta be aware",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-36",
+          "text": "丢掉你给过的戒指",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-37",
+          "text": "删掉你写过的信",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-38",
+          "text": "毫无留恋 毫不后悔地忘记你",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-39",
+          "text": "我要忘记你 我要抹去你",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-40",
+          "text": "会让你看到 完全改变的我",
+          "source": "manual",
+          "action": "ADD"
+        },
+        {
+          "id": "line-41",
+          "text": "会让你看到 更加漂亮的我",
+          "source": "manual",
+          "action": "ADD"
+        },
+        {
+          "id": "line-42",
+          "text": "像傻瓜一样 因为爱情而离开的",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-43",
+          "text": "不会因为你而哭泣",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-44",
+          "text": "会遇见更帅气的男人 一定让你看到",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-45",
+          "text": "比你更幸福的我",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-46",
+          "text": "没有你也不悲伤 不会崩溃",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-47",
+          "text": "boy you gotta be aware",
+          "source": "ai",
+          "action": "ADD"
+        }
+      ],
+      "rejected": [],
+      "kept": [],
+      "replaced": [],
+      "unchanged": [],
+      "warnings": [],
+      "metadata": {
+        "target": {},
+        "source": {
+          "updatedAt": "2026-10-30T18:16:55.711Z",
+          "provider": "manual",
+          "model": "user"
+        }
+      },
+      "result": {
+        "mergedLines": 47,
+        "source": "mixed",
+        "manualLines": 13,
+        "aiLines": 34,
+        "lrcLines": 0,
+        "staleLines": [],
+        "changes": 47,
+        "willWrite": true,
+        "predictedRevision": 3
+      },
+      "nextJson": "{\"version\":1,\"language\":\"zh\",\"lines\":[{\"id\":\"line-1\",\"text\":\"穿上我买给你的衣服\",\"source\":\"ai\",\"sourceHash\":\"bae9ac636b04d1848be9aa9c86759203\"},{\"id\":\"line-2\",\"text\":\"喷上我买给你的香水\",\"source\":\"ai\",\"sourceHash\":\"2a2eb09b129b3fd856a6a79787f8432e\"},{\"id\":\"line-3\",\"text\":\"现在你大概在见她吧\",\"source\":\"ai\",\"sourceHash\":\"d536d22c90108f297b9dc3e2722145b5\"},{\"id\":\"line-4\",\"text\":\"又在笑着吧\",\"source\":\"manual\",\"sourceHash\":\"02fe9dd05e607c3fca9b4d1f10f36886\"},{\"id\":\"line-5\",\"text\":\"就有那么好吗\",\"source\":\"ai\",\"sourceHash\":\"77afc552d2244571996cf1d3190107ca\"},{\"id\":\"line-6\",\"text\":\"好到能丢下我离开\",\"source\":\"ai\",\"sourceHash\":\"44711424e158c4d540aa3d1ebadf8e65\"},{\"id\":\"line-7\",\"text\":\"还要多少 要怎么做\",\"source\":\"ai\",\"sourceHash\":\"cb67c8507b65e102399f53904febfe94\"},{\"id\":\"line-8\",\"text\":\"我还得做得更好吗\",\"source\":\"ai\",\"sourceHash\":\"9339641e4a98c30b2b2249108e3b09ca\"},{\"id\":\"line-9\",\"text\":\"不管怎么想把你抹去\",\"source\":\"ai\",\"sourceHash\":\"9c279e4e0ac7e0c44c2b9bb230a6f6da\"},{\"id\":\"line-10\",\"text\":\"一起走过的日子那么多\",\"source\":\"manual\",\"sourceHash\":\"5282c1da8b23b666926b7a368b3b42b3\"},{\"id\":\"line-11\",\"text\":\"过去的时光让我太委屈\",\"source\":\"manual\",\"sourceHash\":\"6ee7b55b8ebd967a80314d31396b97e2\"},{\"id\":\"line-12\",\"text\":\"眼泪总是止不住地流\",\"source\":\"ai\",\"sourceHash\":\"da454a913bf615076db1f309f161c8e6\"},{\"id\":\"line-13\",\"text\":\"会让你看到 完全改变的我\",\"source\":\"manual\",\"sourceHash\":\"4d22e0f0d1a5b098acb9483bc198b8c7\"},{\"id\":\"line-14\",\"text\":\"会让你看到 更加漂亮的我\",\"source\":\"manual\",\"sourceHash\":\"9cb4be9d8bd058d49ecb8878785ef404\"},{\"id\":\"line-15\",\"text\":\"像傻瓜一样 因为爱情而离开的\",\"source\":\"manual\",\"sourceHash\":\"d71d1294c857e8ecc689db624c37940d\"},{\"id\":\"line-16\",\"text\":\"不会因为你而哭泣\",\"source\":\"manual\",\"sourceHash\":\"de001c0a242805dbb77428e7727d324c\"},{\"id\":\"line-17\",\"text\":\"会遇见更帅气的男人 一定让你看到\",\"source\":\"manual\",\"sourceHash\":\"8e3f0e7ddd3c207cada4c5cb052f5433\"},{\"id\":\"line-18\",\"text\":\"比你更幸福的我\",\"source\":\"ai\",\"sourceHash\":\"61841b3e651c3d8a13713d32d2db0cd6\"},{\"id\":\"line-19\",\"text\":\"没有你也不悲伤 不会崩溃\",\"source\":\"manual\",\"sourceHash\":\"4eef81e2b0fd42c914d5d7b9309e083d\"},{\"id\":\"line-20\",\"text\":\"boy you gotta be aware\",\"source\":\"ai\",\"sourceHash\":\"6b16ba3372edf16cdddd6e5b54e44952\"},{\"id\":\"line-21\",\"text\":\"清爽地换个发型\",\"source\":\"ai\",\"sourceHash\":\"7d26c270afb25fdf7820741fb00f6fc4\"},{\"id\":\"line-22\",\"text\":\"用心地化好妆\",\"source\":\"ai\",\"sourceHash\":\"f6426789b3510d94f732e22967f02bf8\"},{\"id\":\"line-23\",\"text\":\"高跟鞋配短裙 所有人都回头看我\",\"source\":\"ai\",\"sourceHash\":\"0bb29de4424fb507f6073f209b32a678\"},{\"id\":\"line-24\",\"text\":\"哪怕是偶然遇见你\",\"source\":\"ai\",\"sourceHash\":\"03587a0a4a4bb8d20454ade7be1b0060\"},{\"id\":\"line-25\",\"text\":\"用耀眼灿烂的笑容对我笑\",\"source\":\"ai\",\"sourceHash\":\"cac77d55aefc00c2ff4008d473c1f1b8\"},{\"id\":\"line-26\",\"text\":\"把惊讶的你留在身后\",\"source\":\"ai\",\"sourceHash\":\"85356f71d1a221da41dff03c7b90c2f8\"},{\"id\":\"line-27\",\"text\":\"想要嗒嗒嗒地向前走\",\"source\":\"ai\",\"sourceHash\":\"4a8fddef034e731bab56441e1d0f297a\"},{\"id\":\"line-28\",\"text\":\"会让你看到 完全改变的我\",\"source\":\"manual\",\"sourceHash\":\"4d22e0f0d1a5b098acb9483bc198b8c7\"},{\"id\":\"line-29\",\"text\":\"会让你看到 更加漂亮的我\",\"source\":\"manual\",\"sourceHash\":\"9cb4be9d8bd058d49ecb8878785ef404\"},{\"id\":\"line-30\",\"text\":\"像傻瓜一样 因为爱情\",\"source\":\"ai\",\"sourceHash\":\"8cfac0d2dd61f55d951a3c43772cf7f2\"},{\"id\":\"line-31\",\"text\":\"不会因为你而哭泣\",\"source\":\"ai\",\"sourceHash\":\"de001c0a242805dbb77428e7727d324c\"},{\"id\":\"line-32\",\"text\":\"会遇见更帅气的男人 一定让你看到\",\"source\":\"ai\",\"sourceHash\":\"8e3f0e7ddd3c207cada4c5cb052f5433\"},{\"id\":\"line-33\",\"text\":\"比你更幸福的我\",\"source\":\"ai\",\"sourceHash\":\"61841b3e651c3d8a13713d32d2db0cd6\"},{\"id\":\"line-34\",\"text\":\"没有你也不悲伤 不会崩溃\",\"source\":\"ai\",\"sourceHash\":\"4eef81e2b0fd42c914d5d7b9309e083d\"},{\"id\":\"line-35\",\"text\":\"boy you gotta be aware\",\"source\":\"ai\",\"sourceHash\":\"6b16ba3372edf16cdddd6e5b54e44952\"},{\"id\":\"line-36\",\"text\":\"丢掉你给过的戒指\",\"source\":\"ai\",\"sourceHash\":\"77857fecf4606ae05531ccd0a9aacd3d\"},{\"id\":\"line-37\",\"text\":\"删掉你写过的信\",\"source\":\"ai\",\"sourceHash\":\"2cfca5ac9f5c410bc4d84260b9740461\"},{\"id\":\"line-38\",\"text\":\"毫无留恋 毫不后悔地忘记你\",\"source\":\"ai\",\"sourceHash\":\"e1416102823615fb60dbd017a0b2588c\"},{\"id\":\"line-39\",\"text\":\"我要忘记你 我要抹去你\",\"source\":\"ai\",\"sourceHash\":\"4a78f67e0314c65e023c3214376fcbe6\"},{\"id\":\"line-40\",\"text\":\"会让你看到 完全改变的我\",\"source\":\"manual\",\"sourceHash\":\"4d22e0f0d1a5b098acb9483bc198b8c7\"},{\"id\":\"line-41\",\"text\":\"会让你看到 更加漂亮的我\",\"source\":\"manual\",\"sourceHash\":\"9cb4be9d8bd058d49ecb8878785ef404\"},{\"id\":\"line-42\",\"text\":\"像傻瓜一样 因为爱情而离开的\",\"source\":\"ai\",\"sourceHash\":\"d71d1294c857e8ecc689db624c37940d\"},{\"id\":\"line-43\",\"text\":\"不会因为你而哭泣\",\"source\":\"ai\",\"sourceHash\":\"de001c0a242805dbb77428e7727d324c\"},{\"id\":\"line-44\",\"text\":\"会遇见更帅气的男人 一定让你看到\",\"source\":\"ai\",\"sourceHash\":\"8e3f0e7ddd3c207cada4c5cb052f5433\"},{\"id\":\"line-45\",\"text\":\"比你更幸福的我\",\"source\":\"ai\",\"sourceHash\":\"61841b3e651c3d8a13713d32d2db0cd6\"},{\"id\":\"line-46\",\"text\":\"没有你也不悲伤 不会崩溃\",\"source\":\"ai\",\"sourceHash\":\"4eef81e2b0fd42c914d5d7b9309e083d\"},{\"id\":\"line-47\",\"text\":\"boy you gotta be aware\",\"source\":\"ai\",\"sourceHash\":\"6b16ba3372edf16cdddd6e5b54e44952\"}],\"updatedAt\":\"2026-10-30T18:16:55.711Z\",\"provider\":\"manual\",\"model\":\"user\"}"
+    },
+    {
+      "id": "f259781d-4da0-5a88-a230-cace8f8c57b3",
+      "title": "사뿐사뿐",
+      "language": "ko",
+      "lyricsLines": 91,
+      "sourceLyricsLines": 91,
+      "incomingLines": 91,
+      "existingLines": 0,
+      "lyricsIdentical": true,
+      "targetRevision": 2,
+      "accepted": [
+        {
+          "id": "line-1",
+          "text": "Hey",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-2",
+          "text": "no matter where you go",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-3",
+          "text": "无论看向哪里",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-4",
+          "text": "The pretty girls are AOA",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-5",
+          "text": "You know",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-6",
+          "text": "I know",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-7",
+          "text": "You know",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-8",
+          "text": "I know",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-9",
+          "text": "I'm good I'm hot I'm fresh I'm fly",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-10",
+          "text": "Brave sound",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-11",
+          "text": "说第一次见到像我这样的人",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-12",
+          "text": "说看到的那一瞬间就有感觉了",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-13",
+          "text": "在那么多人当中也是",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-14",
+          "text": "格外与众不同",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-15",
+          "text": "说我闪闪发光",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-16",
+          "text": "跟着我转过来的头",
+          "source": "manual",
+          "action": "ADD"
+        },
+        {
+          "id": "line-17",
+          "text": "那双被我填满的眼睛里",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-18",
+          "text": "犹豫着要不要搭话的样子",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-19",
+          "text": "太可爱了",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-20",
+          "text": "阳光照在我身上",
+          "source": "manual",
+          "action": "ADD"
+        },
+        {
+          "id": "line-21",
+          "text": "Spotlight light light light",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-22",
+          "text": "只有我在你脑海里",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-23",
+          "text": "Headline line line line",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-24",
+          "text": "就算做梦 你也会看到我",
+          "source": "manual",
+          "action": "ADD"
+        },
+        {
+          "id": "line-25",
+          "text": "烦恼 Stop it",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-26",
+          "text": "靠近我 Baby come on",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-27",
+          "text": "向你轻轻地走去",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-28",
+          "text": "摘下玫瑰花",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-29",
+          "text": "会把它送到你怀里",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-30",
+          "text": "会吓你一跳",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-31",
+          "text": "轻轻地走去",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-32",
+          "text": "当你睡着的时候",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-33",
+          "text": "会轻轻抱住你",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-34",
+          "text": "会吓你一跳",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-35",
+          "text": "La la la la la la la la la la",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-36",
+          "text": "La la la la",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-37",
+          "text": "La la la la la la la la la la",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-38",
+          "text": "I'm good I'm hot I'm fresh I'm fly",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-39",
+          "text": "La la la la la la la la la la",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-40",
+          "text": "La la la la",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-41",
+          "text": "La la la la la la la la la la",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-42",
+          "text": "I'm good I'm hot I'm fresh I'm fly",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-43",
+          "text": "想要轻轻地靠近你",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-44",
+          "text": "今夜我要瞒着所有人",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-45",
+          "text": "在你静静熟睡的嘴唇上",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-46",
+          "text": "我要轻轻吻上去",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-47",
+          "text": "你和我的甜蜜夜晚",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-48",
+          "text": "紧紧抓住这夜晚的尽头",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-49",
+          "text": "你是只属于我的狼",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-50",
+          "text": "我是你可爱的猫咪",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-51",
+          "text": "阳光照在我身上",
+          "source": "manual",
+          "action": "ADD"
+        },
+        {
+          "id": "line-52",
+          "text": "Spotlight light light light",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-53",
+          "text": "只有我在你脑海里",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-54",
+          "text": "Headline line line line",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-55",
+          "text": "就算做梦 你也会看到我",
+          "source": "manual",
+          "action": "ADD"
+        },
+        {
+          "id": "line-56",
+          "text": "烦恼 Stop it",
+          "source": "manual",
+          "action": "ADD"
+        },
+        {
+          "id": "line-57",
+          "text": "靠近我 Baby come on",
+          "source": "manual",
+          "action": "ADD"
+        },
+        {
+          "id": "line-58",
+          "text": "向你轻轻地走去",
+          "source": "manual",
+          "action": "ADD"
+        },
+        {
+          "id": "line-59",
+          "text": "摘下玫瑰花",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-60",
+          "text": "会把它送到你怀里",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-61",
+          "text": "会吓你一跳",
+          "source": "manual",
+          "action": "ADD"
+        },
+        {
+          "id": "line-62",
+          "text": "轻轻地走去",
+          "source": "manual",
+          "action": "ADD"
+        },
+        {
+          "id": "line-63",
+          "text": "当你睡着的时候",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-64",
+          "text": "会轻轻抱住你",
+          "source": "manual",
+          "action": "ADD"
+        },
+        {
+          "id": "line-65",
+          "text": "会吓你一跳",
+          "source": "manual",
+          "action": "ADD"
+        },
+        {
+          "id": "line-66",
+          "text": "La la la la la la la la la la",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-67",
+          "text": "La la la la",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-68",
+          "text": "La la la la la la la la la la",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-69",
+          "text": "I'm good I'm hot I'm fresh I'm fly",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-70",
+          "text": "La la la la la la la la la la",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-71",
+          "text": "La la la la",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-72",
+          "text": "La la la la la la la la la la",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-73",
+          "text": "I'm good I'm hot I'm fresh I'm fly",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-74",
+          "text": "We fly high",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-75",
+          "text": "今晚请抱住我",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-76",
+          "text": "请飞得更高些",
+          "source": "manual",
+          "action": "ADD"
+        },
+        {
+          "id": "line-77",
+          "text": "云朵向着月亮",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-78",
+          "text": "好让我的手能够触及",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-79",
+          "text": "轻轻飞来、颤抖着的",
+          "source": "manual",
+          "action": "ADD"
+        },
+        {
+          "id": "line-80",
+          "text": "请懂我的心",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-81",
+          "text": "Oh talk to me Oh lead me",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-82",
+          "text": "Oh kiss me baby 今晚",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-83",
+          "text": "La la la la la la la la la la",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-84",
+          "text": "La la la la",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-85",
+          "text": "La la la la la la la la la la",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-86",
+          "text": "I'm good I'm hot I'm fresh I'm fly",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-87",
+          "text": "La la la la la la la la la la",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-88",
+          "text": "La la la la",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-89",
+          "text": "La la la la la la la la la la",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-90",
+          "text": "I'm good I'm hot I'm fresh I'm fly",
+          "source": "ai",
+          "action": "ADD"
+        },
+        {
+          "id": "line-91",
+          "text": "Come on over boy",
+          "source": "ai",
+          "action": "ADD"
+        }
+      ],
+      "rejected": [],
+      "kept": [],
+      "replaced": [],
+      "unchanged": [],
+      "warnings": [],
+      "metadata": {
+        "target": {},
+        "source": {
+          "updatedAt": "2026-10-30T18:16:55.709Z",
+          "provider": "manual",
+          "model": "user"
+        }
+      },
+      "result": {
+        "mergedLines": 91,
+        "source": "mixed",
+        "manualLines": 14,
+        "aiLines": 77,
+        "lrcLines": 0,
+        "staleLines": [],
+        "changes": 91,
+        "willWrite": true,
+        "predictedRevision": 3
+      },
+      "nextJson": "{\"version\":1,\"language\":\"zh\",\"lines\":[{\"id\":\"line-1\",\"text\":\"Hey\",\"source\":\"ai\",\"sourceHash\":\"581d43745726e0ee62911178bfb3887c\"},{\"id\":\"line-2\",\"text\":\"no matter where you go\",\"source\":\"ai\",\"sourceHash\":\"e24be0be31e2607893fd8e61def7655c\"},{\"id\":\"line-3\",\"text\":\"无论看向哪里\",\"source\":\"ai\",\"sourceHash\":\"ab025e43a8355f9b7118c917642a8b53\"},{\"id\":\"line-4\",\"text\":\"The pretty girls are AOA\",\"source\":\"ai\",\"sourceHash\":\"2b7892db6b0c35fe0937e9387340e0d6\"},{\"id\":\"line-5\",\"text\":\"You know\",\"source\":\"ai\",\"sourceHash\":\"16927b2b8ce6c7e5aea44bbc53c188c9\"},{\"id\":\"line-6\",\"text\":\"I know\",\"source\":\"ai\",\"sourceHash\":\"8d5c3d26c51c6af49fe4003741aab7e2\"},{\"id\":\"line-7\",\"text\":\"You know\",\"source\":\"ai\",\"sourceHash\":\"16927b2b8ce6c7e5aea44bbc53c188c9\"},{\"id\":\"line-8\",\"text\":\"I know\",\"source\":\"ai\",\"sourceHash\":\"8d5c3d26c51c6af49fe4003741aab7e2\"},{\"id\":\"line-9\",\"text\":\"I'm good I'm hot I'm fresh I'm fly\",\"source\":\"ai\",\"sourceHash\":\"332441e188b8a395d7e701ab5751c31f\"},{\"id\":\"line-10\",\"text\":\"Brave sound\",\"source\":\"ai\",\"sourceHash\":\"f9945ee84356715b99bb04a2e28429a1\"},{\"id\":\"line-11\",\"text\":\"说第一次见到像我这样的人\",\"source\":\"ai\",\"sourceHash\":\"fef6666642e40ce92ddb041f5427fefc\"},{\"id\":\"line-12\",\"text\":\"说看到的那一瞬间就有感觉了\",\"source\":\"ai\",\"sourceHash\":\"7d4e8db569f39e39b7fb85ecf598de7c\"},{\"id\":\"line-13\",\"text\":\"在那么多人当中也是\",\"source\":\"ai\",\"sourceHash\":\"a4a0ddba068b1113aade24840e84ea24\"},{\"id\":\"line-14\",\"text\":\"格外与众不同\",\"source\":\"ai\",\"sourceHash\":\"7949dd922dd57b7358b5aca3f0b85272\"},{\"id\":\"line-15\",\"text\":\"说我闪闪发光\",\"source\":\"ai\",\"sourceHash\":\"8ae4bbaef14d9d67438c2f52aed4ee79\"},{\"id\":\"line-16\",\"text\":\"跟着我转过来的头\",\"source\":\"manual\",\"sourceHash\":\"9ca4fddc68c405836de0356b9ffa3a17\"},{\"id\":\"line-17\",\"text\":\"那双被我填满的眼睛里\",\"source\":\"ai\",\"sourceHash\":\"6c54b33c40a84bf1f420c9c65982228b\"},{\"id\":\"line-18\",\"text\":\"犹豫着要不要搭话的样子\",\"source\":\"ai\",\"sourceHash\":\"ec36a3a850d5cf5aa7dec7d2c7e1ce89\"},{\"id\":\"line-19\",\"text\":\"太可爱了\",\"source\":\"ai\",\"sourceHash\":\"079db754fc5a380df49bb764a1d80118\"},{\"id\":\"line-20\",\"text\":\"阳光照在我身上\",\"source\":\"manual\",\"sourceHash\":\"c5aeb4fc1c6a342444d83f54569e7d51\"},{\"id\":\"line-21\",\"text\":\"Spotlight light light light\",\"source\":\"ai\",\"sourceHash\":\"4eecff81364df86a5fec63211104aad1\"},{\"id\":\"line-22\",\"text\":\"只有我在你脑海里\",\"source\":\"ai\",\"sourceHash\":\"6fb01b1c1d7248ee071fa51208bd491d\"},{\"id\":\"line-23\",\"text\":\"Headline line line line\",\"source\":\"ai\",\"sourceHash\":\"50482892e6a065ad9b1718336cbe83f1\"},{\"id\":\"line-24\",\"text\":\"就算做梦 你也会看到我\",\"source\":\"manual\",\"sourceHash\":\"a8825b0a55a8c4ec84557ac7ce3ea274\"},{\"id\":\"line-25\",\"text\":\"烦恼 Stop it\",\"source\":\"ai\",\"sourceHash\":\"ea02163a4bf4159f96a9d9b8c78e97fd\"},{\"id\":\"line-26\",\"text\":\"靠近我 Baby come on\",\"source\":\"ai\",\"sourceHash\":\"44c6dee75b91b1c042e606e8a7198d52\"},{\"id\":\"line-27\",\"text\":\"向你轻轻地走去\",\"source\":\"ai\",\"sourceHash\":\"2000501321446b074932c60699864839\"},{\"id\":\"line-28\",\"text\":\"摘下玫瑰花\",\"source\":\"ai\",\"sourceHash\":\"cfa85ac288e0fea390d422c2ee8c9c87\"},{\"id\":\"line-29\",\"text\":\"会把它送到你怀里\",\"source\":\"ai\",\"sourceHash\":\"60e8214202378992b00c33fa7b74ee75\"},{\"id\":\"line-30\",\"text\":\"会吓你一跳\",\"source\":\"ai\",\"sourceHash\":\"0f9bf71d4fb4ff0dea561c42653d51e1\"},{\"id\":\"line-31\",\"text\":\"轻轻地走去\",\"source\":\"ai\",\"sourceHash\":\"33c96b5fa5886621e0e51eb692f86024\"},{\"id\":\"line-32\",\"text\":\"当你睡着的时候\",\"source\":\"ai\",\"sourceHash\":\"8a1487aa0aa9b0d46c195bb62e5193f2\"},{\"id\":\"line-33\",\"text\":\"会轻轻抱住你\",\"source\":\"ai\",\"sourceHash\":\"17a0a20eacdbe56ac26ac152f0ba067d\"},{\"id\":\"line-34\",\"text\":\"会吓你一跳\",\"source\":\"ai\",\"sourceHash\":\"0f9bf71d4fb4ff0dea561c42653d51e1\"},{\"id\":\"line-35\",\"text\":\"La la la la la la la la la la\",\"source\":\"ai\",\"sourceHash\":\"10c30aa0789cdbb006a310d1805a534a\"},{\"id\":\"line-36\",\"text\":\"La la la la\",\"source\":\"ai\",\"sourceHash\":\"75beca361f52133d669e50e5c3c8b4a3\"},{\"id\":\"line-37\",\"text\":\"La la la la la la la la la la\",\"source\":\"ai\",\"sourceHash\":\"10c30aa0789cdbb006a310d1805a534a\"},{\"id\":\"line-38\",\"text\":\"I'm good I'm hot I'm fresh I'm fly\",\"source\":\"ai\",\"sourceHash\":\"332441e188b8a395d7e701ab5751c31f\"},{\"id\":\"line-39\",\"text\":\"La la la la la la la la la la\",\"source\":\"ai\",\"sourceHash\":\"10c30aa0789cdbb006a310d1805a534a\"},{\"id\":\"line-40\",\"text\":\"La la la la\",\"source\":\"ai\",\"sourceHash\":\"75beca361f52133d669e50e5c3c8b4a3\"},{\"id\":\"line-41\",\"text\":\"La la la la la la la la la la\",\"source\":\"ai\",\"sourceHash\":\"10c30aa0789cdbb006a310d1805a534a\"},{\"id\":\"line-42\",\"text\":\"I'm good I'm hot I'm fresh I'm fly\",\"source\":\"ai\",\"sourceHash\":\"332441e188b8a395d7e701ab5751c31f\"},{\"id\":\"line-43\",\"text\":\"想要轻轻地靠近你\",\"source\":\"ai\",\"sourceHash\":\"16722368a8c8650173cf0d47565ce396\"},{\"id\":\"line-44\",\"text\":\"今夜我要瞒着所有人\",\"source\":\"ai\",\"sourceHash\":\"46f2e20188eee585d819988397349126\"},{\"id\":\"line-45\",\"text\":\"在你静静熟睡的嘴唇上\",\"source\":\"ai\",\"sourceHash\":\"6717d1fcfafea9f57d07ad11f0370a94\"},{\"id\":\"line-46\",\"text\":\"我要轻轻吻上去\",\"source\":\"ai\",\"sourceHash\":\"17e91002b9c8e36522b1e7f5d5832a40\"},{\"id\":\"line-47\",\"text\":\"你和我的甜蜜夜晚\",\"source\":\"ai\",\"sourceHash\":\"86b17e89f9bb7b376cafbbf4544b5130\"},{\"id\":\"line-48\",\"text\":\"紧紧抓住这夜晚的尽头\",\"source\":\"ai\",\"sourceHash\":\"0cb0ef74b82acde5618016df019e77cd\"},{\"id\":\"line-49\",\"text\":\"你是只属于我的狼\",\"source\":\"ai\",\"sourceHash\":\"a8e245ae785239b048ee70b81146caed\"},{\"id\":\"line-50\",\"text\":\"我是你可爱的猫咪\",\"source\":\"ai\",\"sourceHash\":\"783a7b57cc55e576ae8fd0ed40f0a63f\"},{\"id\":\"line-51\",\"text\":\"阳光照在我身上\",\"source\":\"manual\",\"sourceHash\":\"c5aeb4fc1c6a342444d83f54569e7d51\"},{\"id\":\"line-52\",\"text\":\"Spotlight light light light\",\"source\":\"ai\",\"sourceHash\":\"4eecff81364df86a5fec63211104aad1\"},{\"id\":\"line-53\",\"text\":\"只有我在你脑海里\",\"source\":\"ai\",\"sourceHash\":\"6fb01b1c1d7248ee071fa51208bd491d\"},{\"id\":\"line-54\",\"text\":\"Headline line line line\",\"source\":\"ai\",\"sourceHash\":\"50482892e6a065ad9b1718336cbe83f1\"},{\"id\":\"line-55\",\"text\":\"就算做梦 你也会看到我\",\"source\":\"manual\",\"sourceHash\":\"a8825b0a55a8c4ec84557ac7ce3ea274\"},{\"id\":\"line-56\",\"text\":\"烦恼 Stop it\",\"source\":\"manual\",\"sourceHash\":\"ea02163a4bf4159f96a9d9b8c78e97fd\"},{\"id\":\"line-57\",\"text\":\"靠近我 Baby come on\",\"source\":\"manual\",\"sourceHash\":\"44c6dee75b91b1c042e606e8a7198d52\"},{\"id\":\"line-58\",\"text\":\"向你轻轻地走去\",\"source\":\"manual\",\"sourceHash\":\"2000501321446b074932c60699864839\"},{\"id\":\"line-59\",\"text\":\"摘下玫瑰花\",\"source\":\"ai\",\"sourceHash\":\"cfa85ac288e0fea390d422c2ee8c9c87\"},{\"id\":\"line-60\",\"text\":\"会把它送到你怀里\",\"source\":\"ai\",\"sourceHash\":\"60e8214202378992b00c33fa7b74ee75\"},{\"id\":\"line-61\",\"text\":\"会吓你一跳\",\"source\":\"manual\",\"sourceHash\":\"0f9bf71d4fb4ff0dea561c42653d51e1\"},{\"id\":\"line-62\",\"text\":\"轻轻地走去\",\"source\":\"manual\",\"sourceHash\":\"33c96b5fa5886621e0e51eb692f86024\"},{\"id\":\"line-63\",\"text\":\"当你睡着的时候\",\"source\":\"ai\",\"sourceHash\":\"8a1487aa0aa9b0d46c195bb62e5193f2\"},{\"id\":\"line-64\",\"text\":\"会轻轻抱住你\",\"source\":\"manual\",\"sourceHash\":\"17a0a20eacdbe56ac26ac152f0ba067d\"},{\"id\":\"line-65\",\"text\":\"会吓你一跳\",\"source\":\"manual\",\"sourceHash\":\"0f9bf71d4fb4ff0dea561c42653d51e1\"},{\"id\":\"line-66\",\"text\":\"La la la la la la la la la la\",\"source\":\"ai\",\"sourceHash\":\"10c30aa0789cdbb006a310d1805a534a\"},{\"id\":\"line-67\",\"text\":\"La la la la\",\"source\":\"ai\",\"sourceHash\":\"75beca361f52133d669e50e5c3c8b4a3\"},{\"id\":\"line-68\",\"text\":\"La la la la la la la la la la\",\"source\":\"ai\",\"sourceHash\":\"10c30aa0789cdbb006a310d1805a534a\"},{\"id\":\"line-69\",\"text\":\"I'm good I'm hot I'm fresh I'm fly\",\"source\":\"ai\",\"sourceHash\":\"332441e188b8a395d7e701ab5751c31f\"},{\"id\":\"line-70\",\"text\":\"La la la la la la la la la la\",\"source\":\"ai\",\"sourceHash\":\"10c30aa0789cdbb006a310d1805a534a\"},{\"id\":\"line-71\",\"text\":\"La la la la\",\"source\":\"ai\",\"sourceHash\":\"75beca361f52133d669e50e5c3c8b4a3\"},{\"id\":\"line-72\",\"text\":\"La la la la la la la la la la\",\"source\":\"ai\",\"sourceHash\":\"10c30aa0789cdbb006a310d1805a534a\"},{\"id\":\"line-73\",\"text\":\"I'm good I'm hot I'm fresh I'm fly\",\"source\":\"ai\",\"sourceHash\":\"332441e188b8a395d7e701ab5751c31f\"},{\"id\":\"line-74\",\"text\":\"We fly high\",\"source\":\"ai\",\"sourceHash\":\"fed6eee9d8e75a377e7e2be710f1763a\"},{\"id\":\"line-75\",\"text\":\"今晚请抱住我\",\"source\":\"ai\",\"sourceHash\":\"10d4d4c8992d5e8aab4ddbcb7e2d46a4\"},{\"id\":\"line-76\",\"text\":\"请飞得更高些\",\"source\":\"manual\",\"sourceHash\":\"0346ee539f432fa2acb87fc29ce089f2\"},{\"id\":\"line-77\",\"text\":\"云朵向着月亮\",\"source\":\"ai\",\"sourceHash\":\"045e65cc9cee4f33cfdbe0702e70a48a\"},{\"id\":\"line-78\",\"text\":\"好让我的手能够触及\",\"source\":\"ai\",\"sourceHash\":\"a1e8f7225fe210fc6e19bf7b2c7d5856\"},{\"id\":\"line-79\",\"text\":\"轻轻飞来、颤抖着的\",\"source\":\"manual\",\"sourceHash\":\"0e54c2ea546857aac10f755f3f44e6c4\"},{\"id\":\"line-80\",\"text\":\"请懂我的心\",\"source\":\"ai\",\"sourceHash\":\"8b51375d7de9e1dc43ad3c25ba45e1cc\"},{\"id\":\"line-81\",\"text\":\"Oh talk to me Oh lead me\",\"source\":\"ai\",\"sourceHash\":\"ad1e9368032845d00a7a4febdfeeee63\"},{\"id\":\"line-82\",\"text\":\"Oh kiss me baby 今晚\",\"source\":\"ai\",\"sourceHash\":\"e3ce34ad4662b55ebc4a8ab0e918fa63\"},{\"id\":\"line-83\",\"text\":\"La la la la la la la la la la\",\"source\":\"ai\",\"sourceHash\":\"10c30aa0789cdbb006a310d1805a534a\"},{\"id\":\"line-84\",\"text\":\"La la la la\",\"source\":\"ai\",\"sourceHash\":\"75beca361f52133d669e50e5c3c8b4a3\"},{\"id\":\"line-85\",\"text\":\"La la la la la la la la la la\",\"source\":\"ai\",\"sourceHash\":\"10c30aa0789cdbb006a310d1805a534a\"},{\"id\":\"line-86\",\"text\":\"I'm good I'm hot I'm fresh I'm fly\",\"source\":\"ai\",\"sourceHash\":\"332441e188b8a395d7e701ab5751c31f\"},{\"id\":\"line-87\",\"text\":\"La la la la la la la la la la\",\"source\":\"ai\",\"sourceHash\":\"10c30aa0789cdbb006a310d1805a534a\"},{\"id\":\"line-88\",\"text\":\"La la la la\",\"source\":\"ai\",\"sourceHash\":\"75beca361f52133d669e50e5c3c8b4a3\"},{\"id\":\"line-89\",\"text\":\"La la la la la la la la la la\",\"source\":\"ai\",\"sourceHash\":\"10c30aa0789cdbb006a310d1805a534a\"},{\"id\":\"line-90\",\"text\":\"I'm good I'm hot I'm fresh I'm fly\",\"source\":\"ai\",\"sourceHash\":\"332441e188b8a395d7e701ab5751c31f\"},{\"id\":\"line-91\",\"text\":\"Come on over boy\",\"source\":\"ai\",\"sourceHash\":\"d7f4154357c8e51ab700987960d9e00c\"}],\"updatedAt\":\"2026-10-30T18:16:55.709Z\",\"provider\":\"manual\",\"model\":\"user\"}"
+    }
+  ],
+  "cache": {
+    "sourceRows": 183,
+    "targetRows": 0,
+    "toInsert": 183
+  },
+  "totals": {
+    "songsConsidered": 5,
+    "songsChanging": 5,
+    "linesAdding": 287,
+    "linesRejected": 0,
+    "linesKeptProtected": 0,
+    "linesUnchanged": 0,
+    "warnings": 0,
+    "staleLines": 0
+  },
+  "planned": [
+    {
+      "id": "93e8499b-b99b-5307-82a5-7cff189073dd",
+      "title": "Insomnia (불면증)",
+      "lines": 40,
+      "manual": 7,
+      "ai": 33,
+      "lrc": 0,
+      "source": "mixed",
+      "changes": 40,
+      "kept": 0,
+      "rejected": 0,
+      "revisionBefore": 1,
+      "revisionAfter": 2,
+      "bytes": 5209
+    },
+    {
+      "id": "4528bfad-2e59-5425-96a9-3581dd2a810c",
+      "title": "덤더럼 (Dumhdurum)",
+      "lines": 44,
+      "manual": 14,
+      "ai": 30,
+      "lrc": 0,
+      "source": "mixed",
+      "changes": 44,
+      "kept": 0,
+      "rejected": 0,
+      "revisionBefore": 5,
+      "revisionAfter": 6,
+      "bytes": 5459
+    },
+    {
+      "id": "c84eb5d2-3865-5943-8abb-7ee6bfbee1fc",
+      "title": "베베 (BABE)",
+      "lines": 65,
+      "manual": 20,
+      "ai": 45,
+      "lrc": 0,
+      "source": "mixed",
+      "changes": 65,
+      "kept": 0,
+      "rejected": 0,
+      "revisionBefore": 1,
+      "revisionAfter": 2,
+      "bytes": 7542
+    },
+    {
+      "id": "01c2a4cd-528c-5316-b864-5ce24f86e280",
+      "title": "보여줄게",
+      "lines": 47,
+      "manual": 13,
+      "ai": 34,
+      "lrc": 0,
+      "source": "mixed",
+      "changes": 47,
+      "kept": 0,
+      "rejected": 0,
+      "revisionBefore": 2,
+      "revisionAfter": 3,
+      "bytes": 5699
+    },
+    {
+      "id": "f259781d-4da0-5a88-a230-cace8f8c57b3",
+      "title": "사뿐사뿐",
+      "lines": 91,
+      "manual": 14,
+      "ai": 77,
+      "lrc": 0,
+      "source": "mixed",
+      "changes": 91,
+      "kept": 0,
+      "rejected": 0,
+      "revisionBefore": 2,
+      "revisionAfter": 3,
+      "bytes": 10266
+    }
+  ],
+  "verification": {
+    "ok": false,
+    "problems": [],
+    "skipped": [
+      {
+        "table": "schema_migrations",
+        "note": "迁移账本按定义新增行，不参与数据比对",
+        "before": 10,
+        "after": 10
+      },
+      {
+        "table": "vocal_translation_cache",
+        "note": "缓存表按设计只增不删；删除/改写会在此后单独核对",
+        "before": 0,
+        "after": 0
+      }
+    ],
+    "songs": [
+      {
+        "id": "01c2a4cd-528c-5316-b864-5ce24f86e280",
+        "title": "보여줄게",
+        "changedFields": [],
+        "lyricsUnchanged": true,
+        "revisionBefore": 2,
+        "revisionAfter": 2
+      },
+      {
+        "id": "0b31b171-f522-55aa-b1c3-57c7293e6a58",
+        "title": "Papillon",
+        "changedFields": [],
+        "lyricsUnchanged": true,
+        "revisionBefore": 2,
+        "revisionAfter": 2
+      },
+      {
+        "id": "121fce84-c058-5023-9655-72359f18fb79",
+        "title": "Let Go",
+        "changedFields": [],
+        "lyricsUnchanged": true,
+        "revisionBefore": 3,
+        "revisionAfter": 3
+      },
+      {
+        "id": "1b2991ef-ca1e-55b4-a170-e69baee5e4f1",
+        "title": "Jar Of Love",
+        "changedFields": [],
+        "lyricsUnchanged": true,
+        "revisionBefore": 2,
+        "revisionAfter": 2
+      },
+      {
+        "id": "1b4c0212-73ca-5c68-b13b-b494a93f1323",
+        "title": "흉터 (Feat. 치타)",
+        "changedFields": [],
+        "lyricsUnchanged": true,
+        "revisionBefore": 1,
+        "revisionAfter": 1
+      },
+      {
+        "id": "28c92b90-5cec-59e5-8619-514f30a6a481",
+        "title": "歌舞:过年迪斯科",
+        "changedFields": [],
+        "lyricsUnchanged": true,
+        "revisionBefore": 1,
+        "revisionAfter": 1
+      },
+      {
+        "id": "2afb52b4-1321-5aea-b688-be11859cd19d",
+        "title": "初爱",
+        "changedFields": [],
+        "lyricsUnchanged": true,
+        "revisionBefore": 1,
+        "revisionAfter": 1
+      },
+      {
+        "id": "3c29d47b-0f08-54e3-8fad-5716a4dc2a39",
+        "title": "여름 안에서 (Live)",
+        "changedFields": [],
+        "lyricsUnchanged": true,
+        "revisionBefore": 2,
+        "revisionAfter": 2
+      },
+      {
+        "id": "3f20871b-5076-5c4b-b210-6bd7d7f5a4ff",
+        "title": "BIRTHDAY",
+        "changedFields": [],
+        "lyricsUnchanged": true,
+        "revisionBefore": 1,
+        "revisionAfter": 1
+      },
+      {
+        "id": "4128e23f-7736-582d-afb6-6916801d7886",
+        "title": "DjYaha-起風了 (DjYaha remix)",
+        "changedFields": [],
+        "lyricsUnchanged": true,
+        "revisionBefore": 1,
+        "revisionAfter": 1
+      },
+      {
+        "id": "44192e01-bb35-5079-a89f-766263389bbb",
+        "title": "一生中最爱",
+        "changedFields": [],
+        "lyricsUnchanged": true,
+        "revisionBefore": 1,
+        "revisionAfter": 1
+      },
+      {
+        "id": "4528bfad-2e59-5425-96a9-3581dd2a810c",
+        "title": "덤더럼 (Dumhdurum)",
+        "changedFields": [],
+        "lyricsUnchanged": true,
+        "revisionBefore": 5,
+        "revisionAfter": 5
+      },
+      {
+        "id": "532a2725-833f-547c-95bc-68145c52213c",
+        "title": "Trespassing",
+        "changedFields": [],
+        "lyricsUnchanged": true,
+        "revisionBefore": 2,
+        "revisionAfter": 2
+      },
+      {
+        "id": "54b8e11a-40ca-52e9-aa72-bcc17d52f09d",
+        "title": "隆里电丝x危险派对 (1FAN Remix)",
+        "changedFields": [],
+        "lyricsUnchanged": true,
+        "revisionBefore": 1,
+        "revisionAfter": 1
+      },
+      {
+        "id": "63bd4643-17c0-5204-9b78-cf824139baf4",
+        "title": "Teeth",
+        "changedFields": [],
+        "lyricsUnchanged": true,
+        "revisionBefore": 2,
+        "revisionAfter": 2
+      },
+      {
+        "id": "78fcc0fd-ee50-508e-a170-3e09e6fedc1f",
+        "title": "Touch",
+        "changedFields": [],
+        "lyricsUnchanged": true,
+        "revisionBefore": 3,
+        "revisionAfter": 3
+      },
+      {
+        "id": "79aa79c7-7688-5b09-b945-d6a8248a7d78",
+        "title": "Bubble Pop!",
+        "changedFields": [],
+        "lyricsUnchanged": true,
+        "revisionBefore": 1,
+        "revisionAfter": 1
+      },
+      {
+        "id": "8345d110-55ca-5048-bea6-b7edf34f14f4",
+        "title": "Faded",
+        "changedFields": [],
+        "lyricsUnchanged": true,
+        "revisionBefore": 2,
+        "revisionAfter": 2
+      },
+      {
+        "id": "8dddcedd-e828-57d6-9e80-01fbaff00dbf",
+        "title": "Cure For Me",
+        "changedFields": [],
+        "lyricsUnchanged": true,
+        "revisionBefore": 2,
+        "revisionAfter": 2
+      },
+      {
+        "id": "91cf203e-8cdd-5dbf-8b3f-f21a48f9f01a",
+        "title": "Welcome to New York (Big Apple Version)",
+        "changedFields": [],
+        "lyricsUnchanged": true,
+        "revisionBefore": 2,
+        "revisionAfter": 2
+      },
+      {
+        "id": "93e8499b-b99b-5307-82a5-7cff189073dd",
+        "title": "Insomnia (불면증)",
+        "changedFields": [],
+        "lyricsUnchanged": true,
+        "revisionBefore": 1,
+        "revisionAfter": 1
+      },
+      {
+        "id": "bec19110-60b3-58b6-917e-5d043893655b",
+        "title": "Clean Bandit Rather Be Without Me",
+        "changedFields": [],
+        "lyricsUnchanged": true,
+        "revisionBefore": 1,
+        "revisionAfter": 1
+      },
+      {
+        "id": "c3c9896b-1021-5779-9984-7d5633c10b74",
+        "title": "Dynamic female voice",
+        "changedFields": [],
+        "lyricsUnchanged": true,
+        "revisionBefore": 2,
+        "revisionAfter": 2
+      },
+      {
+        "id": "c55853cc-3a1f-5191-b501-751a2577c7b8",
+        "title": "Lonely Christmas",
+        "changedFields": [],
+        "lyricsUnchanged": true,
+        "revisionBefore": 1,
+        "revisionAfter": 1
+      },
+      {
+        "id": "c84eb5d2-3865-5943-8abb-7ee6bfbee1fc",
+        "title": "베베 (BABE)",
+        "changedFields": [],
+        "lyricsUnchanged": true,
+        "revisionBefore": 1,
+        "revisionAfter": 1
+      },
+      {
+        "id": "c9f62381-8c0d-5e57-9243-4830653beb2c",
+        "title": "Hourglass",
+        "changedFields": [],
+        "lyricsUnchanged": true,
+        "revisionBefore": 2,
+        "revisionAfter": 2
+      },
+      {
+        "id": "cadadde6-1215-5a2d-8105-e32c775fc5be",
+        "title": "Alan Walker-All Falls Down (刘至佳  lambert remix)",
+        "changedFields": [],
+        "lyricsUnchanged": true,
+        "revisionBefore": 3,
+        "revisionAfter": 3
+      },
+      {
+        "id": "d0c0904f-2a92-570d-ab3e-9d89c48429d2",
+        "title": "소나기 (Feat. 10cm)",
+        "changedFields": [],
+        "lyricsUnchanged": true,
+        "revisionBefore": 2,
+        "revisionAfter": 2
+      },
+      {
+        "id": "d5090dd2-ff4c-5763-b6b5-f7a86b310637",
+        "title": "22秒",
+        "changedFields": [],
+        "lyricsUnchanged": true,
+        "revisionBefore": 2,
+        "revisionAfter": 2
+      },
+      {
+        "id": "efaab368-8c6c-585a-be2b-d4a679121a10",
+        "title": "senorita (翻自 Shawn Mendes)",
+        "changedFields": [],
+        "lyricsUnchanged": true,
+        "revisionBefore": 2,
+        "revisionAfter": 2
+      },
+      {
+        "id": "f259781d-4da0-5a88-a230-cace8f8c57b3",
+        "title": "사뿐사뿐",
+        "changedFields": [],
+        "lyricsUnchanged": true,
+        "revisionBefore": 2,
+        "revisionAfter": 2
+      }
+    ],
+    "translations": [
+      {
+        "id": "93e8499b-b99b-5307-82a5-7cff189073dd",
+        "title": "Insomnia (불면증)",
+        "revision": 1,
+        "lines": 0,
+        "manual": 0,
+        "ai": 0,
+        "lrc": 0,
+        "source": "none",
+        "stale": 0,
+        "lyricsLines": 40,
+        "updatedAt": null,
+        "provider": null,
+        "model": null
+      },
+      {
+        "id": "4528bfad-2e59-5425-96a9-3581dd2a810c",
+        "title": "덤더럼 (Dumhdurum)",
+        "revision": 5,
+        "lines": 0,
+        "manual": 0,
+        "ai": 0,
+        "lrc": 0,
+        "source": "none",
+        "stale": 0,
+        "lyricsLines": 44,
+        "updatedAt": null,
+        "provider": null,
+        "model": null
+      },
+      {
+        "id": "c84eb5d2-3865-5943-8abb-7ee6bfbee1fc",
+        "title": "베베 (BABE)",
+        "revision": 1,
+        "lines": 0,
+        "manual": 0,
+        "ai": 0,
+        "lrc": 0,
+        "source": "none",
+        "stale": 0,
+        "lyricsLines": 70,
+        "updatedAt": null,
+        "provider": null,
+        "model": null
+      },
+      {
+        "id": "01c2a4cd-528c-5316-b864-5ce24f86e280",
+        "title": "보여줄게",
+        "revision": 2,
+        "lines": 0,
+        "manual": 0,
+        "ai": 0,
+        "lrc": 0,
+        "source": "none",
+        "stale": 0,
+        "lyricsLines": 47,
+        "updatedAt": null,
+        "provider": null,
+        "model": null
+      },
+      {
+        "id": "f259781d-4da0-5a88-a230-cace8f8c57b3",
+        "title": "사뿐사뿐",
+        "revision": 2,
+        "lines": 0,
+        "manual": 0,
+        "ai": 0,
+        "lrc": 0,
+        "source": "none",
+        "stale": 0,
+        "lyricsLines": 91,
+        "updatedAt": null,
+        "provider": null,
+        "model": null
+      }
+    ],
+    "cacheAfter": 0,
+    "cacheIntegrity": {
+      "sourceKeys": 183,
+      "targetKeys": 0,
+      "missing": 183,
+      "complete": false
+    }
+  }
+}

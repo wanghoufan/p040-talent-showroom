@@ -27,7 +27,7 @@ function vocalItem(extra: Partial<TalentItem> = {}): TalentItem {
     audio: media('a'), language: 'zh',
     lyrics: [{ id: 'l1', startMs: 0, text: '第一句' }],
     sections: [{ id: 's1', type: 'verse', label: 'A1', startMs: 0, endMs: 8000, source: 'manual' }],
-    practice: { skipRap: true, wholeTrackLoop: false, backwardSeconds: 10, forwardSeconds: 15, customRepeatLines: 4, playbackRate: 0.8 },
+    practice: { skipRap: true, wholeTrackLoop: false, backwardSeconds: 10, forwardSeconds: 15, rapRange: null, playbackRate: 0.8 },
     ...extra,
   };
 }

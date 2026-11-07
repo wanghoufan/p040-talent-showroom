@@ -1,0 +1,568 @@
+{
+  "record": {
+    "id": "01c2a4cd-528c-5316-b864-5ce24f86e280",
+    "title": "보여줄게",
+    "artist": "Ailee",
+    "language": "ko",
+    "startedAt": "2026-10-30T16:48:14.370Z",
+    "finishedAt": "2026-10-30T16:48:33.913Z",
+    "status": "COMPLETE",
+    "total": 47,
+    "translated": 47,
+    "cached": 0,
+    "lrcReused": 0,
+    "translatedLines": 47,
+    "remaining": 0,
+    "failed": [],
+    "lyricsUnchanged": true,
+    "translationSources": {
+      "ai": 47
+    },
+    "samples": [
+      {
+        "id": "line-1",
+        "text": "穿上我买给你的衣服",
+        "source": "ai"
+      },
+      {
+        "id": "line-2",
+        "text": "喷上我买给你的香水",
+        "source": "ai"
+      },
+      {
+        "id": "line-3",
+        "text": "现在你大概在见她吧",
+        "source": "ai"
+      }
+    ]
+  },
+  "lyrics": [
+    {
+      "id": "line-1",
+      "startMs": 14960,
+      "text": "내가 사준 옷을 걸치고"
+    },
+    {
+      "id": "line-2",
+      "startMs": 18500,
+      "text": "내가 사준 향술 뿌리고"
+    },
+    {
+      "id": "line-3",
+      "startMs": 22260,
+      "text": "지금쯤 넌 그녈 만나"
+    },
+    {
+      "id": "line-4",
+      "startMs": 25940,
+      "text": "또 웃고 있겠지"
+    },
+    {
+      "id": "line-5",
+      "startMs": 29680,
+      "text": "그렇게 좋았던 거니"
+    },
+    {
+      "id": "line-6",
+      "startMs": 33230,
+      "text": "날 버리고 떠날 만큼"
+    },
+    {
+      "id": "line-7",
+      "startMs": 36940,
+      "text": "얼마나 더 어떻게"
+    },
+    {
+      "id": "line-8",
+      "startMs": 40570,
+      "text": "더 잘 해야 한 거니"
+    },
+    {
+      "id": "line-9",
+      "startMs": 43930,
+      "text": "너를 아무리 지울래도"
+    },
+    {
+      "id": "line-10",
+      "startMs": 47410,
+      "text": "함께한 날이 얼마인데"
+    },
+    {
+      "id": "line-11",
+      "startMs": 51320,
+      "text": "지난 시간이 억울해서"
+    },
+    {
+      "id": "line-12",
+      "startMs": 54850,
+      "text": "자꾸 눈물이 흐르지만"
+    },
+    {
+      "id": "line-13",
+      "startMs": 60190,
+      "text": "보여줄게 완전히 달라진 나"
+    },
+    {
+      "id": "line-14",
+      "startMs": 63850,
+      "text": "보여줄게 훨씬 더 예뻐진 나"
+    },
+    {
+      "id": "line-15",
+      "startMs": 67550,
+      "text": "바보처럼 사랑 때문에 떠난"
+    },
+    {
+      "id": "line-16",
+      "startMs": 70230,
+      "text": "너 때문에 울지 않을래"
+    },
+    {
+      "id": "line-17",
+      "startMs": 75870,
+      "text": "더 멋진 남잘 만나 꼭 보여줄게"
+    },
+    {
+      "id": "line-18",
+      "startMs": 79730,
+      "text": "너보다 행복한 나"
+    },
+    {
+      "id": "line-19",
+      "startMs": 82310,
+      "text": "너 없이도 슬프지 않아 무너지지않아"
+    },
+    {
+      "id": "line-20",
+      "startMs": 86910,
+      "text": "boy you gotta be aware"
+    },
+    {
+      "id": "line-21",
+      "startMs": 92700,
+      "text": "산뜻하게 머릴 바꾸고"
+    },
+    {
+      "id": "line-22",
+      "startMs": 96140,
+      "text": "정성 들여 화장도 하고"
+    },
+    {
+      "id": "line-23",
+      "startMs": 99830,
+      "text": "하이힐에 짧은 치마 모두 날 돌아봐"
+    },
+    {
+      "id": "line-24",
+      "startMs": 107150,
+      "text": "우연히 라도 널 만나면"
+    },
+    {
+      "id": "line-25",
+      "startMs": 110370,
+      "text": "눈이 부시게 웃어주며"
+    },
+    {
+      "id": "line-26",
+      "startMs": 114100,
+      "text": "놀란 니 모습 뒤로 한 채"
+    },
+    {
+      "id": "line-27",
+      "startMs": 117850,
+      "text": "또각 또각 걸어가려 해"
+    },
+    {
+      "id": "line-28",
+      "startMs": 122900,
+      "text": "보여줄게 완전히 달라진 나"
+    },
+    {
+      "id": "line-29",
+      "startMs": 126480,
+      "text": "보여줄게 훨씬 더 예뻐진 나"
+    },
+    {
+      "id": "line-30",
+      "startMs": 130220,
+      "text": "바보처럼 사랑 때문에"
+    },
+    {
+      "id": "line-31",
+      "startMs": 133170,
+      "text": "너 때문에 울지 않을래"
+    },
+    {
+      "id": "line-32",
+      "startMs": 138650,
+      "text": "더 멋진 남잘 만나 꼭 보여줄게"
+    },
+    {
+      "id": "line-33",
+      "startMs": 142330,
+      "text": "너보다 행복한 나"
+    },
+    {
+      "id": "line-34",
+      "startMs": 145110,
+      "text": "너 없이도 슬프지 않아 무너지지않아"
+    },
+    {
+      "id": "line-35",
+      "startMs": 149630,
+      "text": "boy you gotta be aware"
+    },
+    {
+      "id": "line-36",
+      "startMs": 153890,
+      "text": "니가 줬던 반질 버리고"
+    },
+    {
+      "id": "line-37",
+      "startMs": 157080,
+      "text": "니가 썼던 편질 지우고"
+    },
+    {
+      "id": "line-38",
+      "startMs": 160790,
+      "text": "미련 없이 후회 없이 잊어 줄 거야"
+    },
+    {
+      "id": "line-39",
+      "startMs": 166700,
+      "text": "너를 잊을래 너를 지울래"
+    },
+    {
+      "id": "line-40",
+      "startMs": 173190,
+      "text": "보여줄게 완전히 달라진 나"
+    },
+    {
+      "id": "line-41",
+      "startMs": 176470,
+      "text": "보여줄게 훨씬 더 예뻐진 나"
+    },
+    {
+      "id": "line-42",
+      "startMs": 180140,
+      "text": "바보처럼 사랑 때문에 떠난"
+    },
+    {
+      "id": "line-43",
+      "startMs": 183700,
+      "text": "너 때문에 울지 않을래"
+    },
+    {
+      "id": "line-44",
+      "startMs": 188480,
+      "text": "더 멋진 남잘 만나 꼭 보여줄게"
+    },
+    {
+      "id": "line-45",
+      "startMs": 192190,
+      "text": "너보다 행복한 나"
+    },
+    {
+      "id": "line-46",
+      "startMs": 195040,
+      "text": "너 없이도 슬프지 않아 무너지지않아"
+    },
+    {
+      "id": "line-47",
+      "startMs": 199970,
+      "text": "boy you gotta be aware"
+    }
+  ],
+  "translations": {
+    "version": 1,
+    "language": "zh",
+    "source": "ai",
+    "lines": [
+      {
+        "id": "line-1",
+        "text": "穿上我买给你的衣服",
+        "source": "ai",
+        "sourceHash": "bae9ac636b04d1848be9aa9c86759203"
+      },
+      {
+        "id": "line-2",
+        "text": "喷上我买给你的香水",
+        "source": "ai",
+        "sourceHash": "2a2eb09b129b3fd856a6a79787f8432e"
+      },
+      {
+        "id": "line-3",
+        "text": "现在你大概在见她吧",
+        "source": "ai",
+        "sourceHash": "d536d22c90108f297b9dc3e2722145b5"
+      },
+      {
+        "id": "line-4",
+        "text": "又在那里笑着吧",
+        "source": "ai",
+        "sourceHash": "02fe9dd05e607c3fca9b4d1f10f36886"
+      },
+      {
+        "id": "line-5",
+        "text": "就有那么好吗",
+        "source": "ai",
+        "sourceHash": "77afc552d2244571996cf1d3190107ca"
+      },
+      {
+        "id": "line-6",
+        "text": "好到能丢下我离开",
+        "source": "ai",
+        "sourceHash": "44711424e158c4d540aa3d1ebadf8e65"
+      },
+      {
+        "id": "line-7",
+        "text": "还要多少 要怎么做",
+        "source": "ai",
+        "sourceHash": "cb67c8507b65e102399f53904febfe94"
+      },
+      {
+        "id": "line-8",
+        "text": "我还得做得更好吗",
+        "source": "ai",
+        "sourceHash": "9339641e4a98c30b2b2249108e3b09ca"
+      },
+      {
+        "id": "line-9",
+        "text": "不管怎么想把你抹去",
+        "source": "ai",
+        "sourceHash": "9c279e4e0ac7e0c44c2b9bb230a6f6da"
+      },
+      {
+        "id": "line-10",
+        "text": "一起走过的日子有多少",
+        "source": "ai",
+        "sourceHash": "5282c1da8b23b666926b7a368b3b42b3"
+      },
+      {
+        "id": "line-11",
+        "text": "过去的时间太委屈",
+        "source": "ai",
+        "sourceHash": "6ee7b55b8ebd967a80314d31396b97e2"
+      },
+      {
+        "id": "line-12",
+        "text": "眼泪总是止不住地流",
+        "source": "ai",
+        "sourceHash": "da454a913bf615076db1f309f161c8e6"
+      },
+      {
+        "id": "line-13",
+        "text": "我会让你看到 完全不同的我",
+        "source": "ai",
+        "sourceHash": "4d22e0f0d1a5b098acb9483bc198b8c7"
+      },
+      {
+        "id": "line-14",
+        "text": "我会让你看到 变得更美的我",
+        "source": "ai",
+        "sourceHash": "9cb4be9d8bd058d49ecb8878785ef404"
+      },
+      {
+        "id": "line-15",
+        "text": "像傻瓜一样 因为爱而离开的",
+        "source": "ai",
+        "sourceHash": "d71d1294c857e8ecc689db624c37940d"
+      },
+      {
+        "id": "line-16",
+        "text": "我不会因为你而哭",
+        "source": "ai",
+        "sourceHash": "de001c0a242805dbb77428e7727d324c"
+      },
+      {
+        "id": "line-17",
+        "text": "我会遇到更帅的男人 一定让你看到",
+        "source": "ai",
+        "sourceHash": "8e3f0e7ddd3c207cada4c5cb052f5433"
+      },
+      {
+        "id": "line-18",
+        "text": "比你更幸福的我",
+        "source": "ai",
+        "sourceHash": "61841b3e651c3d8a13713d32d2db0cd6"
+      },
+      {
+        "id": "line-19",
+        "text": "没有你我也不难过 也不会崩溃",
+        "source": "ai",
+        "sourceHash": "4eef81e2b0fd42c914d5d7b9309e083d"
+      },
+      {
+        "id": "line-20",
+        "text": "boy you gotta be aware",
+        "source": "ai",
+        "sourceHash": "6b16ba3372edf16cdddd6e5b54e44952"
+      },
+      {
+        "id": "line-21",
+        "text": "清爽地换个发型",
+        "source": "ai",
+        "sourceHash": "7d26c270afb25fdf7820741fb00f6fc4"
+      },
+      {
+        "id": "line-22",
+        "text": "用心地化好妆",
+        "source": "ai",
+        "sourceHash": "f6426789b3510d94f732e22967f02bf8"
+      },
+      {
+        "id": "line-23",
+        "text": "高跟鞋配短裙 所有人都回头看我",
+        "source": "ai",
+        "sourceHash": "0bb29de4424fb507f6073f209b32a678"
+      },
+      {
+        "id": "line-24",
+        "text": "哪怕是偶然遇见你",
+        "source": "ai",
+        "sourceHash": "03587a0a4a4bb8d20454ade7be1b0060"
+      },
+      {
+        "id": "line-25",
+        "text": "用耀眼灿烂的笑容对我笑",
+        "source": "ai",
+        "sourceHash": "cac77d55aefc00c2ff4008d473c1f1b8"
+      },
+      {
+        "id": "line-26",
+        "text": "把惊讶的你留在身后",
+        "source": "ai",
+        "sourceHash": "85356f71d1a221da41dff03c7b90c2f8"
+      },
+      {
+        "id": "line-27",
+        "text": "想要嗒嗒嗒地向前走",
+        "source": "ai",
+        "sourceHash": "4a8fddef034e731bab56441e1d0f297a"
+      },
+      {
+        "id": "line-28",
+        "text": "会让你看到完全改变的我",
+        "source": "ai",
+        "sourceHash": "4d22e0f0d1a5b098acb9483bc198b8c7"
+      },
+      {
+        "id": "line-29",
+        "text": "会让你看到更加漂亮的我",
+        "source": "ai",
+        "sourceHash": "9cb4be9d8bd058d49ecb8878785ef404"
+      },
+      {
+        "id": "line-30",
+        "text": "像傻瓜一样 因为爱情",
+        "source": "ai",
+        "sourceHash": "8cfac0d2dd61f55d951a3c43772cf7f2"
+      },
+      {
+        "id": "line-31",
+        "text": "不会因为你而哭泣",
+        "source": "ai",
+        "sourceHash": "de001c0a242805dbb77428e7727d324c"
+      },
+      {
+        "id": "line-32",
+        "text": "会遇见更帅气的男人 一定让你看到",
+        "source": "ai",
+        "sourceHash": "8e3f0e7ddd3c207cada4c5cb052f5433"
+      },
+      {
+        "id": "line-33",
+        "text": "比你更幸福的我",
+        "source": "ai",
+        "sourceHash": "61841b3e651c3d8a13713d32d2db0cd6"
+      },
+      {
+        "id": "line-34",
+        "text": "没有你也不悲伤 不会崩溃",
+        "source": "ai",
+        "sourceHash": "4eef81e2b0fd42c914d5d7b9309e083d"
+      },
+      {
+        "id": "line-35",
+        "text": "boy you gotta be aware",
+        "source": "ai",
+        "sourceHash": "6b16ba3372edf16cdddd6e5b54e44952"
+      },
+      {
+        "id": "line-36",
+        "text": "丢掉你给过的戒指",
+        "source": "ai",
+        "sourceHash": "77857fecf4606ae05531ccd0a9aacd3d"
+      },
+      {
+        "id": "line-37",
+        "text": "删掉你写过的信",
+        "source": "ai",
+        "sourceHash": "2cfca5ac9f5c410bc4d84260b9740461"
+      },
+      {
+        "id": "line-38",
+        "text": "毫无留恋 毫不后悔地忘记你",
+        "source": "ai",
+        "sourceHash": "e1416102823615fb60dbd017a0b2588c"
+      },
+      {
+        "id": "line-39",
+        "text": "我要忘记你 我要抹去你",
+        "source": "ai",
+        "sourceHash": "4a78f67e0314c65e023c3214376fcbe6"
+      },
+      {
+        "id": "line-40",
+        "text": "会让你看到完全改变的我",
+        "source": "ai",
+        "sourceHash": "4d22e0f0d1a5b098acb9483bc198b8c7"
+      },
+      {
+        "id": "line-41",
+        "text": "会让你看到更加漂亮的我",
+        "source": "ai",
+        "sourceHash": "9cb4be9d8bd058d49ecb8878785ef404"
+      },
+      {
+        "id": "line-42",
+        "text": "像傻瓜一样 因为爱情而离开的",
+        "source": "ai",
+        "sourceHash": "d71d1294c857e8ecc689db624c37940d"
+      },
+      {
+        "id": "line-43",
+        "text": "不会因为你而哭泣",
+        "source": "ai",
+        "sourceHash": "de001c0a242805dbb77428e7727d324c"
+      },
+      {
+        "id": "line-44",
+        "text": "会遇见更帅气的男人 一定让你看到",
+        "source": "ai",
+        "sourceHash": "8e3f0e7ddd3c207cada4c5cb052f5433"
+      },
+      {
+        "id": "line-45",
+        "text": "比你更幸福的我",
+        "source": "ai",
+        "sourceHash": "61841b3e651c3d8a13713d32d2db0cd6"
+      },
+      {
+        "id": "line-46",
+        "text": "没有你也不悲伤 不会崩溃",
+        "source": "ai",
+        "sourceHash": "4eef81e2b0fd42c914d5d7b9309e083d"
+      },
+      {
+        "id": "line-47",
+        "text": "boy you gotta be aware",
+        "source": "ai",
+        "sourceHash": "6b16ba3372edf16cdddd6e5b54e44952"
+      }
+    ],
+    "updatedAt": "2026-10-30T16:48:33.911Z",
+    "provider": "codebuddy",
+    "model": "deepseek-v4.1-flash"
+  }
+}

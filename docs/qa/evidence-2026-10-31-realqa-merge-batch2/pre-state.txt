@@ -1,0 +1,32 @@
+# pre-merge state  2026-10-30T20:30:03Z
+## listener on 28794
+COMMAND   PID        USER   FD   TYPE             DEVICE SIZE/OFF NODE NAME
+node    74097 zzymima0000   17u  IPv4 0x452e6078c83e6414      0t0  TCP *:28794 (LISTEN)
+## process
+  PID  PPID STARTED                      COMMAND
+74097     1 Sat Oct 31 04:21:07 2026     node server/index.mjs
+## cwd
+n/Users/zzymima0000/Developer/coding/1.Active/040-ing-才艺展示厅
+## service env (essentials)
+HOST=0.0.0.0
+LOG_FORMAT=json
+MEDIA_ROOT=/Users/zzymima0000/Developer/coding/1.Active/040-ing-才艺展示厅/var/vocal-v31-work/real-qa-20261030/media
+PORT=28794
+SQLITE_DB_PATH=/Users/zzymima0000/Developer/coding/1.Active/040-ing-才艺展示厅/var/vocal-v31-work/real-qa-20261030/db/qa.db
+VOCAL_IMPORT_WORKER=0
+## db files
+-rw-r--r--@ 1 zzymima0000  staff  860160 Oct 31 04:20 var/vocal-v31-work/real-qa-20261030/db/qa.db
+-rw-r--r--@ 1 zzymima0000  staff   32768 Oct 31 04:21 var/vocal-v31-work/real-qa-20261030/db/qa.db-shm
+-rw-r--r--@ 1 zzymima0000  staff       0 Oct 31 04:20 var/vocal-v31-work/real-qa-20261030/db/qa.db-wal
+## db hashes
+63f888b707f05fbdd23555eec9e8f14fe618398f43809edcf172149a756160c4  var/vocal-v31-work/real-qa-20261030/db/qa.db
+e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855  var/vocal-v31-work/real-qa-20261030/db/qa.db-wal
+fd4c9fda9cd3f9ae7c962b0ddf37232294d55580e1aa165aa06129b8549389eb  var/vocal-v31-work/real-qa-20261030/db/qa.db-shm
+## source work.db
+-rw-r--r--  1 zzymima0000  staff  1097728 Oct 31 04:28 var/vocal-v31-work/translation-all-20261031/work.db
+-rw-r--r--  1 zzymima0000  staff    32768 Oct 31 04:29 var/vocal-v31-work/translation-all-20261031/work.db-shm
+-rw-r--r--  1 zzymima0000  staff        0 Oct 31 04:29 var/vocal-v31-work/translation-all-20261031/work.db-wal
+4cf1caaf5f21db0ff235a8f704854afedc09dfd24c78c8f3e28224ca7340c306  var/vocal-v31-work/translation-all-20261031/work.db
+ok
+## other listeners 2879x
+node      74097 zzymima0000   17u  IPv4 0x452e6078c83e6414      0t0  TCP *:28794 (LISTEN)

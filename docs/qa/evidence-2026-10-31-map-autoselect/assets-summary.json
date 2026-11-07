@@ -1,0 +1,43 @@
+{
+  "generatedAt": "2026-10-31T02:29:42.794Z",
+  "apk": {
+    "path": "android/app/build/outputs/apk/debug/app-debug.apk",
+    "sizeBytes": 14303703,
+    "sha256": "76a0b6791878cd19d77e2994e7942551a33604e442c32a813e904c687d0fd300",
+    "packageName": "com.wanghoufan.dancelibrary.dev",
+    "versionCode": 18,
+    "versionName": "1.1.15"
+  },
+  "assets": {
+    "distFiles": 205,
+    "mismatch": 0,
+    "extraInSynced": [
+      "cordova.js",
+      "cordova_plugins.js"
+    ],
+    "compared": "dist/** ↔ android/app/src/main/assets/public/** ↔ APK assets/public/**（sha256 三方一致）",
+    "keyFiles": [
+      {
+        "file": "assets/ScoreReader-DB3l_ak9.js",
+        "sha256": "826290490718118778b93855eb40c77fc8630de2c80c7c9c258cb892523853be"
+      },
+      {
+        "file": "assets/index-CIXvh_pW.css",
+        "sha256": "006d696b264a1ee0b249a5d5744f6b2428953c2d49091debd48aab98805399b5"
+      },
+      {
+        "file": "assets/index-DkO7qQZh.js",
+        "sha256": "eacee088740d14b379aa2c13dc77de5fa3bed91bd8c9dd9db87da6df356d9bfe"
+      },
+      {
+        "file": "index.html",
+        "sha256": "42942c29b135b4f2b1f67ff3a0d09fdedca19ae73970f6efb3e520e1d6417357"
+      }
+    ]
+  },
+  "newCodeInBundle": {
+    "needle": "没有自动选段",
+    "bundle": "assets/public/assets/index-DkO7qQZh.js",
+    "hits": 1
+  }
+}

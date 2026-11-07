@@ -1,0 +1,491 @@
+{
+  "record": {
+    "id": "93e8499b-b99b-5307-82a5-7cff189073dd",
+    "title": "Insomnia (불면증)",
+    "artist": "辉星",
+    "language": "ko",
+    "startedAt": "2026-10-30T16:48:57.741Z",
+    "finishedAt": "2026-10-30T16:49:14.118Z",
+    "status": "COMPLETE",
+    "total": 40,
+    "translated": 40,
+    "cached": 0,
+    "lrcReused": 0,
+    "translatedLines": 40,
+    "remaining": 0,
+    "failed": [],
+    "lyricsUnchanged": true,
+    "translationSources": {
+      "ai": 40
+    },
+    "samples": [
+      {
+        "id": "line-1",
+        "text": "我奔跑的路是 Love, Love, Love, Love",
+        "source": "ai"
+      },
+      {
+        "id": "line-2",
+        "text": "但那条路上全是陷阱，陷阱，陷阱，陷阱",
+        "source": "ai"
+      },
+      {
+        "id": "line-3",
+        "text": "无法避开的陷阱是心中的恐惧，恐惧，恐惧，恐惧",
+        "source": "ai"
+      }
+    ]
+  },
+  "lyrics": [
+    {
+      "id": "line-1",
+      "startMs": 16680,
+      "text": "내가 달리는 길은 Love, Love, Love, Love"
+    },
+    {
+      "id": "line-2",
+      "startMs": 19490,
+      "text": "허나 그 길엔 온통 덫, 덫, 덫, 덫"
+    },
+    {
+      "id": "line-3",
+      "startMs": 23500,
+      "text": "피할 수 없는 함정은 맘의 겁, 겁, 겁, 겁"
+    },
+    {
+      "id": "line-4",
+      "startMs": 27210,
+      "text": "마치 늪처럼 용기를 삼켜 점점.."
+    },
+    {
+      "id": "line-5",
+      "startMs": 30340,
+      "text": "난 작아져 사라져가는 얼굴의 밝은 표정"
+    },
+    {
+      "id": "line-6",
+      "startMs": 37840,
+      "text": "내 고백에 등돌린 채 외면할 까봐 자꾸 두려워"
+    },
+    {
+      "id": "line-7",
+      "startMs": 45400,
+      "text": "바늘 같은 걱정을 베고서 오지 않는 잠을 청하고"
+    },
+    {
+      "id": "line-8",
+      "startMs": 53300,
+      "text": "꿈보다 더 생생한 네 생각 때문에 끝내 밤을 새워"
+    },
+    {
+      "id": "line-9",
+      "startMs": 60600,
+      "text": "Feels like insomnia, ah ah"
+    },
+    {
+      "id": "line-10",
+      "startMs": 64470,
+      "text": "Feels like insomnia, ah ah"
+    },
+    {
+      "id": "line-11",
+      "startMs": 68160,
+      "text": "Feels like insomnia, ah ah"
+    },
+    {
+      "id": "line-12",
+      "startMs": 71850,
+      "text": "Feels like insomnia, ah ah"
+    },
+    {
+      "id": "line-13",
+      "startMs": 77100,
+      "text": "너라는 곳을 향해 외로워도 가는 길"
+    },
+    {
+      "id": "line-14",
+      "startMs": 79470,
+      "text": "Love, Love, Love, Love"
+    },
+    {
+      "id": "line-15",
+      "startMs": 80789,
+      "text": "몇 번을 넘어져도 일어서 갈 테지"
+    },
+    {
+      "id": "line-16",
+      "startMs": 83390,
+      "text": "But, But, But, But"
+    },
+    {
+      "id": "line-17",
+      "startMs": 84730,
+      "text": "잠마저 못 들도록 너를 보다 걸려든"
+    },
+    {
+      "id": "line-18",
+      "startMs": 86539,
+      "text": "병, 병, 병, 병"
+    },
+    {
+      "id": "line-19",
+      "startMs": 88480,
+      "text": "네 사랑 갖지 못하면 나을 수 없지 영영.."
+    },
+    {
+      "id": "line-20",
+      "startMs": 91539,
+      "text": "영원토록 죽도록 너의 허락만 기다리고"
+    },
+    {
+      "id": "line-21",
+      "startMs": 99110,
+      "text": "몇 년이든 몇 생애든 너를 위해 존재하겠지만"
+    },
+    {
+      "id": "line-22",
+      "startMs": 107390,
+      "text": "바늘 같은 걱정을 베고서 오지 않는 잠을 청하고"
+    },
+    {
+      "id": "line-23",
+      "startMs": 114360,
+      "text": "꿈보다 더 생생한 네 생각 때문에 끝내 밤을 새워"
+    },
+    {
+      "id": "line-24",
+      "startMs": 121980,
+      "text": "Feels like insomnia, ah ah"
+    },
+    {
+      "id": "line-25",
+      "startMs": 125730,
+      "text": "Feels like insomnia, ah ah"
+    },
+    {
+      "id": "line-26",
+      "startMs": 129300,
+      "text": "Feels like insomnia, ah ah"
+    },
+    {
+      "id": "line-27",
+      "startMs": 133500,
+      "text": "Feels like insomnia, ah ah"
+    },
+    {
+      "id": "line-28",
+      "startMs": 138180,
+      "text": "ah.. 불타는 이 사랑.."
+    },
+    {
+      "id": "line-29",
+      "startMs": 143740,
+      "text": "그리움에 지쳐 내리는"
+    },
+    {
+      "id": "line-30",
+      "startMs": 146800,
+      "text": "비 같은 눈물에 젖어도 식지 않는걸.."
+    },
+    {
+      "id": "line-31",
+      "startMs": 153680,
+      "text": "매일 입술을 물고서 오지 않는 잠을 청하고"
+    },
+    {
+      "id": "line-32",
+      "startMs": 159810,
+      "text": "꿈보다 더 생생한 네 생각 때문에 끝내 밤을 새워"
+    },
+    {
+      "id": "line-33",
+      "startMs": 167430,
+      "text": "Feels like insomnia, ah ah"
+    },
+    {
+      "id": "line-34",
+      "startMs": 171620,
+      "text": "Feels like insomnia, ah ah"
+    },
+    {
+      "id": "line-35",
+      "startMs": 175250,
+      "text": "Feels like insomnia, ah ah"
+    },
+    {
+      "id": "line-36",
+      "startMs": 179250,
+      "text": "Feels like insomnia, ah ah"
+    },
+    {
+      "id": "line-37",
+      "startMs": 183000,
+      "text": "Feels like insomnia, ah ah"
+    },
+    {
+      "id": "line-38",
+      "startMs": 187000,
+      "text": "Feels like insomnia, ah ah"
+    },
+    {
+      "id": "line-39",
+      "startMs": 190630,
+      "text": "Feels like insomnia, ah ah"
+    },
+    {
+      "id": "line-40",
+      "startMs": 194440,
+      "text": "Feels like insomnia, ah ah"
+    }
+  ],
+  "translations": {
+    "version": 1,
+    "language": "zh",
+    "source": "ai",
+    "lines": [
+      {
+        "id": "line-1",
+        "text": "我奔跑的路是 Love, Love, Love, Love",
+        "source": "ai",
+        "sourceHash": "b41bbdbee33f625069d091b4d2bc612e"
+      },
+      {
+        "id": "line-2",
+        "text": "但那条路上全是陷阱，陷阱，陷阱，陷阱",
+        "source": "ai",
+        "sourceHash": "7ec03bb821c65c1178b4c85a1151f804"
+      },
+      {
+        "id": "line-3",
+        "text": "无法避开的陷阱是心中的恐惧，恐惧，恐惧，恐惧",
+        "source": "ai",
+        "sourceHash": "7d1a7a61cc6116faffcfc796857b8305"
+      },
+      {
+        "id": "line-4",
+        "text": "像沼泽一样吞掉勇气，渐渐地..",
+        "source": "ai",
+        "sourceHash": "f29aa948478cc9c64dd415069807c1b4"
+      },
+      {
+        "id": "line-5",
+        "text": "我越来越渺小，脸上明朗的表情渐渐消失",
+        "source": "ai",
+        "sourceHash": "db0f4b5fecbee06bb4011ef35f0acdd0"
+      },
+      {
+        "id": "line-6",
+        "text": "总害怕你面对我的告白转过身去、避而不见",
+        "source": "ai",
+        "sourceHash": "cc04a895283599539727c3fd3f62832e"
+      },
+      {
+        "id": "line-7",
+        "text": "枕着针尖般的担忧，祈求迟迟不来的睡眠",
+        "source": "ai",
+        "sourceHash": "0c66c87ec6747863920e7ae99b5cd125"
+      },
+      {
+        "id": "line-8",
+        "text": "因为对你的思念比梦更清晰，最终熬了一整夜",
+        "source": "ai",
+        "sourceHash": "2408e1eab88a96eeb1b4df48d6a67672"
+      },
+      {
+        "id": "line-9",
+        "text": "Feels like insomnia, ah ah",
+        "source": "ai",
+        "sourceHash": "d103461384ae4f25174562ed2c526b3a"
+      },
+      {
+        "id": "line-10",
+        "text": "Feels like insomnia, ah ah",
+        "source": "ai",
+        "sourceHash": "d103461384ae4f25174562ed2c526b3a"
+      },
+      {
+        "id": "line-11",
+        "text": "Feels like insomnia, ah ah",
+        "source": "ai",
+        "sourceHash": "d103461384ae4f25174562ed2c526b3a"
+      },
+      {
+        "id": "line-12",
+        "text": "Feels like insomnia, ah ah",
+        "source": "ai",
+        "sourceHash": "d103461384ae4f25174562ed2c526b3a"
+      },
+      {
+        "id": "line-13",
+        "text": "朝着名为你的地方，即使孤独也要走的路",
+        "source": "ai",
+        "sourceHash": "84895ac47db34d02c2f7b30bf5af12ea"
+      },
+      {
+        "id": "line-14",
+        "text": "Love, Love, Love, Love",
+        "source": "ai",
+        "sourceHash": "12caf24838b850848427cb144150b2e0"
+      },
+      {
+        "id": "line-15",
+        "text": "无论跌倒几次，都会站起来走下去",
+        "source": "ai",
+        "sourceHash": "157ee9d34035914470bd4856e634bf47"
+      },
+      {
+        "id": "line-16",
+        "text": "But, But, But, But",
+        "source": "ai",
+        "sourceHash": "3842dcd6f06673dbeb266712ec1c6f6e"
+      },
+      {
+        "id": "line-17",
+        "text": "为了连觉都睡不着，一直看着你而染上的",
+        "source": "ai",
+        "sourceHash": "73b0d55d8a45542893f69c0d88f618c2"
+      },
+      {
+        "id": "line-18",
+        "text": "病，病，病，病",
+        "source": "ai",
+        "sourceHash": "bb043a74ef525026a027a5ff97bd8867"
+      },
+      {
+        "id": "line-19",
+        "text": "得不到你的爱，就永远治不好..",
+        "source": "ai",
+        "sourceHash": "179b7948aefdf9234a99b128bc4eb902"
+      },
+      {
+        "id": "line-20",
+        "text": "永远地、死一般地只等待你的允许",
+        "source": "ai",
+        "sourceHash": "6388306c70a828cac2c1a5630f46a6ae"
+      },
+      {
+        "id": "line-21",
+        "text": "无论几年、几辈子，我都会为你而存在",
+        "source": "ai",
+        "sourceHash": "3740826367e05cf0dccb602ff7e32e48"
+      },
+      {
+        "id": "line-22",
+        "text": "枕着针尖般的担忧，祈求迟迟不来的睡眠",
+        "source": "ai",
+        "sourceHash": "0c66c87ec6747863920e7ae99b5cd125"
+      },
+      {
+        "id": "line-23",
+        "text": "因为对你的思念比梦更清晰，最终熬了一整夜",
+        "source": "ai",
+        "sourceHash": "2408e1eab88a96eeb1b4df48d6a67672"
+      },
+      {
+        "id": "line-24",
+        "text": "Feels like insomnia, ah ah",
+        "source": "ai",
+        "sourceHash": "d103461384ae4f25174562ed2c526b3a"
+      },
+      {
+        "id": "line-25",
+        "text": "Feels like insomnia, ah ah",
+        "source": "ai",
+        "sourceHash": "d103461384ae4f25174562ed2c526b3a"
+      },
+      {
+        "id": "line-26",
+        "text": "Feels like insomnia, ah ah",
+        "source": "ai",
+        "sourceHash": "d103461384ae4f25174562ed2c526b3a"
+      },
+      {
+        "id": "line-27",
+        "text": "Feels like insomnia, ah ah",
+        "source": "ai",
+        "sourceHash": "d103461384ae4f25174562ed2c526b3a"
+      },
+      {
+        "id": "line-28",
+        "text": "ah.. 这份燃烧的爱情..",
+        "source": "ai",
+        "sourceHash": "9cae08b945687ab36afe6bb8a5341b91"
+      },
+      {
+        "id": "line-29",
+        "text": "思念中疲惫落下",
+        "source": "ai",
+        "sourceHash": "84e900059b15b08b8a6edf6fe10d8b7d"
+      },
+      {
+        "id": "line-30",
+        "text": "纵使被雨一般的泪水浸湿 也不会冷却..",
+        "source": "ai",
+        "sourceHash": "324e4e531a73db15a5c9a4c179ca16bd"
+      },
+      {
+        "id": "line-31",
+        "text": "每天咬着嘴唇 祈求那不来的睡意",
+        "source": "ai",
+        "sourceHash": "4fff8d2cd256a34c6378376b60eb7bda"
+      },
+      {
+        "id": "line-32",
+        "text": "因为比梦更鲜活的你的念头 终究彻夜未眠",
+        "source": "ai",
+        "sourceHash": "2408e1eab88a96eeb1b4df48d6a67672"
+      },
+      {
+        "id": "line-33",
+        "text": "Feels like insomnia, ah ah",
+        "source": "ai",
+        "sourceHash": "d103461384ae4f25174562ed2c526b3a"
+      },
+      {
+        "id": "line-34",
+        "text": "Feels like insomnia, ah ah",
+        "source": "ai",
+        "sourceHash": "d103461384ae4f25174562ed2c526b3a"
+      },
+      {
+        "id": "line-35",
+        "text": "Feels like insomnia, ah ah",
+        "source": "ai",
+        "sourceHash": "d103461384ae4f25174562ed2c526b3a"
+      },
+      {
+        "id": "line-36",
+        "text": "Feels like insomnia, ah ah",
+        "source": "ai",
+        "sourceHash": "d103461384ae4f25174562ed2c526b3a"
+      },
+      {
+        "id": "line-37",
+        "text": "Feels like insomnia, ah ah",
+        "source": "ai",
+        "sourceHash": "d103461384ae4f25174562ed2c526b3a"
+      },
+      {
+        "id": "line-38",
+        "text": "Feels like insomnia, ah ah",
+        "source": "ai",
+        "sourceHash": "d103461384ae4f25174562ed2c526b3a"
+      },
+      {
+        "id": "line-39",
+        "text": "Feels like insomnia, ah ah",
+        "source": "ai",
+        "sourceHash": "d103461384ae4f25174562ed2c526b3a"
+      },
+      {
+        "id": "line-40",
+        "text": "Feels like insomnia, ah ah",
+        "source": "ai",
+        "sourceHash": "d103461384ae4f25174562ed2c526b3a"
+      }
+    ],
+    "updatedAt": "2026-10-30T16:49:14.117Z",
+    "provider": "codebuddy",
+    "model": "deepseek-v4.1-flash"
+  }
+}

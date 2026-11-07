@@ -1,0 +1,2 @@
+:root, [data-theme="dark"] { --bg:#060b12; --surface:#0d1621; --surface-2:#111d2a; --primary:#1677ff; --text:#f5f8ff; --muted:#94a3b8; --line:#23354b; color-scheme:dark; }
+[data-theme="light"] { --bg:#f6f8fb; --surface:#fff; --surface-2:#eef3f9; --text:#101828; --muted:#667085; --line:#d5dfeb; color-scheme:light; }

@@ -1,0 +1,391 @@
+{
+  "capturedAt": "2026-10-30T20:30:13.001Z",
+  "songs": [
+    {
+      "id": "01c2a4cd-528c-5316-b864-5ce24f86e280",
+      "title": "보여줄게",
+      "revision": 3,
+      "lines": 47,
+      "manual": [
+        {
+          "id": "line-4",
+          "text": "又在笑着吧",
+          "sourceHash": "02fe9dd05e607c3fca9b4d1f10f36886"
+        },
+        {
+          "id": "line-10",
+          "text": "一起走过的日子那么多",
+          "sourceHash": "5282c1da8b23b666926b7a368b3b42b3"
+        },
+        {
+          "id": "line-11",
+          "text": "过去的时光让我太委屈",
+          "sourceHash": "6ee7b55b8ebd967a80314d31396b97e2"
+        },
+        {
+          "id": "line-13",
+          "text": "会让你看到 完全改变的我",
+          "sourceHash": "4d22e0f0d1a5b098acb9483bc198b8c7"
+        },
+        {
+          "id": "line-14",
+          "text": "会让你看到 更加漂亮的我",
+          "sourceHash": "9cb4be9d8bd058d49ecb8878785ef404"
+        },
+        {
+          "id": "line-15",
+          "text": "像傻瓜一样 因为爱情而离开的",
+          "sourceHash": "d71d1294c857e8ecc689db624c37940d"
+        },
+        {
+          "id": "line-16",
+          "text": "不会因为你而哭泣",
+          "sourceHash": "de001c0a242805dbb77428e7727d324c"
+        },
+        {
+          "id": "line-17",
+          "text": "会遇见更帅气的男人 一定让你看到",
+          "sourceHash": "8e3f0e7ddd3c207cada4c5cb052f5433"
+        },
+        {
+          "id": "line-19",
+          "text": "没有你也不悲伤 不会崩溃",
+          "sourceHash": "4eef81e2b0fd42c914d5d7b9309e083d"
+        },
+        {
+          "id": "line-28",
+          "text": "会让你看到 完全改变的我",
+          "sourceHash": "4d22e0f0d1a5b098acb9483bc198b8c7"
+        },
+        {
+          "id": "line-29",
+          "text": "会让你看到 更加漂亮的我",
+          "sourceHash": "9cb4be9d8bd058d49ecb8878785ef404"
+        },
+        {
+          "id": "line-40",
+          "text": "会让你看到 完全改变的我",
+          "sourceHash": "4d22e0f0d1a5b098acb9483bc198b8c7"
+        },
+        {
+          "id": "line-41",
+          "text": "会让你看到 更加漂亮的我",
+          "sourceHash": "9cb4be9d8bd058d49ecb8878785ef404"
+        }
+      ]
+    },
+    {
+      "id": "4528bfad-2e59-5425-96a9-3581dd2a810c",
+      "title": "덤더럼 (Dumhdurum)",
+      "revision": 6,
+      "lines": 44,
+      "manual": [
+        {
+          "id": "line-1",
+          "text": "Hey 这感觉有点太奇怪了",
+          "sourceHash": "2986bdc4eb23f0357b63b645083f35c4"
+        },
+        {
+          "id": "line-2",
+          "text": "说要为了我放我走的那句话",
+          "sourceHash": "f688a9f222d13748853645515e61f9ea"
+        },
+        {
+          "id": "line-5",
+          "text": "华丽却藏起来的模样",
+          "sourceHash": "fa8371945f035317310cf99cecec19b2"
+        },
+        {
+          "id": "line-7",
+          "text": "别担心 Baby I'm so fine",
+          "sourceHash": "4282f09c6b65e149584c951cb19fb295"
+        },
+        {
+          "id": "line-10",
+          "text": "比谁都冷漠的你离开了 这样也好…",
+          "sourceHash": "99a9ec331089a247613e6fc31a090d1c"
+        },
+        {
+          "id": "line-12",
+          "text": "并不怎么难过 也没有流泪",
+          "sourceHash": "ec82428ed491919296af259ee0aed719"
+        },
+        {
+          "id": "line-16",
+          "text": "别说这像是谎言",
+          "sourceHash": "23bdf8b781bffbd8d1a24ea5e11d7d64"
+        },
+        {
+          "id": "line-23",
+          "text": "华丽却藏起来的模样",
+          "sourceHash": "fa8371945f035317310cf99cecec19b2"
+        },
+        {
+          "id": "line-26",
+          "text": "不是的，我没事，我很好",
+          "sourceHash": "4489e5b9adc06f605d69b47f35b5a509"
+        },
+        {
+          "id": "line-28",
+          "text": "比谁都冷漠的你离开了 这样也好…",
+          "sourceHash": "99a9ec331089a247613e6fc31a090d1c"
+        },
+        {
+          "id": "line-30",
+          "text": "并不怎么难过 也没有流泪",
+          "sourceHash": "ec82428ed491919296af259ee0aed719"
+        },
+        {
+          "id": "line-31",
+          "text": "早已全部结束的我的心 덤더럼 덤덤",
+          "sourceHash": "5710e3be43b916ad0635d9aa48ecc19b"
+        },
+        {
+          "id": "line-34",
+          "text": "别说这像是谎言",
+          "sourceHash": "23bdf8b781bffbd8d1a24ea5e11d7d64"
+        },
+        {
+          "id": "line-43",
+          "text": "别说这像是谎言",
+          "sourceHash": "23bdf8b781bffbd8d1a24ea5e11d7d64"
+        }
+      ]
+    },
+    {
+      "id": "93e8499b-b99b-5307-82a5-7cff189073dd",
+      "title": "Insomnia (불면증)",
+      "revision": 2,
+      "lines": 40,
+      "manual": [
+        {
+          "id": "line-2",
+          "text": "但那条路上全是圈套，圈套，圈套，圈套",
+          "sourceHash": "7ec03bb821c65c1178b4c85a1151f804"
+        },
+        {
+          "id": "line-8",
+          "text": "因为对你的思念比梦还要鲜活 最终还是熬了一整夜",
+          "sourceHash": "2408e1eab88a96eeb1b4df48d6a67672"
+        },
+        {
+          "id": "line-17",
+          "text": "看着你，看到连觉都睡不着的",
+          "sourceHash": "73b0d55d8a45542893f69c0d88f618c2"
+        },
+        {
+          "id": "line-20",
+          "text": "永远地、拼命地只等你的允许",
+          "sourceHash": "6388306c70a828cac2c1a5630f46a6ae"
+        },
+        {
+          "id": "line-23",
+          "text": "因为对你的思念比梦还要鲜活 最终还是熬了一整夜",
+          "sourceHash": "2408e1eab88a96eeb1b4df48d6a67672"
+        },
+        {
+          "id": "line-29",
+          "text": "因思念而疲惫落下的",
+          "sourceHash": "84e900059b15b08b8a6edf6fe10d8b7d"
+        },
+        {
+          "id": "line-32",
+          "text": "因为对你的思念比梦还要鲜活 最终还是熬了一整夜",
+          "sourceHash": "2408e1eab88a96eeb1b4df48d6a67672"
+        }
+      ]
+    },
+    {
+      "id": "c84eb5d2-3865-5943-8abb-7ee6bfbee1fc",
+      "title": "베베 (BABE)",
+      "revision": 2,
+      "lines": 65,
+      "manual": [
+        {
+          "id": "line-10",
+          "text": "就这样 呃 这样 呃",
+          "sourceHash": "def44c46373970aec91891a4ad9d6acd"
+        },
+        {
+          "id": "line-12",
+          "text": "比昨天更",
+          "sourceHash": "e17d012e3df90ad6112df411706f3afd"
+        },
+        {
+          "id": "line-13",
+          "text": "我变得更奇怪了",
+          "sourceHash": "9382c897b29f55b63aba5fe7b5bd24a8"
+        },
+        {
+          "id": "line-15",
+          "text": "老是觉得自己不像自己",
+          "sourceHash": "673683f257b319a1a4e022f63537e306"
+        },
+        {
+          "id": "line-29",
+          "text": "好像又想听了",
+          "sourceHash": "02513be3881bc5bf2e36fe7d6e7166d9"
+        },
+        {
+          "id": "line-34",
+          "text": "是不是施了什么魔法 求求你了嘛",
+          "sourceHash": "37d7725c90de4f11b186a38539afdaf6"
+        },
+        {
+          "id": "line-37",
+          "text": "身子怎么这么不听使唤 babe",
+          "sourceHash": "ef7e0100bbf0f858cdf8aa573105503f"
+        },
+        {
+          "id": "line-38",
+          "text": "这就是撒娇没错 多疼疼我嘛",
+          "sourceHash": "c8796b5bb5b4a640683d52b607202148"
+        },
+        {
+          "id": "line-39",
+          "text": "多疼疼我嘛",
+          "sourceHash": "0cfbb58d418dcb1e9e9e3d29a59cf98e"
+        },
+        {
+          "id": "line-40",
+          "text": "多疼疼我嘛",
+          "sourceHash": "0cfbb58d418dcb1e9e9e3d29a59cf98e"
+        },
+        {
+          "id": "line-41",
+          "text": "多疼疼我嘛",
+          "sourceHash": "0cfbb58d418dcb1e9e9e3d29a59cf98e"
+        },
+        {
+          "id": "line-42",
+          "text": "多疼疼我嘛",
+          "sourceHash": "0cfbb58d418dcb1e9e9e3d29a59cf98e"
+        },
+        {
+          "id": "line-43",
+          "text": "多疼疼我嘛",
+          "sourceHash": "0cfbb58d418dcb1e9e9e3d29a59cf98e"
+        },
+        {
+          "id": "line-44",
+          "text": "多疼疼我嘛",
+          "sourceHash": "0cfbb58d418dcb1e9e9e3d29a59cf98e"
+        },
+        {
+          "id": "line-45",
+          "text": "多疼疼我嘛",
+          "sourceHash": "0cfbb58d418dcb1e9e9e3d29a59cf98e"
+        },
+        {
+          "id": "line-49",
+          "text": "看着你的时候 不知不觉",
+          "sourceHash": "c24e042d8792d3cd158b4c6960d028ed"
+        },
+        {
+          "id": "line-50",
+          "text": "我好像想听",
+          "sourceHash": "88fa1acfcde0d9c9b96f3fd859865935"
+        },
+        {
+          "id": "line-52",
+          "text": "你让我 19 19 19",
+          "sourceHash": "704befb6241834fb7159a84137f216eb"
+        },
+        {
+          "id": "line-53",
+          "text": "你让我 17 17 17",
+          "sourceHash": "ae5d0a9099a532ef1c6b2cd634ce5663"
+        },
+        {
+          "id": "line-54",
+          "text": "我感觉像 15 15 15",
+          "sourceHash": "513765919a90526ae434f44ec7245ee0"
+        }
+      ]
+    },
+    {
+      "id": "f259781d-4da0-5a88-a230-cace8f8c57b3",
+      "title": "사뿐사뿐",
+      "revision": 3,
+      "lines": 91,
+      "manual": [
+        {
+          "id": "line-16",
+          "text": "跟着我转过来的头",
+          "sourceHash": "9ca4fddc68c405836de0356b9ffa3a17"
+        },
+        {
+          "id": "line-20",
+          "text": "阳光照在我身上",
+          "sourceHash": "c5aeb4fc1c6a342444d83f54569e7d51"
+        },
+        {
+          "id": "line-24",
+          "text": "就算做梦 你也会看到我",
+          "sourceHash": "a8825b0a55a8c4ec84557ac7ce3ea274"
+        },
+        {
+          "id": "line-51",
+          "text": "阳光照在我身上",
+          "sourceHash": "c5aeb4fc1c6a342444d83f54569e7d51"
+        },
+        {
+          "id": "line-55",
+          "text": "就算做梦 你也会看到我",
+          "sourceHash": "a8825b0a55a8c4ec84557ac7ce3ea274"
+        },
+        {
+          "id": "line-56",
+          "text": "烦恼 Stop it",
+          "sourceHash": "ea02163a4bf4159f96a9d9b8c78e97fd"
+        },
+        {
+          "id": "line-57",
+          "text": "靠近我 Baby come on",
+          "sourceHash": "44c6dee75b91b1c042e606e8a7198d52"
+        },
+        {
+          "id": "line-58",
+          "text": "向你轻轻地走去",
+          "sourceHash": "2000501321446b074932c60699864839"
+        },
+        {
+          "id": "line-61",
+          "text": "会吓你一跳",
+          "sourceHash": "0f9bf71d4fb4ff0dea561c42653d51e1"
+        },
+        {
+          "id": "line-62",
+          "text": "轻轻地走去",
+          "sourceHash": "33c96b5fa5886621e0e51eb692f86024"
+        },
+        {
+          "id": "line-64",
+          "text": "会轻轻抱住你",
+          "sourceHash": "17a0a20eacdbe56ac26ac152f0ba067d"
+        },
+        {
+          "id": "line-65",
+          "text": "会吓你一跳",
+          "sourceHash": "0f9bf71d4fb4ff0dea561c42653d51e1"
+        },
+        {
+          "id": "line-76",
+          "text": "请飞得更高些",
+          "sourceHash": "0346ee539f432fa2acb87fc29ce089f2"
+        },
+        {
+          "id": "line-79",
+          "text": "轻轻飞来、颤抖着的",
+          "sourceHash": "0e54c2ea546857aac10f755f3f44e6c4"
+        }
+      ]
+    }
+  ],
+  "totals": {
+    "songs": 5,
+    "manual": 68,
+    "ai": 219,
+    "lrc": 0
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "path": "EXAMPLE_ONLY_NOT_USER_MUSIC.wav",
+  "bpm": 104,
+  "segments": [
+    {"start":0,"end":15,"label":"intro"},
+    {"start":15,"end":38,"label":"verse"},
+    {"start":38,"end":53,"label":"pre-chorus"},
+    {"start":53,"end":78,"label":"chorus"},
+    {"start":78,"end":102,"label":"verse"},
+    {"start":102,"end":126,"label":"chorus"},
+    {"start":126,"end":148,"label":"bridge"},
+    {"start":148,"end":173,"label":"chorus"},
+    {"start":173,"end":180,"label":"outro"}
+  ]
+}

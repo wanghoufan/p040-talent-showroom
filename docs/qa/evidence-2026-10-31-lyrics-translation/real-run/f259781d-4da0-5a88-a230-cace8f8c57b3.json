@@ -1,0 +1,1052 @@
+{
+  "record": {
+    "id": "f259781d-4da0-5a88-a230-cace8f8c57b3",
+    "title": "사뿐사뿐",
+    "artist": "AOA",
+    "language": "ko",
+    "startedAt": "2026-10-30T16:47:36.799Z",
+    "finishedAt": "2026-10-30T16:48:14.369Z",
+    "status": "COMPLETE",
+    "total": 91,
+    "translated": 91,
+    "cached": 0,
+    "lrcReused": 0,
+    "translatedLines": 91,
+    "remaining": 0,
+    "failed": [],
+    "lyricsUnchanged": true,
+    "translationSources": {
+      "ai": 91
+    },
+    "samples": [
+      {
+        "id": "line-1",
+        "text": "Hey",
+        "source": "ai"
+      },
+      {
+        "id": "line-2",
+        "text": "no matter where you go",
+        "source": "ai"
+      },
+      {
+        "id": "line-3",
+        "text": "无论看向哪里",
+        "source": "ai"
+      }
+    ]
+  },
+  "lyrics": [
+    {
+      "id": "line-1",
+      "startMs": 3970,
+      "text": "Hey"
+    },
+    {
+      "id": "line-2",
+      "startMs": 6290,
+      "text": "no matter where you go"
+    },
+    {
+      "id": "line-3",
+      "startMs": 7740,
+      "text": "그 어딜 봐도"
+    },
+    {
+      "id": "line-4",
+      "startMs": 8530,
+      "text": "The pretty girls are AOA"
+    },
+    {
+      "id": "line-5",
+      "startMs": 12430,
+      "text": "You know"
+    },
+    {
+      "id": "line-6",
+      "startMs": 14560,
+      "text": "I know"
+    },
+    {
+      "id": "line-7",
+      "startMs": 15260,
+      "text": "You know"
+    },
+    {
+      "id": "line-8",
+      "startMs": 15850,
+      "text": "I know"
+    },
+    {
+      "id": "line-9",
+      "startMs": 16440,
+      "text": "I'm good I'm hot I'm fresh I'm fly"
+    },
+    {
+      "id": "line-10",
+      "startMs": 19140,
+      "text": "Brave sound"
+    },
+    {
+      "id": "line-11",
+      "startMs": 20830,
+      "text": "나 같은 애 첨 봤대"
+    },
+    {
+      "id": "line-12",
+      "startMs": 22180,
+      "text": "본 순간 느낌 왔대"
+    },
+    {
+      "id": "line-13",
+      "startMs": 24930,
+      "text": "수많은 사람 그 속에서도"
+    },
+    {
+      "id": "line-14",
+      "startMs": 27430,
+      "text": "유별나게도"
+    },
+    {
+      "id": "line-15",
+      "startMs": 29640,
+      "text": "난 빛이 났대"
+    },
+    {
+      "id": "line-16",
+      "startMs": 30560,
+      "text": "날 따라 돌아가는 고개"
+    },
+    {
+      "id": "line-17",
+      "startMs": 33230,
+      "text": "나로 꽉 차버린 두 눈에"
+    },
+    {
+      "id": "line-18",
+      "startMs": 35430,
+      "text": "말을 걸까 말까 망설이는 모습"
+    },
+    {
+      "id": "line-19",
+      "startMs": 38510,
+      "text": "너무 귀여워"
+    },
+    {
+      "id": "line-20",
+      "startMs": 40460,
+      "text": "햇살은 나를 비추는"
+    },
+    {
+      "id": "line-21",
+      "startMs": 42940,
+      "text": "Spotlight light light light"
+    },
+    {
+      "id": "line-22",
+      "startMs": 45140,
+      "text": "나만이 그대 머릿 속에"
+    },
+    {
+      "id": "line-23",
+      "startMs": 47510,
+      "text": "Headline line line line"
+    },
+    {
+      "id": "line-24",
+      "startMs": 49800,
+      "text": "꿈을 꿔도 내가 보이게 될 거야"
+    },
+    {
+      "id": "line-25",
+      "startMs": 54230,
+      "text": "고민은 Stop it"
+    },
+    {
+      "id": "line-26",
+      "startMs": 56250,
+      "text": "다가와 Baby come on"
+    },
+    {
+      "id": "line-27",
+      "startMs": 58770,
+      "text": "너에게 사뿐사뿐 걸어가"
+    },
+    {
+      "id": "line-28",
+      "startMs": 61550,
+      "text": "장미꽃을 꺾어서"
+    },
+    {
+      "id": "line-29",
+      "startMs": 64160,
+      "text": "그대에게 안겨줄 거야"
+    },
+    {
+      "id": "line-30",
+      "startMs": 67160,
+      "text": "깜짝 놀래 줄 거야"
+    },
+    {
+      "id": "line-31",
+      "startMs": 68980,
+      "text": "사뿐사뿐 걸어가"
+    },
+    {
+      "id": "line-32",
+      "startMs": 71340,
+      "text": "그대가 잠들었을 때"
+    },
+    {
+      "id": "line-33",
+      "startMs": 73630,
+      "text": "살며시 안아줄 거야"
+    },
+    {
+      "id": "line-34",
+      "startMs": 75960,
+      "text": "깜짝 놀래 줄 거야"
+    },
+    {
+      "id": "line-35",
+      "startMs": 78210,
+      "text": "La la la la la la la la la la"
+    },
+    {
+      "id": "line-36",
+      "startMs": 81160,
+      "text": "La la la la"
+    },
+    {
+      "id": "line-37",
+      "startMs": 83390,
+      "text": "La la la la la la la la la la"
+    },
+    {
+      "id": "line-38",
+      "startMs": 86250,
+      "text": "I'm good I'm hot I'm fresh I'm fly"
+    },
+    {
+      "id": "line-39",
+      "startMs": 88140,
+      "text": "La la la la la la la la la la"
+    },
+    {
+      "id": "line-40",
+      "startMs": 90740,
+      "text": "La la la la"
+    },
+    {
+      "id": "line-41",
+      "startMs": 92750,
+      "text": "La la la la la la la la la la"
+    },
+    {
+      "id": "line-42",
+      "startMs": 95560,
+      "text": "I'm good I'm hot I'm fresh I'm fly"
+    },
+    {
+      "id": "line-43",
+      "startMs": 97910,
+      "text": "사뿐사뿐히 다가갈래"
+    },
+    {
+      "id": "line-44",
+      "startMs": 99900,
+      "text": "나 오늘 밤에 아무도 모르게"
+    },
+    {
+      "id": "line-45",
+      "startMs": 102640,
+      "text": "새근새근 잠이 든 그대 입술에"
+    },
+    {
+      "id": "line-46",
+      "startMs": 105460,
+      "text": "살며시 나 입 맞출래"
+    },
+    {
+      "id": "line-47",
+      "startMs": 107470,
+      "text": "너와 나의 달콤한 이 밤"
+    },
+    {
+      "id": "line-48",
+      "startMs": 109770,
+      "text": "이 밤에 끝을 꽉 잡고"
+    },
+    {
+      "id": "line-49",
+      "startMs": 112070,
+      "text": "그대는 나만의 늑대"
+    },
+    {
+      "id": "line-50",
+      "startMs": 113600,
+      "text": "나는 그대의 귀여운 고양이"
+    },
+    {
+      "id": "line-51",
+      "startMs": 117270,
+      "text": "햇살은 나를 비추는"
+    },
+    {
+      "id": "line-52",
+      "startMs": 119430,
+      "text": "Spotlight light light light"
+    },
+    {
+      "id": "line-53",
+      "startMs": 122110,
+      "text": "나만이 그대 머릿 속에"
+    },
+    {
+      "id": "line-54",
+      "startMs": 124100,
+      "text": "Headline line line line"
+    },
+    {
+      "id": "line-55",
+      "startMs": 126670,
+      "text": "꿈을 꿔도 내가 보이게 될 거야"
+    },
+    {
+      "id": "line-56",
+      "startMs": 131150,
+      "text": "고민은 Stop it"
+    },
+    {
+      "id": "line-57",
+      "startMs": 133060,
+      "text": "다가와 Baby come on"
+    },
+    {
+      "id": "line-58",
+      "startMs": 135590,
+      "text": "너에게 사뿐사뿐 걸어가"
+    },
+    {
+      "id": "line-59",
+      "startMs": 138380,
+      "text": "장미꽃을 꺾어서"
+    },
+    {
+      "id": "line-60",
+      "startMs": 141040,
+      "text": "그대에게 안겨줄 거야"
+    },
+    {
+      "id": "line-61",
+      "startMs": 143440,
+      "text": "깜짝 놀래 줄 거야"
+    },
+    {
+      "id": "line-62",
+      "startMs": 145790,
+      "text": "사뿐사뿐 걸어가"
+    },
+    {
+      "id": "line-63",
+      "startMs": 147980,
+      "text": "그대가 잠들었을 때"
+    },
+    {
+      "id": "line-64",
+      "startMs": 150520,
+      "text": "살며시 안아줄 거야"
+    },
+    {
+      "id": "line-65",
+      "startMs": 152830,
+      "text": "깜짝 놀래 줄 거야"
+    },
+    {
+      "id": "line-66",
+      "startMs": 155240,
+      "text": "La la la la la la la la la la"
+    },
+    {
+      "id": "line-67",
+      "startMs": 157940,
+      "text": "La la la la"
+    },
+    {
+      "id": "line-68",
+      "startMs": 159670,
+      "text": "La la la la la la la la la la"
+    },
+    {
+      "id": "line-69",
+      "startMs": 162540,
+      "text": "I'm good I'm hot I'm fresh I'm fly"
+    },
+    {
+      "id": "line-70",
+      "startMs": 164990,
+      "text": "La la la la la la la la la la"
+    },
+    {
+      "id": "line-71",
+      "startMs": 167510,
+      "text": "La la la la"
+    },
+    {
+      "id": "line-72",
+      "startMs": 169690,
+      "text": "La la la la la la la la la la"
+    },
+    {
+      "id": "line-73",
+      "startMs": 171950,
+      "text": "I'm good I'm hot I'm fresh I'm fly"
+    },
+    {
+      "id": "line-74",
+      "startMs": 174550,
+      "text": "We fly high"
+    },
+    {
+      "id": "line-75",
+      "startMs": 176570,
+      "text": "오늘 밤에 날 안고"
+    },
+    {
+      "id": "line-76",
+      "startMs": 177960,
+      "text": "더 높이 날아가줘"
+    },
+    {
+      "id": "line-77",
+      "startMs": 179400,
+      "text": "구름이 달님에게"
+    },
+    {
+      "id": "line-78",
+      "startMs": 181530,
+      "text": "내 손이 닿을 수 있게"
+    },
+    {
+      "id": "line-79",
+      "startMs": 183770,
+      "text": "사뿐히 날아온 떨리는"
+    },
+    {
+      "id": "line-80",
+      "startMs": 186060,
+      "text": "내 맘을 알아줘"
+    },
+    {
+      "id": "line-81",
+      "startMs": 188350,
+      "text": "Oh talk to me Oh lead me"
+    },
+    {
+      "id": "line-82",
+      "startMs": 190400,
+      "text": "Oh kiss me baby 오늘 밤"
+    },
+    {
+      "id": "line-83",
+      "startMs": 193710,
+      "text": "La la la la la la la la la la"
+    },
+    {
+      "id": "line-84",
+      "startMs": 196340,
+      "text": "La la la la"
+    },
+    {
+      "id": "line-85",
+      "startMs": 198690,
+      "text": "La la la la la la la la la la"
+    },
+    {
+      "id": "line-86",
+      "startMs": 201080,
+      "text": "I'm good I'm hot I'm fresh I'm fly"
+    },
+    {
+      "id": "line-87",
+      "startMs": 203170,
+      "text": "La la la la la la la la la la"
+    },
+    {
+      "id": "line-88",
+      "startMs": 205930,
+      "text": "La la la la"
+    },
+    {
+      "id": "line-89",
+      "startMs": 208120,
+      "text": "La la la la la la la la la la"
+    },
+    {
+      "id": "line-90",
+      "startMs": 210410,
+      "text": "I'm good I'm hot I'm fresh I'm fly"
+    },
+    {
+      "id": "line-91",
+      "startMs": 212740,
+      "text": "Come on over boy"
+    }
+  ],
+  "translations": {
+    "version": 1,
+    "language": "zh",
+    "source": "ai",
+    "lines": [
+      {
+        "id": "line-1",
+        "text": "Hey",
+        "source": "ai",
+        "sourceHash": "581d43745726e0ee62911178bfb3887c"
+      },
+      {
+        "id": "line-2",
+        "text": "no matter where you go",
+        "source": "ai",
+        "sourceHash": "e24be0be31e2607893fd8e61def7655c"
+      },
+      {
+        "id": "line-3",
+        "text": "无论看向哪里",
+        "source": "ai",
+        "sourceHash": "ab025e43a8355f9b7118c917642a8b53"
+      },
+      {
+        "id": "line-4",
+        "text": "The pretty girls are AOA",
+        "source": "ai",
+        "sourceHash": "2b7892db6b0c35fe0937e9387340e0d6"
+      },
+      {
+        "id": "line-5",
+        "text": "You know",
+        "source": "ai",
+        "sourceHash": "16927b2b8ce6c7e5aea44bbc53c188c9"
+      },
+      {
+        "id": "line-6",
+        "text": "I know",
+        "source": "ai",
+        "sourceHash": "8d5c3d26c51c6af49fe4003741aab7e2"
+      },
+      {
+        "id": "line-7",
+        "text": "You know",
+        "source": "ai",
+        "sourceHash": "16927b2b8ce6c7e5aea44bbc53c188c9"
+      },
+      {
+        "id": "line-8",
+        "text": "I know",
+        "source": "ai",
+        "sourceHash": "8d5c3d26c51c6af49fe4003741aab7e2"
+      },
+      {
+        "id": "line-9",
+        "text": "I'm good I'm hot I'm fresh I'm fly",
+        "source": "ai",
+        "sourceHash": "332441e188b8a395d7e701ab5751c31f"
+      },
+      {
+        "id": "line-10",
+        "text": "Brave sound",
+        "source": "ai",
+        "sourceHash": "f9945ee84356715b99bb04a2e28429a1"
+      },
+      {
+        "id": "line-11",
+        "text": "说第一次见到像我这样的人",
+        "source": "ai",
+        "sourceHash": "fef6666642e40ce92ddb041f5427fefc"
+      },
+      {
+        "id": "line-12",
+        "text": "说看到的那一瞬间就有感觉了",
+        "source": "ai",
+        "sourceHash": "7d4e8db569f39e39b7fb85ecf598de7c"
+      },
+      {
+        "id": "line-13",
+        "text": "在那么多人当中也是",
+        "source": "ai",
+        "sourceHash": "a4a0ddba068b1113aade24840e84ea24"
+      },
+      {
+        "id": "line-14",
+        "text": "格外与众不同",
+        "source": "ai",
+        "sourceHash": "7949dd922dd57b7358b5aca3f0b85272"
+      },
+      {
+        "id": "line-15",
+        "text": "说我闪闪发光",
+        "source": "ai",
+        "sourceHash": "8ae4bbaef14d9d67438c2f52aed4ee79"
+      },
+      {
+        "id": "line-16",
+        "text": "跟着我转动的目光",
+        "source": "ai",
+        "sourceHash": "9ca4fddc68c405836de0356b9ffa3a17"
+      },
+      {
+        "id": "line-17",
+        "text": "那双被我填满的眼睛里",
+        "source": "ai",
+        "sourceHash": "6c54b33c40a84bf1f420c9c65982228b"
+      },
+      {
+        "id": "line-18",
+        "text": "犹豫着要不要搭话的样子",
+        "source": "ai",
+        "sourceHash": "ec36a3a850d5cf5aa7dec7d2c7e1ce89"
+      },
+      {
+        "id": "line-19",
+        "text": "太可爱了",
+        "source": "ai",
+        "sourceHash": "079db754fc5a380df49bb764a1d80118"
+      },
+      {
+        "id": "line-20",
+        "text": "阳光照耀着我",
+        "source": "ai",
+        "sourceHash": "c5aeb4fc1c6a342444d83f54569e7d51"
+      },
+      {
+        "id": "line-21",
+        "text": "Spotlight light light light",
+        "source": "ai",
+        "sourceHash": "4eecff81364df86a5fec63211104aad1"
+      },
+      {
+        "id": "line-22",
+        "text": "只有我在你脑海里",
+        "source": "ai",
+        "sourceHash": "6fb01b1c1d7248ee071fa51208bd491d"
+      },
+      {
+        "id": "line-23",
+        "text": "Headline line line line",
+        "source": "ai",
+        "sourceHash": "50482892e6a065ad9b1718336cbe83f1"
+      },
+      {
+        "id": "line-24",
+        "text": "就算做梦也会看见我",
+        "source": "ai",
+        "sourceHash": "a8825b0a55a8c4ec84557ac7ce3ea274"
+      },
+      {
+        "id": "line-25",
+        "text": "烦恼 Stop it",
+        "source": "ai",
+        "sourceHash": "ea02163a4bf4159f96a9d9b8c78e97fd"
+      },
+      {
+        "id": "line-26",
+        "text": "靠近我 Baby come on",
+        "source": "ai",
+        "sourceHash": "44c6dee75b91b1c042e606e8a7198d52"
+      },
+      {
+        "id": "line-27",
+        "text": "向你轻轻地走去",
+        "source": "ai",
+        "sourceHash": "2000501321446b074932c60699864839"
+      },
+      {
+        "id": "line-28",
+        "text": "摘下玫瑰花",
+        "source": "ai",
+        "sourceHash": "cfa85ac288e0fea390d422c2ee8c9c87"
+      },
+      {
+        "id": "line-29",
+        "text": "会把它送到你怀里",
+        "source": "ai",
+        "sourceHash": "60e8214202378992b00c33fa7b74ee75"
+      },
+      {
+        "id": "line-30",
+        "text": "会吓你一跳",
+        "source": "ai",
+        "sourceHash": "0f9bf71d4fb4ff0dea561c42653d51e1"
+      },
+      {
+        "id": "line-31",
+        "text": "轻轻地走去",
+        "source": "ai",
+        "sourceHash": "33c96b5fa5886621e0e51eb692f86024"
+      },
+      {
+        "id": "line-32",
+        "text": "当你睡着的时候",
+        "source": "ai",
+        "sourceHash": "8a1487aa0aa9b0d46c195bb62e5193f2"
+      },
+      {
+        "id": "line-33",
+        "text": "会轻轻抱住你",
+        "source": "ai",
+        "sourceHash": "17a0a20eacdbe56ac26ac152f0ba067d"
+      },
+      {
+        "id": "line-34",
+        "text": "会吓你一跳",
+        "source": "ai",
+        "sourceHash": "0f9bf71d4fb4ff0dea561c42653d51e1"
+      },
+      {
+        "id": "line-35",
+        "text": "La la la la la la la la la la",
+        "source": "ai",
+        "sourceHash": "10c30aa0789cdbb006a310d1805a534a"
+      },
+      {
+        "id": "line-36",
+        "text": "La la la la",
+        "source": "ai",
+        "sourceHash": "75beca361f52133d669e50e5c3c8b4a3"
+      },
+      {
+        "id": "line-37",
+        "text": "La la la la la la la la la la",
+        "source": "ai",
+        "sourceHash": "10c30aa0789cdbb006a310d1805a534a"
+      },
+      {
+        "id": "line-38",
+        "text": "I'm good I'm hot I'm fresh I'm fly",
+        "source": "ai",
+        "sourceHash": "332441e188b8a395d7e701ab5751c31f"
+      },
+      {
+        "id": "line-39",
+        "text": "La la la la la la la la la la",
+        "source": "ai",
+        "sourceHash": "10c30aa0789cdbb006a310d1805a534a"
+      },
+      {
+        "id": "line-40",
+        "text": "La la la la",
+        "source": "ai",
+        "sourceHash": "75beca361f52133d669e50e5c3c8b4a3"
+      },
+      {
+        "id": "line-41",
+        "text": "La la la la la la la la la la",
+        "source": "ai",
+        "sourceHash": "10c30aa0789cdbb006a310d1805a534a"
+      },
+      {
+        "id": "line-42",
+        "text": "I'm good I'm hot I'm fresh I'm fly",
+        "source": "ai",
+        "sourceHash": "332441e188b8a395d7e701ab5751c31f"
+      },
+      {
+        "id": "line-43",
+        "text": "想要轻轻地靠近你",
+        "source": "ai",
+        "sourceHash": "16722368a8c8650173cf0d47565ce396"
+      },
+      {
+        "id": "line-44",
+        "text": "今夜我要瞒着所有人",
+        "source": "ai",
+        "sourceHash": "46f2e20188eee585d819988397349126"
+      },
+      {
+        "id": "line-45",
+        "text": "在你静静熟睡的嘴唇上",
+        "source": "ai",
+        "sourceHash": "6717d1fcfafea9f57d07ad11f0370a94"
+      },
+      {
+        "id": "line-46",
+        "text": "我要轻轻吻上去",
+        "source": "ai",
+        "sourceHash": "17e91002b9c8e36522b1e7f5d5832a40"
+      },
+      {
+        "id": "line-47",
+        "text": "你和我的甜蜜夜晚",
+        "source": "ai",
+        "sourceHash": "86b17e89f9bb7b376cafbbf4544b5130"
+      },
+      {
+        "id": "line-48",
+        "text": "紧紧抓住这夜晚的尽头",
+        "source": "ai",
+        "sourceHash": "0cb0ef74b82acde5618016df019e77cd"
+      },
+      {
+        "id": "line-49",
+        "text": "你是只属于我的狼",
+        "source": "ai",
+        "sourceHash": "a8e245ae785239b048ee70b81146caed"
+      },
+      {
+        "id": "line-50",
+        "text": "我是你可爱的猫咪",
+        "source": "ai",
+        "sourceHash": "783a7b57cc55e576ae8fd0ed40f0a63f"
+      },
+      {
+        "id": "line-51",
+        "text": "阳光照在我身上的",
+        "source": "ai",
+        "sourceHash": "c5aeb4fc1c6a342444d83f54569e7d51"
+      },
+      {
+        "id": "line-52",
+        "text": "Spotlight light light light",
+        "source": "ai",
+        "sourceHash": "4eecff81364df86a5fec63211104aad1"
+      },
+      {
+        "id": "line-53",
+        "text": "只有我在你脑海里",
+        "source": "ai",
+        "sourceHash": "6fb01b1c1d7248ee071fa51208bd491d"
+      },
+      {
+        "id": "line-54",
+        "text": "Headline line line line",
+        "source": "ai",
+        "sourceHash": "50482892e6a065ad9b1718336cbe83f1"
+      },
+      {
+        "id": "line-55",
+        "text": "就算做梦你也会看见我",
+        "source": "ai",
+        "sourceHash": "a8825b0a55a8c4ec84557ac7ce3ea274"
+      },
+      {
+        "id": "line-56",
+        "text": "烦恼就 Stop it",
+        "source": "ai",
+        "sourceHash": "ea02163a4bf4159f96a9d9b8c78e97fd"
+      },
+      {
+        "id": "line-57",
+        "text": "靠近我吧 Baby come on",
+        "source": "ai",
+        "sourceHash": "44c6dee75b91b1c042e606e8a7198d52"
+      },
+      {
+        "id": "line-58",
+        "text": "轻飘飘地走向你",
+        "source": "ai",
+        "sourceHash": "2000501321446b074932c60699864839"
+      },
+      {
+        "id": "line-59",
+        "text": "摘下玫瑰花",
+        "source": "ai",
+        "sourceHash": "cfa85ac288e0fea390d422c2ee8c9c87"
+      },
+      {
+        "id": "line-60",
+        "text": "会把它送到你怀里",
+        "source": "ai",
+        "sourceHash": "60e8214202378992b00c33fa7b74ee75"
+      },
+      {
+        "id": "line-61",
+        "text": "会吓你一跳给你惊喜",
+        "source": "ai",
+        "sourceHash": "0f9bf71d4fb4ff0dea561c42653d51e1"
+      },
+      {
+        "id": "line-62",
+        "text": "轻飘飘地走过去",
+        "source": "ai",
+        "sourceHash": "33c96b5fa5886621e0e51eb692f86024"
+      },
+      {
+        "id": "line-63",
+        "text": "当你睡着的时候",
+        "source": "ai",
+        "sourceHash": "8a1487aa0aa9b0d46c195bb62e5193f2"
+      },
+      {
+        "id": "line-64",
+        "text": "会悄悄抱住你",
+        "source": "ai",
+        "sourceHash": "17a0a20eacdbe56ac26ac152f0ba067d"
+      },
+      {
+        "id": "line-65",
+        "text": "会吓你一跳给你惊喜",
+        "source": "ai",
+        "sourceHash": "0f9bf71d4fb4ff0dea561c42653d51e1"
+      },
+      {
+        "id": "line-66",
+        "text": "La la la la la la la la la la",
+        "source": "ai",
+        "sourceHash": "10c30aa0789cdbb006a310d1805a534a"
+      },
+      {
+        "id": "line-67",
+        "text": "La la la la",
+        "source": "ai",
+        "sourceHash": "75beca361f52133d669e50e5c3c8b4a3"
+      },
+      {
+        "id": "line-68",
+        "text": "La la la la la la la la la la",
+        "source": "ai",
+        "sourceHash": "10c30aa0789cdbb006a310d1805a534a"
+      },
+      {
+        "id": "line-69",
+        "text": "I'm good I'm hot I'm fresh I'm fly",
+        "source": "ai",
+        "sourceHash": "332441e188b8a395d7e701ab5751c31f"
+      },
+      {
+        "id": "line-70",
+        "text": "La la la la la la la la la la",
+        "source": "ai",
+        "sourceHash": "10c30aa0789cdbb006a310d1805a534a"
+      },
+      {
+        "id": "line-71",
+        "text": "La la la la",
+        "source": "ai",
+        "sourceHash": "75beca361f52133d669e50e5c3c8b4a3"
+      },
+      {
+        "id": "line-72",
+        "text": "La la la la la la la la la la",
+        "source": "ai",
+        "sourceHash": "10c30aa0789cdbb006a310d1805a534a"
+      },
+      {
+        "id": "line-73",
+        "text": "I'm good I'm hot I'm fresh I'm fly",
+        "source": "ai",
+        "sourceHash": "332441e188b8a395d7e701ab5751c31f"
+      },
+      {
+        "id": "line-74",
+        "text": "We fly high",
+        "source": "ai",
+        "sourceHash": "fed6eee9d8e75a377e7e2be710f1763a"
+      },
+      {
+        "id": "line-75",
+        "text": "今晚请抱住我",
+        "source": "ai",
+        "sourceHash": "10d4d4c8992d5e8aab4ddbcb7e2d46a4"
+      },
+      {
+        "id": "line-76",
+        "text": "请带我飞得更高",
+        "source": "ai",
+        "sourceHash": "0346ee539f432fa2acb87fc29ce089f2"
+      },
+      {
+        "id": "line-77",
+        "text": "云朵向着月亮",
+        "source": "ai",
+        "sourceHash": "045e65cc9cee4f33cfdbe0702e70a48a"
+      },
+      {
+        "id": "line-78",
+        "text": "好让我的手能够触及",
+        "source": "ai",
+        "sourceHash": "a1e8f7225fe210fc6e19bf7b2c7d5856"
+      },
+      {
+        "id": "line-79",
+        "text": "轻轻飞来的颤抖的",
+        "source": "ai",
+        "sourceHash": "0e54c2ea546857aac10f755f3f44e6c4"
+      },
+      {
+        "id": "line-80",
+        "text": "请懂我的心",
+        "source": "ai",
+        "sourceHash": "8b51375d7de9e1dc43ad3c25ba45e1cc"
+      },
+      {
+        "id": "line-81",
+        "text": "Oh talk to me Oh lead me",
+        "source": "ai",
+        "sourceHash": "ad1e9368032845d00a7a4febdfeeee63"
+      },
+      {
+        "id": "line-82",
+        "text": "Oh kiss me baby 今晚",
+        "source": "ai",
+        "sourceHash": "e3ce34ad4662b55ebc4a8ab0e918fa63"
+      },
+      {
+        "id": "line-83",
+        "text": "La la la la la la la la la la",
+        "source": "ai",
+        "sourceHash": "10c30aa0789cdbb006a310d1805a534a"
+      },
+      {
+        "id": "line-84",
+        "text": "La la la la",
+        "source": "ai",
+        "sourceHash": "75beca361f52133d669e50e5c3c8b4a3"
+      },
+      {
+        "id": "line-85",
+        "text": "La la la la la la la la la la",
+        "source": "ai",
+        "sourceHash": "10c30aa0789cdbb006a310d1805a534a"
+      },
+      {
+        "id": "line-86",
+        "text": "I'm good I'm hot I'm fresh I'm fly",
+        "source": "ai",
+        "sourceHash": "332441e188b8a395d7e701ab5751c31f"
+      },
+      {
+        "id": "line-87",
+        "text": "La la la la la la la la la la",
+        "source": "ai",
+        "sourceHash": "10c30aa0789cdbb006a310d1805a534a"
+      },
+      {
+        "id": "line-88",
+        "text": "La la la la",
+        "source": "ai",
+        "sourceHash": "75beca361f52133d669e50e5c3c8b4a3"
+      },
+      {
+        "id": "line-89",
+        "text": "La la la la la la la la la la",
+        "source": "ai",
+        "sourceHash": "10c30aa0789cdbb006a310d1805a534a"
+      },
+      {
+        "id": "line-90",
+        "text": "I'm good I'm hot I'm fresh I'm fly",
+        "source": "ai",
+        "sourceHash": "332441e188b8a395d7e701ab5751c31f"
+      },
+      {
+        "id": "line-91",
+        "text": "Come on over boy",
+        "source": "ai",
+        "sourceHash": "d7f4154357c8e51ab700987960d9e00c"
+      }
+    ],
+    "updatedAt": "2026-10-30T16:48:14.364Z",
+    "provider": "codebuddy",
+    "model": "deepseek-v4.1-flash"
+  }
+}

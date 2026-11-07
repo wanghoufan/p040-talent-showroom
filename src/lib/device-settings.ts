@@ -19,13 +19,17 @@ export function readDeviceSettings():DeviceSettings {
     const raw=JSON.parse(localStorage.getItem(KEY)||'null') as Partial<DeviceSettings>|null;
     if(!raw||!isThemeMode(raw.themeMode)) return {...defaults};
     const apiEndpoint=raw.apiEndpoint?validateEndpoint(raw.apiEndpoint,import.meta.env.DEV):'';
-    return {...defaults,themeMode:raw.themeMode,apiEndpoint,lastSyncAt:typeof raw.lastSyncAt==='string'?raw.lastSyncAt:undefined};
+    const apiFallback=raw.apiFallback?validateEndpoint(raw.apiFallback,import.meta.env.DEV):undefined;
+    return {...defaults,themeMode:raw.themeMode,apiEndpoint,apiFallback,lastSyncAt:typeof raw.lastSyncAt==='string'?raw.lastSyncAt:undefined};
   } catch { return {...defaults}; }
 }
 export function saveDeviceSettings(settings:DeviceSettings):void {
   if(!isThemeMode(settings.themeMode)) throw new Error('无效主题');
   const apiEndpoint=settings.apiEndpoint?validateEndpoint(settings.apiEndpoint,import.meta.env.DEV):'';
-  localStorage.setItem(KEY,JSON.stringify({...settings,apiEndpoint}));
+  const apiFallback=settings.apiFallback?validateEndpoint(settings.apiFallback,import.meta.env.DEV):undefined;
+  localStorage.setItem(KEY,JSON.stringify({...settings,apiEndpoint,apiFallback}));
+  // 地址变了就让故障切换缓存失效，下一次请求重新探测。
+  void import('./endpoint').then(({invalidateEndpoint})=>invalidateEndpoint()).catch(()=>undefined);
   localStorage.setItem(THEME_STORAGE_KEY,settings.themeMode);
   window.dispatchEvent(new Event('dance-settings-changed'));
 }

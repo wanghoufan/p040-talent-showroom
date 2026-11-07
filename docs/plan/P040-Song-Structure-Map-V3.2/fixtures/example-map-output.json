@@ -1,0 +1,205 @@
+{
+  "schema": "p040.song-map.v1",
+  "songId": "example",
+  "durationMs": 180000,
+  "analysisSource": "model-audio-boundaries",
+  "status": "draft",
+  "sections": [
+    {
+      "id": "analysis-1",
+      "originIndex": 0,
+      "type": "intro",
+      "startMs": 0,
+      "endMs": 15000,
+      "source": "algorithm",
+      "confidence": null,
+      "approvedRap": false,
+      "code": "前奏",
+      "label": "前奏",
+      "typeLabel": "前奏",
+      "lines": []
+    },
+    {
+      "id": "analysis-2",
+      "originIndex": 1,
+      "type": "verse",
+      "startMs": 15000,
+      "endMs": 38000,
+      "source": "algorithm",
+      "confidence": null,
+      "approvedRap": false,
+      "code": "A1",
+      "label": "A1",
+      "typeLabel": "主歌",
+      "lines": [
+        {
+          "id": "line-1",
+          "startMs": 15000,
+          "text": "城市在雨里醒来"
+        },
+        {
+          "id": "line-2",
+          "startMs": 25000,
+          "text": "灯光照着回家的路"
+        }
+      ]
+    },
+    {
+      "id": "analysis-3",
+      "originIndex": 2,
+      "type": "pre",
+      "startMs": 38000,
+      "endMs": 53000,
+      "source": "algorithm",
+      "confidence": null,
+      "approvedRap": false,
+      "code": "P1",
+      "label": "P1",
+      "typeLabel": "预副歌",
+      "lines": [
+        {
+          "id": "line-3",
+          "startMs": 38000,
+          "text": "我听见风轻轻呼唤"
+        }
+      ]
+    },
+    {
+      "id": "analysis-4",
+      "originIndex": 3,
+      "type": "chorus",
+      "startMs": 53000,
+      "endMs": 78000,
+      "source": "algorithm",
+      "confidence": null,
+      "approvedRap": false,
+      "code": "B1",
+      "label": "B1",
+      "typeLabel": "副歌",
+      "lines": [
+        {
+          "id": "line-4",
+          "startMs": 53000,
+          "text": "把今天唱给明天听"
+        },
+        {
+          "id": "line-5",
+          "startMs": 64000,
+          "text": "把故事留给夜晚听"
+        }
+      ]
+    },
+    {
+      "id": "analysis-5",
+      "originIndex": 4,
+      "type": "verse",
+      "startMs": 78000,
+      "endMs": 102000,
+      "source": "algorithm",
+      "confidence": null,
+      "approvedRap": false,
+      "code": "A2",
+      "label": "A2",
+      "typeLabel": "主歌",
+      "lines": [
+        {
+          "id": "line-6",
+          "startMs": 78000,
+          "text": "街口的店又亮起来"
+        },
+        {
+          "id": "line-7",
+          "startMs": 90000,
+          "text": "脚步慢慢找到了方向"
+        }
+      ]
+    },
+    {
+      "id": "analysis-6",
+      "originIndex": 5,
+      "type": "chorus",
+      "startMs": 102000,
+      "endMs": 126000,
+      "source": "algorithm",
+      "confidence": null,
+      "approvedRap": false,
+      "code": "B2",
+      "label": "B2",
+      "typeLabel": "副歌",
+      "lines": [
+        {
+          "id": "line-8",
+          "startMs": 102000,
+          "text": "把今天唱给明天听"
+        },
+        {
+          "id": "line-9",
+          "startMs": 113000,
+          "text": "把故事留给夜晚听"
+        }
+      ]
+    },
+    {
+      "id": "analysis-7",
+      "originIndex": 6,
+      "type": "bridge",
+      "startMs": 126000,
+      "endMs": 148000,
+      "source": "algorithm",
+      "confidence": null,
+      "approvedRap": false,
+      "code": "C1",
+      "label": "C1",
+      "typeLabel": "桥段",
+      "lines": [
+        {
+          "id": "line-10",
+          "startMs": 126000,
+          "text": "新的节奏在这里转弯"
+        }
+      ]
+    },
+    {
+      "id": "analysis-8",
+      "originIndex": 7,
+      "type": "chorus",
+      "startMs": 148000,
+      "endMs": 173000,
+      "source": "algorithm",
+      "confidence": null,
+      "approvedRap": false,
+      "code": "B3",
+      "label": "B3",
+      "typeLabel": "副歌",
+      "lines": [
+        {
+          "id": "line-11",
+          "startMs": 148000,
+          "text": "把今天唱给明天听"
+        },
+        {
+          "id": "line-12",
+          "startMs": 160000,
+          "text": "把故事留给夜晚听"
+        }
+      ]
+    },
+    {
+      "id": "analysis-9",
+      "originIndex": 8,
+      "type": "outro",
+      "startMs": 173000,
+      "endMs": 180000,
+      "source": "algorithm",
+      "confidence": null,
+      "approvedRap": false,
+      "code": "尾奏",
+      "label": "尾奏",
+      "typeLabel": "尾奏",
+      "lines": []
+    }
+  ],
+  "relationCandidates": [],
+  "warnings": [],
+  "unassigned": []
+}

@@ -1,0 +1,671 @@
+[
+  {
+    "dom": "dom-ref",
+    "viewport": "393x791",
+    "touchScrollTop": 1165,
+    "vw": 393,
+    "vh": 791,
+    "drawer": {
+      "top": 79.1,
+      "bottom": 791,
+      "height": 711.9,
+      "left": 0,
+      "right": 393
+    },
+    "computedMaxHeight": "711.9px",
+    "clientHeight": 712,
+    "scrollHeight": 1298,
+    "scrollable": true,
+    "headings": [
+      "歌曲分段"
+    ],
+    "closeButtons": 1,
+    "steps": [
+      "1选一段",
+      "2试听这一段",
+      "3调整边界和类型"
+    ],
+    "detailsOpen": false,
+    "atTop": {
+      "chips": {
+        "rect": {
+          "top": 206.6,
+          "bottom": 300.1,
+          "height": 93.5,
+          "left": 12,
+          "right": 381
+        },
+        "insideViewport": true,
+        "hittable": true
+      },
+      "nowCard": {
+        "rect": {
+          "top": 406.6,
+          "bottom": 548.9,
+          "height": 142.3,
+          "left": 12,
+          "right": 381
+        },
+        "insideViewport": true,
+        "hittable": true
+      },
+      "play": {
+        "rect": {
+          "top": 488.9,
+          "bottom": 536.9,
+          "height": 48,
+          "left": 24,
+          "right": 135
+        },
+        "insideViewport": true,
+        "hittable": true
+      },
+      "loop": {
+        "rect": {
+          "top": 488.9,
+          "bottom": 536.9,
+          "height": 48,
+          "left": 141,
+          "right": 252
+        },
+        "insideViewport": true,
+        "hittable": true
+      },
+      "save": {
+        "rect": {
+          "top": 694,
+          "bottom": 742,
+          "height": 48,
+          "left": 12,
+          "right": 381
+        },
+        "insideViewport": true,
+        "hittable": true
+      },
+      "emptyHint": null,
+      "wave": {
+        "rect": {
+          "top": 629.1,
+          "bottom": 725.1,
+          "height": 96,
+          "left": 12,
+          "right": 381
+        },
+        "insideViewport": true,
+        "hittable": true
+      }
+    },
+    "overflowX": 32,
+    "drawerScrollWidth": 393,
+    "drawerClientWidth": 393,
+    "minFont": 14,
+    "tooSmall": [],
+    "bodyTooSmall": [
+      {
+        "tag": "span",
+        "cls": "",
+        "size": 14,
+        "text": "0:00"
+      },
+      {
+        "tag": "span",
+        "cls": "",
+        "size": 14,
+        "text": "0:49"
+      },
+      {
+        "tag": "span",
+        "cls": "",
+        "size": 14,
+        "text": "1:38"
+      },
+      {
+        "tag": "span",
+        "cls": "",
+        "size": 14,
+        "text": "2:26"
+      },
+      {
+        "tag": "span",
+        "cls": "",
+        "size": 14,
+        "text": "3:15"
+      }
+    ],
+    "atBottom": {
+      "save": {
+        "rect": {
+          "top": 694,
+          "bottom": 742,
+          "height": 48,
+          "left": 12,
+          "right": 381
+        },
+        "insideViewport": true,
+        "hittable": true
+      },
+      "loadFile": null
+    }
+  },
+  {
+    "dom": "dom-ref",
+    "viewport": "360x640",
+    "touchScrollTop": 1318,
+    "vw": 360,
+    "vh": 640,
+    "drawer": {
+      "top": 64,
+      "bottom": 640,
+      "height": 576,
+      "left": 0,
+      "right": 360
+    },
+    "computedMaxHeight": "576px",
+    "clientHeight": 576,
+    "scrollHeight": 1271,
+    "scrollable": true,
+    "headings": [
+      "歌曲分段"
+    ],
+    "closeButtons": 1,
+    "steps": [
+      "1选一段",
+      "2试听这一段",
+      "3调整边界和类型"
+    ],
+    "detailsOpen": false,
+    "atTop": {
+      "chips": {
+        "rect": {
+          "top": 191.5,
+          "bottom": 285,
+          "height": 93.5,
+          "left": 12,
+          "right": 348
+        },
+        "insideViewport": true,
+        "hittable": true
+      },
+      "nowCard": {
+        "rect": {
+          "top": 391.5,
+          "bottom": 533.8,
+          "height": 142.3,
+          "left": 12,
+          "right": 348
+        },
+        "insideViewport": true,
+        "hittable": true
+      },
+      "play": {
+        "rect": {
+          "top": 473.8,
+          "bottom": 521.8,
+          "height": 48,
+          "left": 24,
+          "right": 124
+        },
+        "insideViewport": true,
+        "hittable": true
+      },
+      "loop": {
+        "rect": {
+          "top": 473.8,
+          "bottom": 521.8,
+          "height": 48,
+          "left": 130,
+          "right": 230
+        },
+        "insideViewport": true,
+        "hittable": true
+      },
+      "save": {
+        "rect": {
+          "top": 570,
+          "bottom": 618,
+          "height": 48,
+          "left": 12,
+          "right": 348
+        },
+        "insideViewport": true,
+        "hittable": true
+      },
+      "emptyHint": null,
+      "wave": {
+        "rect": {
+          "top": 614,
+          "bottom": 710,
+          "height": 96,
+          "left": 12,
+          "right": 348
+        },
+        "insideViewport": false,
+        "hittable": false
+      }
+    },
+    "overflowX": 33,
+    "drawerScrollWidth": 360,
+    "drawerClientWidth": 360,
+    "minFont": 14,
+    "tooSmall": [],
+    "bodyTooSmall": [
+      {
+        "tag": "span",
+        "cls": "",
+        "size": 14,
+        "text": "0:00"
+      },
+      {
+        "tag": "span",
+        "cls": "",
+        "size": 14,
+        "text": "0:49"
+      },
+      {
+        "tag": "span",
+        "cls": "",
+        "size": 14,
+        "text": "1:38"
+      },
+      {
+        "tag": "span",
+        "cls": "",
+        "size": 14,
+        "text": "2:26"
+      },
+      {
+        "tag": "span",
+        "cls": "",
+        "size": 14,
+        "text": "3:15"
+      }
+    ],
+    "atBottom": {
+      "save": {
+        "rect": {
+          "top": 570,
+          "bottom": 618,
+          "height": 48,
+          "left": 12,
+          "right": 348
+        },
+        "insideViewport": true,
+        "hittable": true
+      },
+      "loadFile": null
+    }
+  },
+  {
+    "dom": "dom-ref",
+    "viewport": "340x700",
+    "touchScrollTop": 1308,
+    "vw": 340,
+    "vh": 700,
+    "drawer": {
+      "top": 70,
+      "bottom": 700,
+      "height": 630,
+      "left": 0,
+      "right": 340
+    },
+    "computedMaxHeight": "630px",
+    "clientHeight": 630,
+    "scrollHeight": 1315,
+    "scrollable": true,
+    "headings": [
+      "歌曲分段"
+    ],
+    "closeButtons": 1,
+    "steps": [
+      "1选一段",
+      "2试听这一段",
+      "3调整边界和类型"
+    ],
+    "detailsOpen": false,
+    "atTop": {
+      "chips": {
+        "rect": {
+          "top": 220,
+          "bottom": 313.5,
+          "height": 93.5,
+          "left": 12,
+          "right": 328
+        },
+        "insideViewport": true,
+        "hittable": true
+      },
+      "nowCard": {
+        "rect": {
+          "top": 420,
+          "bottom": 584,
+          "height": 164,
+          "left": 12,
+          "right": 328
+        },
+        "insideViewport": true,
+        "hittable": true
+      },
+      "play": {
+        "rect": {
+          "top": 524,
+          "bottom": 572,
+          "height": 48,
+          "left": 24,
+          "right": 117.3
+        },
+        "insideViewport": true,
+        "hittable": true
+      },
+      "loop": {
+        "rect": {
+          "top": 524,
+          "bottom": 572,
+          "height": 48,
+          "left": 123.3,
+          "right": 216.7
+        },
+        "insideViewport": true,
+        "hittable": true
+      },
+      "save": {
+        "rect": {
+          "top": 630,
+          "bottom": 678,
+          "height": 48,
+          "left": 12,
+          "right": 328
+        },
+        "insideViewport": true,
+        "hittable": true
+      },
+      "emptyHint": null,
+      "wave": {
+        "rect": {
+          "top": 664.3,
+          "bottom": 760.3,
+          "height": 96,
+          "left": 12,
+          "right": 328
+        },
+        "insideViewport": false,
+        "hittable": false
+      }
+    },
+    "overflowX": 34,
+    "drawerScrollWidth": 340,
+    "drawerClientWidth": 340,
+    "minFont": 14,
+    "tooSmall": [],
+    "bodyTooSmall": [
+      {
+        "tag": "span",
+        "cls": "",
+        "size": 14,
+        "text": "0:00"
+      },
+      {
+        "tag": "span",
+        "cls": "",
+        "size": 14,
+        "text": "0:49"
+      },
+      {
+        "tag": "span",
+        "cls": "",
+        "size": 14,
+        "text": "1:38"
+      },
+      {
+        "tag": "span",
+        "cls": "",
+        "size": 14,
+        "text": "2:26"
+      },
+      {
+        "tag": "span",
+        "cls": "",
+        "size": 14,
+        "text": "3:15"
+      }
+    ],
+    "atBottom": {
+      "save": {
+        "rect": {
+          "top": 630,
+          "bottom": 678,
+          "height": 48,
+          "left": 12,
+          "right": 328
+        },
+        "insideViewport": true,
+        "hittable": true
+      },
+      "loadFile": null
+    }
+  },
+  {
+    "dom": "dom-empty",
+    "viewport": "393x791",
+    "touchScrollTop": 16,
+    "vw": 393,
+    "vh": 791,
+    "drawer": {
+      "top": 318.9,
+      "bottom": 791,
+      "height": 472.1,
+      "left": 0,
+      "right": 393
+    },
+    "computedMaxHeight": "711.9px",
+    "clientHeight": 472,
+    "scrollHeight": 472,
+    "scrollable": false,
+    "headings": [
+      "歌曲分段"
+    ],
+    "closeButtons": 1,
+    "steps": [
+      "1选一段"
+    ],
+    "detailsOpen": false,
+    "atTop": {
+      "chips": null,
+      "nowCard": null,
+      "play": null,
+      "loop": null,
+      "save": {
+        "rect": {
+          "top": 694,
+          "bottom": 742,
+          "height": 48,
+          "left": 12,
+          "right": 381
+        },
+        "insideViewport": true,
+        "hittable": true
+      },
+      "emptyHint": {
+        "rect": {
+          "top": 446.4,
+          "bottom": 552,
+          "height": 105.6,
+          "left": 12,
+          "right": 381
+        },
+        "insideViewport": true,
+        "hittable": true
+      },
+      "wave": null
+    },
+    "overflowX": 0,
+    "drawerScrollWidth": 393,
+    "drawerClientWidth": 393,
+    "minFont": 15,
+    "tooSmall": [],
+    "bodyTooSmall": [],
+    "atBottom": {
+      "save": {
+        "rect": {
+          "top": 694,
+          "bottom": 742,
+          "height": 48,
+          "left": 12,
+          "right": 381
+        },
+        "insideViewport": true,
+        "hittable": true
+      },
+      "loadFile": null
+    }
+  },
+  {
+    "dom": "dom-empty",
+    "viewport": "360x640",
+    "touchScrollTop": 147,
+    "vw": 360,
+    "vh": 640,
+    "drawer": {
+      "top": 194.9,
+      "bottom": 640,
+      "height": 445.1,
+      "left": 0,
+      "right": 360
+    },
+    "computedMaxHeight": "576px",
+    "clientHeight": 445,
+    "scrollHeight": 445,
+    "scrollable": false,
+    "headings": [
+      "歌曲分段"
+    ],
+    "closeButtons": 1,
+    "steps": [
+      "1选一段"
+    ],
+    "detailsOpen": false,
+    "atTop": {
+      "chips": null,
+      "nowCard": null,
+      "play": null,
+      "loop": null,
+      "save": {
+        "rect": {
+          "top": 570,
+          "bottom": 618,
+          "height": 48,
+          "left": 12,
+          "right": 348
+        },
+        "insideViewport": true,
+        "hittable": true
+      },
+      "emptyHint": {
+        "rect": {
+          "top": 322.4,
+          "bottom": 428,
+          "height": 105.6,
+          "left": 12,
+          "right": 348
+        },
+        "insideViewport": true,
+        "hittable": true
+      },
+      "wave": null
+    },
+    "overflowX": 0,
+    "drawerScrollWidth": 360,
+    "drawerClientWidth": 360,
+    "minFont": 15,
+    "tooSmall": [],
+    "bodyTooSmall": [],
+    "atBottom": {
+      "save": {
+        "rect": {
+          "top": 570,
+          "bottom": 618,
+          "height": 48,
+          "left": 12,
+          "right": 348
+        },
+        "insideViewport": true,
+        "hittable": true
+      },
+      "loadFile": null
+    }
+  },
+  {
+    "dom": "dom-empty",
+    "viewport": "340x700",
+    "touchScrollTop": 120,
+    "vw": 340,
+    "vh": 700,
+    "drawer": {
+      "top": 227.8,
+      "bottom": 700,
+      "height": 472.3,
+      "left": 0,
+      "right": 340
+    },
+    "computedMaxHeight": "630px",
+    "clientHeight": 472,
+    "scrollHeight": 472,
+    "scrollable": false,
+    "headings": [
+      "歌曲分段"
+    ],
+    "closeButtons": 1,
+    "steps": [
+      "1选一段"
+    ],
+    "detailsOpen": false,
+    "atTop": {
+      "chips": null,
+      "nowCard": null,
+      "play": null,
+      "loop": null,
+      "save": {
+        "rect": {
+          "top": 630,
+          "bottom": 678,
+          "height": 48,
+          "left": 12,
+          "right": 328
+        },
+        "insideViewport": true,
+        "hittable": true
+      },
+      "emptyHint": {
+        "rect": {
+          "top": 355.3,
+          "bottom": 488,
+          "height": 132.8,
+          "left": 12,
+          "right": 328
+        },
+        "insideViewport": true,
+        "hittable": true
+      },
+      "wave": null
+    },
+    "overflowX": 0,
+    "drawerScrollWidth": 340,
+    "drawerClientWidth": 340,
+    "minFont": 15,
+    "tooSmall": [],
+    "bodyTooSmall": [],
+    "atBottom": {
+      "save": {
+        "rect": {
+          "top": 630,
+          "bottom": 678,
+          "height": 48,
+          "left": 12,
+          "right": 328
+        },
+        "insideViewport": true,
+        "hittable": true
+      },
+      "loadFile": null
+    }
+  }
+]

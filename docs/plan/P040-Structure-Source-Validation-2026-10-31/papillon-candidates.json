@@ -1,0 +1,25 @@
+{
+  "schema": "p040.structure-reference.v1",
+  "project": "P040",
+  "songTitle": "Papillon",
+  "artist": "Jackson Wang",
+  "artistAliases": ["王嘉尔"],
+  "version": "studio",
+  "audioDurationMs": 195036,
+  "audioSha256": "057306bf81c0c2e143848db6b90b416cdee3ad3c0cb218f1f0c35022585d63b7",
+  "status": "DRAFT_REVIEW_REQUIRED",
+  "source": "fan-reference-plus-user-LRC",
+  "note": "Not official; boundaries are first corresponding LRC vocal timestamps, not verified actual musical phrase boundaries. Do not import directly to production.",
+  "candidates": [
+    {"timeMs": 0, "type": "intro", "label": "前奏"},
+    {"timeMs": 12000, "type": "chorus", "label": "B1 副歌"},
+    {"timeMs": 35000, "type": "verse", "label": "A1 主歌"},
+    {"timeMs": 57000, "type": "unknown", "label": "C1 叠句（待核对）", "alternates": ["refrain", "verse"]},
+    {"timeMs": 69000, "type": "pre", "label": "P1 预副歌"},
+    {"timeMs": 80000, "type": "chorus", "label": "B2 副歌", "repeatCandidateOf": "B1"},
+    {"timeMs": 103000, "type": "verse", "label": "A2 主歌", "repeatCandidateOf": "A1"},
+    {"timeMs": 125000, "type": "unknown", "label": "C2 叠句（待核对）", "alternates": ["refrain", "verse"]},
+    {"timeMs": 136000, "type": "pre", "label": "P2 预副歌"},
+    {"timeMs": 147000, "type": "chorus", "label": "B3 副歌", "repeatCandidateOf": "B1"}
+  ]
+}
