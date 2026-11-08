@@ -1,218 +1,160 @@
-# ORCA 治理模板分发版｜导航（先读我）
+# 才艺展示厅
+
+自己练的歌、谱和现场要用的东西收在一个本地曲库里，连上自家电脑循环变速练唱，出门前把今晚的曲目装进手机离线带走。
 
 [English](./README.en.md)
 
-> 模板名冻结，版本真相以本仓库 Git 提交历史为准（版本标记文件仅为指针）。
+<p>
+  <img src="./docs/images/readme-library.png" alt="唱歌曲库界面" width="180" />
+  <img src="./docs/images/readme-settings.png" alt="设备连接与离线准备界面" width="180" />
+  <img src="./docs/images/readme-offline.png" alt="离线下载完成界面" width="180" />
+</p>
 
-开工读盘顺序（全体系唯一）：`AGENTS.md` → `docs/roles/`（本次角色卡）→ 根 `USER_MODEL_OVERRIDE.md`（模型表，有就用它）→ `docs/handoff/`（交接现状）→ 根 `经验一句话.md` → 任务目标放最后。
+## 它解决什么问题
 
-## 一图看懂（体系全景）
+练歌和上台时，资料通常是散的：音频在音乐软件里，谱在相册或 PDF 里，原调、演出调和变调夹记在备忘录里，今晚的顺序写在聊天记录里。想单独抠某一句，只能在播放器里来回拖进度条。
 
-**两阶段治理总流程**（口令推进 · Human Gate 不可自动跨越 · Change C 闭环）：
+这个应用把音频、谱、歌词、调性、练习状态和演出顺序放进同一个本地曲库。练唱时可以按句或按段循环、0.75–1.5 倍变速、逐句点跳；演出前把选定曲目、歌词、谱和参考视频缓存到手机，到了没有稳定网络的场地也能直接播。
 
-![ORCA 两阶段治理总流程](./docs/assets/orca-two-phase-flow.png)
+## 核心能力
 
-**角色阵容与 Phase 2 派工主链**（9+1+1 · 自动探测派工口 · 账本与同步四件套）：
+### 三个曲库
 
-![ORCA 角色阵容与派工主链](./docs/assets/orca-roles-dispatch-chain.png)
+- 底部四个主入口：舞蹈、唱歌、吉他、我的。
+- 唱歌与吉他曲目可记录原调、演出调、文本谱和备注；吉他另有 Capo 字段。
+- 学习状态统一为想学、正在练、会唱 / 会弹；唱歌支持按语言筛选，吉他支持按场景筛选。
+- 支持搜索、批量管理、批量修改分类、移入回收站与恢复。
+- 谱以 PDF 或图片附件保存，内置阅读器支持翻页与 0.25 倍步进缩放，并按曲目记住页码。
 
-## 怎么用：你的操作只有两件事（新建文件夹 ＋ 说一句话）
+### 收录与整理
 
-体系不绑定 Orca，也不绑定任何客户端：**Orca／Trae／Qoder／Codex／CodeArts Agent／opencode／Claude Code** 随便切，编排者每轮开工跑 `scripts/detect-client.sh` 自动认当前客户端并选派工口（有原生子代理就在该客户端窗口内直派；没有就走通道 CLI），**不需要你填任何配置、不需要你指派角色**。
+- 唱歌批量导入接受 mp3、m4a、wav、flac 音频与 `.lrc` 歌词；导入前可预览与校对。
+- 本地智能导入（默认关闭）可从受控音乐目录扫描，分离原唱与伴奏、提取歌词与结构；未配置白名单目录时接口不挂载。
+- 曲目封面、音频、谱和参考视频都来自本机服务端，手机端按需下载。
+- 删除先进回收站，可恢复；批量操作与单曲操作共用同一套服务端接口。
 
-| 场景 | 你要做的 | 说哪一句 |
-|---|---|---|
-| **新项目·大项目**（多阶段要等你点头／要产品验收留痕／跨周或会交接／要发布上线留回执／多角色并行，命中任一） | ①新建一个空文件夹 ②在里面打开任一客户端 | 见下方【新项目大项目·一句话】（它会自己铺包、建账本、认客户端、派活） |
-| **新项目·小项目**（单文件小修／单日单任务／一次性脚本／查资料） | 新建文件夹 ＋ 打开客户端 | `直接干活，别铺包。项目是 XXX，要做 XXX。` |
-| **老项目**（本机 `1.Active/` 里已铺好的） | 打开该项目 ＋ 打开客户端 | 直接说事即可：`XXX 项目，第一阶段，计划`（规则、脚本、账本都已就位，**不要重铺包**） |
-| **单客户端环境**（只有 shell、没有子代理） | 同上 | 完全一样；探测返回 `channel_cli`，角色走 `opencode run`／`codebuddy -y -p`／`codex exec` 直调，规矩不减，只是少了并行与真 resume |
+### 唱歌练唱
 
-### 新项目大项目·一句话（复制即可）
+- 逐句循环只保留 3 句与 5 句两种范围，另有整首循环、段落循环和「合练一遍」。
+- 变速档位为 0.75、1、1.25、1.5 倍速，变速时保持音高。
+- 后退与前进可选 5、10、15、30 秒；歌词可点击定位，逐句跟随滚动。
+- 歌词字号分标准、大、特大三档；译文可逐句开关，并标记哪些是冗余翻译。
+- 歌曲地图按前奏、主歌、副歌、桥段等结构分段；可框选 Rap 范围并跳过，未确认的 Rap 段会单独提示。
+- 沉浸练歌模式可隐藏列表控件，只保留播放与歌词。
+- 可生成 A4 学习稿；纸质修订导入用于把纸上改动回填到歌词与结构。
 
-```text
-按 /Users/zzymima0000/Developer/coding/1.Active/000-alw-个人偏好-电脑治理仓库-skill管理/体系管家/2026-09-09 丨 MAC 丨 ORCA V2.1 治理模板 丨 分发版-2026-09-11/新项目模板包/README.md 和它的归位表，把 ORCA 治理模板铺进这个项目根目录（USER_MODEL_OVERRIDE.md 建软链指母版，别拷实文件），铺完你就是本项目编排者。项目是 XXX，第一阶段，计划。
-```
+### 唱歌演出与节目单
 
-之后每一单你只说**业务目标 ＋ 口令**（下面三个口令），铺包/派工/落账/验收全由编排者自己走完。
+- 今晚节目单把舞蹈、唱歌、吉他混排，可拖动调整顺序并保存。
+- 演出模式是手机单列布局，唱歌默认伴奏，缺伴奏时明确提示，不会把原唱当伴奏自动播出。
+- 演出中可切换原唱 / 伴奏，保持播放位置、暂停状态与歌词同步；页面保持屏幕常亮。
+- 准备离线演出时逐首列出缺口：伴奏未提供、伴奏未缓存、歌词无时间戳、结构未标注等，不用「已准备」掩盖缺项。
+- 吉他谱、舞蹈音频与参考视频沿用同一套离线准备流程。
 
-**别做的事**：不要把 `新项目模板包/` 整个文件夹丢进项目根（会多一层目录、路径全错）；不要拷母版 Git 历史或别的项目的 HANDOFF；老项目不要重铺（规则升级由母版 `scripts/sync-old-projects.sh` 自动铺开）。
+### 扫码点歌
 
-### 新项目怎么铺（两种情况，别搞混）
+- 在「我的 → 扫码点歌」里选择可以公开的曲目，生成二维码；默认不发布任何曲目。
+- 来宾连接同一个 Wi-Fi 后打开点歌页，只能看到所选曲目的歌名与才艺类型，看不到谱、歌词、备注或媒体。
+- 点歌需要填写称呼（最多 40 字）与留言（最多 200 字）；相同曲目不会重复排队。
+- 点歌台默认 24 小时后过期，可提前关闭；主持人可接受、拒绝或清理已处理记录，接受后自动加入节目单。
 
-| 项目目录状态 | 怎么做 | 为什么 |
-|---|---|---|
-| **空目录**（只有 `.git`／`.project.yaml`／`.DS_Store`） | **整包拷** `新项目模板包/` 的**全部内容**到项目根（`cp -R "<母版路径>/新项目模板包/." <项目根>/`，注意末尾 `/.`，不要多套一层目录） | 不会漏文件。人工逐文件铺最容易漏 `docs/model/` 下四本账本空壳、`scripts/model/fixtures/`、后加的模板文件——这些漏了要到后续门禁才爆，且爆的时候查不出来。空目录 `cp -R` 无覆盖风险 |
-| **非空目录**（已有文件／已有治理文件／已有业务代码） | **只覆盖规则层＋补新增，实例层一律不碰** | 非空目录整包拷会把实例记录（`docs/pm/` 的计划、`docs/qa/BUGS-*.md`、`docs/handoff/HANDOFF.md`、账本真实行、业务代码）静默顶成空模板，**且不报错** |
+### Android 离线壳
 
-**空目录整包拷的正确写法（带回滚保障）**：
+- Capacitor 8 把构建好的前端与本地能力打进 APK，Android 端播放走已校验的本地文件，不依赖服务端在线。
+- 我的页显示已缓存条目数与占用字节，可一键准备「想学」与「今晚节目单」两组曲目，也可清空离线媒体。
+- 冷启动断网后仍可打开曲库并播放已缓存曲目；谱、歌词与参考视频在下载校验通过后才算可用。
 
-```bash
-# 1) 目标必须干净
-ls -A <项目目录>          # 期望只有 .git / .project.yaml / .DS_Store
+## 快速开始
 
-# 2) 先原子备份——把「不可逆」变成「可回退」
-mv <项目目录> <项目目录>.bak && mkdir <项目目录>
-
-# 3) 整包拷（末尾 /. 关键，漏了会多一层目录）
-cp -R "<母版>/新项目模板包/." <项目目录>/
-
-# 4) 校验
-ls <项目目录>/docs/qa/产品验收追踪矩阵.template.md                  # 应存在
-ls <项目目录>/docs/model/TASK-MANAGER-QUALIFICATION-EVENTS.jsonl    # 应存在（空壳）
-# 先删 docs/model/ 下各账本的 `_example` 行（母版/分发包里是模板空壳，新项目直接跑必然报「示例行未删」）
-# 跨平台：macOS 用 -i ''（BSD sed）；Linux / Git-Bash 用 -i；Windows 请用 git-bash 或自行处理换行
-sed -i '' "/\"_example\"/d" <项目目录>/docs/model/*.jsonl     # macOS
-sed -i    "/\"_example\"/d" <项目目录>/docs/model/*.jsonl     # Linux / Git-Bash
-node <项目目录>/scripts/model/check-ledger.mjs                       # 期望 LEDGER-OK（空账本/无 Plan 属正常，只报 WARN）
-```
-
-**非空目录的「规则层」清单**（只覆盖这几份，其余一律不碰）：
-**权威清单以 `scripts/_sync-packages.py` 的 `PAIRS`＋`DIRS`＋`EXTRA` 为单一真源**，下表只是人读副本（2026-10-17 G6 补齐，此前漏了 AGENTS/概览硬引用的脚本）：
-`AGENTS.md`｜`USER_MODEL_OVERRIDE.md`｜`ORCA治理体系说明.md`｜`经验一句话.md`｜
-`scripts/model/check-ledger.mjs`｜`scripts/model/model-perf.mjs`｜`scripts/detect-client.sh`｜`scripts/check-sync.sh`｜`scripts/check-channel-preflight.sh`｜
-**AGENTS 与概览硬引用、漏了会 `no such file` 的**：`scripts/pre-commit-guard.sh`｜`scripts/check-product-review.sh`｜`scripts/check-dispatch-output.sh`（通用零产出守卫）｜`scripts/install-governance-hooks.sh`（把账本门真正装进项目仓的 hook）｜`scripts/codebuddy-auto.sh`＋`_cb-rotate.py`/`_cb-active.py`/`_cb-count.py`｜`scripts/orca-gitignore.sh`｜`scripts/orca-public-guard.sh`＋`orca-public-ignore.txt`｜`scripts/restore-framework.sh`｜`scripts/migration-status.sh`｜`scripts/_inject-agents-block.py`
-＋ **补新增**（不存在才放，已存在不覆盖）：`docs/qa/产品验收追踪矩阵.template.md`｜`docs/model/TASK-MANAGER-QUALIFICATION-EVENTS.jsonl`｜`docs/model/JEV-DECISION-LOG.jsonl`
-
-**规则文件不要挑行合并**：要么整个文件覆盖，要么按归位表整包处理——手工挑行是这类操作里最容易漏、最容易冲突的做法。
-
-**`USER_MODEL_OVERRIDE.md` 在包里是实文件**（不是软链），落地后按 `AGENTS.md` 的软链制改成软链指母版真源；改之前先备份旧实文件。
-
-## 公开仓怎么不带 ORCA、丢了怎么恢复（可选，仅作品对外公开时用）
-
-**为什么**：默认铺包会把 ORCA 脚手架铺在项目根，推到**公开作品仓**后，克隆的人会看到一堆与产品无关的治理文件。本节给一条**零操作**解法：设一次忽略，此后推送多少次都不会把 ORCA 上传；本地文件一个不少、开发照旧。
-
-**启用（每个要公开的仓跑一次）**：
-
-> 多数情况下**不用你管**：开工跑 `bash "<母版路径>/scripts/orca-public-guard.sh"` 会按可见性自动补齐——公开仓缺忽略块就自动注入并摘除，私有仓跳过（私有仓保留 ORCA 作云备份）。下面两条是手动等价物。
+运行需要 Node.js 22 及以上与 npm。服务端不读取 `.env` 文件，环境变量需要在 shell 里导出。
 
 ```bash
-# 全机自动补齐（推荐）
-bash "<母版路径>/scripts/orca-public-guard.sh"
-
-# 或手动：单个要公开的仓
-bash "<母版路径>/scripts/orca-gitignore.sh" <项目根> --untrack
+npm ci
+npm run dev          # 前端，默认 http://127.0.0.1:5173
+npm run server:dev   # API，默认 http://127.0.0.1:8791
 ```
 
-- 会把一段「ORCA 治理块」（托管、带标记、幂等）写进项目根 `.gitignore`；
-- 并把**已经提交过**的 ORCA 脚手架从 git 索引摘除（`--untrack`）——**只影响仓库里要不要收，本地文件不动**；
-- 边界＝**只隐藏"每个项目都一样"的通用脚手架**（角色卡／规范／脚本／模板／`AGENTS.md` 等）；**本项目自己的**产品计划、评审、交接、账本、经验**保留在公开仓**作云端备份；应用的 `README.md` 绝不会被藏（那是作品首页）。清单单一真源＝`scripts/orca-public-ignore.txt`。
+首次启动会在 `var/` 下创建 SQLite 数据库 `var/personal-dance-library.db` 与媒体目录 `var/media`，并自动应用未执行的迁移。如果已有真实数据，先确认 `SQLITE_DB_PATH` 指向的是你想要操作的库。
 
-> 提示：`.gitignore` 只对**未跟踪**的文件生效，所以已经推上去过的 ORCA 文件必须配 `--untrack` 摘一次；摘除后下一次提交公开仓就不再收。本工具**不会自动 commit/push**。
-
-**恢复（万一项目文件夹从云端 clone 回来、发现没有 ORCA）**：
+健康检查：
 
 ```bash
-bash "<母版路径>/scripts/restore-framework.sh" <项目根>
+curl --noproxy '*' http://127.0.0.1:8791/api/health
 ```
 
-- 从本机母版把通用框架补回项目（脚本会自己认母版路径，不用填）；
-- **绝不覆盖**你的应用代码、`README.md`、产品计划、评审、交接、账本、经验；
-- 补完按提示跑两条自检（`check-channel-preflight.sh` / `check-ledger.mjs`）即可继续开发。
+正常返回 `{"ok":true,"recognition":"disabled"}`。
 
-> 本机母版（`体系管家/ORCA V2.1 治理模板`）本身就是云端公开仓（`wanghoufan/orca-v2.1-governance`），本机丢了还能拉回来——治理体系本身永远丢不了。
+检查与构建：
 
-## 主开发者开发使用说明（2026-10-10 用户定，2026-10-17 改名与澄清）
+```bash
+npm run lint
+npm run typecheck
+npm test
+npm run test:integration
+npm run build
+```
 
-**只需说这一句：`你是主开发者`**，不需要复制任何长提示词。说出即立即启用主开发者模式，**智能体不会再问你是否启用，也不会自动派治理角色**（但可以派子代理并行干活）。
+数据库脚本：
 
-项目开始时，智能体**自行读取 `AGENTS.md`**，并根据其中的主开发者规则继续执行：它会**自己判断当前项目处在哪个阶段、该读哪些规范**（产品规划／UI 规范／SDD／技术 SOP／自审／QA／HANDOFF），**你不需要逐项指定要读哪个文件**。
+```bash
+npm run db:migrate
+npm run db:backup
+npm run db:restore
+```
 
-> 这一句**只决定执行模式**，**不代表**可以跳过产品方案确认、必要的 Human Gate 或授权要求。
+Docker：
 
-**你说`你是主开发者`后直接采用，不再询问**，也不会自动派治理角色链。
+```bash
+docker build -t dance-library .
+docker run --rm -p 8791:8791 -v "$(pwd)/var/docker:/app/data" dance-library
+```
 
-**但它不是「只能一个人干活」**（2026-10-17 澄清，此前理解过窄）：主开发者应自己判断哪些子任务互不依赖、可并行，
-对可并行的部分**派子代理同时推进**——**执行层**（跑测试、跑构建、起服务点关键路径、真机 adb、取证、逐项核查现象）可外包，
-**判定层**（判 `PASS`／`FAIL`、宣布收工、写关键 AC 结论、首次发布签收）必须它自己拍。
-子代理产出须附可核查证据并落 `docs/qa/<交付单元>/` 作证据来源，**不算独立审查者**；关键路径它至少亲手复验一次。
+Android 调试包：
 
-**按阶段按需读，读到哪个阶段才开哪个文件——不要开工就全量加载角色卡与 SOP。**
+```bash
+npm run build
+npx cap sync android
+cd android && ./gradlew :app:assembleDebug
+```
 
-| 工作阶段 | 读取现有规范 |
-|---|---|
-| 产品规划 | `docs/pm/PRODUCT_PLAN.template.md`、`docs/sop/app-simplicity.md`（产品简化门槛） |
-| UI 与交互 | 适用才读：`docs/sop/app-theme-i18n.md`、`app-brand-assets.md`、`app-navigation.md`、`app-ui-layers.md` |
-| 开发 | `docs/roles/builder.md`；涉基础设施再加 `docs/sop/` 对应规范（Docker／DB／SQLite／Android／Web QA） |
-| 代码自审 | `docs/roles/code-reviewer.md`（照 `CODE_REVIEW.template.md` 落 `docs/review/`） |
-| 实际测试 | `docs/roles/qa.md`、`docs/qa/产品验收追踪矩阵.template.md` |
-| 交付 | `docs/handoff/HANDOFF.template.md` |
+构建需要 JDK 21 与 Android SDK；仓库的验证记录显示 JDK 17 构建失败。产物位于 `android/app/build/outputs/apk/debug/app-debug.apk`，debug 包名带 `.dev` 后缀。
 
-**四条硬约束**：
+让手机连上本机服务：
 
-1. **自审与真实 QA 两步一个都不能省**，只是执行者是你自己。落盘照旧（`docs/review/`、`docs/qa/`），**必须如实标注「自审」还是「独立审查」，不得伪造独立审查**。
-2. **必须真实运行应用、操作关键功能**；没有实际验证的项目不得直接标 `PASS`。**通道按项目类型选**（Web/PWA 用真实浏览器，Android 用模拟器／ADB／真机）；真机 Canary 与会话能力预检**只在本项目确实适用时强制**，不得因缺少无关工具而阻断开发——细则见 `docs/roles/qa.md`「主开发者模式的 QA 执行细则」。
-3. **产品简化、APP 基础能力（主题／中英双语／品牌资产／导航／信息分层）、安全、隐私、异常恢复、数据正确性、首次发布用户签收、产品验收追踪矩阵——一条不减。** 原有 Human Gate 同样适用：开发前方案批准、Change C 受控重开、首次发布签收、生产／付费／凭据／不可逆操作的授权限制。
-4. **规范读不到就如实报告缺哪个、为什么**，不要假装执行，也不要凭印象编内容。
+```bash
+HOST=0.0.0.0 PORT=8791 npm run server:dev
+```
 
-**减少的是管理成本，不是质量**：不造派工记录（`DISPATCH-LOG.jsonl` 无派工就留空）、不逐个模拟角色；普通局部修改不重走完整产品规划；计划批准后可连续开发→自审→测试→修复→复验直到完成，只在需要你授权（secrets、不可逆删除、生产／他人项目、commit／push）时才暂停。
+在应用「我的」里填写电脑的局域网地址（例如 `http://192.168.x.x:8791`）与设备配对码。服务端首次启动会在数据库旁生成 `owner-pairing.json`；同一家庭局域网或 Tailscale 网段内的设备会自动配对，跨网段才需要手动填码。
 
-> 本节只说明**如何使用现有规范**，各规范正文一律在 `docs/sop/` 与 `docs/roles/`，不在此复述。多智能体是默认，两种方式**共用同一套规范与模板包**，本体系不存在「主开发者专属 SOP／模板包」。
+真机实时预览（可选）：
 
-## 用户只需记住三个口令
+```bash
+CAP_LIVE=1 npx cap sync android
+adb reverse tcp:5173 tcp:5173
+adb reverse tcp:8791 tcp:8791
+```
 
-- `第一阶段，计划`：进 Phase1（PLAN），Planner＋Research Reviewer 出 PRODUCT_PLAN，≥90 且模板 Gate 全条件满足（P0=0＋blocking P1=0＋事实/假设验证）才找你。
-- `第二阶段，开发`：Human Gate 批准后进 Phase2（DEVELOP，锁定 DEV_BASELINE），默认主链开发（模型以override表为准）。
-- `变更请求：……`：开发中反馈统一入口，TM 按 A（小改留 DEVELOP）/ B（局部功能改留 DEVELOP 不召 Sol）/ C（产品架构变 Controlled Reopen）分类。
+随后启动应用，WebView 会加载本机 Vite 服务，JS 改动即时生效。
 
-## 模型口径（一句话）
+## 数据与隐私
 
-模型／通道／调用方式**一律以根 `USER_MODEL_OVERRIDE.md` 表为准**（唯一口径，改表必真调，精确 ID 照抄执行）；本 README 不复述模型 ID，避免与表漂移。换人用户直接改母版真源表；**表内备用两列（备用模型／备用执行通道）以本表为准**，主通道超时/限额时才切备，切备时 DISPATCH `used` 仍填主＋note 记原因。分工表软链制：各项目根表均为软链指母版真源，改母版即全项目同步（禁拷实文件；跨机器断链时拷实文件并记 HANDOFF）。
+- 曲库、谱、歌词、结构与节目单保存在本机 SQLite；媒体文件保存在 `MEDIA_ROOT`。没有账号、云同步或第三方备份。
+- 手机端通过局域网或 Tailscale 连接你自己的服务端；配对凭据保存在设备本地，配对码只用于建立信任。
+- 扫码点歌只公开你勾选的曲目歌名与类型，页面不返回谱、歌词、备注与媒体；会话默认 24 小时过期，可提前关闭。
+- 歌词翻译如果启用，会把歌词原文发送到 CodeBuddy 云端模型；仓库代码里明确标注这不是本地模型。未配置 `scripts/codebuddy-auto.sh` 时翻译明确失败，不返回假译文。
+- 识曲默认关闭（`MUSIC_RECOGNITION_PROVIDER=disabled`）；仓库只提供 provider 接口与测试用 mock，没有内置云端识曲实现。
+- 本地智能导入只读取服务端声明的白名单目录，源目录按只读使用；产物写入 `MEDIA_ROOT/vocal-import/`，不会移动、改名或删除源文件。
+- Android 壳在私有网络内使用明文 HTTP（`androidScheme: http`），只为让页面加载局域网媒体与接口；不要把这个包当作公网客户端使用。
 
-## 根目录
+## 已知限制
 
-**入口与规则**
-- `AGENTS.md`：全员规则（一页，全体系唯一真源之一）
-- `README.md`：本导航（先读我）；`README.en.md`：英文导航
-- `ORCA治理体系说明.md`：**对外概览**（体系更新四件套第 2 步必须同步它）
-- `USER_MODEL_OVERRIDE.md`：模型表（角色/模型/执行通道/调用方式，**唯一口径**，改表即生效，精确ID照抄执行）
-- `GOVERNANCE_VERSION`：版本指针文件（内容：以Git历史为准）
-- `CHANGELOG.md`：**变更说明正典**——每次改动并 push 必须在此追加一条（改了什么/为什么/影响谁/怎么验）；只写 commit message 或 HANDOFF 章节不算交差
-- `经验一句话.md`：收工一句经验（只追加）
-- `agent.md`：**审查交付约定**（审查者须一次性交付完整结论，不分批问；**临时材料，随交接更新，不受 check-sync 门禁**）。接续开工快照在 `temp/agent.md`，两者不是同一份
+- 前端没有 Service Worker，不是可在浏览器安装的 PWA。离线播放依赖 Android 壳的本地文件缓存；浏览器版需要服务端在线。
+- 原调、演出调和 Capo 只用于记录，不会自动改变音频音高；变速保持音高，但不是变调。
+- 本地智能导入默认关闭，需要白名单目录、ffmpeg / ffprobe、可执行的 `audio-separator` 与模型文件；结构分析还需要单独的 Python venv；任一项缺失时会明确停在待处理状态。
+- 仓库内没有统一的版本号：`package.json` 是 0.1.0，Android 壳当前是 1.1.32（versionCode 35），发布记录停留在 v1.0.0；原生版本以 `android/app/build.gradle` 为准。
+- Android 包是 debug 签名，`applicationId` 为 `com.wanghoufan.dancelibrary`，debug 构建带 `.dev` 后缀；没有应用商店发布配置，也没有 iOS 工程。
+- 运行时需要 macOS 上可用的 Node 服务；手机端本身不托管曲库，换网络后如果地址变化，需要在「我的」里更新服务地址或备用地址。
+- 扫码点歌依赖来宾与电脑在同一网络，公网地址不可用时二维码无法打开。
 
-**脚本（`scripts/`）**
-- `detect-client.sh`：自动认当前客户端并选派工口（`window_subagent`／`channel_cli`）；每轮开工先跑它
-- `check-channel-preflight.sh`：分工表在用模型 ↔ 通道目录对账，须 `CHANNEL-OK` 才可派工
-- `weekly-channel-check.sh` ＋ `_inject-agents-block.py`、`sync-old-projects.sh`、`migration-status.sh`、`_sync-packages.py`（母版→两包同步唯一入口，**禁手写 sed 复制**）
-- `model/check-ledger.mjs`：**两本**账校验（`TASK-MODEL-LOG`／`DISPATCH-LOG`；`TASK-MANAGER-QUALIFICATION-EVENTS` 由 `tm-qualification.mjs` 校验）；另含 **APP 基线硬门**（`APP-BASELINE-MISSING`／`APP-CRITICAL-AC-EMPTY`／`APP-CRITICAL-AC-INCOMPLETE`，2026-10-08 起为 FAIL 不再是 WARN）。母版/分发包自检用 `--allow-example`（**真实项目禁用**，否则等于放过「示例行未删」）
-- `decision/orca-decide.mjs`：决策侧车；`orchestration/`：L3 watchdog（仅外部/终端编排时部署）
-- `check-sync.sh`：母版↔两包一致性门禁（归一化裸名后逐字节比对），须 `SYNC-OK`
-- `orca-gitignore.sh` ＋ `orca-public-ignore.txt` ＋ `restore-framework.sh`：**公开仓不带 ORCA** 三件套（注入忽略块＋摘除已跟踪 ORCA / 忽略清单单一真源 / clone 回来补回框架）。仅作品对外公开时用，详见上方「公开仓怎么不带 ORCA」
-- `orca-public-guard.sh`：**自动**按可见性补齐——扫全部项目，公开仓缺忽略块就自动注入并摘除，私有仓跳过；开工跑一次即可，无需逐仓交代
-
-**包**
-- `新项目模板包/`（新项目初始化）、`老项目迁移模板包/`（老项目迁移，入口【迁移整理】提示词）。两包内容由 `scripts/_sync-packages.py` 从母版生成，**不要手改包内文件**。
-
-## docs/ 地图
-
-- `roles/`：11张角色卡（只看本次派的角色）
-- `prompts/`：编排者/外部开发者/迁移整理三份提示词（迁移整理含自举取包＋冲突处理，可当老项目唯一入口）＋《Orca 通用编排者持续推进协议》（防停摆三层监督收编版；其动态角色论与十卡制冲突，不采用）＋《Orca 编排治理监督者提示词》（总监督wake-only收编版，平时只喊编排者）
-- `history/`：重塑说明、更新说明、ORCA 模型与双阶段治理整改方案（历史，看现行先看根）
-- `templates/`：归位表模板
-- `pm/` `plan/` `qa/` `review/`：计划/测试/评审落盘（各照 template）。`pm/` 是**本轮**计划（Phase1 产品计划、Phase2 Stage/Task），`plan/` 是**后续开发计划**（V2/V3 路线图，版本序列/排序/取舍/暂不排期候选），两者分开不混
-- `handoff/`：交接（含模板）；`model/`：模型账本（TASK 首个真实任务前、DISPATCH 首个真实派工前删示例行）＋ TM 资格测试（`TASK-MANAGER-QUALIFICATION.md` 规范/报告、`TASK-MANAGER-QUALIFICATION-EVENTS.jsonl` 事件，评分 `scripts/model/tm-qualification.mjs`）
-- `sop/`：基础设施规范（docker.md、supabase.md、sqlite.md、android.md、android-machine-profile.md、webqa.md、decision-router.md、**app-theme-i18n.md**（APP 基础能力：主题三态＋中英双语）、**app-brand-assets.md**（APP 品牌资产：中文名／英文名／安卓图标／启动画面，面向用户 APP 默认继承）、**background-services.md**，去版本号引用），新项目自建
-- `scripts/decision/`：Decision Sidecar orca-decide（用法见其 README 与 docs/sop/decision-router.md）
-
-## 已删除（用户令，结论均已落实）
-
-- 历史治理审查报告6份（09-09→09-11）：P1/P2结论已全部修完验过，删前状态见 git 历史；现行结论以包内文件为准
-- `docs/model/模型分工工作量排名-2026-09-13-参考.md`（2026-09-15 删，快照过期，见 git 历史）
-- 根散文件已归位：三提示词→`prompts/`、两说明→`history/`、归位表→`templates/`
-
-## 改名对照（去版本号一次改名，老链接按此找新位置）
-
-- `docs/history/2.0-重塑说明.md` → `docs/history/重塑说明.md`
-- `docs/history/2.1-更新说明.md` → `docs/history/更新说明.md`
-- `docs/history/ORCA-V2.1-治理审查报告-*` → `docs/history/ORCA-治理审查报告-*`（实物已删，见 git 历史）
-- `docs/history/*ORCA V2.1模型与双阶段治理-整改方案 丨 V1.0.md` → `docs/history/*ORCA模型与双阶段治理-整改方案.md`
-- `docs/prompts/*持续推进协议 丨 V1.1.md` → `Orca 通用编排者持续推进协议.md`
-- `docs/sop/*交接上下文 丨 V1.0.md` → 去掉末尾 ` 丨 V1.0`（该文件已删，见 git 历史）
-- 口令 `【迁移整理｜2.1】` → `【迁移整理】`
-- 口令 `【编排者｜2.1开工】` → `【编排者｜开工】`
-- 口令 `【外部施工｜2.1】` → `【外部施工】`
-
-## 可直接使用的模板包
-
-- `新项目模板包/`：新项目初始化所需的完整文件包。
-- `老项目迁移模板包/`：老项目迁移所需的完整文件包；入口是 `【迁移整理】` 提示词（含自举取包：它每次都自己去本机治理仓库取包，无需你手动拷贝，也不会因项目已有治理文件而跳过）。
+版本号注入、构建链与产物核验方法见 `docs/architecture-facts.md`；本地导入的启用步骤与恢复方式见 `docs/vocal-v31-operations.md`。

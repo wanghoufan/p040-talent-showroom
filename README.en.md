@@ -1,117 +1,160 @@
-# Personal Talent Library (Dance / Guitar / Vocals)
+# Talent Showcase
 
-English | [简体中文](README.md)
+Keep the songs you practise, their scores, and what you need on stage in one local library. Rehearse with looping and tempo changes from your own computer, then cache tonight's set onto your phone before you leave.
 
-A **personal-use** talent library: collect your own music, scores and lyrics, then filter, practice and perform with cached content offline.
+[简体中文](./README.md) | English
 
-> The intended flow: collect songs at home (on a Mac), then take the phone out — **cold-start and play even with no network**, instead of scrambling through short-video apps on site.
+<p>
+  <img src="./docs/images/readme-library.png" alt="Vocal library screen" width="180" />
+  <img src="./docs/images/readme-settings.png" alt="Device connection and offline preparation screen" width="180" />
+  <img src="./docs/images/readme-offline.png" alt="Offline download complete screen" width="180" />
+</p>
 
-![Library home](docs/verification/screens/cover-bulk-home-light.png)
+## What it solves
 
-## What it does
+Practice material is usually scattered: audio lives in a music app, scores live in a photo album or PDF, original key, performance key, and capo settings live in a notes app, and tonight's running order lives in a chat thread. To work on one line, you end up dragging a progress bar back and forth.
 
-- **Cut the dancing audio out of a video**: import a local video, auto-extract a clip, fine-tune start/end points, and keep the original video for review.
-- **Bulk classification**: use “Batch management” on the home screen to select multiple dances or all filtered results, then update progress or add/remove/replace scene tags together. Edits can be saved offline on the phone and synchronize when the API is reachable.
-- **Filter by progress and scene**: 3 learning states (Want to learn / Practicing / Can dance) × 4 scene tags (Cool / Sexy / Outdoor / Transition) to quickly pick what to practice today.
-- **One-tap import from a share link**: share a short-video link into the app to create an entry; if the platform can't provide the media, the flow doesn't break — the link is kept so you can supply a local video later.
-- **Works offline**: cached dances can still be filtered and played with no network (offline performance).
-- **Tonight playlist + Performance mode**: line up what you'll dance and use large play / pause / previous / next controls.
-- **One-tap play from the home grid**: play straight from a library card, with a floating bottom bar showing title, progress, and pause.
-- **Theme-aware covers**: covers are matching gradients with a ♪ watermark and the dance name — light blue in light theme, deep blue in dark theme — switching automatically with the theme.
+This app puts audio, scores, lyrics, keys, practice status, and performance order into one local library. While practising you can loop a line or a section, change tempo between 0.75x and 1.5x, and jump by line. Before a show you cache the selected songs, lyrics, scores, and reference videos onto the phone, so playback works even where the network is unreliable.
 
-## Who it's for
+## Core capabilities
 
-A **single-user** personal tool: collect your own songs, practice on your own, perform on your own. No accounts, no multi-user collaboration.
+### Three libraries
 
-## Quick start
+- Four main entries at the bottom: Dance, Vocal, Guitar, and Mine.
+- Vocal and guitar entries can store original key, performance key, text scores, and notes; guitar entries also have a capo field.
+- Learning status is shared across libraries: want to learn, practising, and can sing / can play. Vocal entries can be filtered by language; guitar entries by scene.
+- Search, batch management, batch classification edits, move to trash, and restore are supported.
+- Scores are stored as PDF or image attachments. The built-in reader supports page navigation and 0.25x zoom steps, and remembers the page per song.
 
-Use the verified **Node.js 24** runtime (the package declares a minimum of ≥ 22).
+### Importing and organising
+
+- Vocal batch import accepts mp3, m4a, wav, and flac audio plus `.lrc` lyrics, with a preview and correction step before saving.
+- Local smart import (off by default) can scan a controlled music directory, separate original vocals from accompaniment, and extract lyrics and structure. When no allow-listed directory is configured, the endpoints are not mounted.
+- Covers, audio, scores, and reference videos all come from the local server, and the phone downloads them on demand.
+- Deletion moves items to trash for recovery. Batch and single-item operations share the same server endpoints.
+
+### Vocal practice
+
+- Line loops offer only 3-line and 5-line ranges, alongside whole-song loops, section loops, and a "run the duet once" action.
+- Tempo steps are 0.75x, 1x, 1.25x, and 1.5x; pitch is preserved while changing speed.
+- Backward and forward jumps are selectable at 5, 10, 15, and 30 seconds. Lyrics can be tapped to seek and scroll line by line.
+- Lyric size has standard, large, and extra-large levels. Translations can be toggled per line, with redundant translations marked.
+- The song map splits the track into intro, verse, chorus, bridge, and other sections. Rap ranges can be selected and skipped; unconfirmed rap sections are called out separately.
+- Immersive practice mode hides list controls and leaves only playback and lyrics.
+- An A4 study sheet can be generated. Paper revision import is used to bring handwritten changes back into lyrics and structure.
+
+### Vocal performance and running order
+
+- Tonight's running order mixes dance, vocal, and guitar items, supports drag reordering and up/down buttons, and saves the order.
+- Performance mode is a single-column phone layout. Vocal items default to the accompaniment track; when it is missing, the app says so instead of silently playing the original vocal.
+- During a performance you can switch between original and accompaniment while keeping the play position, pause state, and lyric sync. The screen stays awake.
+- Preparing an offline show lists each gap per song: accompaniment missing, accompaniment not cached, lyrics without timestamps, structure not annotated. It does not hide missing pieces behind an "already prepared" label.
+- Guitar scores, dance audio, and reference videos use the same offline preparation flow.
+
+### Song requests by QR code
+
+- Under "Mine → Song Requests", choose which songs may be published and generate a QR code. Nothing is published by default.
+- Guests on the same Wi-Fi open the request page and see only the selected song titles and talent type, never scores, lyrics, notes, or media.
+- A request takes a nickname (up to 40 characters) and a note (up to 200 characters). The same song is not queued twice.
+- A request session expires after 24 hours by default and can be closed early. The host can accept, reject, or clear processed requests; accepted songs are added to the running order.
+
+### Android offline shell
+
+- Capacitor 8 packs the built frontend and native capabilities into the APK. Android playback uses verified local files rather than a live server.
+- The Mine page shows the number of cached items and bytes used, can prepare the "want to learn" and "tonight's running order" sets in one action, and can clear offline media.
+- After a cold start with no network, the library still opens and cached songs still play. Scores, lyrics, and reference videos count as available only after a download passes verification.
+
+## Quick Start
+
+Requires Node.js 22 or later and npm. The server does not read a `.env` file, so environment variables must be exported in the shell.
 
 ```bash
-# 1. Install dependencies
-npm install
-
-# 2. Start the local API (defaults to 127.0.0.1:8791)
-npm run server:dev
-
-# 3. In another terminal, start the frontend (127.0.0.1:5173, /api proxied to 8791)
-npm run dev
+npm ci
+npm run dev          # frontend, default http://127.0.0.1:5173
+npm run server:dev   # API, default http://127.0.0.1:8791
 ```
 
-Then open http://127.0.0.1:5173 . Health check: http://127.0.0.1:8791/api/health .
+The first start creates the SQLite database `var/personal-dance-library.db` and the media directory `var/media` under `var/`, and automatically applies pending migrations. If you already have real data, confirm that `SQLITE_DB_PATH` points at the database you intend to operate on.
 
-Common commands:
+Health check:
 
 ```bash
-npm run build     # type-check + frontend build
-npm run test      # unit / component tests
-npm run lint      # lint
+curl --noproxy '*' http://127.0.0.1:8791/api/health
 ```
 
-## Build as an Android app
+The expected response is `{"ok":true,"recognition":"disabled"}`.
 
-Built with Capacitor 8. The delivery form bundles the frontend into the app (the WebView loads local assets and reaches the local API over a private LAN).
+Checks and build:
+
+```bash
+npm run lint
+npm run typecheck
+npm test
+npm run test:integration
+npm run build
+```
+
+Database scripts:
+
+```bash
+npm run db:migrate
+npm run db:backup
+npm run db:restore
+```
+
+Docker:
+
+```bash
+docker build -t dance-library .
+docker run --rm -p 8791:8791 -v "$(pwd)/var/docker:/app/data" dance-library
+```
+
+Android debug build:
 
 ```bash
 npm run build
 npx cap sync android
-# Requires Java 21
-JAVA_HOME=<your JDK21 path> ANDROID_HOME=<your Android SDK path> \
-  ./android/gradlew -p android :app:assembleDebug
+cd android && ./gradlew :app:assembleDebug
 ```
 
-Output: `android/app/build/outputs/apk/debug/app-debug.apk`.
+Building requires JDK 21 and the Android SDK; the repository's verification notes record that JDK 17 fails. The APK is at `android/app/build/outputs/apk/debug/app-debug.apk`, and the debug package name carries a `.dev` suffix.
 
-## Run the backend with Docker
+Connecting a phone to the local server:
 
 ```bash
-docker compose up --build
+HOST=0.0.0.0 PORT=8791 npm run server:dev
 ```
 
-- The API listens on `8791` inside the container; the host maps it to `8792` by default (change with `DANCE_PORT`).
-- Data (SQLite database and media files) persists in `./var/docker`.
-- Ships with a health check (`/api/health`).
+In the app's "Mine" page, enter the computer's LAN address (for example `http://192.168.x.x:8791`) and the device pairing code. On first start the server generates `owner-pairing.json` next to the database. Devices on the same home LAN or Tailscale range pair automatically; only cross-subnet devices need the code entered manually.
 
-## Configuration
+Live reload on a device (optional):
 
-Configured via environment variables (see `.env.example`). Server secrets are **never committed to Git and never shipped to the client**.
+```bash
+CAP_LIVE=1 npx cap sync android
+adb reverse tcp:5173 tcp:5173
+adb reverse tcp:8791 tcp:8791
+```
 
-| Variable | Default | Purpose |
-| --- | --- | --- |
-| `HOST` | `127.0.0.1` | API bind address |
-| `PORT` | `8791` | API port |
-| `SQLITE_DB_PATH` | `var/personal-dance-library.db` | SQLite database path |
-| `MEDIA_ROOT` | `var/media` | Directory for audio / covers / source videos |
-| `MUSIC_RECOGNITION_PROVIDER` | `disabled` | Recognition provider (off by default) |
-| `MUSIC_RECOGNITION_API_KEY` | empty | Reserved: recognition service key (not yet wired in the server, so it has no effect today) |
+Start the app and the WebView loads the local Vite server, so JS changes apply immediately.
+
+## Data and privacy
+
+- The library, scores, lyrics, structure, and running order live in a local SQLite database; media files live under `MEDIA_ROOT`. There is no account, cloud sync, or third-party backup.
+- The phone connects to your own server over LAN or Tailscale. Pairing credentials stay on the device, and the pairing code is only used to establish trust.
+- QR song requests expose only the titles and talent types you selected. The page returns no scores, lyrics, notes, or media. Sessions expire after 24 hours by default and can be closed early.
+- If lyric translation is enabled, the original lyrics are sent to the CodeBuddy cloud model; the repository explicitly documents that this is not a local model. Without a configured `scripts/codebuddy-auto.sh`, translation fails explicitly rather than returning fake output.
+- Music recognition is disabled by default (`MUSIC_RECOGNITION_PROVIDER=disabled`). The repository provides only a provider interface and a mock for tests, with no built-in cloud recognition implementation.
+- Local smart import reads only allow-listed directories declared by the server and treats source directories as read-only. Outputs go to `MEDIA_ROOT/vocal-import/`; source files are not moved, renamed, or deleted.
+- The Android shell uses cleartext HTTP inside a private network (`androidScheme: http`) so pages can load LAN media and APIs. Do not treat this build as a public-internet client.
 
 ## Known limitations
 
-- **Recognition is off by default**: without a real key it runs in disabled/mock mode and never fabricates results; title/artist can be entered manually.
-- **Depends on the local API**: the phone must reach the machine running the API (same private LAN). Outside that network it relies on cached content.
-- **Verification still open**: physical offline cold start (T064) and Docker isolated build/run (T089) passed; final user acceptance (T096) remains open; the first release still needs the owner's sign-off.
+- The frontend has no Service Worker and is not an installable browser PWA. Offline playback depends on the Android shell's local file cache; the browser build needs the server online.
+- Original key, performance key, and capo are records only. They do not transpose the audio; tempo changes preserve pitch rather than shift it.
+- Local smart import is off by default and requires an allow-listed directory, ffmpeg / ffprobe, an executable `audio-separator`, and model files. Structure analysis also needs a separate Python venv. If any piece is missing, work stops in an explicit pending state.
+- There is no single version number in the repository: `package.json` says 0.1.0, the Android shell is currently 1.1.32 (versionCode 35), and the release record stops at v1.0.0. The native version in `android/app/build.gradle` is authoritative.
+- The Android package is debug-signed with `applicationId` `com.wanghoufan.dancelibrary`; debug builds carry a `.dev` suffix. There is no store release configuration and no iOS project.
+- A Node server must be running on macOS. The phone does not host the library, so if the address changes after switching networks, update the server or fallback address in "Mine".
+- QR song requests require guests and the computer to be on the same network. If the public address is unavailable, the QR code cannot be opened.
 
-## Tech stack
-
-React 19 · TypeScript · Vite 7 ｜ Node.js local API (`node:sqlite`) ｜ Capacitor 8 (Android) ｜ HTML5 `<audio>`.
-
-## More docs
-
-- Spec and plan: [specs/001-personal-dance-library/](specs/001-personal-dance-library/)
-- Verification evidence (device / offline / audio / Docker): [docs/verification/](docs/verification/)
-- Current handoff snapshot: [docs/handoff/HANDOFF.md](docs/handoff/HANDOFF.md)
-- Infrastructure guides (Docker / SQLite / Android): [docs/sop/](docs/sop/)
-
-## License
-
-No open-source license is declared; this is a personal-use project.
-
-## Completion update
-
-The compact two-column home, bulk editing/trash/restore, durable offline edits and mixed program are implemented. Vocals use the same inline card playback control as dance. The phone can create vocal text items offline, queue media/score files, and resolve revision conflicts in Settings. Permanent record deletion and demo cleanup require the local API.
-
-Settings offers independently registered original demos with selective downloads and confirmed cleanup. Vocal image/PDF attachments support ordering, unlinking, zoom, PDF page bookmarks and offline reading; PDF.js assets are bundled. Lyrics can scroll automatically and pause on manual touch.
-
-The local song-request desk publishes only selected titles and types for 24 hours. Scan its QR on the same LAN; guests cannot access private lyrics, scores, notes or media. Owner pairing protects management and media endpoints. Requests are approved before joining the program. Public hosting, production signing and first-release acceptance remain Human Gates.
-
-Guitar code and data are preserved but further guitar development and data changes are frozen at the user's request on 2026-10-03, pending a revised design. See the [completion plan](specs/003-talent-library-completion/plan.md) and [current handoff](docs/handoff/HANDOFF.md) for verification boundaries.
+The version injection, build chain, and artifact verification method are documented in `docs/architecture-facts.md`. Enablement and recovery steps for local import are in `docs/vocal-v31-operations.md`.
