@@ -10,6 +10,9 @@ export interface PendingImport {
   jobId: string;
   name: string;
   createdAt: string;
+  /** 已保存到应用私有目录的源视频；没有该字段代表旧版只记了 jobId。 */
+  videoId?: string;
+  sizeBytes?: number;
 }
 
 const KEY = 'dance.pending-imports.v1';
@@ -35,10 +38,14 @@ export function listPendingImports(): PendingImport[] {
 }
 
 /** 同一 jobId 只留一条；最多保留 20 条，避免长期堆积。 */
-export function rememberImport(jobId: string, name: string): void {
+export function rememberImport(jobId: string, name: string, extra: Pick<PendingImport, 'videoId' | 'sizeBytes'> = {}): void {
   const items = read().filter((item) => item.jobId !== jobId);
-  items.unshift({ jobId, name: name.trim() || '未命名视频', createdAt: new Date().toISOString() });
+  items.unshift({ jobId, name: name.trim() || '未命名视频', createdAt: new Date().toISOString(), ...extra });
   write(items.slice(0, 20));
+}
+
+export function findPendingImport(jobId: string): PendingImport | undefined {
+  return read().find((item) => item.jobId === jobId);
 }
 
 export function forgetImport(jobId: string): void {

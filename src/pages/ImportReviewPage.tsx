@@ -1,7 +1,8 @@
 import { useEffect,useRef,useState } from 'react';
 import { Link,useNavigate,useParams } from 'react-router-dom';
-import { api,jsonBody,mediaUrl,ApiError } from '../lib/api';
-import { forgetImport } from '../lib/pending-imports';
+import { api,apiWithTimeout,jsonBody,mediaUrl,ApiError } from '../lib/api';
+import { findPendingImport,forgetImport,rememberImport } from '../lib/pending-imports';
+import { discardStoredVideo,findStoredVideo,findStoredVideoByJob,linkStoredVideo,recoverStoredVideos,stageVideo,readStoredVideo,VideoCopyError,type StoredVideo } from '../lib/video-store';
 import { removeShareByJob,updateShareByJob } from '../lib/pending-shares';
 import { catalogChanged } from '../lib/catalog-store';
 import { STATUS_OPTIONS,SCENE_OPTIONS } from '../lib/filters';
@@ -20,7 +21,13 @@ export default function ImportReviewPage(){
   const [title,setTitle]=useState(''),[artist,setArtist]=useState('');
   const [status,setStatus]=useState<LearningStatus>('WANT_TO_LEARN'),[scenes,setScenes]=useState<SceneTag[]>([]);
   const [busy,setBusy]=useState(false);
+  const [storedVideo,setStoredVideo]=useState<StoredVideo|undefined>(()=>findStoredVideoByJob(jobId));
   const supplementInput=useRef<HTMLInputElement>(null);
+
+  useEffect(()=>{
+    // 冷启动后 sidecar 可能比 localStorage 索引更完整，先补登记再判断能否继续上传。
+    void recoverStoredVideos().then(()=>setStoredVideo(findStoredVideoByJob(jobId)));
+  },[jobId]);
 
   useEffect(()=>{
     let active=true; let timer:ReturnType<typeof setTimeout>; let initialized=false;
@@ -30,6 +37,7 @@ export default function ImportReviewPage(){
         if(!active) return;
         setJob(next);
         if(next.status==='FAILED') forgetImport(jobId);
+        if(next.status!=='NEEDS_INPUT') setStoredVideo(findStoredVideoByJob(jobId));
         if(next.status==='READY'&&!initialized){ setTitle(next.draft?.title||'未识别舞蹈'); setArtist(next.draft?.artist||''); initialized=true; }
         if(['PENDING','PROCESSING'].includes(next.status)) timer=setTimeout(()=>void poll(),400);
       }catch(error){
@@ -41,17 +49,45 @@ export default function ImportReviewPage(){
     };
     void poll();
     return ()=>{ active=false; clearTimeout(timer); };
-  },[id]);
+  },[id,jobId]);
 
   const save=async()=>{
     setBusy(true); setError('');
-    try{ const item=await api<DanceItem>(`/api/imports/${id}/finalize`,{method:'POST',...jsonBody({title,artist,learningStatus:status,sceneTags:scenes})}); forgetImport(jobId); removeShareByJob(jobId); catalogChanged(); navigate(`/dances/${item.id}`,{replace:true}); }
+    try{
+      const item=await api<DanceItem>(`/api/imports/${id}/finalize`,{method:'POST',...jsonBody({title,artist,learningStatus:status,sceneTags:scenes})});
+      // 确认保存后把私有副本登记为该曲目的本地原视频；文件保留，重启/断网仍可播放。
+      const pending=findPendingImport(jobId);
+      const local=(pending?.videoId?findStoredVideo(pending.videoId):undefined)||findStoredVideoByJob(jobId);
+      // 只有视频副本才登记为“原视频”；手动音频导入不能冒充视频源。
+      // 关联失败不阻断保存（文件仍在手机里，播放会回落到网络），下次打开原视频页还能重新下载。
+      if(item.sourceMediaId&&local?.mime.startsWith('video/')) {
+        try { await linkStoredVideo(local.id,{sourceMediaId:item.sourceMediaId}); }
+        catch { /* sidecar 写失败：任务已保存，关联信息丢失只影响离线播放 */ }
+      }
+      forgetImport(jobId); removeShareByJob(jobId); catalogChanged(); navigate(`/dances/${item.id}`,{replace:true});
+    }
     catch{ setError('保存未完成，请重试'); setBusy(false); }
+  };
+  const sendSupplement=async(video:StoredVideo)=>{
+    setBusy(true); setError('');
+    try{
+      const body=await readStoredVideo(video);
+      await apiWithTimeout(`/api/imports/${id}/supplement`,{method:'POST',headers:{'Content-Type':video.mime,'X-File-Name':encodeURIComponent(video.name)},body},120000);
+      updateShareByJob(jobId,'SUBMITTED'); window.location.reload();
+    }catch{ setError('视频已保存在手机，但补充上传未完成；可点「继续上传已保存的视频」重试'); setBusy(false); }
   };
   const supplement=async(file:File)=>{
     setBusy(true); setError('');
-    try{ await api<ImportJob>(`/api/imports/${id}/supplement`,{method:'POST',headers:{'Content-Type':file.type||'application/octet-stream','X-File-Name':encodeURIComponent(file.name)},body:file}); updateShareByJob(jobId,'SUBMITTED'); window.location.reload(); }
-    catch{ setError('补充视频未完成，请确认文件有效并重试'); setBusy(false); }
+    let staged:StoredVideo;
+    try{ staged=await stageVideo(file); }
+    catch(error){ setError(error instanceof VideoCopyError?error.message:'视频无法保存到手机，请重试'); setBusy(false); return; }
+    // 用户明确换视频：新副本落盘成功后才清理这一条任务下的旧副本，避免两份都挂同一个 jobId。
+    const previous=findStoredVideoByJob(jobId);
+    if(previous&&previous.id!==staged.id)await discardStoredVideo(previous.id);
+    await linkStoredVideo(staged.id,{jobId});
+    rememberImport(jobId,staged.name,{videoId:staged.id,sizeBytes:staged.sizeBytes});
+    setStoredVideo(staged);
+    await sendSupplement(staged);
   };
   const candidates=job?.draft?.candidates||[];
 
@@ -64,8 +100,12 @@ export default function ImportReviewPage(){
     {job?.status==='NEEDS_INPUT'&&<div className="empty-library">
       <h2>已保留分享链接</h2>
       <p>当前无法自动取得这条视频，请选择本地视频补充；原链接会保留在条目来源里。</p>
+      {storedVideo&&<p className="muted">视频已保存在手机：{storedVideo.name}（{Math.ceil(storedVideo.sizeBytes/1024/1024)} MB），退出 App 也不会丢。</p>}
       <input ref={supplementInput} type="file" accept="video/*" hidden onChange={e=>{const f=e.target.files?.[0];if(f)void supplement(f);}}/>
-      <button className="primary" disabled={busy} onClick={()=>supplementInput.current?.click()}>选择本地视频补充</button>
+      {storedVideo
+        ?<button className="primary" disabled={busy} onClick={()=>void sendSupplement(storedVideo)}>{busy?'正在上传…':'继续上传已保存的视频'}</button>
+        :<button className="primary" disabled={busy} onClick={()=>supplementInput.current?.click()}>选择本地视频补充</button>}
+      {storedVideo&&<button disabled={busy} onClick={()=>supplementInput.current?.click()}>换一个视频</button>}
       <Link className="icon-link" to="/">返回曲库</Link>
     </div>}
     {job?.status==='READY'&&job.draft&&<div className="review-form">

@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## 2026-11-09｜换机迁移（6 位数字＋自动发现）与视频持久化收口
+
+- 换机迁移按用户要求改为 **6 位数字配对码**（删除 160 位 32 字符长码），新增同 Wi-Fi UDP 自动发现 + 旧机「允许 / 拒绝」确认；确认前服务端回 428、新机 90s 轮询，拒绝回 403，不回落明文。
+- 安全余项：nonce 按会话保存/满则拒绝；`handleConfirm` 复核过期时间；连接上限 8/单 IP 3 与 10s 头部超时；F7 文案改为「同一局域网（同一 Wi-Fi 或 Tailscale）」。
+- 迁移成功广播 `dance-migration-applied`，设置页即时重算缓存统计；原生失败落日志且界面不再只显示 `MIGRATION_FAILED` 代号。
+- 视频持久/孤儿/待办修复与迁移数据层（cacheIndex、operations、pendingFiles、pendingImports、offlineManifest 幂等合并）随包交付。
+- 1.1.36（39）`assembleRelease` 成功，APK SHA-256 `849b60cf226846ef520c4c555208ac38650937eedf1fa42fd734f15d02cb0ebc`；**两机真机验收通过**：自动发现→允许→102 文件 444.3 MB、二次迁移幂等、断网杀进程后原视频可播、旧机数据不变。证据 `docs/qa/evidence-2026-11-09-migration-e2e/QA_RESULT.md`。
+- 定向测试：JS 92 用例、Java 24 用例全过；未跑全量回归。未 push。
+
 ## 2026-10-03｜洁癖收尾
 
 - 对齐当前交付回执、Human Gate、批准计划的历史/当前状态与双语离线批量编辑说明；修正Android预览API启动命令。

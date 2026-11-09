@@ -33,6 +33,16 @@ import { storeCover } from './media/covers.mjs';
 import { normalizeSourceLink } from './security/source-policy.mjs';
 import { serveStatic } from './static.mjs';
 
+/** 家庭局域网 / Tailscale(CGNAT) / 本机回环视为可信来源：免配对码，自动签发独立凭据。 */
+export function trustedPeer(address) {
+  const ip = (address || '').replace(/^::ffff:/, '');
+  if (ip === '::1' || ip.startsWith('127.')) return true;
+  const v4 = ip.split('.').map(Number);
+  if (v4.length !== 4 || v4.some((n) => !Number.isInteger(n) || n < 0 || n > 255)) return false;
+  return v4[0] === 10 || (v4[0] === 172 && v4[1] >= 16 && v4[1] <= 31)
+    || (v4[0] === 192 && v4[1] === 168) || (v4[0] === 100 && v4[1] >= 64 && v4[1] <= 127);
+}
+
 export function sendJson(res, status, value) {
   res.writeHead(status, { 'Content-Type': 'application/json; charset=utf-8', 'Cache-Control': 'no-store' });
   res.end(JSON.stringify(value));
@@ -61,7 +71,7 @@ export function createApiServer(options={}) {
       if (req.method === 'OPTIONS') { res.writeHead(204); res.end(); return; }
       if (req.method === 'GET' && path === '/api/health') return sendJson(res, 200, { ok: true, recognition: 'disabled' });
       const {db}=ctx;
-      if(db&&path==='/api/pair'&&req.method==='POST')return sendJson(res,200,pairOwner(db,(await readJson(req)).code,ctx.pairCode));
+      if(db&&path==='/api/pair'&&req.method==='POST')return sendJson(res,200,pairOwner(db,(await readJson(req)).code,ctx.pairCode,{trusted:trustedPeer(req.socket.remoteAddress)}));
       const publicMatch=/^\/api\/public\/request-sessions\/([A-Za-z0-9_-]{32})(\/requests)?$/.exec(path);
       if(db&&publicMatch){if(req.method==='GET'&&!publicMatch[2])return sendJson(res,200,publicSession(db,publicMatch[1]));if(req.method==='POST'&&publicMatch[2])return sendJson(res,201,guestRequest(db,publicMatch[1],await readJson(req)));return sendJson(res,404,{error:{code:'NOT_FOUND'}});}
       if(db&&path.startsWith('/api/')&&db.prepare('SELECT count(*) AS n FROM owner_credentials').get().n>0&&!authenticateOwner(db,req.headers.authorization?.replace(/^Bearer /,'')||(path.startsWith('/api/media/')?url.searchParams.get('owner'):null)))return sendJson(res,401,{error:{code:'UNAUTHORIZED',message:'请先在“我的”配对这台设备'}});

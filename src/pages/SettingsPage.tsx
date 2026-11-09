@@ -2,6 +2,7 @@ import {api,jsonBody} from '../lib/api';
 import {createTimedSignal} from '../lib/abort-signal';
 import SyncControls from '../components/SyncControls';
 import DemoControls from '../components/DemoControls';
+import MigrationPanel from '../components/MigrationPanel';
 import VocalImportManager from '../components/VocalImportManager';
 import { Link } from 'react-router-dom';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
@@ -54,6 +55,12 @@ export default function SettingsPage() {
   useEffect(() => { let active = true; void readAppVersion().then((v) => { if (active) setAppVersion({ version: v.version, build: v.build }); }).catch(() => undefined); return () => { active = false; }; }, []);
 
   const refreshCache = useCallback(async () => { setChecking(true); try { setOverview(await inspectOfflineLibrary()); setCache({ count: Object.keys(readCachedIndex()).length, bytes: await offlineBytes() }); setRefPlan(refManifest.current ? referencePlan(refManifest.current) : referencePlan()); setPresets({ want: wantToLearnIds(refManifest.current), program: tonightProgramIds() }); } finally { setChecking(false); } }, []);
+  // 换机迁移完成后重算缓存统计，避免页面停在上一次的 0 个文件。
+  useEffect(() => {
+    const refresh = () => void refreshCache();
+    window.addEventListener('dance-migration-applied', refresh);
+    return () => window.removeEventListener('dance-migration-applied', refresh);
+  }, [refreshCache]);
   // 先拉清单再做缓存检查，串行执行：避免慢的缓存检查用旧清单把最新体积/总数覆盖掉。
   useEffect(() => { let active = true; void (async () => {
     try {
@@ -89,7 +96,15 @@ export default function SettingsPage() {
       if (!primaryOk && !backupOk) throw new Error();
       const next = { ...settings, apiEndpoint: primary, apiFallback: backup }; saveDeviceSettings(next); setSettings(next);
       invalidateEndpoint();
-      const parts = [primaryOk ? `主地址可用（${primary}）` : `主地址不通（${primary}）`, backup ? (backupOk ? `备用可用（${backup}）` : `备用不通（${backup}）`) : '未设备用地址'];
+      // 家庭局域网/Tailscale 由服务端自动信任：连上就顺带配对，不用再手填 32 位码。
+      let autoPaired = false;
+      if (!localStorage.getItem('dance.owner-token')) {
+        try {
+          const r = await api<{ token: string }>('/api/pair', { method: 'POST', ...jsonBody({ code: pairCode }) });
+          localStorage.setItem('dance.owner-token', r.token); setPairCode(''); autoPaired = true;
+        } catch { /* 非局域网来源仍需手动填配对码 */ }
+      }
+      const parts = [primaryOk ? `主地址可用（${primary}）` : `主地址不通（${primary}）`, backup ? (backupOk ? `备用可用（${backup}）` : `备用不通（${backup}）`) : '未设备用地址', ...(autoPaired ? ['设备已自动配对'] : [])];
       setMessage(`连接成功，已保存：${parts.join(' · ')}；使用时自动选可用的那个`);
     } catch { setMessage('连接失败：主地址与备用地址都不通，请检查网络与服务器状态'); } finally { setBusy(false); }
   };
@@ -134,7 +149,10 @@ export default function SettingsPage() {
         <label>备用地址（出门用 Tailscale 地址，可留空）<input value={fallback} onChange={(e) => setFallback(e.target.value)} placeholder="http://100.x.y.z:28794" inputMode="url" /></label>
         <button className="primary" disabled={busy || !endpoint.trim()} onClick={() => void connect()}>{busy ? '正在检测…' : '连接测试并保存'}</button>
         {message && <p role="status">{message}</p>}
-        <label>设备配对码<input type="password" value={pairCode} onChange={e=>setPairCode(e.target.value)} autoComplete="off"/></label><button disabled={!pairCode||busy} onClick={()=>void api<{token:string}>('/api/pair',{method:'POST',...jsonBody({code:pairCode})}).then(r=>{localStorage.setItem('dance.owner-token',r.token);setPairCode('');setMessage('设备配对成功');}).catch(()=>setMessage('配对失败，请检查配对码'))}>配对这台设备</button><p className="muted">最近同步：{settings.lastSyncAt ? new Date(settings.lastSyncAt).toLocaleString() : '尚未同步'}</p>
+        <label>设备配对码（家庭局域网/Tailscale 内可留空，自动配对）<input type="password" value={pairCode} onChange={e=>setPairCode(e.target.value)} autoComplete="off"/></label><button disabled={busy} onClick={()=>void api<{token:string}>('/api/pair',{method:'POST',...jsonBody({code:pairCode})}).then(r=>{localStorage.setItem('dance.owner-token',r.token);setPairCode('');setMessage('设备配对成功');}).catch(()=>setMessage('配对失败，请检查配对码'))}>配对这台设备</button><p className="muted">最近同步：{settings.lastSyncAt ? new Date(settings.lastSyncAt).toLocaleString() : '尚未同步'}</p>
+      </div>
+      <div className="settings-block">
+        <MigrationPanel />
       </div>
       <div className="settings-block">
         <VocalImportManager />

@@ -9,6 +9,8 @@ vi.mock('@capacitor/filesystem', () => ({ Directory: { Data: 'DATA' }, Filesyste
  stat: async ({ path }: { path: string }) => { if (!native.files.has(path)) throw Error('missing'); return { size: native.files.get(path) }; },
  downloadFile: async ({ url, path }: { url: string; path: string }) => { native.downloads.push(url); if (native.fail.has(url)) throw Error('network'); native.files.set(path, 10); native.afterDownload(); return { path: 'file:///' + path }; },
  rename: async ({ from, to }: { from: string; to: string }) => { native.files.set(to, native.files.get(from)!); native.files.delete(from); },
+ getUri: async ({ path }: { path: string }) => ({ uri: 'file:///DATA/' + path }),
+ readdir: async () => ({ files: [] }),
 } }));
 const items: DanceItem[] = [1, 2, 3].map(i => ({ id: String(i), title: `舞蹈${i}`, artist: '', learningStatus: 'CAN_DANCE', sceneTags: [], performanceClipId: String(i), durationMs: 1000, audio: { id: String(i), url: `/api/media/audio/${i}`, sha256: `hash${i}`, sizeBytes: 10, version: 1 } }));
 beforeEach(() => { localStorage.clear(); native.supported = true; native.files.clear(); native.fail.clear(); native.downloads = []; native.afterDownload = () => {}; vi.stubGlobal('fetch', vi.fn(async () => new Response(JSON.stringify({ catalogVersion: 1, items, playlist: [] })))); });

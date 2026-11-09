@@ -1,7 +1,8 @@
 import { Capacitor } from '@capacitor/core';
 import { Directory, Filesystem } from '@capacitor/filesystem';
 import { mediaUrl } from '../lib/api';
-import { isItemPlayable, readCachedIndex, type CachedIndex, type CachedMedia, type MediaEntry } from '../lib/offline-manifest';
+import { isItemPlayable, readCachedIndex, readOfflineManifest, referenceEntries, saveCachedIndex, type CachedIndex, type CachedMedia, type MediaEntry } from '../lib/offline-manifest';
+import { findStoredVideoBySource, recoverStoredVideos, verifiedVideoUri } from '../lib/video-store';
 import type { DanceItem } from '../lib/types';
 
 /**
@@ -47,14 +48,62 @@ export function playbackSource(item: DanceItem, cached: CachedIndex): string {
 /**
  * 原视频播放地址解析：已缓存到手机且文件真实存在时用本地地址，否则回落网络。
  * 与音乐播放解耦，原视频是否就绪不影响曲库离线可用。
+ * 优先使用「导入时保存到私有目录的源视频」；该类副本独立于离线下载索引，重启后仍可播放。
  */
 export async function referenceSource(sourceMediaId: string): Promise<{ src: string; offline: boolean }> {
   const key = `/api/media/reference/${sourceMediaId}`;
+  let stored = findStoredVideoBySource(sourceMediaId);
+  if (!stored) {
+    // 索引可能被清理，sidecar 仍在：先补登记再判断，避免把已保存的视频当成没导入。
+    await recoverStoredVideos();
+    stored = findStoredVideoBySource(sourceMediaId);
+  }
+  if (stored) {
+    const uri = await verifiedVideoUri(stored);
+    if (uri) return { src: offlineUrl(uri), offline: true };
+  }
   if (isOfflineSupported()) {
     const hit = readCachedIndex()[key];
     if (hit?.uri && await fileExists(hit.path)) return { src: offlineUrl(hit.uri), offline: true };
+    const recovered = await recoverReferenceCache(key);
+    if (recovered) return { src: offlineUrl(recovered.uri), offline: true };
   }
   return { src: mediaUrl(key), offline: false };
+}
+
+function referenceEntry(key: string): MediaEntry | undefined {
+  const manifest = readOfflineManifest();
+  if (!manifest) return undefined;
+  for (const item of [...(manifest.items || []), ...(manifest.repertoire || [])]) {
+    for (const entry of referenceEntries(item)) if (entry.key === key) return entry;
+  }
+  return undefined;
+}
+
+/**
+ * 索引丢失但缓存文件还在时按确定性路径重建一条索引。
+ * 只接受体积与清单一致的文件；不删除任何现存文件。
+ */
+async function recoverReferenceCache(key: string): Promise<CachedMedia | null> {
+  const entry = referenceEntry(key);
+  if (!entry) return null;
+  const path = filePath(entry);
+  // 上次原子替换中断会留下 .old：体积相符时先还原，不把可用副本判死。
+  if (await sizeOf(path) !== entry.sizeBytes) {
+    const backup = `${path}.old`;
+    if (await sizeOf(backup) === entry.sizeBytes) {
+      await Filesystem.rename({ from: backup, to: path, directory: Directory.Data, toDirectory: Directory.Data }).catch(() => undefined);
+    }
+  }
+  if (await sizeOf(path) !== entry.sizeBytes) return null;
+  try {
+    const uri = (await Filesystem.getUri({ path, directory: Directory.Data })).uri;
+    const record: CachedMedia = { key, sha256: entry.sha256, version: entry.version, sizeBytes: entry.sizeBytes, path, uri };
+    const index = readCachedIndex();
+    index[key] = record;
+    saveCachedIndex(index);
+    return record;
+  } catch { return null; }
 }
 
 async function sizeOf(path: string): Promise<number | null> {
@@ -80,6 +129,11 @@ export async function downloadMedia(entry: MediaEntry): Promise<CachedMedia> {
   try { await Filesystem.mkdir({ path: dir, directory: Directory.Data, recursive: true }); } catch { /* 已存在 */ }
   const target = filePath(entry);
   const temp = `${target}.tmp`;
+  const backup = `${target}.old`;
+  // 上次替换在改名中途被杀掉时，先把备份还原成正式缓存，避免把可用副本当成缺失重新下载。
+  if (!(await fileExists(target)) && await fileExists(backup)) {
+    await Filesystem.rename({ from: backup, to: target, directory: Directory.Data, toDirectory: Directory.Data }).catch(() => undefined);
+  }
   await Filesystem.deleteFile({ path: temp, directory: Directory.Data }).catch(() => undefined);
   const result = await Filesystem.downloadFile({ url: mediaUrl(entry.url), path: temp, directory: Directory.Data, connectTimeout: 10000, readTimeout: 20000 });
   const size = await sizeOf(temp);
@@ -87,11 +141,28 @@ export async function downloadMedia(entry: MediaEntry): Promise<CachedMedia> {
     await Filesystem.deleteFile({ path: temp, directory: Directory.Data }).catch(() => undefined);
     throw new Error('文件校验失败');
   }
-  // 原子替换：先删旧目标，再把临时文件改名为目标。
-  await Filesystem.deleteFile({ path: target, directory: Directory.Data }).catch(() => undefined);
-  await Filesystem.rename({ from: temp, to: target, directory: Directory.Data, toDirectory: Directory.Data });
-  // 原生返回的是绝对路径；去掉 .tmp 得到目标文件的绝对 URI，供播放地址转换。
-  const uri = (result.path || temp).replace(/\.tmp$/, '');
+  // 原子替换：旧文件先改名备份，新文件落位成功后才删备份；中途失败必须把旧副本还原。
+  let backedUp = false;
+  if (await fileExists(target)) {
+    await Filesystem.deleteFile({ path: backup, directory: Directory.Data }).catch(() => undefined);
+    try {
+      await Filesystem.rename({ from: target, to: backup, directory: Directory.Data, toDirectory: Directory.Data });
+      backedUp = true;
+    } catch {
+      throw new Error('旧缓存文件无法替换，已保留原文件');
+    }
+  }
+  try {
+    await Filesystem.rename({ from: temp, to: target, directory: Directory.Data, toDirectory: Directory.Data });
+  } catch (error) {
+    if (backedUp) await Filesystem.rename({ from: backup, to: target, directory: Directory.Data, toDirectory: Directory.Data }).catch(() => undefined);
+    throw error;
+  }
+  if (backedUp) await Filesystem.deleteFile({ path: backup, directory: Directory.Data }).catch(() => undefined);
+  // 用原生解析出的绝对 URI，绝不把下载临时路径写进索引；重启后仍指向真实文件。
+  const uri = await Filesystem.getUri({ path: target, directory: Directory.Data })
+    .then((value) => value.uri)
+    .catch(() => (result.path || temp).replace(/\.tmp$/, ''));
   return { key: entry.key, sha256: entry.sha256, version: entry.version, sizeBytes: entry.sizeBytes, path: target, uri };
 }
 

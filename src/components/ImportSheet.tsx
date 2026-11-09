@@ -3,14 +3,24 @@ import { useRef,useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { api,jsonBody } from '../lib/api';
 import { rememberImport } from '../lib/pending-imports';
+import { stageVideo,uploadStoredVideo,VideoCopyError } from '../lib/video-store';
 import type { ImportJob } from '../lib/types';
 export default function ImportSheet({onClose}:{onClose:()=>void}){
   const [multi,setMulti]=useState(false);const navigate=useNavigate();const [busy,setBusy]=useState(false),[error,setError]=useState(''),[link,setLink]=useState(''),[showLink,setShowLink]=useState(false);
   const video=useRef<HTMLInputElement>(null),audio=useRef<HTMLInputElement>(null);
   const sendFile=async(file:File)=>{
     setBusy(true);setError('');
-    try{const job=await api<ImportJob>('/api/imports/file',{method:'POST',headers:{'Content-Type':file.type||'application/octet-stream','X-File-Name':encodeURIComponent(file.name)},body:file});rememberImport(job.id,file.name);navigate(`/imports/${job.id}`);onClose();}
-    catch{setError('收录未完成，请确认服务器连接后重试');setBusy(false);}
+    try{
+      // 先复制到应用私有目录并核对字节数，再上传；上传失败或退出 App 时源视频仍留在手机里。
+      const stored=await stageVideo(file);
+      const job=await uploadStoredVideo(stored);
+      navigate(`/imports/${job.id}`);onClose();
+    }catch(e){
+      setError(e instanceof VideoCopyError
+        ? e.message
+        : '视频已保存到手机，但上传未完成；可在曲库顶部「未完成的收录」重试');
+      setBusy(false);
+    }
   };
   const sendLink=async()=>{
     setBusy(true);setError('');try{const job=await api<ImportJob>('/api/imports/link',{method:'POST',...jsonBody({link})});rememberImport(job.id,link.trim());navigate(`/imports/${job.id}`);onClose();}catch{setError('请检查链接和服务器连接');setBusy(false);}
