@@ -38,7 +38,7 @@ if [ ! -x "$REAL" ]; then
   # 解析出来的是影子自己 → 无效，回落 pnpm 路径
   [ -n "$REAL" ] && [ "$REAL" != "$0" ] || REAL="$HOME/Library/pnpm/bin/codebuddy"
 fi
-[ -x "$REAL" ] || { echo "codebuddy-auto: 找不到真实 codebuddy 程序（CODEBUDDY_REAL=$REAL）" >&2; exit 127; }
+[ -x "$REAL" ] || { echo "codebuddy-auto: 找不到真实 codebuddy 程序（CODEBUDDY_REAL=${REAL}）" >&2; exit 127; }
 
 N="$(python3 "$HERE/_cb-count.py" "$ACC_FILE" 2>/dev/null || echo 0)"
 if [ "${N:-0}" -eq 0 ]; then
