@@ -4,8 +4,9 @@ import {editLocally} from '../lib/offline-editing';
 import ScoreAttachments from '../components/ScoreAttachments';
 import ScrollingText from '../components/ScrollingText';
 import { playableTalent } from '../lib/repertoire-store';
+import { availableVocalSources, resolveTracks } from '../lib/vocal';
 import { useEffect, useRef, useState } from 'react';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
 import { api, jsonBody } from '../lib/api';
 import { cacheRepertoire, rememberRepertoire, storedRepertoire, talentLabel, talentStatuses, useRepertoire } from '../lib/repertoire-store';
 import { playbackSource } from '../native/filesystem';
@@ -17,7 +18,7 @@ import DownloadItemButton from '../components/DownloadItemButton';
 import VocalPracticePlayer from '../components/VocalPracticePlayer';
 import VocalImportPanel from '../components/VocalImportPanel';
 export default function TalentDetailPage() {
- const { id, kind: pathKind } = useParams(); const navigate = useNavigate(); const { items, error: catalogError, loaded } = useRepertoire();
+ const { id, kind: pathKind } = useParams(); const navigate = useNavigate(); const location = useLocation(); const { items, error: catalogError, loaded } = useRepertoire();
  const item = items.find(x => x.id === id); const creating = !id; const kind: TalentKind = item?.kind || (pathKind === 'guitar' ? 'GUITAR' : 'VOCAL'); const listPath = `/repertoire/${kind === 'GUITAR' ? 'guitar' : 'vocal'}`;
  const [editing, setEditing] = useState(false), [error, setError] = useState(''), [busy, setBusy] = useState(false), [paused, setPaused] = useState(true), [loop, setLoop] = useState(false), [rate, setRate] = useState('1'), [confirm, setConfirm] = useState(false);
  const audio = useRef<HTMLAudioElement>(null), file = useRef<HTMLInputElement>(null), cancel = useRef<AbortController | null>(null);
@@ -36,6 +37,20 @@ export default function TalentDetailPage() {
   if (!a.getAttribute('src')) a.src = playbackSource(playable, readCachedIndex());
   a.playbackRate = Number(rate); a.preservesPitch = true;
   void a.play().catch(() => setError('音乐暂时无法播放，请检查连接或到“我的”下载全部音乐。'));
+ };
+ /** 列表循环：按进入这首歌时的曲库列表顺序切下一首；列表尽头回到第一首。 */
+ const playNext = () => {
+  const queued = (location.state as { vocalQueue?: string[] } | null)?.vocalQueue;
+  const ids = queued?.length ? queued : items.filter(x => x.kind === 'VOCAL').map(x => x.id);
+  const start = ids.indexOf(id || '');
+  if (start < 0) return;
+  /* 离线快照里旧 audio 字段可能缺失，但 tracks 仍可用；按真实音轨判定能不能播。 */
+  const canPlay = (next: TalentItem) => availableVocalSources(resolveTracks(next)).length > 0;
+  for (let step = 1; step <= ids.length; step += 1) {
+   const nextId = ids[(start + step) % ids.length];
+   const nextItem = items.find(x => x.id === nextId);
+   if (nextItem && canPlay(nextItem)) { navigate(`/repertoire/item/${nextId}${location.search}`, { replace: true, state: location.state }); return; }
+  }
  };
  const finishImport = async (jobId: string, signal: AbortSignal) => {
   for (let i = 0; i < 180; i++) {
@@ -65,7 +80,7 @@ export default function TalentDetailPage() {
  {(creating || editing) ? <TalentEditor key={id || kind} kind={kind} item={item} onSave={save} onCancel={() => creating ? navigate(listPath) : setEditing(false)} /> : item && <>
  <CoverArt title={item.title} variant="detail" /><h2 className="detail-title">{item.title}</h2><p className="muted">{item.artist || '未填写歌手'} · {talentStatuses(kind).find(s => s.id === item.learningStatus)?.label}</p>
  <div className="talent-facts"><span>原调 {item.originalKey || '未填写'}</span><span>{kind === 'GUITAR' ? '演奏调' : '演唱调'} {item.performanceKey || '未填写'}</span>{kind === 'GUITAR' && <span>Capo {item.capo}</span>}</div>
- {kind === 'VOCAL' ? <><VocalPracticePlayer key={item.id} item={item} onRequestImport={() => document.getElementById('vocal-import-original')?.click()} onExitToLibrary={() => navigate(listPath)} onOpenDetail={() => navigate(`/repertoire/item/${item.id}`, { replace: true })} /><VocalImportPanel item={item} onUpdated={rememberRepertoire} /></> : item.audio ? <div className="settings-block"><p>{item.audioRole === 'ACCOMPANIMENT' ? '伴奏' : '原唱 / 示范'}</p><button className="primary talent-play" onClick={play}>{paused ? '播放音乐' : '暂停音乐'}</button><audio ref={audio} controls loop={loop} onPlay={() => setPaused(false)} onPause={() => setPaused(true)} onEnded={() => setPaused(true)} />
+ {kind === 'VOCAL' ? <><VocalPracticePlayer key={item.id} item={item} onNext={playNext} onRequestImport={() => document.getElementById('vocal-import-original')?.click()} onExitToLibrary={() => navigate(listPath)} onOpenDetail={() => navigate(`/repertoire/item/${item.id}`, { replace: true })} /><VocalImportPanel item={item} onUpdated={rememberRepertoire} /></> : item.audio ? <div className="settings-block"><p>{item.audioRole === 'ACCOMPANIMENT' ? '伴奏' : '原唱 / 示范'}</p><button className="primary talent-play" onClick={play}>{paused ? '播放音乐' : '暂停音乐'}</button><audio ref={audio} controls loop={loop} onPlay={() => setPaused(false)} onPause={() => setPaused(true)} onEnded={() => setPaused(true)} />
  <div className="button-row"><button aria-pressed={loop} onClick={() => setLoop(!loop)}>{loop ? '循环已开启' : '单曲循环'}</button><label>播放速度<select value={rate} onChange={e => setRate(e.target.value)}>{['0.5','0.75','1','1.25','1.5'].map(x => <option key={x} value={x}>{x}×</option>)}</select></label></div></div> : <p className="notice">这是文本曲目，可直接看谱或歌词；导入自己的音频后可播放。</p>}
  {kind === 'GUITAR' && <div className="settings-block"><h2>和弦 / 歌词文本谱</h2>{item.scoreText ? <ScrollingText text={item.scoreText}/> : <p className="muted">尚未填写，点“编辑曲目”粘贴文本。</p>}</div>}{item.notes && <div className="settings-block"><h2>练习备注</h2><p className="talent-notes">{item.notes}</p></div>}
  <div className="button-row"><DownloadItemButton item={item} /></div><ScoreAttachments itemRef={{kind,id:item.id}} scores={item.scores||[]} onChange={scores=>rememberRepertoire({...item,scores})}/><div className="button-row"><button disabled={busy} onClick={() => setEditing(true)}>编辑曲目</button>{kind !== 'VOCAL' && <button disabled={busy} onClick={() => file.current?.click()}>{item.audio ? '重新导入练习音乐' : '导入音频 / 视频'}</button>}</div>

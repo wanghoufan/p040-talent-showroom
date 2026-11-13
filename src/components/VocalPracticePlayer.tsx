@@ -39,9 +39,24 @@ const SETTINGS_PREFIX = 'dance.vocal-practice.settings';
 const FONT_STORAGE_KEY = 'dance.vocal-practice.font-size';
 const TIMESTAMP_HINT = /\[\d{1,4}:\d{1,2}/;
 const SECONDS_CHOICES: VocalPracticeSettings['backwardSeconds'][] = [5, 10, 15, 30];
-const RATE_CHOICES = [0.75, 1, 1.25, 1.5];
-/** 逐句循环只留 3 句 / 5 句；2 句与 4 句已按用户要求下线。 */
-const LOOP_LINE_CHOICES = [3, 5];
+/** 只留 0.5 / 0.75 / 1 三档：不做加速，且每档独立成键，不再单键循环切换。 */
+const RATE_CHOICES = [0.5, 0.75, 1];
+/** 逐句循环 1 / 3 / 5 句；2 句与 4 句已按用户要求下线。 */
+const LOOP_LINE_CHOICES = [1, 3, 5];
+/** 整曲播放模式：单曲播放（播完停）/ 单曲循环（整首反复）/ 列表循环（播完接列表下一首）。 */
+type PlaybackMode = 'single' | 'single-loop' | 'list-loop';
+const PLAYBACK_MODES: readonly PlaybackMode[] = ['single', 'single-loop', 'list-loop'];
+const PLAYBACK_MODE_LABEL: Record<PlaybackMode, string> = { single: '单曲播放', 'single-loop': '单曲循环', 'list-loop': '列表循环' };
+const PLAY_MODE_STORAGE_KEY = 'dance.vocal-practice.play-mode';
+function readPlaybackMode(): PlaybackMode {
+  try {
+    const value = localStorage.getItem(PLAY_MODE_STORAGE_KEY);
+    return value === 'single-loop' || value === 'list-loop' ? value : 'single';
+  } catch { return 'single'; }
+}
+function savePlaybackMode(value: PlaybackMode): void {
+  try { localStorage.setItem(PLAY_MODE_STORAGE_KEY, value); } catch { /* 存储不可用时只影响本会话 */ }
+}
 const DEFAULT_SETTINGS: VocalPracticeSettings = { ...VOCAL_PRACTICE_DEFAULTS };
 /** 段落类型文案与结构编辑共用一份，避免两处标签不一致。 */
 const SECTION_TYPE_LABEL = TYPE_TEXT;
@@ -154,6 +169,8 @@ interface Props {
   onExitToLibrary?: () => void;
   /** 沉浸页里回到曲目详情（编辑、导入、删除仍在详情页）。 */
   onOpenDetail?: () => void;
+  /** 列表循环：一首播完由上层切到曲库列表的下一首。 */
+  onNext?: () => void;
 }
 
 /** 曲库点歌用 `?immersive=1` 直达沉浸；只在首次挂载时判定，后续切换不改入口。 */
@@ -162,7 +179,7 @@ function immersiveFromUrl(): boolean {
   try { return new URLSearchParams(window.location.search).get('immersive') === '1'; } catch { return false; }
 }
 
-export default function VocalPracticePlayer({ item, onRequestImport, onExitToLibrary, onOpenDetail }: Props) {
+export default function VocalPracticePlayer({ item, onRequestImport, onExitToLibrary, onOpenDetail, onNext }: Props) {
   /** 后端 tracks 是分角色持久化的真源；缺失的角色用旧 audio + audioRole 精确补位，绝不猜测另一轨。 */
   const tracks = useMemo<VocalTracks>(() => resolveTracks(item), [item]);
   const sourceList = useMemo(() => availableVocalSources(tracks), [tracks]);
@@ -172,6 +189,8 @@ export default function VocalPracticePlayer({ item, onRequestImport, onExitToLib
   const src = useMemo(() => trackSource(item, track?.media), [item, track]);
 
   const [settings, setSettings] = useState<VocalPracticeSettings>(() => readSettings(item));
+  /** 播放模式是跨曲目的习惯，和逐句循环互不影响；默认播完就停。 */
+  const [playbackMode, setPlaybackMode] = useState<PlaybackMode>(readPlaybackMode);
   const [playing, setPlaying] = useState(false);
   const [timeMs, setTimeMs] = useState(0);
   const [mediaDurationMs, setMediaDurationMs] = useState(0);
@@ -214,7 +233,6 @@ export default function VocalPracticePlayer({ item, onRequestImport, onExitToLib
    * 读取失败一律静默，不因为草稿服务不可用而挡住练唱。
    */
   const [draftReference, setDraftReference] = useState<{ count: number; disputed: number; loadedAt?: string | null } | null>(null);
-  const [joint, setJoint] = useState(false);
   const [notice, setNotice] = useState('');
   const [showSettings, setShowSettings] = useState(false);
   /** 沉浸页顶栏「更多」：音轨、译文纠错、翻译、结构入口都收在这里，主界面保持原型布局。 */
@@ -476,16 +494,17 @@ export default function VocalPracticePlayer({ item, onRequestImport, onExitToLib
   };
 
   const replay = (): void => {
-    setLoop(null); setLoopKey(null); setJoint(false); setSectionLoop(null);
+    setLoop(null); setLoopKey(null); setSectionLoop(null);
     setLoopAnchor(null); setLoopRange(null); setLoopRangeOn(false);
     seekTo(0, true);
   };
 
-  const toggleWholeLoop = (): void => {
-    setJoint(false);
-    setLoop(null); setLoopKey(null); setSectionLoop(null);
-    setLoopAnchor(null); setLoopRange(null); setLoopRangeOn(false);
-    setSettings((current) => ({ ...current, wholeTrackLoop: !current.wholeTrackLoop }));
+  /** 播放模式键：像日常播放器一样，点一次换下一个模式。 */
+  const cyclePlaybackMode = (): void => {
+    const next = PLAYBACK_MODES[(PLAYBACK_MODES.indexOf(playbackMode) + 1) % PLAYBACK_MODES.length];
+    setPlaybackMode(next);
+    savePlaybackMode(next);
+    setNotice(`播放模式：${PLAYBACK_MODE_LABEL[next]}`);
   };
 
   /** 点「跳过 Rap」直接开框选面板：按歌词句选起点/终点，不逼用户去整首分段。 */
@@ -505,15 +524,6 @@ export default function VocalPracticePlayer({ item, onRequestImport, onExitToLib
     setRapPickOpen(true);
   };
 
-  const startJoint = (): void => {
-    if (!src) { setNotice('没有可播放的音轨，无法合练。'); return; }
-    setLoop(null); setLoopKey(null); setSectionLoop(null); setJoint(true);
-    setLoopAnchor(null); setLoopRange(null); setLoopRangeOn(false);
-    setSettings((current) => ({ ...current, skipRap: true, wholeTrackLoop: false }));
-    seekTo(0, true);
-    setNotice('合练一遍：从头播放 · 自动跳过 Rap · 到结尾停止');
-  };
-
   const startLineLoop = (count: number, key: string): void => {
     if (!hasTiming) { setNotice('这首歌没有逐句时间戳，无法逐句循环；请导入带时间的 LRC。'); return; }
     /* 同键二次点击＝退出这一档循环：不 seek、不暂停、不重开播，保持在当前位置继续往后。
@@ -526,7 +536,7 @@ export default function VocalPracticePlayer({ item, onRequestImport, onExitToLib
     const endIndex = Math.max(0, activeLine);
     const next = lineLoopFor(lyrics.lines, endIndex, count, { durationMs: durationMs || undefined });
     if (!next) { setNotice('当前句缺少可靠句尾时间，无法循环；可先补充校准。'); return; }
-    setLoop(next); setLoopKey(key); setJoint(false); setSectionLoop(null);
+    setLoop(next); setLoopKey(key); setSectionLoop(null);
     setLoopAnchor(null); setLoopRange(null); setLoopRangeOn(false);
     setSettings((current) => ({ ...current, wholeTrackLoop: false }));
     /* 只进入循环、不替用户按下播放：暂停时设置循环就停在句首（真机曾出现「点循环即开播」）。 */
@@ -540,7 +550,7 @@ export default function VocalPracticePlayer({ item, onRequestImport, onExitToLib
   const seekToLine = (index: number): void => {
     const line = lyrics.lines[index];
     if (!line) return;
-    setLoop(null); setLoopKey(null); setJoint(false); setSectionLoop(null);
+    setLoop(null); setLoopKey(null); setSectionLoop(null);
     seekTo(line.startMs);
   };
 
@@ -568,7 +578,7 @@ export default function VocalPracticePlayer({ item, onRequestImport, onExitToLib
     const index = activeLine >= 0 ? activeLine : 0;
     const line = lyrics.lines[index];
     if (!line) return;
-    setLoop(null); setLoopKey(null); setSectionLoop(null); setJoint(false);
+    setLoop(null); setLoopKey(null); setSectionLoop(null);
     setSettings((current) => ({ ...current, wholeTrackLoop: false }));
     setLoopAnchor({ index, startMs: line.startMs });
     setNotice(`循环开始：第 ${index + 1} 句「${line.text}」；再点「循环结束」选终点`);
@@ -602,7 +612,7 @@ export default function VocalPracticePlayer({ item, onRequestImport, onExitToLib
       setNotice('终点还没落到起点之后；先播放到后面的句子再点「循环结束」。');
       return;
     }
-    setLoop(null); setLoopKey(null); setSectionLoop(null); setJoint(false);
+    setLoop(null); setLoopKey(null); setSectionLoop(null);
     setSettings((current) => ({ ...current, wholeTrackLoop: false }));
     setLoopAnchor(null);
     setLoopRange({ startIndex, endIndex: lastIndex, startMs: startMs as number, endMs: endMs as number });
@@ -651,29 +661,6 @@ export default function VocalPracticePlayer({ item, onRequestImport, onExitToLib
     setSettings((current) => ({ ...current, rapRange: null, skipRap: false }));
     setRapPickStart(null); setRapPickEnd(null);
     setNotice('已清除 Rap 范围');
-  };
-
-  /** 倍速按钮按 0.75 → 1 → 1.25 → 1.5 循环，和前后的 select 共用同一份设置。 */
-  const cycleRate = (): void => {
-    const index = RATE_CHOICES.indexOf(settings.playbackRate);
-    const next = RATE_CHOICES[(index + 1) % RATE_CHOICES.length];
-    setSettings((current) => ({ ...current, playbackRate: next }));
-    setNotice(`倍速 ${next}×`);
-  };
-
-  const cycleFont = (): void => {
-    const index = FONT_CHOICES.indexOf(fontScale);
-    const next = FONT_CHOICES[(index + 1) % FONT_CHOICES.length];
-    setFontScale(next);
-    saveFontScale(next);
-    setNotice(`歌词字号：${FONT_LABEL[next]}`);
-  };
-
-  const clearLoops = (): void => {
-    setLoop(null); setLoopKey(null); setSectionLoop(null); setJoint(false);
-    setLoopAnchor(null); setLoopRange(null); setLoopRangeOn(false);
-    setSettings((current) => ({ ...current, wholeTrackLoop: false }));
-    setNotice('已关闭循环');
   };
 
   /** 切轨复用 lib/vocal/tracks.ts：先校验目标可访问，再按 offset 还原位置，失败回滚原轨并明确提示。 */
@@ -742,15 +729,16 @@ export default function VocalPracticePlayer({ item, onRequestImport, onExitToLib
 
   const handleEnded = (): void => {
     setPlaying(false);
-    if (joint) { setJoint(false); setNotice('合练一遍完成'); return; }
     if (loopRangeOn && loopRange) { seekTo(loopRange.startMs, true); return; }
     if (sectionLoop) { seekTo(sectionLoop.startMs, true); return; }
     if (loop) { seekTo(loop.startMs, true); return; }
+    /* 单曲循环由 audio.loop 接住；列表循环播完交给上层切下一首。 */
+    if (playbackMode === 'list-loop' && onNext) { onNext(); return; }
     setTimeMs(durationMs);
   };
 
   const jumpToSection = (section: VocalSection): void => {
-    setLoop(null); setLoopKey(null); setJoint(false); setSectionLoop(null);
+    setLoop(null); setLoopKey(null); setSectionLoop(null);
     setLoopAnchor(null); setLoopRange(null); setLoopRangeOn(false);
     setFocusedSectionId(section.id);
     seekTo(section.startMs);
@@ -764,7 +752,7 @@ export default function VocalPracticePlayer({ item, onRequestImport, onExitToLib
       setNotice(`已退出 ${section.label} 整段循环`);
       return;
     }
-    setLoop(null); setLoopKey(null); setJoint(false);
+    setLoop(null); setLoopKey(null);
     setLoopAnchor(null); setLoopRange(null); setLoopRangeOn(false);
     setSettings((current) => ({ ...current, wholeTrackLoop: false }));
     setSectionLoop({ id: section.id, startMs: section.startMs, endMs: section.endMs });
@@ -844,10 +832,10 @@ export default function VocalPracticePlayer({ item, onRequestImport, onExitToLib
     }
   };
 
-  const modeText = joint ? '合练中 · 自动跳过 Rap'
-      : loopRangeOn && loopRange ? `循环 · 第 ${loopRange.startIndex + 1}～${loopRange.endIndex + 1} 句`
+  const modeText = loopRangeOn && loopRange ? `循环 · 第 ${loopRange.startIndex + 1}～${loopRange.endIndex + 1} 句`
       : sectionLoop ? `整段循环 · ${sectionById.get(sectionLoop.id)?.label ?? `${formatTime(sectionLoop.startMs)}–${formatTime(sectionLoop.endMs)}`}`
-      : loop ? `逐句循环 · 第 ${loop.startIndex + 1}～${loop.endIndex + 1} 句` : '自由练习';
+      : loop ? `逐句循环 · 第 ${loop.startIndex + 1}～${loop.endIndex + 1} 句`
+      : PLAYBACK_MODE_LABEL[playbackMode];
   const skipRapBlocked = Boolean(loop || sectionLoop || (loopRangeOn && loopRange)) && settings.skipRap;
 
   /**
@@ -1226,7 +1214,7 @@ export default function VocalPracticePlayer({ item, onRequestImport, onExitToLib
           ref={audioRef}
           className="vocal-audio"
           preload="metadata"
-          loop={settings.wholeTrackLoop}
+          loop={playbackMode === 'single-loop'}
           onLoadedMetadata={handleLoadedMetadata}
           onDurationChange={handleLoadedMetadata}
           onTimeUpdate={handleTimeUpdate}
@@ -1292,6 +1280,7 @@ export default function VocalPracticePlayer({ item, onRequestImport, onExitToLib
               ))}
               <button
                 type="button"
+                className="vocal-practice-wide"
                 aria-pressed={Boolean(loopAnchor || loopRange)}
                 disabled={!hasTiming}
                 aria-label="循环开始"
@@ -1301,6 +1290,7 @@ export default function VocalPracticePlayer({ item, onRequestImport, onExitToLib
               </button>
               <button
                 type="button"
+                className="vocal-practice-wide"
                 aria-pressed={loopRangeOn}
                 disabled={!hasTiming}
                 aria-label="循环结束"
@@ -1308,12 +1298,28 @@ export default function VocalPracticePlayer({ item, onRequestImport, onExitToLib
               >
                 循环结束
               </button>
-              <button type="button" aria-pressed={joint} disabled={!src} aria-label="合练一遍" onClick={startJoint}>合练</button>
+              <button
+                type="button"
+                className="vocal-practice-wide"
+                aria-label={`播放模式：${PLAYBACK_MODE_LABEL[playbackMode]}`}
+                onClick={cyclePlaybackMode}
+              >
+                {PLAYBACK_MODE_LABEL[playbackMode]}
+              </button>
             </div>
             <div className="vocal-immersive__tools" role="group" aria-label="练习工具">
               <button type="button" onClick={replay} aria-label="重播"><span className="vocal-immersive__icon" aria-hidden="true">↺</span> 重播</button>
-              <button type="button" onClick={() => setShowSettings(true)} aria-label="循环设置"><span className="vocal-immersive__icon" aria-hidden="true">⇄</span> 循环设置</button>
-              <button type="button" onClick={cycleRate} aria-label={`倍速，当前 ${settings.playbackRate} 倍`}>{settings.playbackRate}×</button>
+              {RATE_CHOICES.map((rate) => (
+                <button
+                  key={rate}
+                  type="button"
+                  aria-pressed={settings.playbackRate === rate}
+                  aria-label={`倍速 ${rate} 倍`}
+                  onClick={() => setSettings((current) => ({ ...current, playbackRate: rate }))}
+                >
+                  {rate}×
+                </button>
+              ))}
               {/* 中文原唱没有译文可切：不摆一个按不动的「双语」。 */}
               {item.language !== 'zh' && (
                 <button
@@ -1326,7 +1332,6 @@ export default function VocalPracticePlayer({ item, onRequestImport, onExitToLib
                   双语
                 </button>
               )}
-              <button type="button" onClick={cycleFont} aria-label={`字号：${FONT_LABEL[fontScale]}`}>Aa</button>
             </div>
           </>
         )}
@@ -1370,11 +1375,10 @@ export default function VocalPracticePlayer({ item, onRequestImport, onExitToLib
             {playing ? '暂停' : '播放'}
           </button>
           <button type="button" onClick={() => seekTo(timeMs + settings.forwardSeconds * 1000)} aria-label={`前进 ${settings.forwardSeconds} 秒`}>+{settings.forwardSeconds}s</button>
-          <button type="button" aria-pressed={settings.wholeTrackLoop} onClick={toggleWholeLoop} aria-label="单曲循环">循环</button>
+          <button type="button" aria-label={`播放模式：${PLAYBACK_MODE_LABEL[playbackMode]}`} onClick={cyclePlaybackMode}>{PLAYBACK_MODE_LABEL[playbackMode]}</button>
         </div>
         <div className="vocal-dock__extra" role="group" aria-label="练习控制">
           <button type="button" aria-pressed={settings.skipRap} onClick={openRapPicker}>跳过 Rap</button>
-          <button type="button" aria-pressed={joint} disabled={!src} onClick={startJoint}>合练一遍</button>
           <button type="button" onClick={() => setShowSettings(true)} aria-label="练习设置">⚙ 设置</button>
           <label className="vocal-dock__rate"><span>倍速</span>
             <select
@@ -1401,7 +1405,7 @@ export default function VocalPracticePlayer({ item, onRequestImport, onExitToLib
 
       {rapPickOpen && (
         <div className="modal-backdrop" onClick={(event) => { if (event.target === event.currentTarget) setRapPickOpen(false); }}>
-          <div className="vocal-sheet" role="dialog" aria-modal="true" aria-label="选择跳过 Rap 范围">
+          <div className="vocal-sheet vocal-sheet--rap" role="dialog" aria-modal="true" aria-label="选择跳过 Rap 范围">
             <div className="vocal-sheet__head">
               <h2>跳过 Rap：框选范围</h2>
               <button type="button" aria-label="关闭 Rap 范围选择" onClick={() => setRapPickOpen(false)}>✕</button>
@@ -1421,6 +1425,23 @@ export default function VocalPracticePlayer({ item, onRequestImport, onExitToLib
             {unconfirmedRap > 0 && (
               <p className="vocal-hint">{unconfirmedRap} 段 Rap 未在结构里确认；不影响在这里按句框选。</p>
             )}
+            {/* 操作键常驻页面顶部：滚歌词时也一直看得到，不压在最下方。 */}
+            <div className="vocal-rap-actions">
+              <button
+                type="button"
+                disabled={!(rapPickStart !== null && rapPickEnd !== null) && !settings.rapRange}
+                onClick={() => applyRapRange(true)}
+              >
+                {settings.skipRap ? '重新开始跳过' : '开始跳过'}
+              </button>
+              {settings.skipRap && (
+                <button type="button" onClick={() => applyRapRange(false)}>关闭跳过</button>
+              )}
+              {settings.rapRange && (
+                <button type="button" onClick={clearRapRange}>清除范围</button>
+              )}
+              <button type="button" onClick={() => setRapPickOpen(false)}>取消</button>
+            </div>
             <div className="vocal-lyrics" role="group" aria-label="Rap 起止句">
               {lyrics.lines.map((line, index) => {
                 const picked = rapPickStart !== null && rapPickEnd !== null && index >= rapPickStart && index <= rapPickEnd;
@@ -1449,22 +1470,6 @@ export default function VocalPracticePlayer({ item, onRequestImport, onExitToLib
                 );
               })}
             </div>
-            <div className="vocal-chips">
-              <button
-                type="button"
-                disabled={!(rapPickStart !== null && rapPickEnd !== null) && !settings.rapRange}
-                onClick={() => applyRapRange(true)}
-              >
-                {settings.skipRap ? '重新开始跳过' : '开始跳过'}
-              </button>
-              {settings.skipRap && (
-                <button type="button" onClick={() => applyRapRange(false)}>关闭跳过</button>
-              )}
-              {settings.rapRange && (
-                <button type="button" onClick={clearRapRange}>清除范围</button>
-              )}
-              <button type="button" onClick={() => setRapPickOpen(false)}>取消</button>
-            </div>
           </div>
         </div>
       )}
@@ -1485,8 +1490,6 @@ export default function VocalPracticePlayer({ item, onRequestImport, onExitToLib
                 ))}
                 <button type="button" aria-pressed={Boolean(loopAnchor || loopRange)} disabled={!hasTiming} onClick={markLoopStart}>循环开始</button>
                 <button type="button" aria-pressed={loopRangeOn} disabled={!hasTiming} onClick={markLoopEnd}>循环结束</button>
-                <button type="button" aria-pressed={settings.wholeTrackLoop} onClick={toggleWholeLoop}>整首循环</button>
-                <button type="button" disabled={!loopKey && !sectionLoop && !loopRange && !settings.wholeTrackLoop} onClick={clearLoops}>关闭循环</button>
               </div>
               <p className="vocal-hint">{modeText}{currentSection ? ` · 当前段 ${currentSection.label}` : ''}</p>
             </fieldset>
@@ -1503,14 +1506,6 @@ export default function VocalPracticePlayer({ item, onRequestImport, onExitToLib
               <div className="vocal-chips">
                 {SECONDS_CHOICES.map((seconds) => (
                   <button key={seconds} type="button" aria-pressed={settings.forwardSeconds === seconds} onClick={() => setSettings((current) => ({ ...current, forwardSeconds: seconds }))}>{seconds} 秒</button>
-                ))}
-              </div>
-            </fieldset>
-            <fieldset className="vocal-field">
-              <legend>播放速度</legend>
-              <div className="vocal-chips">
-                {RATE_CHOICES.map((rate) => (
-                  <button key={rate} type="button" aria-pressed={settings.playbackRate === rate} onClick={() => setSettings((current) => ({ ...current, playbackRate: rate }))}>{rate}×</button>
                 ))}
               </div>
             </fieldset>
@@ -1593,6 +1588,27 @@ export default function VocalPracticePlayer({ item, onRequestImport, onExitToLib
               {translationSummary.missing > 0 && (
                 <p className="vocal-hint">翻译经 CodeBuddy 云端模型处理，歌词会发送到该服务；不是本地模型。</p>
               )}
+            </fieldset>
+            <fieldset className="vocal-field">
+              <legend>字号</legend>
+              <div className="vocal-chips">
+                {FONT_CHOICES.map((value) => (
+                  <button
+                    key={value}
+                    type="button"
+                    aria-pressed={fontScale === value}
+                    onClick={() => { setFontScale(value); saveFontScale(value); }}
+                  >
+                    {FONT_LABEL[value]}
+                  </button>
+                ))}
+              </div>
+            </fieldset>
+            <fieldset className="vocal-field">
+              <legend>循环设置</legend>
+              <div className="vocal-chips">
+                <button type="button" onClick={() => { setMoreOpen(false); setShowSettings(true); }}>前后跳秒数</button>
+              </div>
             </fieldset>
             <fieldset className="vocal-field">
               <legend>结构与其他</legend>

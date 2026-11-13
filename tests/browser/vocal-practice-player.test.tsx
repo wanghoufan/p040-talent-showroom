@@ -195,23 +195,66 @@ it('逐句循环期间不自动跳 Rap，并说明原因', () => {
   expect(audio.currentTime).toBeCloseTo(30, 1);
 });
 
-it('合练一遍从头播放、自动开跳过 Rap、关闭全曲循环，到结尾停止', () => {
+it('播放模式键像日常播放器一样循环切换：单曲播放 → 单曲循环 → 列表循环', () => {
   render(<VocalPracticePlayer item={vocalItem({ tracks: { original: { media: media('orig') } }, lyrics, sections })} />);
   const audio = loadMedia();
-  fireEvent.click(screen.getByRole('button', { name: '单曲循环' }));
-  expect(audio.loop).toBe(true);
-
-  fireEvent.click(screen.getByRole('button', { name: '合练一遍' }));
-  expect(audio.currentTime).toBe(0);
+  const mode = () => screen.getByRole('button', { name: /播放模式：/ });
+  expect(mode()).toHaveAccessibleName('播放模式：单曲播放');
   expect(audio.loop).toBe(false);
-  expect(screen.getByRole('button', { name: '跳过 Rap' })).toHaveAttribute('aria-pressed', 'true');
-  expect(screen.getByRole('button', { name: '单曲循环' })).toHaveAttribute('aria-pressed', 'false');
-  expect(play).toHaveBeenCalled();
 
+  fireEvent.click(mode());
+  expect(mode()).toHaveAccessibleName('播放模式：单曲循环');
+  expect(audio.loop).toBe(true);
+  expect(localStorage.getItem('dance.vocal-practice.play-mode')).toBe('single-loop');
+
+  fireEvent.click(mode());
+  expect(mode()).toHaveAccessibleName('播放模式：列表循环');
+  expect(audio.loop).toBe(false);
+  expect(localStorage.getItem('dance.vocal-practice.play-mode')).toBe('list-loop');
+  expect(document.querySelector('.vocal-dock__mode')?.textContent).toBe('列表循环');
+
+  fireEvent.click(mode());
+  expect(mode()).toHaveAccessibleName('播放模式：单曲播放');
+});
+
+it('列表循环播完交给上层切下一首，单曲循环不触发切歌', () => {
+  const onNext = vi.fn();
+  render(<VocalPracticePlayer item={vocalItem({ tracks: { original: { media: media('orig') } }, lyrics, sections })} onNext={onNext} />);
+  const audio = loadMedia();
+  fireEvent.click(screen.getByRole('button', { name: '播放模式：单曲播放' }));
+  // 此时已是单曲循环：整首重复由 audio.loop 接管，不触发切歌。
   fireEvent.ended(audio);
-  /* 合练结束提示走浮层；状态槽固定显示当前模式，不被提示文本改写。 */
-  expect(document.querySelector('.vocal-toast')?.textContent).toBe('合练一遍完成');
-  expect(document.querySelector('.vocal-dock__mode')?.textContent).toBe('自由练习');
+  expect(onNext).not.toHaveBeenCalled();
+
+  fireEvent.click(screen.getByRole('button', { name: '播放模式：单曲循环' }));
+  // 再点一次到列表循环。
+  fireEvent.ended(audio);
+  expect(onNext).toHaveBeenCalledTimes(1);
+});
+
+it('列表循环在详情页按进入时的曲库顺序切到下一首', async () => {
+  const first = vocalItem({ id: 'queue-1', title: '第一首', tracks: { original: { media: media('orig') } }, lyrics, sections });
+  const second = vocalItem({ id: 'queue-2', title: '第二首', tracks: { original: { media: media('orig2') } }, lyrics, sections });
+  writeMetadata('dance.repertoire-snapshot', JSON.stringify([first, second]));
+  const view = render(
+    <MemoryRouter initialEntries={[{ pathname: '/repertoire/item/queue-1', search: '?immersive=1', state: { vocalQueue: ['queue-1', 'queue-2'] } }]}>
+      <Routes><Route path="/repertoire/item/:id" element={<TalentDetailPage />} /></Routes>
+    </MemoryRouter>,
+  );
+  const audio = await waitFor(() => {
+    const element = document.querySelector('audio');
+    if (!element) throw new Error('missing audio');
+    return element as HTMLAudioElement;
+  });
+  Object.defineProperty(audio, 'duration', { configurable: true, value: 66 });
+  fireEvent.loadedMetadata(audio);
+
+  fireEvent.click(screen.getByRole('button', { name: '播放模式：单曲播放' }));
+  fireEvent.click(screen.getByRole('button', { name: '播放模式：单曲循环' }));
+  fireEvent.ended(audio);
+
+  expect(await screen.findByRole('heading', { name: '第二首' })).toBeVisible();
+  view.unmount();
 });
 
 it('练习设置可改前后跳秒数，并同时落到本机缓存和同曲 practice 字段', async () => {
@@ -332,7 +375,7 @@ it('完全没有音轨时给出明确提示并可引导导入，纯文本仍可�
   expect(screen.getByText(/还没有原唱或伴奏音轨/)).toBeVisible();
   fireEvent.click(screen.getByRole('button', { name: '导入音频' }));
   expect(onRequestImport).toHaveBeenCalled();
-  expect(screen.getByRole('button', { name: '合练一遍' })).toBeDisabled();
+  expect(screen.getByRole('button', { name: /播放模式：/ })).toBeVisible();
 });
 
 it('旧音频用途无法识别时不猜测轨道，提示补充用途', () => {
@@ -448,24 +491,36 @@ it('沉浸页 3 句循环、循环开始/结束与合练都接现有练习逻辑
   expect(screen.getByText(/循环 · 第 3～6 句/)).toBeVisible();
   expect(audio.currentTime).toBeCloseTo(8, 1);
 
-  fireEvent.click(screen.getByRole('button', { name: '合练一遍' }));
-  expect(audio.currentTime).toBe(0);
-  expect(screen.getByRole('button', { name: '跳过 Rap' })).toHaveAttribute('aria-pressed', 'true');
+  fireEvent.click(screen.getByRole('button', { name: '循环 1 句' }));
+  // 区间循环把播放位置拉回第 3 句，所以「1 句」循环的是当前句 3。
+  expect(screen.getByText(/逐句循环 · 第 3～3 句/)).toBeVisible();
+  expect(screen.getByRole('button', { name: '循环 1 句' })).toHaveAttribute('aria-pressed', 'true');
+  expect(screen.queryByText(/循环 · 第 3～6 句/)).not.toBeInTheDocument();
   view.unmount();
 });
 
-it('沉浸页倍速按钮循环切换、字号按钮切换歌词字号并记住', () => {
+it('沉浸页三档倍速各自独立成键，字号在「更多」里三档直选并记住', () => {
   const view = renderImmersive(vocalItem({ tracks: { original: { media: media('orig') } }, lyrics, sections }));
   const audio = loadMedia();
-  fireEvent.click(screen.getByRole('button', { name: /倍速，当前 1 倍/ }));
-  expect(screen.getByRole('button', { name: /倍速，当前 1.25 倍/ })).toBeVisible();
-  expect(audio.playbackRate).toBe(1.25);
+  // 不做加速：1.25 / 1.5 不再出现。
+  expect(screen.queryByRole('button', { name: /1\.25/ })).not.toBeInTheDocument();
+  expect(screen.queryByRole('button', { name: /1\.5/ })).not.toBeInTheDocument();
+
+  fireEvent.click(screen.getByRole('button', { name: '倍速 0.5 倍' }));
+  expect(audio.playbackRate).toBe(0.5);
+  fireEvent.click(screen.getByRole('button', { name: '倍速 0.75 倍' }));
+  expect(audio.playbackRate).toBe(0.75);
+  expect(screen.getByRole('button', { name: '倍速 0.75 倍' })).toHaveAttribute('aria-pressed', 'true');
+  fireEvent.click(screen.getByRole('button', { name: '倍速 1 倍' }));
+  expect(audio.playbackRate).toBe(1);
 
   const lyricsBox = view.container.querySelector('.vocal-lyrics') as HTMLElement;
   expect(lyricsBox.className).toContain('vocal-lyrics--normal');
-  fireEvent.click(screen.getByRole('button', { name: '字号：标准' }));
+  fireEvent.click(screen.getByRole('button', { name: '更多' }));
+  const dialog = screen.getByRole('dialog', { name: '更多' });
+  expect(within(dialog).getByRole('button', { name: '标准' })).toHaveAttribute('aria-pressed', 'true');
+  fireEvent.click(within(dialog).getByRole('button', { name: '大' }));
   expect(lyricsBox.className).toContain('vocal-lyrics--large');
-  expect(screen.getByRole('button', { name: '字号：大' })).toBeVisible();
   expect(localStorage.getItem('dance.vocal-practice.font-size')).toBe('large');
   view.unmount();
 });
@@ -506,19 +561,27 @@ it('沉浸页 3句/5句与循环设置都接现有循环逻辑，工具行五键
   expect(audio.currentTime).toBeCloseTo(0, 1);
   expect(screen.getByText(/逐句循环 · 第 1～1 句/)).toBeVisible();
 
-  fireEvent.click(screen.getByRole('button', { name: '循环设置' }));
+  fireEvent.click(screen.getByRole('button', { name: '更多' }));
+  const more = screen.getByRole('dialog', { name: '更多' });
+  for (const name of ['标准', '大', '特大']) {
+    expect(within(more).getByRole('button', { name })).toBeVisible();
+  }
+  fireEvent.click(within(within(more).getByRole('group', { name: '字号' })).getByRole('button', { name: '特大' }));
+  expect(localStorage.getItem('dance.vocal-practice.font-size')).toBe('xlarge');
+  fireEvent.click(within(more).getByRole('button', { name: '前后跳秒数' }));
   const sheet = screen.getByRole('dialog', { name: '循环与练习设置' });
   const loopGroup = sheet.querySelector('fieldset') as HTMLElement;
-  for (const name of ['3 句', '5 句', '循环开始', '循环结束', '整首循环', '关闭循环']) {
+  for (const name of ['1 句', '3 句', '5 句', '循环开始', '循环结束']) {
     expect(within(loopGroup).getByRole('button', { name })).toBeVisible();
   }
   expect(within(loopGroup).queryByRole('button', { name: /自定义/ })).not.toBeInTheDocument();
   expect(within(loopGroup).queryByRole('button', { name: /本段/ })).not.toBeInTheDocument();
+  expect(within(loopGroup).queryByRole('button', { name: '整首循环' })).not.toBeInTheDocument();
   fireEvent.click(within(sheet).getByRole('button', { name: '关闭练习设置' }));
 
   const tools = screen.getByRole('group', { name: '练习工具' });
   const labels = within(tools).getAllByRole('button').map((button) => (button.textContent || '').trim());
-  expect(labels).toEqual(['↺ 重播', '⇄ 循环设置', '1×', '双语', 'Aa']);
+  expect(labels).toEqual(['↺ 重播', '0.5×', '0.75×', '1×', '双语']);
   for (const label of labels) expect(label).not.toContain('…');
   view.unmount();
 });
@@ -577,17 +640,17 @@ it('沉浸页无结构、无歌词、无译文时安全兜底，不伪造分段�
 /* 布局稳定性：状态槽固定占位，短提示走浮层，出现提示不再顶动上下布局。 */
 it('沉浸页状态槽固定常驻，操作提示走浮层不撑高布局', () => {
   const view = renderImmersive(vocalItem({ tracks: { original: { media: media('orig') } }, lyrics, sections }));
-  expect(view.container.querySelector('.vocal-dock__mode')?.textContent).toBe('自由练习');
+  expect(view.container.querySelector('.vocal-dock__mode')?.textContent).toBe('单曲播放');
   const practice = view.container.querySelector('.vocal-immersive__practice') as HTMLElement;
   const rap = within(practice).getByRole('button', { name: /Rap/ });
   /* 点「跳过 Rap」只开框选面板，不直接改状态、不产生常驻状态行；取消后状态槽内容不变。 */
   fireEvent.click(rap);
   expect(screen.getByRole('dialog', { name: '选择跳过 Rap 范围' })).toBeVisible();
-  expect(view.container.querySelector('.vocal-dock__mode')?.textContent).toBe('自由练习');
+  expect(view.container.querySelector('.vocal-dock__mode')?.textContent).toBe('单曲播放');
   expect(view.container.querySelector('.vocal-toast')).toBeNull();
   fireEvent.click(within(screen.getByRole('dialog', { name: '选择跳过 Rap 范围' })).getByRole('button', { name: '取消' }));
   expect(rap).toHaveAttribute('aria-pressed', 'false');
-  expect(view.container.querySelector('.vocal-dock__mode')?.textContent).toBe('自由练习');
+  expect(view.container.querySelector('.vocal-dock__mode')?.textContent).toBe('单曲播放');
 
   /* 会产生提示的操作：提示落在浮层，状态槽文字不变，布局高度不随提示增减。 */
   fireEvent.click(within(practice).getByRole('button', { name: '循环 3 句' }));
@@ -618,22 +681,24 @@ it('详情页仍保留占位块，避免 fixed 播放器压住页面底部内容
 });
 
 /** 用户痛点：旧版「跳过 Rap」「合练一遍」被挤成省略号。这里锁住分层与完整文案。 */
-it('播放器控制分层完整：主控与练习按钮文案不被省略，倍速仍可直接切换', () => {
+it('播放器控制分层完整：主控与练习按钮文案不被省略，倍速为三档独立选项', () => {
   render(<VocalPracticePlayer item={vocalItem({ tracks: { original: { media: media('orig') } }, lyrics, sections })} />);
   const transport = screen.getByRole('group', { name: '播放控制' });
-  for (const name of ['重播', '后退 5 秒', '播放', '前进 10 秒', '单曲循环']) {
+  for (const name of ['重播', '后退 5 秒', '播放', '前进 10 秒', '播放模式：单曲播放']) {
     expect(within(transport).getByRole('button', { name })).toBeVisible();
   }
   const practice = screen.getByRole('group', { name: '练习控制' });
-  for (const name of ['跳过 Rap', '合练一遍', '练习设置']) {
+  for (const name of ['跳过 Rap', '练习设置']) {
     const button = within(practice).getByRole('button', { name });
     expect(button).toBeVisible();
     expect(button.textContent || '').not.toContain('…');
   }
+  expect(within(practice).queryByRole('button', { name: '合练一遍' })).not.toBeInTheDocument();
   const rate = within(practice).getByRole('combobox', { name: '播放速度' });
   expect(rate).toHaveValue('1');
-  fireEvent.change(rate, { target: { value: '1.25' } });
-  expect(rate).toHaveValue('1.25');
+  expect(within(rate).getAllByRole('option').map((option) => option.textContent)).toEqual(['0.5×', '0.75×', '1×']);
+  fireEvent.change(rate, { target: { value: '0.75' } });
+  expect(rate).toHaveValue('0.75');
 });
 
 /**

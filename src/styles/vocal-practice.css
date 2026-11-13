@@ -91,7 +91,7 @@
 /* 主控只突出播放/暂停：实心主色，一眼找到，其余保持安静的中性按钮。 */
 .vocal-dock__play { display: inline-flex; align-items: center; justify-content: center; gap: 4px; background: var(--primary); border-color: var(--primary); color: #fff; font-weight: 700; }
 .vocal-dock__play-icon { font-size: 13px; line-height: 1; }
-.vocal-dock__extra { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)) minmax(0, auto); align-items: stretch; gap: 6px; }
+.vocal-dock__extra { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)) minmax(0, auto); align-items: stretch; gap: 6px; }
 .vocal-dock__extra button { min-width: 0; padding: 4px 6px; line-height: 1.2; }
 .vocal-dock__rate { display: flex; flex-direction: row; align-items: center; gap: 4px; min-height: 44px; padding: 0 2px; font-size: 15px; color: var(--muted); white-space: nowrap; }
 .vocal-dock__rate select { width: auto; min-height: 44px; padding: 0 6px; font-size: 15px; }
@@ -118,7 +118,7 @@
 @media (max-width: 340px) {
   /* 极窄屏把「倍速」二字让给按钮，下拉框仍显示 1× 并由 aria-label 说明用途。 */
   .vocal-dock__rate > span { display: none; }
-  .vocal-dock__extra { grid-template-columns: repeat(3, minmax(0, 1fr)) 52px; }
+  .vocal-dock__extra { grid-template-columns: repeat(2, minmax(0, 1fr)) 52px; }
 }
 
 /* 练习设置：单向底部弹层，只改练唱习惯 */
@@ -129,6 +129,12 @@
 .vocal-sheet { width: min(100%, 650px); max-height: 88vh; max-height: 88dvh; overflow-y: auto; overscroll-behavior-y: contain; background: var(--surface); border-radius: 22px 22px 0 0; padding: 20px 18px calc(20px + var(--inset-bottom)); }
 /* 结构校准要在地图与歌词之间来回看，给更宽的单列空间（仍是手机单列，不做左右分栏）。 */
 .vocal-sheet--wide { width: min(100%, 760px); }
+/* Rap 框选：标题与操作键固定在上方，只有歌词列表滚动；按钮不再压到页面最底部。
+   高度上限先写 vh 兜底，再写 dvh（旧 WebView 不认 dvh 时整条声明会作废）。 */
+.vocal-sheet--rap { display: flex; flex-direction: column; max-height: 88vh; max-height: 88dvh; overflow: hidden; }
+.vocal-sheet--rap > .vocal-lyrics { flex: 1 1 auto; min-height: 0; margin-top: 8px; overflow-y: auto; overscroll-behavior-y: contain; -webkit-overflow-scrolling: touch; }
+.vocal-rap-actions { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px; margin-top: 8px; }
+.vocal-rap-actions button { min-height: 44px; padding: 4px 8px; font-size: 15px; line-height: 1.15; white-space: nowrap; }
 .vocal-sheet h3 { font-size: 19px; }
 .vocal-sheet__head { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
 .vocal-sheet__head h2 { margin: 0; font-size: 23px; }
@@ -253,17 +259,19 @@
 /* 播放键只留图标：原型里它是整条控制带里唯一的实心块，这里用尺寸与主色保持同样分量。 */
 .vocal-immersive__transport .vocal-dock__play { min-height: 44px; }
 .vocal-dock--immersive .vocal-dock__play-icon { font-size: 20px; }
-.vocal-immersive__practice { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; }
-.vocal-immersive__practice button { min-width: 0; min-height: 44px; padding: 4px 0; font-size: 15px; line-height: 1.15; white-space: nowrap; }
-/* 工具行 5 列：不能等分。实测 390/384 宽时每列 68.8/67.6px，「⇄ 循环设置」需要约 79px，
-   等分会让文字越出按钮盒 10px、压到右边「1×」上（字号不能缩、文字不能截断）。
-   minmax(auto, 1fr) + 按钮保留自动最小宽度：宽标签拿到自己的内容宽度，其余四列分剩余空间。 */
-.vocal-immersive__tools { display: grid; grid-template-columns: repeat(5, minmax(auto, 1fr)); gap: 6px; }
-.vocal-immersive__tools button { min-height: 44px; padding: 4px 0; font-size: 15px; line-height: 1.15; white-space: nowrap; }
+/* 练习行 12 栅格：上排 4 键（跳Rap / 1句 / 3句 / 5句）各占 3 格；
+   下排 3 键（循环开始 / 循环结束 / 播放模式）各占 4 格，两排都铺满整行。 */
+.vocal-immersive__practice { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 6px; }
+.vocal-immersive__practice button { grid-column: span 3; min-width: 0; min-height: 44px; padding: 4px 0; font-size: 15px; line-height: 1.15; white-space: nowrap; }
+.vocal-immersive__practice .vocal-practice-wide { grid-column: span 4; }
+/* 工具行按实际按钮数等分：中文歌 4 键、外语歌 5 键，不会留空槽。 */
+.vocal-immersive__tools { display: flex; gap: 6px; }
+.vocal-immersive__tools button { flex: 1 1 0; min-width: 0; min-height: 44px; padding: 4px 0; font-size: 15px; line-height: 1.15; white-space: nowrap; }
 
-/* 窄屏：按钮文字不缩小，改成换行排布，避免 15px 文字被压成省略号 */
+/* 窄屏：按钮文字不缩小，练习行退成 3 键一排，避免 15px 文字被压成省略号 */
 @media (max-width: 352px) {
-  .vocal-immersive__practice, .vocal-immersive__tools { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .vocal-immersive__practice button,
+  .vocal-immersive__practice .vocal-practice-wide { grid-column: span 4; }
   /* 三排按钮同高（44），窄屏也不再把主控那一排单独撑高，避免又比下两排占地方。 */
   .vocal-immersive__transport button { min-height: 44px; }
 }
@@ -282,8 +290,7 @@
   .vocal-practice.is-immersive > .vocal-block { grid-column: 1; grid-row: 3; }
   .vocal-practice.is-immersive > .vocal-missing { grid-column: 1 / -1; grid-row: 4; margin: 4px 0 0; }
   .vocal-practice.is-immersive .vocal-dock { grid-column: 2; grid-row: 2 / 5; align-self: start; max-height: 100%; overflow-y: auto; gap: 4px; padding: 6px 8px; border-radius: 14px; border-bottom: 1px solid var(--line); }
-  /* 右栏只有三百多像素：工具行改 3 列并去掉装饰图标，「循环设置」才不会被裁掉。 */
-  .vocal-practice.is-immersive .vocal-immersive__tools { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 4px; }
+  /* 右栏只有三百多像素：工具行已改为按数量等分，不再单独改列数。 */
   .vocal-practice.is-immersive .vocal-immersive__icon { display: none; }
   .vocal-practice.is-immersive .vocal-dock__mode { display: none; }
 }
